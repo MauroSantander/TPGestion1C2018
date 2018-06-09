@@ -486,3 +486,15 @@ INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('REGISTRAR_CONSUMIBLES');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('FACTURAR_ESTADIA');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('LISTADO_ESTADISTICO');
 
+INSERT INTO [PISOS_PICADOS].Consumible 
+SELECT DISTINCT Consumible_Codigo, Consumible_Precio, Consumible_Descripcion
+FROM [gd_esquema].Maestra 
+WHERE Consumible_Codigo IS NOT NULL;
+
+INSERT INTO [PISOS_PICADOS].Regimen(descripcion,precioBase)
+SELECT DISTINCT Regimen_Descripcion,Regimen_Precio 
+FROM [gd_esquema].Maestra;
+
+INSERT INTO [PISOS_PICADOS].Tipo 
+SELECT DISTINCT Habitacion_Tipo_Descripcion , Habitacion_Tipo_Porcentual 
+FROM [gd_esquema].Maestra;
