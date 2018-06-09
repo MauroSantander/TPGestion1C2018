@@ -45,13 +45,13 @@ contraseña VARCHAR(255)
 CREATE TABLE [PISOS_PICADOS].Hotel
 (
 idHotel INT PRIMARY KEY IDENTITY,
-nombre VARCHAR(255),
+nombre VARCHAR(255) DEFAULT NULL,
 mail VARCHAR(255) DEFAULT NULL,
 telefono VARCHAR(255) DEFAULT NULL,
 calle VARCHAR(255),
 nroCalle INT,
 ciudad VARCHAR(255),
-pais INT REFERENCES [PISOS_PICADOS].Pais,
+pais INT REFERENCES [PISOS_PICADOS].Pais DEFAULT NULL,
 fechaCreacion DATE DEFAULT NULL,
 estrellas INT
 )
@@ -83,14 +83,15 @@ CREATE TABLE [PISOS_PICADOS].Tipo
 (
 idTipo INT PRIMARY KEY IDENTITY,
 tipoCamas VARCHAR(255),
-porcentual NUMERIC(2,2)
+porcentual NUMERIC(3,2)
 )
 
 CREATE TABLE [PISOS_PICADOS].Habitacion
+
 (
 numero INT,
 idHotel INT,
-ubicacion CHAR(1),
+frente CHAR(1),
 tipo INT REFERENCES [PISOS_PICADOS].Tipo,
 descripcion VARCHAR(255) DEFAULT NULL,
 piso INT,
@@ -491,11 +492,33 @@ SELECT DISTINCT Consumible_Codigo, Consumible_Precio, Consumible_Descripcion
 FROM [gd_esquema].Maestra 
 WHERE Consumible_Codigo IS NOT NULL;
 
-INSERT INTO [PISOS_PICADOS].Regimen(descripcion,precioBase)
+INSERT INTO [PISOS_PICADOS].Regimen(descripcion, precioBase)
 SELECT DISTINCT Regimen_Descripcion,Regimen_Precio 
 FROM [gd_esquema].Maestra;
 
 INSERT INTO [PISOS_PICADOS].Tipo 
 SELECT DISTINCT Habitacion_Tipo_Descripcion , Habitacion_Tipo_Porcentual 
 FROM [gd_esquema].Maestra;
+
+INSERT INTO [PISOS_PICADOS].Usuario 
+(nombre, apellido, mail, calle, numeroIdentificacion, fechaNacimiento)
+SELECT 
+Cliente_Nombre, Cliente_Apellido, Cliente_Mail, Cliente_Dom_Calle,
+Cliente_Pasaporte_Nro, Cliente_Fecha_Nac
+FROM [gd_esquema].Maestra;
+
+UPDATE [PISOS_PICADOS].Usuario SET pais = 13
+WHERE pais IS NULL;
+
+INSERT INTO [PISOS_PICADOS].Cliente 
+SELECT DISTINCT Usuario.idUsuario, Cliente_Nacionalidad
+FROM [gd_esquema].Maestra, [PISOS_PICADOS].Usuario
+WHERE Usuario.numeroIdentificacion = Cliente_Pasaporte_Nro;
+
+INSERT INTO [PISOS_PICADOS].Hotel (calle, nroCalle, ciudad, estrellas)
+SELECT DISTINCT Hotel_Calle, Hotel_Nro_Calle, Hotel_Ciudad, Hotel_CantEstrella
+FROM [gd_esquema].Maestra;
+
+UPDATE [PISOS_PICADOS].Hotel SET pais = 13
+WHERE pais IS NULL;
 
