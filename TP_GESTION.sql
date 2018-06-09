@@ -498,3 +498,4 @@ FROM [gd_esquema].Maestra;
 INSERT INTO [PISOS_PICADOS].Tipo 
 SELECT DISTINCT Habitacion_Tipo_Descripcion , Habitacion_Tipo_Porcentual 
 FROM [gd_esquema].Maestra;
+
