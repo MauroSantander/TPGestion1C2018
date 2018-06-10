@@ -487,6 +487,15 @@ INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('REGISTRAR_CONSUMIBLES');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('FACTURAR_ESTADIA');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('LISTADO_ESTADISTICO');
 
+SET IDENTITY_INSERT [PISOS_PICADOS].Usuario ON
+
+INSERT INTO [PISOS_PICADOS].Usuario (idUsuario, nombre, apellido, mail, calle, nroCalle, pais, numeroIdentificacion, fechaNacimiento) 
+VALUES (96945,'admin','admin','admin@gmail.com','admincalle',123,13,12345678,'1997-05-01');
+
+SET IDENTITY_INSERT [PISOS_PICADOS].Usuario OFF
+
+INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña) VALUES (96945,'admin','admin');
+
 SET IDENTITY_INSERT [PISOS_PICADOS].Consumible ON
 
 INSERT INTO [PISOS_PICADOS].Consumible (idConsumible, precio, descripcion)
@@ -543,4 +552,5 @@ and Usuario.apellido + Usuario.nombre = Cliente_Apellido + Cliente_Nombre
 and Regimen.descripcion = Regimen_Descripcion;
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Reserva OFF
+
 
