@@ -101,7 +101,11 @@ namespace FrbaHotel.AbmCliente
         {
 
         }
-		
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Boton Crear --  seguramente sea un insert
+        }
 
     }
 }
