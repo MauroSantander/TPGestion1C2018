@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,24 +29,26 @@ namespace FrbaHotel
 
         private void button1_Click(object sender, EventArgs e)
         {
+           
             try
             {
                 conexion.Open();
                 MessageBox.Show("Conexion exitosa");
+                (new FrbaHotel.Login.Form1()).ShowDialog();
+                this.Hide();
             }
             catch (Exception)
             {
                 MessageBox.Show("Error");
+
             }
 
-
-            this.Hide();
-           
+            
+           // Application.Run(new FrbaHotel.Login.Form1());
 
             
-            Application.Run(new FrbaHotel.Login.Form1());
-            //Form1 obj = new FrbaHotel.Login.Form1();
-           // obj.ShowDialog();
+           
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -62,3 +64,4 @@ namespace FrbaHotel
     }
 
 }
+
