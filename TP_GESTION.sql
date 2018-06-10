@@ -487,7 +487,6 @@ INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('REGISTRAR_CONSUMIBLES');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('FACTURAR_ESTADIA');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('LISTADO_ESTADISTICO');
 
-
 SET IDENTITY_INSERT [PISOS_PICADOS].Consumible ON
 
 INSERT INTO [PISOS_PICADOS].Consumible (idConsumible, precio, descripcion)
@@ -534,4 +533,14 @@ Habitacion_Frente, idTipo, Habitacion_Piso
 FROM [gd_esquema].Maestra, [PISOS_PICADOS].Hotel, [PISOS_PICADOS].Tipo
 WHERE ciudad + calle = Hotel_Ciudad + Hotel_Calle and Habitacion_Tipo_Descripcion = tipoCamas;
 
+SET IDENTITY_INSERT [PISOS_PICADOS].Reserva ON
+
+INSERT INTO [PISOS_PICADOS].Reserva (codigoReserva, fechaInicio, codigoRegimen, idCliente)
+SELECT DISTINCT Reserva_Codigo, Reserva_Fecha_Inicio, Regimen.codigoRegimen, idUsuario
+FROM [gd_esquema].Maestra, [PISOS_PICADOS].Usuario, [PISOS_PICADOS].Regimen
+WHERE Usuario.numeroIdentificacion = Cliente_Pasaporte_Nro 
+and Usuario.apellido + Usuario.nombre = Cliente_Apellido + Cliente_Nombre
+and Regimen.descripcion = Regimen_Descripcion;
+
+SET IDENTITY_INSERT [PISOS_PICADOS].Reserva OFF
 
