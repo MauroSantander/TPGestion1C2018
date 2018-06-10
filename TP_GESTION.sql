@@ -152,7 +152,7 @@ CREATE TABLE [PISOS_PICADOS].Modificacion
 codigoModificacion INT PRIMARY KEY IDENTITY,
 reserva INT REFERENCES [PISOS_PICADOS].Reserva,
 descripcion VARCHAR(255),
-usuario INT REFERENCES [PISOS_PICADOS].Empleado,
+usuario INT REFERENCES [PISOS_PICADOS].Usuario,
 fecha DATE
 )
 
@@ -568,4 +568,39 @@ SELECT DISTINCT codigoRegimen, idHotel
 FROM [gd_esquema].Maestra, [PISOS_PICADOS].Hotel, [PISOS_PICADOS].Regimen
 WHERE descripcion = Regimen_Descripcion and Hotel_Calle + Hotel_Ciudad = calle + ciudad
 
+INSERT INTO [PISOS_PICADOS].RolxFuncionalidad
+SELECT idRol, idFuncionalidad
+FROM [PISOS_PICADOS].Rol, [PISOS_PICADOS].Funcionalidad
+WHERE nombreRol = 'Guest' and 
+(Funcionalidad.descripcion = 'GENERAR_RESERVA' or 
+Funcionalidad.descripcion = 'MODIFICAR_RESERVA' or 
+Funcionalidad.descripcion = 'CANCELAR_RESERVA')
 
+INSERT INTO [PISOS_PICADOS].RolxFuncionalidad
+SELECT idRol, idFuncionalidad
+FROM [PISOS_PICADOS].Rol, [PISOS_PICADOS].Funcionalidad
+WHERE nombreRol = 'Recepcionista' and 
+(Funcionalidad.descripcion = 'GENERAR_RESERVA' or 
+Funcionalidad.descripcion = 'MODIFICAR_RESERVA' or 
+Funcionalidad.descripcion = 'CANCELAR_RESERVA' or
+Funcionalidad.descripcion = 'REGISTRAR_ESTADIA' or 
+Funcionalidad.descripcion = 'REGISTRAR_CONSUMIBLES' or 
+Funcionalidad.descripcion = 'FACTURAR_ESTADIA')
+
+INSERT INTO [PISOS_PICADOS].RolxFuncionalidad
+SELECT idRol, idFuncionalidad
+FROM [PISOS_PICADOS].Rol, [PISOS_PICADOS].Funcionalidad
+WHERE nombreRol = 'Administrador' and 
+(Funcionalidad.descripcion = 'ABM_ROL' or 
+Funcionalidad.descripcion = 'ABM_USUARIO' or 
+Funcionalidad.descripcion = 'ABM_CLIENTE' or 
+Funcionalidad.descripcion = 'ABM_HOTEL' or 
+Funcionalidad.descripcion = 'ABM_HABITACION' or
+Funcionalidad.descripcion = 'ABM_REGIMEN_ESTADIA' or  
+Funcionalidad.descripcion = 'GENERAR_RESERVA' or 
+Funcionalidad.descripcion = 'MODIFICAR_RESERVA' or 
+Funcionalidad.descripcion = 'CANCELAR_RESERVA' or
+Funcionalidad.descripcion = 'REGISTRAR_ESTADIA' or 
+Funcionalidad.descripcion = 'REGISTRAR_CONSUMIBLES' or 
+Funcionalidad.descripcion = 'FACTURAR_ESTADIA' or
+Funcionalidad.descripcion = 'LISTADO_ESTADISTICO')
