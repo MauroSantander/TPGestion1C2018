@@ -169,14 +169,14 @@ CREATE TABLE [PISOS_PICADOS].CheckIn
 (
 idCheckIn INT PRIMARY KEY IDENTITY,
 fecha DATE,
-usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario
+usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario DEFAULT NULL
 )
 
 CREATE TABLE [PISOS_PICADOS].CheckOut
 (
 idCheckOut INT PRIMARY KEY IDENTITY,
 fecha DATE,
-usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario
+usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario DEFAULT NULL
 )
 
 CREATE TABLE [PISOS_PICADOS].Estadia
@@ -614,3 +614,11 @@ INSERT INTO [PISOS_PICADOS].RolxUsuario (idRol, idUsuario)
 SELECT DISTINCT 1, idUsuario
 FROM [PISOS_PICADOS].Usuario, [PISOS_PICADOS].Rol
 WHERE usuario.nombre = 'admin' and usuario.apellido = 'admin'
+
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva (numero, idHotel, codigoReserva)
+SELECT DISTINCT Habitacion.numero, Habitacion.idHotel, Reserva.codigoReserva
+FROM [gd_esquema].Maestra, [PISOS_PICADOS].Habitacion, [PISOS_PICADOS].Reserva, [PISOS_PICADOS].Hotel
+WHERE Reserva.codigoReserva = Reserva_Codigo 
+and Habitacion_Numero = Habitacion.numero 
+and Hotel.idHotel = Habitacion.idHotel
+and Hotel.calle + Hotel.ciudad = Hotel_Calle + Hotel_Ciudad
