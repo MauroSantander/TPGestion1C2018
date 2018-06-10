@@ -137,13 +137,13 @@ descripcion VARCHAR(255) DEFAULT NULL
 
 CREATE TABLE [PISOS_PICADOS].Reserva
 (
-codigoReserva INT PRIMARY KEY,
+codigoReserva INT PRIMARY KEY IDENTITY(10001,1),
 fechaRealizacion DATE DEFAULT NULL,
 fechaInicio DATE,
-fechaFin DATE,
+fechaFin DATE DEFAULT NULL,
 cantidadHuespedes INT DEFAULT NULL,
 codigoRegimen INT REFERENCES [PISOS_PICADOS].Regimen,
-estado INT REFERENCES [PISOS_PICADOS].Estado,
+estado INT REFERENCES [PISOS_PICADOS].Estado DEFAULT NULL,
 idCliente INT REFERENCES [PISOS_PICADOS].Cliente
 )
 
@@ -189,7 +189,7 @@ idCheckOut INT REFERENCES [PISOS_PICADOS].CheckOut
 
 CREATE TABLE [PISOS_PICADOS].Consumible
 (
-idConsumible INT PRIMARY KEY,
+idConsumible INT PRIMARY KEY IDENTITY(2324,1),
 precio NUMERIC(6,2),
 descripcion VARCHAR(255)
 )
@@ -210,7 +210,7 @@ numeroTarjeta INT
 
 CREATE TABLE [PISOS_PICADOS].Factura
 (
-numeroFactura INT PRIMARY KEY,
+numeroFactura INT PRIMARY KEY IDENTITY(2396745,1),
 formaDePago INT REFERENCES [PISOS_PICADOS].FormaDePago,
 cliente INT REFERENCES [PISOS_PICADOS].Cliente,
 total NUMERIC(8,2)
@@ -487,10 +487,16 @@ INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('REGISTRAR_CONSUMIBLES');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('FACTURAR_ESTADIA');
 INSERT INTO [PISOS_PICADOS].Funcionalidad VALUES('LISTADO_ESTADISTICO');
 
-INSERT INTO [PISOS_PICADOS].Consumible 
+
+SET IDENTITY_INSERT [PISOS_PICADOS].Consumible ON
+
+INSERT INTO [PISOS_PICADOS].Consumible (idConsumible, precio, descripcion)
 SELECT DISTINCT Consumible_Codigo, Consumible_Precio, Consumible_Descripcion
 FROM [gd_esquema].Maestra 
-WHERE Consumible_Codigo IS NOT NULL;
+WHERE Consumible_Codigo IS NOT NULL
+order by Consumible_Codigo;
+
+SET IDENTITY_INSERT [PISOS_PICADOS].Consumible OFF
 
 INSERT INTO [PISOS_PICADOS].Regimen(descripcion, precioBase)
 SELECT DISTINCT Regimen_Descripcion,Regimen_Precio 
@@ -502,7 +508,7 @@ FROM [gd_esquema].Maestra;
 
 INSERT INTO [PISOS_PICADOS].Usuario 
 (nombre, apellido, mail, calle, numeroIdentificacion, fechaNacimiento)
-SELECT 
+SELECT DISTINCT
 Cliente_Nombre, Cliente_Apellido, Cliente_Mail, Cliente_Dom_Calle,
 Cliente_Pasaporte_Nro, Cliente_Fecha_Nac
 FROM [gd_esquema].Maestra;
@@ -521,4 +527,11 @@ FROM [gd_esquema].Maestra;
 
 UPDATE [PISOS_PICADOS].Hotel SET pais = 13
 WHERE pais IS NULL;
+
+INSERT INTO [PISOS_PICADOS].Habitacion (numero, idHotel, frente, tipo, piso)
+SELECT DISTINCT Habitacion_Numero, [PISOS_PICADOS].Hotel.idHotel,
+Habitacion_Frente, idTipo, Habitacion_Piso
+FROM [gd_esquema].Maestra, [PISOS_PICADOS].Hotel, [PISOS_PICADOS].Tipo
+WHERE ciudad + calle = Hotel_Ciudad + Hotel_Calle and Habitacion_Tipo_Descripcion = tipoCamas;
+
 
