@@ -56,9 +56,9 @@ fechaCreacion DATE DEFAULT NULL,
 estrellas INT
 )
 
-CREATE TABLE [PISOS_PICADOS].UsuarioxHotel
+CREATE TABLE [PISOS_PICADOS].EmpleadoxHotel
 (
-idUsuario INT REFERENCES [PISOS_PICADOS].Usuario,
+idUsuario INT REFERENCES [PISOS_PICADOS].Empleado,
 idHotel INT REFERENCES [PISOS_PICADOS].Hotel
 PRIMARY KEY (idUsuario, idHotel)
 )
@@ -150,7 +150,7 @@ idCliente INT REFERENCES [PISOS_PICADOS].Cliente
 CREATE TABLE [PISOS_PICADOS].Modificacion
 (
 codigoModificacion INT PRIMARY KEY IDENTITY,
-estado INT REFERENCES [PISOS_PICADOS].Estado,
+reserva INT REFERENCES [PISOS_PICADOS].Reserva,
 descripcion VARCHAR(255),
 usuario INT REFERENCES [PISOS_PICADOS].Empleado,
 fecha DATE
@@ -552,5 +552,20 @@ and Usuario.apellido + Usuario.nombre = Cliente_Apellido + Cliente_Nombre
 and Regimen.descripcion = Regimen_Descripcion;
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Reserva OFF
+
+INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva correcta');
+INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva modificada');
+INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva cancelada por recepción');
+INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva modificada por cliente');
+INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva cancelada por No-Show');
+INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva efectivizada');
+
+INSERT INTO [PISOS_PICADOS].EmpleadoxHotel (idUsuario, idHotel) 
+SELECT idUsuario, idHotel FROM PISOS_PICADOS.Hotel, PISOS_PICADOS.Empleado
+
+INSERT INTO [PISOS_PICADOS].RegimenxHotel (codigoRegimen, idHotel)
+SELECT DISTINCT codigoRegimen, idHotel
+FROM [gd_esquema].Maestra, [PISOS_PICADOS].Hotel, [PISOS_PICADOS].Regimen
+WHERE descripcion = Regimen_Descripcion and Hotel_Calle + Hotel_Ciudad = calle + ciudad
 
 
