@@ -16,8 +16,7 @@ namespace FrbaHotel
 
         SqlConnection conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true");
 
-    
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -41,7 +40,13 @@ namespace FrbaHotel
             }
 
 
+            this.Hide();
+           
 
+            
+            Application.Run(new FrbaHotel.Login.Form1());
+            //Form1 obj = new FrbaHotel.Login.Form1();
+           // obj.ShowDialog();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -53,5 +58,7 @@ namespace FrbaHotel
         {
             this.Close();
         }
+
     }
+
 }

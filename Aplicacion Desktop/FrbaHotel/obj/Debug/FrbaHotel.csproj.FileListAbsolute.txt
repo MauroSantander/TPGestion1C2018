@@ -23,3 +23,6 @@ C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion 
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Properties.Resources.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.Form1.resources
+C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmCliente.Form1.resources
+C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRol.Form1.resources
+C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Form1.resources
