@@ -623,3 +623,16 @@ WHERE Reserva.codigoReserva = Reserva_Codigo
 and Habitacion_Numero = Habitacion.numero 
 and Hotel.idHotel = Habitacion.idHotel
 and Hotel.calle + Hotel.ciudad = Hotel_Calle + Hotel_Ciudad
+
+INSERT INTO [PISOS_PICADOS].CheckIn (fecha)
+SELECT fechaInicio
+FROM [PISOS_PICADOS].Reserva JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
+WHERE Factura_Nro IS NOT NULL
+GROUP BY Factura_Nro, fechaInicio
+
+INSERT INTO [PISOS_PICADOS].CheckOut (fecha)
+SELECT dateadd(day, DateDiff(day,Reserva.fechaInicio,Reserva.fechaFin), Reserva.fechaInicio)
+FROM [PISOS_PICADOS].Reserva JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
+WHERE Factura_Nro IS NOT NULL
+GROUP BY fechaFin, fechaInicio, codigoReserva
+
