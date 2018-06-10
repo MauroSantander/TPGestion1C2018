@@ -604,3 +604,13 @@ Funcionalidad.descripcion = 'REGISTRAR_ESTADIA' or
 Funcionalidad.descripcion = 'REGISTRAR_CONSUMIBLES' or 
 Funcionalidad.descripcion = 'FACTURAR_ESTADIA' or
 Funcionalidad.descripcion = 'LISTADO_ESTADISTICO')
+
+INSERT INTO [PISOS_PICADOS].RolxUsuario (idRol, idUsuario)
+SELECT DISTINCT 3, idUsuario
+FROM [PISOS_PICADOS].Usuario, [PISOS_PICADOS].Rol
+WHERE usuario.nombre <> 'admin' and usuario.apellido <> 'admin'
+
+INSERT INTO [PISOS_PICADOS].RolxUsuario (idRol, idUsuario)
+SELECT DISTINCT 1, idUsuario
+FROM [PISOS_PICADOS].Usuario, [PISOS_PICADOS].Rol
+WHERE usuario.nombre = 'admin' and usuario.apellido = 'admin'
