@@ -544,8 +544,9 @@ WHERE ciudad + calle = Hotel_Ciudad + Hotel_Calle and Habitacion_Tipo_Descripcio
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Reserva ON
 
-INSERT INTO [PISOS_PICADOS].Reserva (codigoReserva, fechaInicio, codigoRegimen, idCliente)
-SELECT DISTINCT Reserva_Codigo, Reserva_Fecha_Inicio, Regimen.codigoRegimen, idUsuario
+INSERT INTO [PISOS_PICADOS].Reserva (codigoReserva, fechaInicio, fechaFin, codigoRegimen, idCliente)
+SELECT DISTINCT Reserva_Codigo, Reserva_Fecha_Inicio, dateadd(day, Reserva_Cant_Noches, '2017/01/01'), 
+Regimen.codigoRegimen, idUsuario
 FROM [gd_esquema].Maestra, [PISOS_PICADOS].Usuario, [PISOS_PICADOS].Regimen
 WHERE Usuario.numeroIdentificacion = Cliente_Pasaporte_Nro 
 and Usuario.apellido + Usuario.nombre = Cliente_Apellido + Cliente_Nombre
