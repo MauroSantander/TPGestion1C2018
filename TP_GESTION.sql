@@ -38,7 +38,7 @@ nacionalidad VARCHAR(255) DEFAULT 'ARGENTINO'
 CREATE TABLE [PISOS_PICADOS].Empleado
 (
 idUsuario INT PRIMARY KEY REFERENCES [PISOS_PICADOS].Usuario(idUsuario),
-usuario VARCHAR(255),
+usuario VARCHAR(255) UNIQUE,
 contraseña VARCHAR(255)
 )
 
