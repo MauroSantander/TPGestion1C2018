@@ -165,11 +165,11 @@ FOREIGN KEY (numero, idHotel) REFERENCES [PISOS_PICADOS].Habitacion(numero, idHo
 PRIMARY KEY (numero, idHotel, codigoReserva)
 )
 
-CREATE TABLE [PISOS_PICADOS].CheckIn
+/*CREATE TABLE [PISOS_PICADOS].CheckIn
 (
 idCheckIn INT PRIMARY KEY IDENTITY,
 fecha DATE,
-usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario DEFAULT NULL
+usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario DEFAULT NULL 
 )
 
 CREATE TABLE [PISOS_PICADOS].CheckOut
@@ -177,14 +177,16 @@ CREATE TABLE [PISOS_PICADOS].CheckOut
 idCheckOut INT PRIMARY KEY IDENTITY,
 fecha DATE,
 usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario DEFAULT NULL
-)
+) */
 
 CREATE TABLE [PISOS_PICADOS].Estadia
 (
 idEstadia INT PRIMARY KEY IDENTITY,
 codigoReserva INT REFERENCES [PISOS_PICADOS].Reserva,
-idCheckIn INT REFERENCES [PISOS_PICADOS].CheckIn,
-idCheckOut INT REFERENCES [PISOS_PICADOS].CheckOut
+fechaCheckIn DATE,
+encargadoCheckIn INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL,
+fechaCheckOut DATE DEFAULT NULL,
+encargadoCheckOut INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL
 )
 
 CREATE TABLE [PISOS_PICADOS].Consumible
@@ -211,7 +213,7 @@ numeroTarjeta INT
 CREATE TABLE [PISOS_PICADOS].Factura
 (
 numeroFactura INT PRIMARY KEY IDENTITY(2396745,1),
-formaDePago INT REFERENCES [PISOS_PICADOS].FormaDePago,
+formaDePago INT REFERENCES [PISOS_PICADOS].FormaDePago DEFAULT NULL,
 cliente INT REFERENCES [PISOS_PICADOS].Cliente,
 total NUMERIC(8,2)
 )
@@ -624,15 +626,8 @@ and Habitacion_Numero = Habitacion.numero
 and Hotel.idHotel = Habitacion.idHotel
 and Hotel.calle + Hotel.ciudad = Hotel_Calle + Hotel_Ciudad
 
-INSERT INTO [PISOS_PICADOS].CheckIn (fecha)
-SELECT fechaInicio
+INSERT INTO [PISOS_PICADOS].Estadia (codigoReserva, fechaCheckIn, fechaCheckOut)
+SELECT codigoReserva, fechaInicio, fechaFin
 FROM [PISOS_PICADOS].Reserva JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
 WHERE Factura_Nro IS NOT NULL
-GROUP BY Factura_Nro, fechaInicio
-
-INSERT INTO [PISOS_PICADOS].CheckOut (fecha)
-SELECT dateadd(day, DateDiff(day,Reserva.fechaInicio,Reserva.fechaFin), Reserva.fechaInicio)
-FROM [PISOS_PICADOS].Reserva JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
-WHERE Factura_Nro IS NOT NULL
-GROUP BY fechaFin, fechaInicio, codigoReserva
-
+GROUP BY Factura_Nro, codigoReserva, fechaInicio, fechaFin
