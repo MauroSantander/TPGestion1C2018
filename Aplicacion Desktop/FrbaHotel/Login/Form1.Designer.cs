@@ -86,11 +86,12 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(74, 126);
+            this.textBox2.Location = new System.Drawing.Point(74, 127);
             this.textBox2.Name = "textBox2";
+            this.textBox2.PasswordChar = '*';
             this.textBox2.Size = new System.Drawing.Size(128, 20);
             this.textBox2.TabIndex = 5;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged_1);
             // 
             // Form1
             // 

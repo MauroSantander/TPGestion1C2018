@@ -15,111 +15,53 @@ namespace FrbaHotel.AbmCliente
     public partial class Form1 : Form
     {
 
-        DataGridView gvClientes = new DataGridView();
+
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
+     
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void label3_Click(object sender, EventArgs e)
+
+        private void tabPage1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void Nombre_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void textBox2_TextChanged_1(object sender, EventArgs e)
         {
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void BotonModifVerClientes_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
-        private void label7_Click(object sender, EventArgs e)
+        private void BotonBaja_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label8_Click(object sender, EventArgs e)
+        private void BotonVerClientes_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //Boton Crear --  seguramente sea un insert
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-         SqlCommand comando = new SqlCommand (string.Format("SELECT Cliente_Nombre, Cliente_Apellido FROM gd_esquema.Maestra"));
-         SqlDataAdapter adaptador = new SqlDataAdapter();
-        adaptador.SelectCommand=comando;
-            DataTable tabla = new DataTable();
-            adaptador.Fill(tabla);
-            gvClientes.DataSource=tabla;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -127,6 +69,95 @@ namespace FrbaHotel.AbmCliente
 
         }
 
+        private void Alta_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void TipoId_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nroId_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Mail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Telefono_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Direccion_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Nacionalidad_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BotonCrear_Click(object sender, EventArgs e)
+        {
+            SqlCommand comandoAlta = new SqlCommand(String.Format("INSERT INTO PISOS_PICADOS.Cliente VALUES (/*completar con todos los datos*/)"));
+            /////////////////////////////
+        }
+
+        private void BotonCancelar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelNombre_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelApellido_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelNroId_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelMail_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelTelefono_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelDireccion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelNacionalidad_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelFechaNac_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

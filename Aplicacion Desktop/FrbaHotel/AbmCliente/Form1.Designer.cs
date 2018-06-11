@@ -29,248 +29,362 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.button2 = new System.Windows.Forms.Button();
+            this.tabCliente = new System.Windows.Forms.TabControl();
+            this.Alta = new System.Windows.Forms.TabPage();
+            this.TipoId = new System.Windows.Forms.ComboBox();
+            this.FechaNacimiento = new System.Windows.Forms.DateTimePicker();
+            this.Direccion = new System.Windows.Forms.TextBox();
+            this.Telefono = new System.Windows.Forms.TextBox();
+            this.Nacionalidad = new System.Windows.Forms.TextBox();
+            this.Mail = new System.Windows.Forms.TextBox();
+            this.nroId = new System.Windows.Forms.TextBox();
+            this.Apellido = new System.Windows.Forms.TextBox();
+            this.Nombre = new System.Windows.Forms.TextBox();
+            this.BotonCancelar = new System.Windows.Forms.Button();
+            this.BotonCrear = new System.Windows.Forms.Button();
+            this.labelFechaNac = new System.Windows.Forms.Label();
+            this.labelNacionalidad = new System.Windows.Forms.Label();
+            this.labelDireccion = new System.Windows.Forms.Label();
+            this.labelTelefono = new System.Windows.Forms.Label();
+            this.labelMail = new System.Windows.Forms.Label();
+            this.labelNroId = new System.Windows.Forms.Label();
+            this.labelApellido = new System.Windows.Forms.Label();
+            this.labelNombre = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.BotonModifVerClientes = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.BotonBaja = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.BotonVerClientes = new System.Windows.Forms.Button();
+            this.tabCliente.SuspendLayout();
+            this.Alta.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 41);
+            this.label1.Location = new System.Drawing.Point(10, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Ingrese los datos del cliente:";
             // 
-            // label2
+            // tabCliente
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Nombre:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.tabCliente.Controls.Add(this.Alta);
+            this.tabCliente.Controls.Add(this.tabPage2);
+            this.tabCliente.Controls.Add(this.tabPage3);
+            this.tabCliente.Location = new System.Drawing.Point(14, 12);
+            this.tabCliente.Name = "tabCliente";
+            this.tabCliente.SelectedIndex = 0;
+            this.tabCliente.Size = new System.Drawing.Size(405, 345);
+            this.tabCliente.TabIndex = 21;
             // 
-            // label3
+            // Alta
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 99);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Apellido:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.Alta.BackColor = System.Drawing.Color.Transparent;
+            this.Alta.Controls.Add(this.TipoId);
+            this.Alta.Controls.Add(this.FechaNacimiento);
+            this.Alta.Controls.Add(this.Direccion);
+            this.Alta.Controls.Add(this.Telefono);
+            this.Alta.Controls.Add(this.Nacionalidad);
+            this.Alta.Controls.Add(this.Mail);
+            this.Alta.Controls.Add(this.nroId);
+            this.Alta.Controls.Add(this.Apellido);
+            this.Alta.Controls.Add(this.Nombre);
+            this.Alta.Controls.Add(this.BotonCancelar);
+            this.Alta.Controls.Add(this.BotonCrear);
+            this.Alta.Controls.Add(this.labelFechaNac);
+            this.Alta.Controls.Add(this.labelNacionalidad);
+            this.Alta.Controls.Add(this.labelDireccion);
+            this.Alta.Controls.Add(this.labelTelefono);
+            this.Alta.Controls.Add(this.labelMail);
+            this.Alta.Controls.Add(this.labelNroId);
+            this.Alta.Controls.Add(this.labelApellido);
+            this.Alta.Controls.Add(this.labelNombre);
+            this.Alta.Location = new System.Drawing.Point(4, 22);
+            this.Alta.Name = "Alta";
+            this.Alta.Padding = new System.Windows.Forms.Padding(3);
+            this.Alta.Size = new System.Drawing.Size(397, 319);
+            this.Alta.TabIndex = 0;
+            this.Alta.Text = "Alta";
+            this.Alta.Click += new System.EventHandler(this.Alta_Click);
             // 
-            // label4
+            // TipoId
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 124);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(127, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Número de identificación:";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.TipoId.FormattingEnabled = true;
+            this.TipoId.Items.AddRange(new object[] {
+            "L. E/DNI",
+            "CARNET EXT.",
+            "RUC",
+            "PASAPORTE",
+            "P. NAC.",
+            "OTROS"});
+            this.TipoId.Location = new System.Drawing.Point(156, 78);
+            this.TipoId.Name = "TipoId";
+            this.TipoId.Size = new System.Drawing.Size(100, 21);
+            this.TipoId.TabIndex = 39;
+            this.TipoId.Text = "Tipo";
+            this.TipoId.SelectedIndexChanged += new System.EventHandler(this.TipoId_SelectedIndexChanged);
             // 
-            // label5
+            // FechaNacimiento
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 151);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Mail:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
+            this.FechaNacimiento.Location = new System.Drawing.Point(156, 214);
+            this.FechaNacimiento.Name = "FechaNacimiento";
+            this.FechaNacimiento.Size = new System.Drawing.Size(200, 20);
+            this.FechaNacimiento.TabIndex = 38;
+            this.FechaNacimiento.ValueChanged += new System.EventHandler(this.FechaNacimiento_ValueChanged);
             // 
-            // label6
+            // Direccion
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 178);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Teléfono:";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            this.Direccion.Location = new System.Drawing.Point(156, 157);
+            this.Direccion.Name = "Direccion";
+            this.Direccion.Size = new System.Drawing.Size(100, 20);
+            this.Direccion.TabIndex = 37;
+            this.Direccion.TextChanged += new System.EventHandler(this.Direccion_TextChanged);
             // 
-            // label7
+            // Telefono
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 207);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Dirección:";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
+            this.Telefono.Location = new System.Drawing.Point(156, 131);
+            this.Telefono.Name = "Telefono";
+            this.Telefono.Size = new System.Drawing.Size(100, 20);
+            this.Telefono.TabIndex = 36;
+            this.Telefono.TextChanged += new System.EventHandler(this.Telefono_TextChanged);
             // 
-            // label8
+            // Nacionalidad
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 233);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "Nacionalidad:";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
+            this.Nacionalidad.Location = new System.Drawing.Point(156, 183);
+            this.Nacionalidad.Name = "Nacionalidad";
+            this.Nacionalidad.Size = new System.Drawing.Size(100, 20);
+            this.Nacionalidad.TabIndex = 35;
+            this.Nacionalidad.TextChanged += new System.EventHandler(this.Nacionalidad_TextChanged);
             // 
-            // label9
+            // Mail
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 261);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(109, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "Fecha de nacimiento:";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
+            this.Mail.Location = new System.Drawing.Point(156, 105);
+            this.Mail.Name = "Mail";
+            this.Mail.Size = new System.Drawing.Size(100, 20);
+            this.Mail.TabIndex = 34;
+            this.Mail.TextChanged += new System.EventHandler(this.Mail_TextChanged);
             // 
-            // button1
+            // nroId
             // 
-            this.button1.Location = new System.Drawing.Point(146, 299);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Crear";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.nroId.Location = new System.Drawing.Point(262, 77);
+            this.nroId.Name = "nroId";
+            this.nroId.Size = new System.Drawing.Size(100, 20);
+            this.nroId.TabIndex = 33;
+            this.nroId.TextChanged += new System.EventHandler(this.nroId_TextChanged);
             // 
-            // button3
+            // Apellido
             // 
-            this.button3.Location = new System.Drawing.Point(242, 299);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Cancelar";
-            this.button3.UseVisualStyleBackColor = true;
+            this.Apellido.Location = new System.Drawing.Point(156, 53);
+            this.Apellido.Name = "Apellido";
+            this.Apellido.Size = new System.Drawing.Size(100, 20);
+            this.Apellido.TabIndex = 32;
+            this.Apellido.TextChanged += new System.EventHandler(this.textBox2_TextChanged_1);
             // 
-            // textBox1
+            // Nombre
             // 
-            this.textBox1.Location = new System.Drawing.Point(146, 74);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 12;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.Nombre.Location = new System.Drawing.Point(156, 27);
+            this.Nombre.Name = "Nombre";
+            this.Nombre.Size = new System.Drawing.Size(100, 20);
+            this.Nombre.TabIndex = 31;
+            this.Nombre.TextChanged += new System.EventHandler(this.Nombre_TextChanged);
             // 
-            // textBox2
+            // BotonCancelar
             // 
-            this.textBox2.Location = new System.Drawing.Point(146, 100);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 13;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.BotonCancelar.Location = new System.Drawing.Point(281, 267);
+            this.BotonCancelar.Name = "BotonCancelar";
+            this.BotonCancelar.Size = new System.Drawing.Size(75, 23);
+            this.BotonCancelar.TabIndex = 30;
+            this.BotonCancelar.Text = "Cancelar";
+            this.BotonCancelar.UseVisualStyleBackColor = true;
+            this.BotonCancelar.Click += new System.EventHandler(this.BotonCancelar_Click);
             // 
-            // textBox3
+            // BotonCrear
             // 
-            this.textBox3.Location = new System.Drawing.Point(146, 126);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 14;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.BotonCrear.Location = new System.Drawing.Point(184, 267);
+            this.BotonCrear.Name = "BotonCrear";
+            this.BotonCrear.Size = new System.Drawing.Size(75, 23);
+            this.BotonCrear.TabIndex = 29;
+            this.BotonCrear.Text = "Crear";
+            this.BotonCrear.UseVisualStyleBackColor = true;
+            this.BotonCrear.Click += new System.EventHandler(this.BotonCrear_Click);
             // 
-            // textBox4
+            // labelFechaNac
             // 
-            this.textBox4.Location = new System.Drawing.Point(146, 152);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 15;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.labelFechaNac.AutoSize = true;
+            this.labelFechaNac.BackColor = System.Drawing.Color.Transparent;
+            this.labelFechaNac.Location = new System.Drawing.Point(23, 214);
+            this.labelFechaNac.Name = "labelFechaNac";
+            this.labelFechaNac.Size = new System.Drawing.Size(109, 13);
+            this.labelFechaNac.TabIndex = 28;
+            this.labelFechaNac.Text = "Fecha de nacimiento:";
+            this.labelFechaNac.Click += new System.EventHandler(this.labelFechaNac_Click);
             // 
-            // textBox5
+            // labelNacionalidad
             // 
-            this.textBox5.Location = new System.Drawing.Point(146, 230);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 16;
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.labelNacionalidad.AutoSize = true;
+            this.labelNacionalidad.Location = new System.Drawing.Point(23, 186);
+            this.labelNacionalidad.Name = "labelNacionalidad";
+            this.labelNacionalidad.Size = new System.Drawing.Size(72, 13);
+            this.labelNacionalidad.TabIndex = 27;
+            this.labelNacionalidad.Text = "Nacionalidad:";
+            this.labelNacionalidad.Click += new System.EventHandler(this.labelNacionalidad_Click);
             // 
-            // textBox6
+            // labelDireccion
             // 
-            this.textBox6.Location = new System.Drawing.Point(146, 178);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 17;
-            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+            this.labelDireccion.AutoSize = true;
+            this.labelDireccion.Location = new System.Drawing.Point(23, 160);
+            this.labelDireccion.Name = "labelDireccion";
+            this.labelDireccion.Size = new System.Drawing.Size(55, 13);
+            this.labelDireccion.TabIndex = 26;
+            this.labelDireccion.Text = "Dirección:";
+            this.labelDireccion.Click += new System.EventHandler(this.labelDireccion_Click);
             // 
-            // textBox7
+            // labelTelefono
             // 
-            this.textBox7.Location = new System.Drawing.Point(146, 204);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 18;
-            this.textBox7.TextChanged += new System.EventHandler(this.textBox7_TextChanged);
+            this.labelTelefono.AutoSize = true;
+            this.labelTelefono.Location = new System.Drawing.Point(20, 131);
+            this.labelTelefono.Name = "labelTelefono";
+            this.labelTelefono.Size = new System.Drawing.Size(52, 13);
+            this.labelTelefono.TabIndex = 25;
+            this.labelTelefono.Text = "Teléfono:";
+            this.labelTelefono.Click += new System.EventHandler(this.labelTelefono_Click);
             // 
-            // dateTimePicker1
+            // labelMail
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(146, 261);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 19;
+            this.labelMail.AutoSize = true;
+            this.labelMail.Location = new System.Drawing.Point(22, 104);
+            this.labelMail.Name = "labelMail";
+            this.labelMail.Size = new System.Drawing.Size(29, 13);
+            this.labelMail.TabIndex = 24;
+            this.labelMail.Text = "Mail:";
+            this.labelMail.Click += new System.EventHandler(this.labelMail_Click);
             // 
-            // button2
+            // labelNroId
             // 
-            this.button2.Location = new System.Drawing.Point(298, 30);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 90);
-            this.button2.TabIndex = 20;
-            this.button2.Text = "Ver clientes actuales";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.labelNroId.AutoSize = true;
+            this.labelNroId.Location = new System.Drawing.Point(20, 77);
+            this.labelNroId.Name = "labelNroId";
+            this.labelNroId.Size = new System.Drawing.Size(127, 13);
+            this.labelNroId.TabIndex = 23;
+            this.labelNroId.Text = "Número de identificación:";
+            this.labelNroId.Click += new System.EventHandler(this.labelNroId_Click);
+            // 
+            // labelApellido
+            // 
+            this.labelApellido.AutoSize = true;
+            this.labelApellido.Location = new System.Drawing.Point(22, 52);
+            this.labelApellido.Name = "labelApellido";
+            this.labelApellido.Size = new System.Drawing.Size(47, 13);
+            this.labelApellido.TabIndex = 22;
+            this.labelApellido.Text = "Apellido:";
+            this.labelApellido.Click += new System.EventHandler(this.labelApellido_Click);
+            // 
+            // labelNombre
+            // 
+            this.labelNombre.AutoSize = true;
+            this.labelNombre.Location = new System.Drawing.Point(20, 27);
+            this.labelNombre.Name = "labelNombre";
+            this.labelNombre.Size = new System.Drawing.Size(47, 13);
+            this.labelNombre.TabIndex = 21;
+            this.labelNombre.Text = "Nombre:";
+            this.labelNombre.Click += new System.EventHandler(this.labelNombre_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dataGridView2);
+            this.tabPage2.Controls.Add(this.BotonModifVerClientes);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(397, 319);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Modificar";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(3, 69);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(391, 150);
+            this.dataGridView2.TabIndex = 6;
+            this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
+            // 
+            // BotonModifVerClientes
+            // 
+            this.BotonModifVerClientes.Location = new System.Drawing.Point(3, 9);
+            this.BotonModifVerClientes.Name = "BotonModifVerClientes";
+            this.BotonModifVerClientes.Size = new System.Drawing.Size(75, 23);
+            this.BotonModifVerClientes.TabIndex = 5;
+            this.BotonModifVerClientes.Text = "Ver Clientes";
+            this.BotonModifVerClientes.UseVisualStyleBackColor = true;
+            this.BotonModifVerClientes.Click += new System.EventHandler(this.BotonModifVerClientes_Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.BotonBaja);
+            this.tabPage3.Controls.Add(this.dataGridView1);
+            this.tabPage3.Controls.Add(this.BotonVerClientes);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(397, 319);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Baja";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // BotonBaja
+            // 
+            this.BotonBaja.Location = new System.Drawing.Point(146, 251);
+            this.BotonBaja.Name = "BotonBaja";
+            this.BotonBaja.Size = new System.Drawing.Size(75, 37);
+            this.BotonBaja.TabIndex = 5;
+            this.BotonBaja.Text = "Dar de Baja";
+            this.BotonBaja.UseVisualStyleBackColor = true;
+            this.BotonBaja.Click += new System.EventHandler(this.BotonBaja_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(407, 14);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 70);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(338, 267);
-            this.dataGridView1.TabIndex = 21;
+            this.dataGridView1.Size = new System.Drawing.Size(391, 150);
+            this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // BotonVerClientes
+            // 
+            this.BotonVerClientes.Location = new System.Drawing.Point(3, 10);
+            this.BotonVerClientes.Name = "BotonVerClientes";
+            this.BotonVerClientes.Size = new System.Drawing.Size(75, 23);
+            this.BotonVerClientes.TabIndex = 3;
+            this.BotonVerClientes.Text = "Ver Clientes";
+            this.BotonVerClientes.UseVisualStyleBackColor = true;
+            this.BotonVerClientes.Click += new System.EventHandler(this.BotonVerClientes_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(757, 377);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(431, 377);
+            this.Controls.Add(this.tabCliente);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "Alta Cliente";
+            this.Text = "ABM Cliente";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.tabCliente.ResumeLayout(false);
+            this.Alta.ResumeLayout(false);
+            this.Alta.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -280,25 +394,33 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TabControl tabCliente;
+        private System.Windows.Forms.TabPage Alta;
+        private System.Windows.Forms.ComboBox TipoId;
+        private System.Windows.Forms.DateTimePicker FechaNacimiento;
+        private System.Windows.Forms.TextBox Direccion;
+        private System.Windows.Forms.TextBox Telefono;
+        private System.Windows.Forms.TextBox Nacionalidad;
+        private System.Windows.Forms.TextBox Mail;
+        private System.Windows.Forms.TextBox nroId;
+        private System.Windows.Forms.TextBox Apellido;
+        private System.Windows.Forms.TextBox Nombre;
+        private System.Windows.Forms.Button BotonCancelar;
+        private System.Windows.Forms.Button BotonCrear;
+        private System.Windows.Forms.Label labelFechaNac;
+        private System.Windows.Forms.Label labelNacionalidad;
+        private System.Windows.Forms.Label labelDireccion;
+        private System.Windows.Forms.Label labelTelefono;
+        private System.Windows.Forms.Label labelMail;
+        private System.Windows.Forms.Label labelNroId;
+        private System.Windows.Forms.Label labelApellido;
+        private System.Windows.Forms.Label labelNombre;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button BotonModifVerClientes;
+        private System.Windows.Forms.Button BotonBaja;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button BotonVerClientes;
     }
 }

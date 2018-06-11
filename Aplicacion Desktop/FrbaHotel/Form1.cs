@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,7 +35,7 @@ namespace FrbaHotel
                 conexion.Open();
                 MessageBox.Show("Conexion exitosa");
                 (new FrbaHotel.Login.Form1()).ShowDialog();
-                this.Hide();
+                this.Close();
             }
             catch (Exception)
             {

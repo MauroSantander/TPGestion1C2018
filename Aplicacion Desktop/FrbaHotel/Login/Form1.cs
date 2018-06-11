@@ -53,7 +53,8 @@ namespace FrbaHotel.Login
             //box de password
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
+
+         private void textBox2_TextChanged_1(object sender, EventArgs e)
         {
 
         }
@@ -61,11 +62,17 @@ namespace FrbaHotel.Login
         private void button1_Click(object sender, EventArgs e)
         {
             //boton de inicio de sesion
+
+            (new FrbaHotel.AbmCliente.Form1()).ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+
+            this.Close();
             //boton de salida
         }
+
+
     }
 }
