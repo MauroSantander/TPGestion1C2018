@@ -200,6 +200,7 @@ CREATE TABLE [PISOS_PICADOS].EstadiaxConsumible
 (
 idEstadia INT REFERENCES [PISOS_PICADOS].Estadia,
 idConsumible INT REFERENCES [PISOS_PICADOS].Consumible,
+cantidad INT,
 PRIMARY KEY (idEstadia, idConsumible)
 )
 
@@ -631,3 +632,9 @@ SELECT codigoReserva, fechaInicio, fechaFin
 FROM [PISOS_PICADOS].Reserva JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
 WHERE Factura_Nro IS NOT NULL
 GROUP BY Factura_Nro, codigoReserva, fechaInicio, fechaFin
+
+INSERT INTO [PISOS_PICADOS].EstadiaxConsumible
+SELECT idEstadia, Consumible_Codigo, count(*)
+FROM [PISOS_PICADOS].Estadia JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
+WHERE Consumible_Codigo IS NOT NULL
+GROUP BY idEstadia, Consumible_Codigo
