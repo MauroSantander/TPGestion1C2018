@@ -660,6 +660,16 @@ GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
 
+CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (@nombre VARCHAR(255), @apellido VARCHAR(255), @numeroIdentificacion INT)
+RETURNS INT
+AS
+BEGIN
+RETURN (SELECT idUsuario 
+FROM [PISOS_PICADOS].Usuario 
+WHERE nombre = @nombre and apellido = @apellido and numeroIdentificacion = @numeroIdentificacion)
+END
+GO
+
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
 AS
 BEGIN
@@ -713,8 +723,67 @@ INSERT INTO [PISOS_PICADOS].Usuario VALUES(@nombre, @apellido, @mail, @telefono,
 (SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @pais), @tipoDocumento, @numeroDocumento, @fechaNacimiento, @estado);
 INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña)
 VALUES ((SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
-p.apellido = @apellido and p.nombre = @nombre), @username, HASHBYTES ('SHA_256' ,@password));
+p.apellido = @apellido and p.nombre = @nombre), @username, HASHBYTES('SHA2_256', @password));
 INSERT INTO [PISOS_PICADOS].RolxUsuario VALUES((SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @rol), (SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
 p.apellido = @apellido and p.nombre = @nombre))
 END;
 GO
+
+CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado
+@idAutor INT, @idUsuario INT, @username VARCHAR(255), @password VARCHAR(255), @nombre VARCHAR(255), @apellido VARCHAR(255),
+@mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255), @numeroCalle INT, @localidad VARCHAR(255),
+@pais VARCHAR(255), @tipoDocumento VARCHAR(255), @numeroDocumento INT, @fechaNacimiento DATE
+AS
+BEGIN
+IF (SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idAutor)
+IF @password IS NOT NULL UPDATE [PISOS_PICADOS].Empleado set contraseña = @password
+WHERE @idUsuario = idUsuario
+IF @nombre IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nombre = @nombre
+WHERE @idUsuario = idUsuario
+IF @apellido IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set apellido = @apellido
+WHERE @idUsuario = idUsuario
+IF @mail IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set mail = @mail
+WHERE @idUsuario = idUsuario
+IF @telefono IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set telefono = @telefono
+WHERE @idUsuario = idUsuario
+IF @calle IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set calle = @calle
+WHERE @idUsuario = idUsuario
+IF @numeroCalle IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nroCalle = @numeroCalle
+WHERE @idUsuario = idUsuario
+IF @localidad IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set localidad = @localidad
+WHERE @idUsuario = idUsuario
+IF @pais IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set pais = (SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @pais)
+WHERE @idUsuario = idUsuario
+IF @tipoDocumento IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set tipoIdentificacion = @tipoDocumento
+WHERE @idUsuario = idUsuario
+IF @numeroDocumento IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set numeroIdentificacion = @numeroDocumento
+WHERE @idUsuario = idUsuario
+IF @fechaNacimiento IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set fechaNacimiento = @fechaNacimiento
+WHERE @idUsuario = idUsuario
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].quitarRolAUsuario @idUsuario INT, @nombreRol VARCHAR(255)
+AS
+BEGIN
+DELETE FROM [PISOS_PICADOS].RolxUsuario 
+WHERE idUsuario = @idUsuario and
+idRol = (SELECT p.idRol FROM [PISOS_PICADOS].Rol as p WHERE nombreRol = @nombreRol)
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].agregarRolAUsuario @idUsuario INT, @nombreRol VARCHAR(255)
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].RolxUsuario VALUES (@idUsuario, (SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @nombreRol))
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].bajaUsuario @idAutor INT, @idUsuario INT
+AS
+BEGIN
+IF (SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idAutor)
+UPDATE [PISOS_PICADOS].Usuario SET estado = 0 WHERE idUsuario = @idUsuario
+END;
+GO
+
