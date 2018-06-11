@@ -31,9 +31,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabCliente = new System.Windows.Forms.TabControl();
             this.Alta = new System.Windows.Forms.TabPage();
+            this.Pais = new System.Windows.Forms.TextBox();
+            this.labelPais = new System.Windows.Forms.Label();
+            this.Localidad = new System.Windows.Forms.TextBox();
+            this.labelLocalidad = new System.Windows.Forms.Label();
+            this.NroCalle = new System.Windows.Forms.TextBox();
+            this.labelNumeroCalle = new System.Windows.Forms.Label();
             this.TipoId = new System.Windows.Forms.ComboBox();
             this.FechaNacimiento = new System.Windows.Forms.DateTimePicker();
-            this.Direccion = new System.Windows.Forms.TextBox();
+            this.Calle = new System.Windows.Forms.TextBox();
             this.Telefono = new System.Windows.Forms.TextBox();
             this.Nacionalidad = new System.Windows.Forms.TextBox();
             this.Mail = new System.Windows.Forms.TextBox();
@@ -44,7 +50,7 @@
             this.BotonCrear = new System.Windows.Forms.Button();
             this.labelFechaNac = new System.Windows.Forms.Label();
             this.labelNacionalidad = new System.Windows.Forms.Label();
-            this.labelDireccion = new System.Windows.Forms.Label();
+            this.labelCalle = new System.Windows.Forms.Label();
             this.labelTelefono = new System.Windows.Forms.Label();
             this.labelMail = new System.Windows.Forms.Label();
             this.labelNroId = new System.Windows.Forms.Label();
@@ -55,14 +61,14 @@
             this.BotonModifVerClientes = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.BotonBaja = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewClientes = new System.Windows.Forms.DataGridView();
             this.BotonVerClientes = new System.Windows.Forms.Button();
             this.tabCliente.SuspendLayout();
             this.Alta.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -82,15 +88,21 @@
             this.tabCliente.Location = new System.Drawing.Point(14, 12);
             this.tabCliente.Name = "tabCliente";
             this.tabCliente.SelectedIndex = 0;
-            this.tabCliente.Size = new System.Drawing.Size(405, 345);
+            this.tabCliente.Size = new System.Drawing.Size(522, 437);
             this.tabCliente.TabIndex = 21;
             // 
             // Alta
             // 
             this.Alta.BackColor = System.Drawing.Color.Transparent;
+            this.Alta.Controls.Add(this.Pais);
+            this.Alta.Controls.Add(this.labelPais);
+            this.Alta.Controls.Add(this.Localidad);
+            this.Alta.Controls.Add(this.labelLocalidad);
+            this.Alta.Controls.Add(this.NroCalle);
+            this.Alta.Controls.Add(this.labelNumeroCalle);
             this.Alta.Controls.Add(this.TipoId);
             this.Alta.Controls.Add(this.FechaNacimiento);
-            this.Alta.Controls.Add(this.Direccion);
+            this.Alta.Controls.Add(this.Calle);
             this.Alta.Controls.Add(this.Telefono);
             this.Alta.Controls.Add(this.Nacionalidad);
             this.Alta.Controls.Add(this.Mail);
@@ -101,7 +113,7 @@
             this.Alta.Controls.Add(this.BotonCrear);
             this.Alta.Controls.Add(this.labelFechaNac);
             this.Alta.Controls.Add(this.labelNacionalidad);
-            this.Alta.Controls.Add(this.labelDireccion);
+            this.Alta.Controls.Add(this.labelCalle);
             this.Alta.Controls.Add(this.labelTelefono);
             this.Alta.Controls.Add(this.labelMail);
             this.Alta.Controls.Add(this.labelNroId);
@@ -110,10 +122,62 @@
             this.Alta.Location = new System.Drawing.Point(4, 22);
             this.Alta.Name = "Alta";
             this.Alta.Padding = new System.Windows.Forms.Padding(3);
-            this.Alta.Size = new System.Drawing.Size(397, 319);
+            this.Alta.Size = new System.Drawing.Size(514, 411);
             this.Alta.TabIndex = 0;
             this.Alta.Text = "Alta";
             this.Alta.Click += new System.EventHandler(this.Alta_Click);
+            // 
+            // Pais
+            // 
+            this.Pais.Location = new System.Drawing.Point(155, 236);
+            this.Pais.Name = "Pais";
+            this.Pais.Size = new System.Drawing.Size(100, 20);
+            this.Pais.TabIndex = 45;
+            this.Pais.TextChanged += new System.EventHandler(this.Pais_TextChanged);
+            // 
+            // labelPais
+            // 
+            this.labelPais.AutoSize = true;
+            this.labelPais.Location = new System.Drawing.Point(23, 243);
+            this.labelPais.Name = "labelPais";
+            this.labelPais.Size = new System.Drawing.Size(32, 13);
+            this.labelPais.TabIndex = 44;
+            this.labelPais.Text = "País:";
+            // 
+            // Localidad
+            // 
+            this.Localidad.Location = new System.Drawing.Point(155, 210);
+            this.Localidad.Name = "Localidad";
+            this.Localidad.Size = new System.Drawing.Size(100, 20);
+            this.Localidad.TabIndex = 43;
+            this.Localidad.TextChanged += new System.EventHandler(this.Localidad_TextChanged);
+            // 
+            // labelLocalidad
+            // 
+            this.labelLocalidad.AutoSize = true;
+            this.labelLocalidad.Location = new System.Drawing.Point(20, 217);
+            this.labelLocalidad.Name = "labelLocalidad";
+            this.labelLocalidad.Size = new System.Drawing.Size(56, 13);
+            this.labelLocalidad.TabIndex = 42;
+            this.labelLocalidad.Text = "Localidad:";
+            this.labelLocalidad.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // NroCalle
+            // 
+            this.NroCalle.Location = new System.Drawing.Point(155, 184);
+            this.NroCalle.Name = "NroCalle";
+            this.NroCalle.Size = new System.Drawing.Size(100, 20);
+            this.NroCalle.TabIndex = 41;
+            this.NroCalle.TextChanged += new System.EventHandler(this.NroCalle_TextChanged);
+            // 
+            // labelNumeroCalle
+            // 
+            this.labelNumeroCalle.AutoSize = true;
+            this.labelNumeroCalle.Location = new System.Drawing.Point(20, 191);
+            this.labelNumeroCalle.Name = "labelNumeroCalle";
+            this.labelNumeroCalle.Size = new System.Drawing.Size(47, 13);
+            this.labelNumeroCalle.TabIndex = 40;
+            this.labelNumeroCalle.Text = "Número:";
             // 
             // TipoId
             // 
@@ -134,23 +198,23 @@
             // 
             // FechaNacimiento
             // 
-            this.FechaNacimiento.Location = new System.Drawing.Point(156, 214);
+            this.FechaNacimiento.Location = new System.Drawing.Point(155, 310);
             this.FechaNacimiento.Name = "FechaNacimiento";
             this.FechaNacimiento.Size = new System.Drawing.Size(200, 20);
             this.FechaNacimiento.TabIndex = 38;
             this.FechaNacimiento.ValueChanged += new System.EventHandler(this.FechaNacimiento_ValueChanged);
             // 
-            // Direccion
+            // Calle
             // 
-            this.Direccion.Location = new System.Drawing.Point(156, 157);
-            this.Direccion.Name = "Direccion";
-            this.Direccion.Size = new System.Drawing.Size(100, 20);
-            this.Direccion.TabIndex = 37;
-            this.Direccion.TextChanged += new System.EventHandler(this.Direccion_TextChanged);
+            this.Calle.Location = new System.Drawing.Point(155, 158);
+            this.Calle.Name = "Calle";
+            this.Calle.Size = new System.Drawing.Size(100, 20);
+            this.Calle.TabIndex = 37;
+            this.Calle.TextChanged += new System.EventHandler(this.Calle_TextChanged);
             // 
             // Telefono
             // 
-            this.Telefono.Location = new System.Drawing.Point(156, 131);
+            this.Telefono.Location = new System.Drawing.Point(156, 132);
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(100, 20);
             this.Telefono.TabIndex = 36;
@@ -158,7 +222,7 @@
             // 
             // Nacionalidad
             // 
-            this.Nacionalidad.Location = new System.Drawing.Point(156, 183);
+            this.Nacionalidad.Location = new System.Drawing.Point(155, 270);
             this.Nacionalidad.Name = "Nacionalidad";
             this.Nacionalidad.Size = new System.Drawing.Size(100, 20);
             this.Nacionalidad.TabIndex = 35;
@@ -166,7 +230,7 @@
             // 
             // Mail
             // 
-            this.Mail.Location = new System.Drawing.Point(156, 105);
+            this.Mail.Location = new System.Drawing.Point(155, 105);
             this.Mail.Name = "Mail";
             this.Mail.Size = new System.Drawing.Size(100, 20);
             this.Mail.TabIndex = 34;
@@ -198,7 +262,7 @@
             // 
             // BotonCancelar
             // 
-            this.BotonCancelar.Location = new System.Drawing.Point(281, 267);
+            this.BotonCancelar.Location = new System.Drawing.Point(382, 369);
             this.BotonCancelar.Name = "BotonCancelar";
             this.BotonCancelar.Size = new System.Drawing.Size(75, 23);
             this.BotonCancelar.TabIndex = 30;
@@ -208,7 +272,7 @@
             // 
             // BotonCrear
             // 
-            this.BotonCrear.Location = new System.Drawing.Point(184, 267);
+            this.BotonCrear.Location = new System.Drawing.Point(285, 369);
             this.BotonCrear.Name = "BotonCrear";
             this.BotonCrear.Size = new System.Drawing.Size(75, 23);
             this.BotonCrear.TabIndex = 29;
@@ -220,7 +284,7 @@
             // 
             this.labelFechaNac.AutoSize = true;
             this.labelFechaNac.BackColor = System.Drawing.Color.Transparent;
-            this.labelFechaNac.Location = new System.Drawing.Point(23, 214);
+            this.labelFechaNac.Location = new System.Drawing.Point(22, 310);
             this.labelFechaNac.Name = "labelFechaNac";
             this.labelFechaNac.Size = new System.Drawing.Size(109, 13);
             this.labelFechaNac.TabIndex = 28;
@@ -230,27 +294,27 @@
             // labelNacionalidad
             // 
             this.labelNacionalidad.AutoSize = true;
-            this.labelNacionalidad.Location = new System.Drawing.Point(23, 186);
+            this.labelNacionalidad.Location = new System.Drawing.Point(22, 270);
             this.labelNacionalidad.Name = "labelNacionalidad";
             this.labelNacionalidad.Size = new System.Drawing.Size(72, 13);
             this.labelNacionalidad.TabIndex = 27;
             this.labelNacionalidad.Text = "Nacionalidad:";
             this.labelNacionalidad.Click += new System.EventHandler(this.labelNacionalidad_Click);
             // 
-            // labelDireccion
+            // labelCalle
             // 
-            this.labelDireccion.AutoSize = true;
-            this.labelDireccion.Location = new System.Drawing.Point(23, 160);
-            this.labelDireccion.Name = "labelDireccion";
-            this.labelDireccion.Size = new System.Drawing.Size(55, 13);
-            this.labelDireccion.TabIndex = 26;
-            this.labelDireccion.Text = "Dirección:";
-            this.labelDireccion.Click += new System.EventHandler(this.labelDireccion_Click);
+            this.labelCalle.AutoSize = true;
+            this.labelCalle.Location = new System.Drawing.Point(20, 165);
+            this.labelCalle.Name = "labelCalle";
+            this.labelCalle.Size = new System.Drawing.Size(33, 13);
+            this.labelCalle.TabIndex = 26;
+            this.labelCalle.Text = "Calle:";
+            this.labelCalle.Click += new System.EventHandler(this.labelCalle_Click);
             // 
             // labelTelefono
             // 
             this.labelTelefono.AutoSize = true;
-            this.labelTelefono.Location = new System.Drawing.Point(20, 131);
+            this.labelTelefono.Location = new System.Drawing.Point(20, 132);
             this.labelTelefono.Name = "labelTelefono";
             this.labelTelefono.Size = new System.Drawing.Size(52, 13);
             this.labelTelefono.TabIndex = 25;
@@ -304,7 +368,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(397, 319);
+            this.tabPage2.Size = new System.Drawing.Size(514, 411);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Modificar";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -331,11 +395,11 @@
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.BotonBaja);
-            this.tabPage3.Controls.Add(this.dataGridView1);
+            this.tabPage3.Controls.Add(this.dataGridViewClientes);
             this.tabPage3.Controls.Add(this.BotonVerClientes);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(397, 319);
+            this.tabPage3.Size = new System.Drawing.Size(514, 411);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Baja";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -350,14 +414,14 @@
             this.BotonBaja.UseVisualStyleBackColor = true;
             this.BotonBaja.Click += new System.EventHandler(this.BotonBaja_Click);
             // 
-            // dataGridView1
+            // dataGridViewClientes
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 70);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(391, 150);
-            this.dataGridView1.TabIndex = 4;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewClientes.Location = new System.Drawing.Point(3, 70);
+            this.dataGridViewClientes.Name = "dataGridViewClientes";
+            this.dataGridViewClientes.Size = new System.Drawing.Size(391, 150);
+            this.dataGridViewClientes.TabIndex = 4;
+            this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);
             // 
             // BotonVerClientes
             // 
@@ -373,7 +437,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(431, 377);
+            this.ClientSize = new System.Drawing.Size(548, 482);
             this.Controls.Add(this.tabCliente);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
@@ -385,7 +449,7 @@
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -398,7 +462,7 @@
         private System.Windows.Forms.TabPage Alta;
         private System.Windows.Forms.ComboBox TipoId;
         private System.Windows.Forms.DateTimePicker FechaNacimiento;
-        private System.Windows.Forms.TextBox Direccion;
+        private System.Windows.Forms.TextBox Calle;
         private System.Windows.Forms.TextBox Telefono;
         private System.Windows.Forms.TextBox Nacionalidad;
         private System.Windows.Forms.TextBox Mail;
@@ -409,7 +473,7 @@
         private System.Windows.Forms.Button BotonCrear;
         private System.Windows.Forms.Label labelFechaNac;
         private System.Windows.Forms.Label labelNacionalidad;
-        private System.Windows.Forms.Label labelDireccion;
+        private System.Windows.Forms.Label labelCalle;
         private System.Windows.Forms.Label labelTelefono;
         private System.Windows.Forms.Label labelMail;
         private System.Windows.Forms.Label labelNroId;
@@ -420,7 +484,13 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Button BotonModifVerClientes;
         private System.Windows.Forms.Button BotonBaja;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewClientes;
         private System.Windows.Forms.Button BotonVerClientes;
+        private System.Windows.Forms.TextBox Pais;
+        private System.Windows.Forms.Label labelPais;
+        private System.Windows.Forms.TextBox Localidad;
+        private System.Windows.Forms.Label labelLocalidad;
+        private System.Windows.Forms.TextBox NroCalle;
+        private System.Windows.Forms.Label labelNumeroCalle;
     }
 }

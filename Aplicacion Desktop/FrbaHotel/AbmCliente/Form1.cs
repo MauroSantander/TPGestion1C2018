@@ -57,6 +57,26 @@ namespace FrbaHotel.AbmCliente
         private void BotonBaja_Click(object sender, EventArgs e)
         {
 
+            String NombreCliente = (String)dataGridViewClientes.CurrentRow.Cells["nombre"].Value;
+            String ApellidoCliente = (String)dataGridViewClientes.CurrentRow.Cells["apellido"].Value;
+            String TipoIdCliente = (String)dataGridViewClientes.CurrentRow.Cells["tipoIdentificacion"].Value;
+            int NroIdCliente = (int)dataGridViewClientes.CurrentRow.Cells["numeroIdentificacion"].Value;
+            String MailCliente = (String)dataGridViewClientes.CurrentRow.Cells["mail"].Value; ;
+            String TelefonoCliente = (String)dataGridViewClientes.CurrentRow.Cells["telefono"].Value;
+            String CalleCliente = (String)dataGridViewClientes.CurrentRow.Cells["calle"].Value;
+            int NroCalleCliente = (int)dataGridViewClientes.CurrentRow.Cells["nroCalle"].Value; ;
+            String LocalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["localidad"].Value;
+            String PaisCliente = (String)dataGridViewClientes.CurrentRow.Cells["pais"].Value;
+            String NacionalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["nacionalidad"].Value;
+
+           // int valor1 = (int)dataGridViewClientes.CurrentRow.Cells["NombreColumna"].Value;
+            
+
+            SqlCommand comandoBaja = new SqlCommand(String.Format("EXEC SPBajaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
+               NombreCliente, ApellidoCliente, TipoIdCliente, NroIdCliente.ToString(), MailCliente, TelefonoCliente, CalleCliente, NroCalleCliente.ToString(), LocalidadCliente, PaisCliente, NacionalidadCliente
+
+
+               ));
         }
 
         private void BotonVerClientes_Click(object sender, EventArgs e)
@@ -64,7 +84,7 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
@@ -94,7 +114,7 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void Direccion_TextChanged(object sender, EventArgs e)
+        private void Calle_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -111,13 +131,48 @@ namespace FrbaHotel.AbmCliente
 
         private void BotonCrear_Click(object sender, EventArgs e)
         {
-            SqlCommand comandoAlta = new SqlCommand(String.Format("INSERT INTO PISOS_PICADOS.Cliente VALUES (/*completar con todos los datos*/)"));
-            /////////////////////////////
+            String NombreCliente = Nombre.Text;
+            String ApellidoCliente = Apellido.Text;
+            String TipoIdCliente = TipoId.Text;
+            int NroIdCliente = int.Parse(nroId.Text);
+            String MailCliente = Mail.Text;
+            String TelefonoCliente = Telefono.Text;
+            String CalleCliente = Calle.Text;
+            int NroCalleCliente = int.Parse(NroCalle.Text);
+            String LocalidadCliente = Localidad.Text;
+            String PaisCliente = Pais.Text;
+            String NacionalidadCliente = Nacionalidad.Text;
+            
+            //String EjecutarProcedure = "EXEC SP ";
+
+
+            SqlCommand comandoAlta = new SqlCommand(String.Format("EXEC SPAltaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
+                NombreCliente,ApellidoCliente,TipoIdCliente, NroIdCliente.ToString(), MailCliente, TelefonoCliente, CalleCliente, NroCalleCliente.ToString(), LocalidadCliente, PaisCliente, NacionalidadCliente
+                
+                
+                ) );
+            /* ***********Otra forma de pasar parametros*************
+                private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection conexion = new SqlConnection("server=DIEGO-PC\\SQLEXPRESS ; database=base1 ; integrated security = true");
+            conexion.Open();
+            string descri = textBox1.Text;
+            string precio = textBox2.Text;
+            string cadena = "insert into articulos(descripcion,precio) values ('" + descri + "'," + precio + ")";
+            SqlCommand comando = new SqlCommand(cadena, conexion);
+            comando.ExecuteNonQuery();
+            MessageBox.Show("Los datos se guardaron correctamente");
+            textBox1.Text = "";
+            textBox2.Text = "";
+            conexion.Close();
+        }
+             
+             */
         }
 
         private void BotonCancelar_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void labelNombre_Click(object sender, EventArgs e)
@@ -145,7 +200,7 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void labelDireccion_Click(object sender, EventArgs e)
+        private void labelCalle_Click(object sender, EventArgs e)
         {
 
         }
@@ -156,6 +211,26 @@ namespace FrbaHotel.AbmCliente
         }
 
         private void labelFechaNac_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NroCalle_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Localidad_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Pais_TextChanged(object sender, EventArgs e)
         {
 
         }
