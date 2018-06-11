@@ -638,3 +638,21 @@ SELECT idEstadia, Consumible_Codigo, count(*)
 FROM [PISOS_PICADOS].Estadia JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
 WHERE Consumible_Codigo IS NOT NULL
 GROUP BY idEstadia, Consumible_Codigo
+
+SET IDENTITY_INSERT [PISOS_PICADOS].Factura ON
+
+INSERT INTO [PISOS_PICADOS].Factura (numeroFactura ,cliente, total)
+SELECT Factura_Nro ,idUsuario, Factura_Total
+FROM [PISOS_PICADOS].Usuario, [gd_esquema].Maestra
+WHERE Cliente_Apellido + Cliente_Nombre = apellido + nombre and
+Cliente_Pasaporte_Nro = numeroIdentificacion and 
+Factura_Total IS NOT NULL
+GROUP BY Factura_Nro ,idUsuario, Factura_Total
+
+SET IDENTITY_INSERT [PISOS_PICADOS].Factura OFF
+
+INSERT INTO [PISOS_PICADOS].RenglonFactura (numeroRenglon, numeroFactura, consumible, cantidad, precio, total, estadia)
+SELECT ROW_NUMBER() OVER(PARTITION BY Factura_Nro ORDER BY Consumible_Codigo) , Factura_Nro, Consumible_Codigo, count(*) ,Consumible_Precio,count(*) * Consumible_Precio, idEstadia
+FROM [PISOS_PICADOS].Estadia JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
+WHERE Factura_Nro IS NOT NULL and Consumible_Codigo IS NOT NULL
+GROUP BY Factura_Nro, Consumible_Codigo, Consumible_Precio, idEstadia
