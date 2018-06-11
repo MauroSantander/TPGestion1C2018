@@ -714,5 +714,7 @@ INSERT INTO [PISOS_PICADOS].Usuario VALUES(@nombre, @apellido, @mail, @telefono,
 INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña)
 VALUES ((SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
 p.apellido = @apellido and p.nombre = @nombre), @username, HASHBYTES ('SHA_256' ,@password));
+INSERT INTO [PISOS_PICADOS].RolxUsuario VALUES((SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @rol), (SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
+p.apellido = @apellido and p.nombre = @nombre))
 END;
 GO
