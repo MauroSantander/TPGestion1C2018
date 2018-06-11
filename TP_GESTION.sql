@@ -702,3 +702,17 @@ WHERE idRol = (SELECT p.idRol FROM [PISOS_PICADOS].Rol as p WHERE p.nombreRol = 
 idFuncionalidad = (SELECT e.idFuncionalidad FROM [PISOS_PICADOS].Funcionalidad as e WHERE e.descripcion = @funcionalidad)
 END;
 GO
+
+CREATE PROCEDURE [PISOS_PICADOS].altaEmpleado
+@username VARCHAR(255), @password VARCHAR(255), @rol VARCHAR(255), @nombre VARCHAR(255), @apellido VARCHAR(255),
+@mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255), @numeroCalle INT, @localidad VARCHAR(255),
+@pais VARCHAR(255), @tipoDocumento VARCHAR(255), @numeroDocumento INT, @fechaNacimiento DATE, @estado BIT
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].Usuario VALUES(@nombre, @apellido, @mail, @telefono, @calle, @numeroCalle, @localidad,
+(SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @pais), @tipoDocumento, @numeroDocumento, @fechaNacimiento, @estado);
+INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña)
+VALUES ((SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
+p.apellido = @apellido and p.nombre = @nombre), @username, HASHBYTES ('SHA_256' ,@password));
+END;
+GO
