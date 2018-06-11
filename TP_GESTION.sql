@@ -87,7 +87,6 @@ porcentual NUMERIC(3,2)
 )
 
 CREATE TABLE [PISOS_PICADOS].Habitacion
-
 (
 numero INT,
 idHotel INT,
@@ -656,3 +655,50 @@ SELECT ROW_NUMBER() OVER(PARTITION BY Factura_Nro ORDER BY Consumible_Codigo) , 
 FROM [PISOS_PICADOS].Estadia JOIN [gd_esquema].Maestra on codigoReserva = Reserva_Codigo
 WHERE Factura_Nro IS NOT NULL and Consumible_Codigo IS NOT NULL
 GROUP BY Factura_Nro, Consumible_Codigo, Consumible_Precio, idEstadia
+
+GO
+
+/*Migracion FIN-------------------------------------------------------------------*/
+
+CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].Rol VALUES(@nombre, @estado);
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].agregarFuncionalidad @nombre VARCHAR(255),  @funcionalidad VARCHAR(255)
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].RolxFuncionalidad
+SELECT idRol, idFuncionalidad
+FROM [PISOS_PICADOS].Rol, [PISOS_PICADOS].Funcionalidad
+WHERE idRol = (SELECT p.idRol FROM [PISOS_PICADOS].Rol as p WHERE p.nombreRol = @nombre) and
+idFuncionalidad = (SELECT e.idFuncionalidad FROM [PISOS_PICADOS].Funcionalidad as e WHERE e.descripcion = @funcionalidad)
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].bajaRol @nombreRol VARCHAR(255)
+AS
+BEGIN
+UPDATE [PISOS_PICADOS].Rol SET estado = 0
+WHERE idRol = (SELECT p.idRol FROM [PISOS_PICADOS].Rol as p WHERE nombreRol = @nombreRol)
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].modificarRol @idRol INT, @nombreRol VARCHAR(255), @estado BIT
+AS
+BEGIN
+IF @nombreRol IS NOT NULL UPDATE [PISOS_PICADOS].Rol SET nombreRol = @nombreRol
+IF @estado IS NOT NULL UPDATE [PISOS_PICADOS].Rol SET estado = @estado
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].quitarFuncionalidad @nombreRol VARCHAR(255), @funcionalidad VARCHAR(255)
+AS
+BEGIN
+DELETE FROM [PISOS_PICADOS].RolxFuncionalidad
+WHERE idRol = (SELECT p.idRol FROM [PISOS_PICADOS].Rol as p WHERE p.nombreRol = @nombreRol) and
+idFuncionalidad = (SELECT e.idFuncionalidad FROM [PISOS_PICADOS].Funcionalidad as e WHERE e.descripcion = @funcionalidad)
+END;
+GO
