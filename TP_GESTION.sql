@@ -670,6 +670,15 @@ WHERE nombre = @nombre and apellido = @apellido and numeroIdentificacion = @nume
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].idPais(@nombre VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @nombre)
+END
+GO
+
+
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
 AS
 BEGIN
@@ -787,3 +796,74 @@ UPDATE [PISOS_PICADOS].Usuario SET estado = 0 WHERE idUsuario = @idUsuario
 END;
 GO
 
+/* ABM CLIENTE */
+
+/* ALTA CLIENTE*/
+
+CREATE PROCEDURE [PISOS_PICADOS].SPAltaCliente @nombre VARCHAR(255), @apellido VARCHAR(255),@tipo VARCHAR(255),
+@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT,
+@localidad VARCHAR(255),@pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE
+
+AS
+BEGIN 
+
+INSERT INTO [PISOS_PICADOS].Usuario(nombre,apellido,mail,telefono,calle,nroCalle,localidad,pais,
+tipoIdentificacion,numeroIdentificacion,fechaNacimiento,estado)
+values (@nombre,@apellido,@mail,@telefono,@calle,@numeroC,@localidad, [PISOS_PICADOS].idPais(@pais) ,
+@tipo,@numeroI,@fechaNacimiento,1);
+
+INSERT INTO [PISOS_PICADOS].Cliente
+VALUES ( [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+
+INSERT INTO [PISOS_PICADOS].RolxUsuario
+VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+END;
+GO
+
+/* MODIFICACION CLIENTE */ 
+
+CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT,@nombre VARCHAR(255), @apellido VARCHAR(255),@tipo VARCHAR(255),
+@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT, 
+@localidad VARCHAR(255), @pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE, 
+@estado BIT
+
+AS
+BEGIN 
+
+IF @nombre IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nombre = @nombre
+WHERE @idUsuario = idUsuario
+IF @apellido IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set apellido = @apellido
+WHERE @idUsuario = idUsuario
+IF @mail IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set mail = @mail
+WHERE @idUsuario = idUsuario
+IF @telefono IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set telefono = @telefono
+WHERE @idUsuario = idUsuario
+IF @calle IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set calle = @calle
+WHERE @idUsuario = idUsuario
+IF @numeroC IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nroCalle = @numeroC
+WHERE @idUsuario = idUsuario
+IF @localidad IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set localidad = @localidad
+WHERE @idUsuario = idUsuario
+IF @pais IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set pais = [PISOS_PICADOS].idPais(@pais)
+WHERE @idUsuario = idUsuario
+IF @tipo IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set tipoIdentificacion = @tipo
+WHERE @idUsuario = idUsuario
+IF @numeroI IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set numeroIdentificacion = @numeroI
+WHERE @idUsuario = idUsuario
+IF @fechaNacimiento IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set fechaNacimiento = @fechaNacimiento
+WHERE @idUsuario = idUsuario
+IF @nacionalidad IS NOT NULL UPDATE [PISOS_PICADOS].Cliente set nacionalidad = @nacionalidad
+WHERE @idUsuario = idUsuario
+
+END;
+GO
+
+/* MODIFICAR ESTADO EMPLEADO */
+
+CREATE PROCEDURE [PISOS_PICADOS].SPEstadoCliente @idUsuario INT, @Estado BIT
+AS 
+BEGIN
+UPDATE [PISOS_PICADOS].Usuario set estado = @Estado
+WHERE @idUsuario = idUsuario
+END;
+GO
