@@ -1,4 +1,5 @@
 /*SELECT * FROM gd_esquema.Maestra*/
+
 CREATE TABLE [PISOS_PICADOS].Rol
 (
 idRol INT PRIMARY KEY IDENTITY,
@@ -17,7 +18,7 @@ CREATE TABLE [PISOS_PICADOS].Usuario
 idUsuario INT PRIMARY KEY IDENTITY,
 nombre VARCHAR(255),
 apellido VARCHAR(255),
-mail VARCHAR(255) UNIQUE,
+mail VARCHAR(255),
 telefono VARCHAR(255) DEFAULT NULL,
 calle VARCHAR(255),
 nroCalle INT,
@@ -88,6 +89,7 @@ porcentual NUMERIC(3,2)
 
 CREATE TABLE [PISOS_PICADOS].Habitacion
 (
+idHabitacion INT PRIMARY KEY IDENTITY,
 numero INT,
 idHotel INT,
 frente CHAR(1),
@@ -95,17 +97,14 @@ tipo INT REFERENCES [PISOS_PICADOS].Tipo,
 descripcion VARCHAR(255) DEFAULT NULL,
 piso INT,
 habilitada BIT DEFAULT 1,
-PRIMARY KEY (numero, idHotel)
 )
 
 CREATE TABLE [PISOS_PICADOS].BajaHabitacion
 (
 idBaja INT PRIMARY KEY IDENTITY,
-numero INT,
-idHotel INT REFERENCES [PISOS_PICADOS].Hotel,
+idHabitacion INT REFERENCES[PISOS_PICADOS].Habitacion ,
 fechaIncio DATE,
 fechaFin DATE,
-FOREIGN KEY (numero, idHotel) REFERENCES [PISOS_PICADOS].Habitacion(numero, idHotel)
 )
 
 CREATE TABLE [PISOS_PICADOS].Funcionalidad
@@ -157,11 +156,9 @@ fecha DATE
 
 CREATE TABLE [PISOS_PICADOS].HabitacionxReserva
 (
-numero INT,
-idHotel INT,
+idHabitacion INT REFERENCES  [PISOS_PICADOS].Habitacion,
 codigoReserva INT REFERENCES [PISOS_PICADOS].Reserva,
-FOREIGN KEY (numero, idHotel) REFERENCES [PISOS_PICADOS].Habitacion(numero, idHotel),
-PRIMARY KEY (numero, idHotel, codigoReserva)
+PRIMARY KEY (idHabitacion, codigoReserva)
 )
 
 /*CREATE TABLE [PISOS_PICADOS].CheckIn
@@ -618,13 +615,13 @@ SELECT DISTINCT 1, idUsuario
 FROM [PISOS_PICADOS].Usuario, [PISOS_PICADOS].Rol
 WHERE usuario.nombre = 'admin' and usuario.apellido = 'admin'
 
-INSERT INTO [PISOS_PICADOS].HabitacionxReserva (numero, idHotel, codigoReserva)
-SELECT DISTINCT Habitacion.numero, Habitacion.idHotel, Reserva.codigoReserva
-FROM [gd_esquema].Maestra, [PISOS_PICADOS].Habitacion, [PISOS_PICADOS].Reserva, [PISOS_PICADOS].Hotel
-WHERE Reserva.codigoReserva = Reserva_Codigo 
-and Habitacion_Numero = Habitacion.numero 
-and Hotel.idHotel = Habitacion.idHotel
-and Hotel.calle + Hotel.ciudad = Hotel_Calle + Hotel_Ciudad
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva (idHabitacion, codigoReserva)
+SELECT DISTINCT idHabitacion, Reserva.codigoReserva
+FROM [gd_esquema].Maestra, [PISOS_PICADOS].Habitacion, [PISOS_PICADOS].Reserva
+WHERE Reserva.codigoReserva = Reserva_Codigo AND idHabitacion = 
+(Select distinct a.idHabitacion FROM [PISOS_PICADOS].Habitacion AS a where a.numero = Habitacion_Numero and
+a.idHotel = (SELECT b.idHotel FROM [PISOS_PICADOS].Hotel AS b 
+WHERE b.ciudad = Hotel_Ciudad AND b.calle = Hotel_Calle)) 
 
 INSERT INTO [PISOS_PICADOS].Estadia (codigoReserva, fechaCheckIn, fechaCheckOut)
 SELECT codigoReserva, fechaInicio, fechaFin
@@ -919,3 +916,4 @@ WHERE  idHabitacion = @idHabitacion
 
 END;
 GO
+
