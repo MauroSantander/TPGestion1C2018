@@ -687,6 +687,15 @@ RETURN (SELECT idHotel FROM [PISOS_PICADOS].Hotel
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].obtenerIDTipoHabitacion(@tipo VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT idTipo FROM [PISOS_PICADOS].Tipo WHERE tipoCamas = @tipo)
+END
+GO
+
+
 
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
 AS
@@ -879,4 +888,27 @@ GO
 
 /* ABM HABITACION */
 
-/* ALTA HABITACION */
+/* ALTA HABITACION (EL numero de habitacion no puede repetirse en un mismo hotel*/
+
+
+CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@frente CHAR(1),
+@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT,
+@localidad VARCHAR(255),@pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE
+
+AS
+BEGIN 
+
+SELECT * FROM PISOS_PICADOS.Tipo
+
+INSERT INTO [PISOS_PICADOS].Usuario(nombre,apellido,mail,telefono,calle,nroCalle,localidad,pais,
+tipoIdentificacion,numeroIdentificacion,fechaNacimiento,estado)
+values (@nombre,@apellido,@mail,@telefono,@calle,@numeroC,@localidad, [PISOS_PICADOS].obtenerIDPais(@pais) ,
+@tipo,@numeroI,@fechaNacimiento,1);
+
+INSERT INTO [PISOS_PICADOS].Cliente
+VALUES ( [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+
+INSERT INTO [PISOS_PICADOS].RolxUsuario
+VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+END;
+GO
