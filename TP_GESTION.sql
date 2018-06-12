@@ -668,6 +668,16 @@ WHERE nombre = @nombre and apellido = @apellido and numeroIdentificacion = @nume
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].esAdmin(@idUsuario INT)
+RETURNS BIT
+AS
+BEGIN
+IF ((SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idUsuario))
+RETURN 1;
+RETURN 0;
+END
+GO
+
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDPais(@nombre VARCHAR(255))
 RETURNS INT
 AS 
@@ -694,7 +704,7 @@ END
 GO
 
 
-/* STORED PROCEDURE ------------------------------------------------------*/
+/* STORED PROCEDURES ------------------------------------------------------*/
 
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
 AS
@@ -760,7 +770,7 @@ CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado
 @pais VARCHAR(255), @tipoDocumento VARCHAR(255), @numeroDocumento INT, @fechaNacimiento DATE
 AS
 BEGIN
-IF (SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idAutor)
+IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
 IF @password IS NOT NULL UPDATE [PISOS_PICADOS].Empleado set contraseña = @password
 WHERE @idUsuario = idUsuario
 IF @nombre IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nombre = @nombre
@@ -807,7 +817,7 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].bajaUsuario @idAutor INT, @idUsuario INT
 AS
 BEGIN
-IF (SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idAutor)
+IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
 UPDATE [PISOS_PICADOS].Usuario SET estado = 0 WHERE idUsuario = @idUsuario
 END;
 GO
