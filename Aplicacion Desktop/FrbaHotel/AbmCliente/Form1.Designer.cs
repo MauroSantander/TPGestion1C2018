@@ -419,7 +419,7 @@
             this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClientes.Location = new System.Drawing.Point(3, 70);
             this.dataGridViewClientes.Name = "dataGridViewClientes";
-            this.dataGridViewClientes.Size = new System.Drawing.Size(391, 150);
+            this.dataGridViewClientes.Size = new System.Drawing.Size(483, 150);
             this.dataGridViewClientes.TabIndex = 4;
             this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);
             // 

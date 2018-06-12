@@ -46,7 +46,11 @@ namespace FrbaHotel.AbmCliente
 
         private void BotonModifVerClientes_Click(object sender, EventArgs e)
         {
+           
+            Conexion c = new Conexion();
 
+            c.mostrarClientes(dataGridView2);
+               
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -68,8 +72,6 @@ namespace FrbaHotel.AbmCliente
             String LocalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["localidad"].Value;
             String PaisCliente = (String)dataGridViewClientes.CurrentRow.Cells["pais"].Value;
             String NacionalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["nacionalidad"].Value;
-
-           // int valor1 = (int)dataGridViewClientes.CurrentRow.Cells["NombreColumna"].Value;
             
 
             SqlCommand comandoBaja = new SqlCommand(String.Format("EXEC SPBajaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
@@ -82,6 +84,10 @@ namespace FrbaHotel.AbmCliente
         private void BotonVerClientes_Click(object sender, EventArgs e)
         {
 
+            Conexion c = new Conexion();
+
+            c.mostrarClientes(dataGridViewClientes);
+            
         }
 
         private void dataGridViewClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -131,6 +137,15 @@ namespace FrbaHotel.AbmCliente
 
         private void BotonCrear_Click(object sender, EventArgs e)
         {
+            /*foreach (Control _textbox in this.Controls)
+            {
+                if (_textbox is TextBox && _textbox.Text == string.Empty)
+                {
+                    MessageBox.Show("Error de campos incompletos");
+                }
+            }*/   //puede que sea util para verificar que todos los campos esten llenos
+
+
             String NombreCliente = Nombre.Text;
             String ApellidoCliente = Apellido.Text;
             String TipoIdCliente = TipoId.Text;
@@ -144,11 +159,20 @@ namespace FrbaHotel.AbmCliente
             String NacionalidadCliente = Nacionalidad.Text;
             
             //String EjecutarProcedure = "EXEC SP ";
-
-
+            if (NombreCliente == ""){MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
+            if (ApellidoCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (TipoIdCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NroIdCliente < 0) { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (MailCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (CalleCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NroCalleCliente <0) { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (LocalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (PaisCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NacionalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            
             SqlCommand comandoAlta = new SqlCommand(String.Format("EXEC SPAltaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
                 NombreCliente,ApellidoCliente,TipoIdCliente, NroIdCliente.ToString(), MailCliente, TelefonoCliente, CalleCliente, NroCalleCliente.ToString(), LocalidadCliente, PaisCliente, NacionalidadCliente
-                
+                    
                 
                 ) );
             /* ***********Otra forma de pasar parametros*************
@@ -234,5 +258,7 @@ namespace FrbaHotel.AbmCliente
         {
 
         }
+
+        
     }
 }
