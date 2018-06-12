@@ -842,7 +842,7 @@ INSERT INTO [PISOS_PICADOS].Cliente
 VALUES ( [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
 
 INSERT INTO [PISOS_PICADOS].RolxUsuario
-VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI));
 END;
 GO
 
