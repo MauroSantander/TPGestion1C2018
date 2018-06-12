@@ -659,7 +659,7 @@ GROUP BY Factura_Nro, Consumible_Codigo, Consumible_Precio, idEstadia
 GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
-
+/* FUNCIONES ---------------------------------------------------------------------*/
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (@nombre VARCHAR(255), @apellido VARCHAR(255), @numeroIdentificacion INT)
 RETURNS INT
 AS
@@ -696,6 +696,7 @@ END
 GO
 
 
+/* STORE PROCEDURE ------------------------------------------------------*/
 
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
 AS
@@ -891,24 +892,30 @@ GO
 /* ALTA HABITACION (EL numero de habitacion no puede repetirse en un mismo hotel*/
 
 
-CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@frente CHAR(1),
-@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT,
-@localidad VARCHAR(255),@pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE
+CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@frente CHAR(1),@tipo INT, 
+@descripcion VARCHAR(255), @piso INT, @habilitado BIT
 
 AS
 BEGIN 
 
 SELECT * FROM PISOS_PICADOS.Tipo
 
-INSERT INTO [PISOS_PICADOS].Usuario(nombre,apellido,mail,telefono,calle,nroCalle,localidad,pais,
-tipoIdentificacion,numeroIdentificacion,fechaNacimiento,estado)
-values (@nombre,@apellido,@mail,@telefono,@calle,@numeroC,@localidad, [PISOS_PICADOS].obtenerIDPais(@pais) ,
-@tipo,@numeroI,@fechaNacimiento,1);
+INSERT INTO [PISOS_PICADOS].Habitacion(numero,idHotel,frente,tipo,descripcion,piso,habilitada)
+VALUES (@numero,@IDhotel,@frente,@tipo,@descripcion,@piso,@habilitado)
 
-INSERT INTO [PISOS_PICADOS].Cliente
-VALUES ( [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+END;
+GO
 
-INSERT INTO [PISOS_PICADOS].RolxUsuario
-VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+/* MODIFICACION HABITACION (VERIFICAR QUE EL NUMERO DE HABITACION NO SE REPITA EN EL HOTEL) */
+
+CREATE PROCEDURE [PISOS_PICADOS].SPModificarHabitacion @idHabitacion INT,@numero INT,@IDhotel INT ,@frente CHAR(1), 
+@descripcion VARCHAR(255), @piso INT, @habilitado BIT
+
+AS
+BEGIN 
+
+IF @numero IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set numero = @numero
+WHERE  idHabitacion = @idHabitacion
+
 END;
 GO
