@@ -670,11 +670,20 @@ WHERE nombre = @nombre and apellido = @apellido and numeroIdentificacion = @nume
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].idPais(@nombre VARCHAR(255))
+CREATE FUNCTION [PISOS_PICADOS].obtenerIDPais(@nombre VARCHAR(255))
 RETURNS INT
 AS 
 BEGIN
 RETURN (SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @nombre)
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].obtenerIDHotel(@ciudad VARCHAR(255),@calle VARCHAR(255),@nroCalle VARCHAR (255))
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT idHotel FROM [PISOS_PICADOS].Hotel
+ WHERE calle = @calle and ciudad=@ciudad and nroCalle= nroCalle)
 END
 GO
 
@@ -809,7 +818,7 @@ BEGIN
 
 INSERT INTO [PISOS_PICADOS].Usuario(nombre,apellido,mail,telefono,calle,nroCalle,localidad,pais,
 tipoIdentificacion,numeroIdentificacion,fechaNacimiento,estado)
-values (@nombre,@apellido,@mail,@telefono,@calle,@numeroC,@localidad, [PISOS_PICADOS].idPais(@pais) ,
+values (@nombre,@apellido,@mail,@telefono,@calle,@numeroC,@localidad, [PISOS_PICADOS].obtenerIDPais(@pais) ,
 @tipo,@numeroI,@fechaNacimiento,1);
 
 INSERT INTO [PISOS_PICADOS].Cliente
@@ -844,7 +853,7 @@ IF @numeroC IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nroCalle = @numeroC
 WHERE @idUsuario = idUsuario
 IF @localidad IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set localidad = @localidad
 WHERE @idUsuario = idUsuario
-IF @pais IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set pais = [PISOS_PICADOS].idPais(@pais)
+IF @pais IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set pais = [PISOS_PICADOS].obtenerIDPais(@pais)
 WHERE @idUsuario = idUsuario
 IF @tipo IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set tipoIdentificacion = @tipo
 WHERE @idUsuario = idUsuario
@@ -867,3 +876,7 @@ UPDATE [PISOS_PICADOS].Usuario set estado = @Estado
 WHERE @idUsuario = idUsuario
 END;
 GO
+
+/* ABM HABITACION */
+
+/* ALTA HABITACION */
