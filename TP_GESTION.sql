@@ -17,7 +17,7 @@ CREATE TABLE [PISOS_PICADOS].Usuario
 idUsuario INT PRIMARY KEY IDENTITY,
 nombre VARCHAR(255),
 apellido VARCHAR(255),
-mail VARCHAR(255),
+mail VARCHAR(255) UNIQUE,
 telefono VARCHAR(255) DEFAULT NULL,
 calle VARCHAR(255),
 nroCalle INT,
@@ -660,6 +660,7 @@ GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
 /* FUNCIONES ---------------------------------------------------------------------*/
+
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (@nombre VARCHAR(255), @apellido VARCHAR(255), @numeroIdentificacion INT)
 RETURNS INT
 AS
@@ -696,7 +697,7 @@ END
 GO
 
 
-/* STORE PROCEDURE ------------------------------------------------------*/
+/* STORED PROCEDURE ------------------------------------------------------*/
 
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
 AS
@@ -750,8 +751,7 @@ BEGIN
 INSERT INTO [PISOS_PICADOS].Usuario VALUES(@nombre, @apellido, @mail, @telefono, @calle, @numeroCalle, @localidad,
 (SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @pais), @tipoDocumento, @numeroDocumento, @fechaNacimiento, @estado);
 INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña)
-VALUES ((SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
-p.apellido = @apellido and p.nombre = @nombre), @username, HASHBYTES('SHA2_256', @password));
+VALUES ([PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroDocumento), @username, HASHBYTES('SHA2_256', @password));
 INSERT INTO [PISOS_PICADOS].RolxUsuario VALUES((SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @rol), (SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
 p.apellido = @apellido and p.nombre = @nombre))
 END;
