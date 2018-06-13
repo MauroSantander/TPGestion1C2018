@@ -27,6 +27,13 @@ namespace FrbaHotel.AbmRol
 
         }
 
+
+        private void comboBoxRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -42,12 +49,12 @@ namespace FrbaHotel.AbmRol
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxActivo_CheckedChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxNoActivo_CheckedChanged(object sender, EventArgs e)
         {
 
         }
@@ -58,6 +65,11 @@ namespace FrbaHotel.AbmRol
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
