@@ -112,6 +112,8 @@
             this.label33 = new System.Windows.Forms.Label();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.BuscarUyPass = new System.Windows.Forms.Button();
+            this.tipoYNum = new System.Windows.Forms.Button();
             this.tabAltaUser.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -132,10 +134,10 @@
             this.tabAltaUser.Controls.Add(this.tabPage1);
             this.tabAltaUser.Controls.Add(this.tabPage2);
             this.tabAltaUser.Controls.Add(this.tabPage3);
-            this.tabAltaUser.Location = new System.Drawing.Point(1, 3);
+            this.tabAltaUser.Location = new System.Drawing.Point(1, 0);
             this.tabAltaUser.Name = "tabAltaUser";
             this.tabAltaUser.SelectedIndex = 0;
-            this.tabAltaUser.Size = new System.Drawing.Size(556, 592);
+            this.tabAltaUser.Size = new System.Drawing.Size(556, 621);
             this.tabAltaUser.TabIndex = 0;
             // 
             // tabPage1
@@ -152,7 +154,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(548, 566);
+            this.tabPage1.Size = new System.Drawing.Size(548, 595);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Nuevo Usuario";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -452,7 +454,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(548, 566);
+            this.tabPage2.Size = new System.Drawing.Size(548, 595);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Borrar Usuario";
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
@@ -534,6 +536,8 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage3.Controls.Add(this.tipoYNum);
+            this.tabPage3.Controls.Add(this.BuscarUyPass);
             this.tabPage3.Controls.Add(this.groupBox3);
             this.tabPage3.Controls.Add(this.textBox10);
             this.tabPage3.Controls.Add(this.comboBox5);
@@ -550,7 +554,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(548, 566);
+            this.tabPage3.Size = new System.Drawing.Size(548, 595);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Actualizar Usuario";
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
@@ -558,7 +562,7 @@
             // button3
             // 
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Location = new System.Drawing.Point(391, 527);
+            this.button3.Location = new System.Drawing.Point(391, 556);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(137, 33);
             this.button3.TabIndex = 35;
@@ -661,7 +665,7 @@
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.groupBox5);
-            this.groupBox3.Location = new System.Drawing.Point(16, 100);
+            this.groupBox3.Location = new System.Drawing.Point(16, 130);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(522, 420);
             this.groupBox3.TabIndex = 41;
@@ -688,7 +692,7 @@
             this.groupBox4.Controls.Add(this.label22);
             this.groupBox4.Controls.Add(this.label24);
             this.groupBox4.Controls.Add(this.label25);
-            this.groupBox4.Location = new System.Drawing.Point(31, 127);
+            this.groupBox4.Location = new System.Drawing.Point(31, 126);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(463, 288);
             this.groupBox4.TabIndex = 36;
@@ -948,25 +952,46 @@
             this.shapeContainer1.Name = "shapeContainer1";
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(542, 560);
+            this.shapeContainer1.Size = new System.Drawing.Size(542, 589);
             this.shapeContainer1.TabIndex = 42;
             this.shapeContainer1.TabStop = false;
             // 
             // rectangleShape1
             // 
             this.rectangleShape1.BorderWidth = 2;
-            this.rectangleShape1.Location = new System.Drawing.Point(12, 96);
+            this.rectangleShape1.Location = new System.Drawing.Point(12, 126);
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(524, 422);
+            // 
+            // BuscarUyPass
+            // 
+            this.BuscarUyPass.Location = new System.Drawing.Point(84, 91);
+            this.BuscarUyPass.Name = "BuscarUyPass";
+            this.BuscarUyPass.Size = new System.Drawing.Size(75, 23);
+            this.BuscarUyPass.TabIndex = 43;
+            this.BuscarUyPass.Text = "Buscar";
+            this.BuscarUyPass.UseVisualStyleBackColor = true;
+            this.BuscarUyPass.Click += new System.EventHandler(this.BuscarUyPass_Click);
+            // 
+            // tipoYNum
+            // 
+            this.tipoYNum.Location = new System.Drawing.Point(355, 91);
+            this.tipoYNum.Name = "tipoYNum";
+            this.tipoYNum.Size = new System.Drawing.Size(75, 23);
+            this.tipoYNum.TabIndex = 44;
+            this.tipoYNum.Text = "Buscar";
+            this.tipoYNum.UseVisualStyleBackColor = true;
+            this.tipoYNum.Click += new System.EventHandler(this.tipoYNum_Click);
             // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 597);
+            this.ClientSize = new System.Drawing.Size(555, 624);
             this.Controls.Add(this.tabAltaUser);
             this.Name = "Admin";
             this.Text = "Admin";
+            this.Load += new System.EventHandler(this.Admin_Load);
             this.tabAltaUser.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1076,5 +1101,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
+        private System.Windows.Forms.Button tipoYNum;
+        private System.Windows.Forms.Button BuscarUyPass;
     }
 }

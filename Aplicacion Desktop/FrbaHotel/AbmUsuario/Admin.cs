@@ -251,5 +251,20 @@ namespace FrbaHotel.AbmUsuario
         {
 
         }
+
+        private void Admin_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tipoYNum_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BuscarUyPass_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
