@@ -73,5 +73,35 @@ namespace FrbaHotel.AbmRol
         {
 
         }
+
+        private void tabPageCrearRol_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelNombreRol_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxSeleccionDeRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FuncionalidadesxRol_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void buttonModificar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
