@@ -1,4 +1,5 @@
 /*SELECT * FROM gd_esquema.Maestra*/
+
 CREATE TABLE [PISOS_PICADOS].Rol
 (
 idRol INT PRIMARY KEY IDENTITY,
@@ -88,6 +89,7 @@ porcentual NUMERIC(3,2)
 
 CREATE TABLE [PISOS_PICADOS].Habitacion
 (
+idHabitacion INT PRIMARY KEY IDENTITY,
 numero INT,
 idHotel INT,
 frente CHAR(1),
@@ -95,17 +97,14 @@ tipo INT REFERENCES [PISOS_PICADOS].Tipo,
 descripcion VARCHAR(255) DEFAULT NULL,
 piso INT,
 habilitada BIT DEFAULT 1,
-PRIMARY KEY (numero, idHotel)
 )
 
 CREATE TABLE [PISOS_PICADOS].BajaHabitacion
 (
 idBaja INT PRIMARY KEY IDENTITY,
-numero INT,
-idHotel INT REFERENCES [PISOS_PICADOS].Hotel,
+idHabitacion INT REFERENCES[PISOS_PICADOS].Habitacion ,
 fechaIncio DATE,
 fechaFin DATE,
-FOREIGN KEY (numero, idHotel) REFERENCES [PISOS_PICADOS].Habitacion(numero, idHotel)
 )
 
 CREATE TABLE [PISOS_PICADOS].Funcionalidad
@@ -157,11 +156,9 @@ fecha DATE
 
 CREATE TABLE [PISOS_PICADOS].HabitacionxReserva
 (
-numero INT,
-idHotel INT,
+idHabitacion INT REFERENCES  [PISOS_PICADOS].Habitacion,
 codigoReserva INT REFERENCES [PISOS_PICADOS].Reserva,
-FOREIGN KEY (numero, idHotel) REFERENCES [PISOS_PICADOS].Habitacion(numero, idHotel),
-PRIMARY KEY (numero, idHotel, codigoReserva)
+PRIMARY KEY (idHabitacion, codigoReserva)
 )
 
 /*CREATE TABLE [PISOS_PICADOS].CheckIn
@@ -618,13 +615,13 @@ SELECT DISTINCT 1, idUsuario
 FROM [PISOS_PICADOS].Usuario, [PISOS_PICADOS].Rol
 WHERE usuario.nombre = 'admin' and usuario.apellido = 'admin'
 
-INSERT INTO [PISOS_PICADOS].HabitacionxReserva (numero, idHotel, codigoReserva)
-SELECT DISTINCT Habitacion.numero, Habitacion.idHotel, Reserva.codigoReserva
-FROM [gd_esquema].Maestra, [PISOS_PICADOS].Habitacion, [PISOS_PICADOS].Reserva, [PISOS_PICADOS].Hotel
-WHERE Reserva.codigoReserva = Reserva_Codigo 
-and Habitacion_Numero = Habitacion.numero 
-and Hotel.idHotel = Habitacion.idHotel
-and Hotel.calle + Hotel.ciudad = Hotel_Calle + Hotel_Ciudad
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva (idHabitacion, codigoReserva)
+SELECT DISTINCT idHabitacion, Reserva.codigoReserva
+FROM [gd_esquema].Maestra, [PISOS_PICADOS].Habitacion, [PISOS_PICADOS].Reserva
+WHERE Reserva.codigoReserva = Reserva_Codigo AND idHabitacion = 
+(Select distinct a.idHabitacion FROM [PISOS_PICADOS].Habitacion AS a where a.numero = Habitacion_Numero and
+a.idHotel = (SELECT b.idHotel FROM [PISOS_PICADOS].Hotel AS b 
+WHERE b.ciudad = Hotel_Ciudad AND b.calle = Hotel_Calle)) 
 
 INSERT INTO [PISOS_PICADOS].Estadia (codigoReserva, fechaCheckIn, fechaCheckOut)
 SELECT codigoReserva, fechaInicio, fechaFin
@@ -659,6 +656,7 @@ GROUP BY Factura_Nro, Consumible_Codigo, Consumible_Precio, idEstadia
 GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
+/* FUNCIONES ---------------------------------------------------------------------*/
 
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (@nombre VARCHAR(255), @apellido VARCHAR(255), @numeroIdentificacion INT)
 RETURNS INT
@@ -667,6 +665,16 @@ BEGIN
 RETURN (SELECT idUsuario 
 FROM [PISOS_PICADOS].Usuario 
 WHERE nombre = @nombre and apellido = @apellido and numeroIdentificacion = @numeroIdentificacion)
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].esAdmin(@idUsuario INT)
+RETURNS BIT
+AS
+BEGIN
+IF ((SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idUsuario))
+RETURN 1;
+RETURN 0;
 END
 GO
 
@@ -696,6 +704,7 @@ END
 GO
 
 
+/* STORED PROCEDURES ------------------------------------------------------*/
 
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
 AS
@@ -749,8 +758,7 @@ BEGIN
 INSERT INTO [PISOS_PICADOS].Usuario VALUES(@nombre, @apellido, @mail, @telefono, @calle, @numeroCalle, @localidad,
 (SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @pais), @tipoDocumento, @numeroDocumento, @fechaNacimiento, @estado);
 INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña)
-VALUES ((SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
-p.apellido = @apellido and p.nombre = @nombre), @username, HASHBYTES('SHA2_256', @password));
+VALUES ([PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroDocumento), @username, HASHBYTES('SHA2_256', @password));
 INSERT INTO [PISOS_PICADOS].RolxUsuario VALUES((SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @rol), (SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
 p.apellido = @apellido and p.nombre = @nombre))
 END;
@@ -762,7 +770,7 @@ CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado
 @pais VARCHAR(255), @tipoDocumento VARCHAR(255), @numeroDocumento INT, @fechaNacimiento DATE
 AS
 BEGIN
-IF (SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idAutor)
+IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
 IF @password IS NOT NULL UPDATE [PISOS_PICADOS].Empleado set contraseña = @password
 WHERE @idUsuario = idUsuario
 IF @nombre IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nombre = @nombre
@@ -809,7 +817,7 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].bajaUsuario @idAutor INT, @idUsuario INT
 AS
 BEGIN
-IF (SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = 'Administrador') IN (SELECT p.idRol FROM [PISOS_PICADOS].RolxUsuario as p WHERE idUsuario = @idAutor)
+IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
 UPDATE [PISOS_PICADOS].Usuario SET estado = 0 WHERE idUsuario = @idUsuario
 END;
 GO
@@ -834,7 +842,7 @@ INSERT INTO [PISOS_PICADOS].Cliente
 VALUES ( [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
 
 INSERT INTO [PISOS_PICADOS].RolxUsuario
-VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI));
 END;
 GO
 
@@ -891,24 +899,31 @@ GO
 /* ALTA HABITACION (EL numero de habitacion no puede repetirse en un mismo hotel*/
 
 
-CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@frente CHAR(1),
-@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT,
-@localidad VARCHAR(255),@pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE
+CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@frente CHAR(1),@tipo INT, 
+@descripcion VARCHAR(255), @piso INT, @habilitado BIT
 
 AS
 BEGIN 
 
 SELECT * FROM PISOS_PICADOS.Tipo
 
-INSERT INTO [PISOS_PICADOS].Usuario(nombre,apellido,mail,telefono,calle,nroCalle,localidad,pais,
-tipoIdentificacion,numeroIdentificacion,fechaNacimiento,estado)
-values (@nombre,@apellido,@mail,@telefono,@calle,@numeroC,@localidad, [PISOS_PICADOS].obtenerIDPais(@pais) ,
-@tipo,@numeroI,@fechaNacimiento,1);
+INSERT INTO [PISOS_PICADOS].Habitacion(numero,idHotel,frente,tipo,descripcion,piso,habilitada)
+VALUES (@numero,@IDhotel,@frente,@tipo,@descripcion,@piso,@habilitado)
 
-INSERT INTO [PISOS_PICADOS].Cliente
-VALUES ( [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
-
-INSERT INTO [PISOS_PICADOS].RolxUsuario
-VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
 END;
 GO
+
+/* MODIFICACION HABITACION (VERIFICAR QUE EL NUMERO DE HABITACION NO SE REPITA EN EL HOTEL) */
+
+CREATE PROCEDURE [PISOS_PICADOS].SPModificarHabitacion @idHabitacion INT,@numero INT,@IDhotel INT ,@frente CHAR(1), 
+@descripcion VARCHAR(255), @piso INT, @habilitado BIT
+
+AS
+BEGIN 
+
+IF @numero IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set numero = @numero
+WHERE  idHabitacion = @idHabitacion
+
+END;
+GO
+
