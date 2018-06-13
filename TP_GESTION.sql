@@ -695,13 +695,60 @@ RETURN (SELECT idHotel FROM [PISOS_PICADOS].Hotel
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].obtenerIDTipoHabitacion(@tipo VARCHAR(255))
+CREATE FUNCTION [PISOS_PICADOS].existeEnHotel(@idHotel INT,@numero INT)
 RETURNS INT
 AS 
 BEGIN
-RETURN (SELECT idTipo FROM [PISOS_PICADOS].Tipo WHERE tipoCamas = @tipo)
+if ( @numero IN (SELECT numero FROM [PISOS_PICADOS].Habitacion WHERE idHotel = @idHotel))
+RETURN 1;
+RETURN 0;
 END
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].existeEmpleado(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN
+if ( @usuario IN (SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
+if ( @contraseña IN (SELECT contraseña FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
+RETURN 1;
+RETURN 0;
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].usuarioValido(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN
+if ( @usuario IN (SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
+if ( @contraseña IN (SELECT contraseña FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
+RETURN 1;
+RETURN 0;
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT idUsuario FROM [PISOS_PICADOS].Empleado
+WHERE  usuario = @usuario and contraseña=@contraseña )
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].obtenerRolEmpleado(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT idRol FROM [PISOS_PICADOS].RolxUsuario
+WHERE  idUsuario = [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario , @contraseña) )
+END
+GO
+
+
+
+/* Crea funcion que a partir de usuario y contra me da idUsuario */
+/* otra que a partir de id de usuario te de el string rol */
 
 
 /* STORED PROCEDURES ------------------------------------------------------*/
@@ -884,7 +931,7 @@ WHERE @idUsuario = idUsuario
 END;
 GO
 
-/* MODIFICAR ESTADO EMPLEADO */
+/* MODIFICAR ESTADO CLIENTE */
 
 CREATE PROCEDURE [PISOS_PICADOS].SPEstadoCliente @idUsuario INT, @Estado BIT
 AS 
@@ -915,15 +962,41 @@ GO
 
 /* MODIFICACION HABITACION (VERIFICAR QUE EL NUMERO DE HABITACION NO SE REPITA EN EL HOTEL) */
 
-CREATE PROCEDURE [PISOS_PICADOS].SPModificarHabitacion @idHabitacion INT,@numero INT,@IDhotel INT ,@frente CHAR(1), 
+CREATE PROCEDURE [PISOS_PICADOS].SPModificarHabitacion @idHabitacion INT,@numeroH INT,@frente CHAR(1), 
 @descripcion VARCHAR(255), @piso INT, @habilitado BIT
 
 AS
 BEGIN 
 
-IF @numero IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set numero = @numero
+IF @numeroH IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set numero = @numeroH
+WHERE  idHabitacion = @idHabitacion
+IF @frente IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set frente = @frente
+WHERE  idHabitacion = @idHabitacion
+IF @descripcion IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set descripcion = @descripcion
+WHERE  idHabitacion = @idHabitacion
+IF @piso IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set piso = @piso
+WHERE  idHabitacion = @idHabitacion
+IF @habilitado IS NOT NULL UPDATE [PISOS_PICADOS].Habitacion set habilitada = @habilitado
 WHERE  idHabitacion = @idHabitacion
 
 END;
 GO
+
+/* BAJA HABITACION   */
+
+CREATE PROCEDURE [PISOS_PICADOS].SPEstadoHabitacion @idHabitacion INT, @habilitado BIT,
+ @fechaInicio DATE , @fechaFin DATE
+AS
+BEGIN 
+
+UPDATE [PISOS_PICADOS].Habitacion set habilitada = @habilitado
+WHERE idHabitacion = @idHabitacion
+
+INSERT INTO [PISOS_PICADOS].BajaHabitacion(idHabitacion,fechaIncio,fechaFin)
+VALUES (@idHabitacion,@fechaInicio,@fechaFin)
+
+
+END;
+GO
+
 
