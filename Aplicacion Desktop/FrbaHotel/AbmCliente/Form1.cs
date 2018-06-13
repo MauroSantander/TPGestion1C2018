@@ -74,11 +74,11 @@ namespace FrbaHotel.AbmCliente
             String NacionalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["nacionalidad"].Value;
             
 
-            SqlCommand comandoBaja = new SqlCommand(String.Format("EXEC SPBajaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
+            /*SqlCommand comandoBaja = new SqlCommand(String.Format("EXEC SPBajaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
                NombreCliente, ApellidoCliente, TipoIdCliente, NroIdCliente.ToString(), MailCliente, TelefonoCliente, CalleCliente, NroCalleCliente.ToString(), LocalidadCliente, PaisCliente, NacionalidadCliente
 
 
-               ));
+               ));*/
         }
 
         private void BotonVerClientes_Click(object sender, EventArgs e)
@@ -145,18 +145,30 @@ namespace FrbaHotel.AbmCliente
                 }
             }*/   //puede que sea util para verificar que todos los campos esten llenos
 
+            //Conexion con = new Conexion();
+          
+            SqlConnection con = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true");
+
+            con.Open();
 
             String NombreCliente = Nombre.Text;
             String ApellidoCliente = Apellido.Text;
             String TipoIdCliente = TipoId.Text;
+
+            if (string.IsNullOrEmpty(nroId.Text)) {MessageBox.Show("Completar numero de id cliente"); return;}
+            
             int NroIdCliente = int.Parse(nroId.Text);
             String MailCliente = Mail.Text;
             String TelefonoCliente = Telefono.Text;
             String CalleCliente = Calle.Text;
+
+            if (string.IsNullOrEmpty(NroCalle.Text)) {MessageBox.Show("Completar numero de calle");return;}
+
             int NroCalleCliente = int.Parse(NroCalle.Text);
             String LocalidadCliente = Localidad.Text;
             String PaisCliente = Pais.Text;
             String NacionalidadCliente = Nacionalidad.Text;
+            DateTime FechaNacimientoCliente = FechaNacimiento.Value;
             
             //String EjecutarProcedure = "EXEC SP ";
             if (NombreCliente == ""){MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
@@ -169,29 +181,57 @@ namespace FrbaHotel.AbmCliente
             if (LocalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (PaisCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (NacionalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+
+            String cadenaAltaCliente = "EXEC [PISOS_PICADOS].SPAltaCliente @nombre, @apellido ,@tipo, @numeroI, @mail, @telefono, @calle, @numeroC, @localidad, @pais, @nacionalidad, @fechaNacimiento";
             
-            SqlCommand comandoAlta = new SqlCommand(String.Format("EXEC SPAltaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
-                NombreCliente,ApellidoCliente,TipoIdCliente, NroIdCliente.ToString(), MailCliente, TelefonoCliente, CalleCliente, NroCalleCliente.ToString(), LocalidadCliente, PaisCliente, NacionalidadCliente
-                    
-                
-                ) );
-            /* ***********Otra forma de pasar parametros*************
-                private void button1_Click(object sender, EventArgs e)
-        {
-            SqlConnection conexion = new SqlConnection("server=DIEGO-PC\\SQLEXPRESS ; database=base1 ; integrated security = true");
-            conexion.Open();
-            string descri = textBox1.Text;
-            string precio = textBox2.Text;
-            string cadena = "insert into articulos(descripcion,precio) values ('" + descri + "'," + precio + ")";
-            SqlCommand comando = new SqlCommand(cadena, conexion);
-            comando.ExecuteNonQuery();
-            MessageBox.Show("Los datos se guardaron correctamente");
-            textBox1.Text = "";
-            textBox2.Text = "";
-            conexion.Close();
-        }
-             
-             */
+            SqlCommand comandoAltaCliente = new SqlCommand(cadenaAltaCliente, con);
+
+            //agregar parametros
+            comandoAltaCliente.Parameters.Add("@nombre", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@apellido", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@tipo", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@numeroI", SqlDbType.Int);
+            comandoAltaCliente.Parameters.Add("@mail", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@telefono", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@calle", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@numeroC", SqlDbType.Int);
+            comandoAltaCliente.Parameters.Add("@localidad", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@pais", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@nacionalidad", SqlDbType.VarChar);
+            comandoAltaCliente.Parameters.Add("@fechaNacimiento", SqlDbType.Date);
+            
+            //cargar valores
+            comandoAltaCliente.Parameters["@nombre"].Value = NombreCliente;
+            comandoAltaCliente.Parameters["@apellido"].Value = ApellidoCliente;
+            comandoAltaCliente.Parameters["@tipo"].Value = TipoIdCliente;
+            comandoAltaCliente.Parameters["@numeroI"].Value = NroIdCliente;
+            comandoAltaCliente.Parameters["@mail"].Value = MailCliente;
+            comandoAltaCliente.Parameters["@telefono"].Value = TelefonoCliente;
+            comandoAltaCliente.Parameters["@calle"].Value = CalleCliente;
+            comandoAltaCliente.Parameters["@numeroC"].Value = NroCalleCliente;
+            comandoAltaCliente.Parameters["@localidad"].Value = LocalidadCliente;
+            comandoAltaCliente.Parameters["@pais"].Value = PaisCliente;
+            comandoAltaCliente.Parameters["@nacionalidad"].Value = NacionalidadCliente;
+            comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente;
+            
+
+            comandoAltaCliente.ExecuteNonQuery();
+            MessageBox.Show("Alta realizada correctamente");
+            
+            //reinicio de los textbox
+            Nombre.ResetText();
+            Apellido.ResetText();
+            TipoId.ResetText();
+            nroId.ResetText();
+            Mail.ResetText();
+            Telefono.ResetText();
+            Calle.ResetText();
+            NroCalle.ResetText();
+            Localidad.ResetText();
+            Nacionalidad.ResetText();
+            FechaNacimiento.ResetText();
+
+            con.Close();
         }
 
         private void BotonCancelar_Click(object sender, EventArgs e)
