@@ -16,7 +16,7 @@ namespace FrbaHotel
         SqlConnection conexion;
         SqlCommand comando;
         SqlDataReader lector;
-        
+
         SqlDataAdapter adapter;
         DataTable dataTable;
 
@@ -51,6 +51,31 @@ namespace FrbaHotel
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
         }
+
+        public void mostrarTodasLasFuncionalidadesDisponibles(DataGridView dgv)
+        {
+            try
+            {
+
+                adapter = new SqlDataAdapter("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", conexion);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                dgv.DataSource = dataTable;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView");
+            }
+
+        }
+
+        public void mostrarFuncionalidadesPara(Rol unRol, DataGridView dgv) 
+        { 
+        
+        
+        
+        }
+            
 
     }
 }

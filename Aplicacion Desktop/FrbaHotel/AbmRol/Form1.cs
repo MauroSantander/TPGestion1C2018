@@ -86,7 +86,9 @@ namespace FrbaHotel.AbmRol
 
         private void comboBoxSeleccionDeRol_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Conexion con = new Conexion();
 
+            con.mostrarTodasLasFuncionalidadesDisponibles(FuncionalidadesxRol);
         }
 
         private void buttonSalir_Click(object sender, EventArgs e)
@@ -97,11 +99,17 @@ namespace FrbaHotel.AbmRol
         private void FuncionalidadesxRol_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+           // String cadena = "SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad";
+            
+          //  SqlCommand comando = new SqlCommand(cadena,Conexion conection = new Conexion());
+
+            
         }
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
 
         }
+
     }
 }
