@@ -108,7 +108,7 @@ namespace FrbaHotel.AbmRol
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-
+            //abrir pantalla de modificacion
         }
 
     }

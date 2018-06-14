@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,7 @@ namespace FrbaHotel.Login
 
         }
 
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        private void textBoxUsuario_TextChanged_1(object sender, EventArgs e)
         {
             //box de usuario
         }
@@ -59,14 +60,28 @@ namespace FrbaHotel.Login
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonIniciarSesion_Click(object sender, EventArgs e)
         {
             //boton de inicio de sesion
 
-            (new FrbaHotel.AbmCliente.Form1()).ShowDialog();
+            Conexion conection = new Conexion();
+
+            String usuario = textBoxUsuario.Text;
+            String contrasena = textBoxContrasena.Text;
+            
+            int valor = conection.verificarUsuario(usuario, contrasena);
+
+            if (valor == 1)
+            {
+                (new FrbaHotel.AbmCliente.Form1()).ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("usuario no valido");
+            }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonSalir_Click(object sender, EventArgs e)
         {
 
             this.Close();

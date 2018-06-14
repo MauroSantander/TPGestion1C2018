@@ -182,10 +182,11 @@ namespace FrbaHotel.AbmCliente
             if (PaisCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (NacionalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
-            String cadenaAltaCliente = "EXEC [PISOS_PICADOS].SPAltaCliente @nombre, @apellido ,@tipo, @numeroI, @mail, @telefono, @calle, @numeroC, @localidad, @pais, @nacionalidad, @fechaNacimiento";
+            String cadenaAltaCliente = "EXECUTE [PISOS_PICADOS].SPAltaCliente @nombre, @apellido ,@tipo, @numeroI, @mail, @telefono, @calle, @numeroC, @localidad, @pais, @nacionalidad, @fechaNacimiento";
             
             SqlCommand comandoAltaCliente = new SqlCommand(cadenaAltaCliente, con);
-
+            comandoAltaCliente.CommandType = CommandType.StoredProcedure;
+            
             //agregar parametros
             comandoAltaCliente.Parameters.Add("@nombre", SqlDbType.VarChar);
             comandoAltaCliente.Parameters.Add("@apellido", SqlDbType.VarChar);
