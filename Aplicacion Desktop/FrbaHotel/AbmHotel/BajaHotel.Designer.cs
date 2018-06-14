@@ -50,6 +50,7 @@
             // 
             this.textBoxNombre.Location = new System.Drawing.Point(61, 63);
             this.textBoxNombre.Name = "textBoxNombre";
+            this.textBoxNombre.ReadOnly = true;
             this.textBoxNombre.Size = new System.Drawing.Size(200, 20);
             this.textBoxNombre.TabIndex = 1;
             this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
