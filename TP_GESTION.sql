@@ -767,7 +767,16 @@ RETURN 0;
 END
 GO
 
-
+CREATE FUNCTION [PISOS_PICADOS].habilitadoHotel(@idHotel INT,@fechaReserva DATE)
+RETURNS INT
+AS 
+BEGIN
+if ( @idHotel IN (SELECT idHotel  FROM [PISOS_PICADOS].BajaHotel 
+WHERE @fechaReserva BETWEEN fechaInicio AND fechaFin ))
+RETURN 1;
+RETURN 0;
+END
+GO
 
 /* Crea funcion que a partir de usuario y contra me da idUsuario */
 /* otra que a partir de id de usuario te de el string rol */
