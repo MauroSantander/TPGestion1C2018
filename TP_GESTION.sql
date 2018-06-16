@@ -789,6 +789,16 @@ RETURN (SELECT descripcion
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].netearConsumibles (@idEstadia INT)
+RETURNS NUMERIC(9,2)
+AS
+BEGIN
+RETURN		(SELECT SUM(cantidad*precio)
+			FROM [PISOS_PICADOS].EstadiaxConsumible, [PISOS_PICADOS].Consumible 
+			WHERE idEstadia = @idEstadia and Consumible.idConsumible = EstadiaxConsumible.idConsumible)
+END
+GO
+
 /* STORED PROCEDURES ------------------------------------------------------*/
 
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
