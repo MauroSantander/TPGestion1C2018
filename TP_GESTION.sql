@@ -227,6 +227,15 @@ estadia INT REFERENCES [PISOS_PICADOS].Estadia,
 PRIMARY KEY (numeroRenglon, numeroFactura)
 )
 
+CREATE TABLE [PISOS_PICADOS].BajaHotel
+(
+idBaja INT PRIMARY KEY,
+idHotel INT REFERENCES [PISOS_PICADOS].Hotel,
+fechaInicio DATE,
+fechaFin DATE,
+razon VARCHAR(255)
+)
+
 INSERT INTO [PISOS_PICADOS].Pais VALUES('Afganistán');
 INSERT INTO [PISOS_PICADOS].Pais VALUES('Islas Gland');
 INSERT INTO [PISOS_PICADOS].Pais VALUES('Albania');
@@ -745,6 +754,19 @@ WHERE  idUsuario = [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario , @contrase
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].HotelTieneReservas(@idHotel INT, @fechaInicio DATE, @fechaFin DATE)
+RETURNS BIT
+AS
+BEGIN
+IF		EXISTS (SELECT IdHabitacion, codigoReserva
+		FROM [PISOS_PICADOS].HabitacionxReserva as p
+		WHERE p.idHabitacion IN (SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion WHERE idHotel = @idHotel) and
+		EXISTS (SELECT fechaInicio, fechaFin FROM [PISOS_PICADOS].Reserva WHERE p.codigoReserva = codigoReserva and
+		(@fechaInicio BETWEEN fechaInicio AND fechaFin or @fechaFin <> fechaInicio))) RETURN 1;
+RETURN 0;
+END
+GO
+
 
 
 /* Crea funcion que a partir de usuario y contra me da idUsuario */
@@ -999,4 +1021,69 @@ VALUES (@idHabitacion,@fechaInicio,@fechaFin)
 END;
 GO
 
+CREATE PROCEDURE [PISOS_PICADOS].crearHotel @nombre VARCHAR(255), @mail VARCHAR(255), @telefono VARCHAR(255),
+@calle VARCHAR(255), @nroCalle VARCHAR(255), @direccion VARCHAR(255), @estrellas INT, @ciudad VARCHAR(255), @pais INT,
+@fechaCreacion DATE, @autorId INT
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].Hotel (nombre, mail, telefono, calle, nroCalle, ciudad, pais, fechaCreacion, estrellas)
+VALUES (@nombre, @mail, @telefono, @calle, @nroCalle, @ciudad, @pais, @fechaCreacion, @estrellas)
+INSERT INTO [PISOS_PICADOS].EmpleadoxHotel (idUsuario, idHotel) 
+VALUES (@autorId, [PISOS_PICADOS].obtenerIDHotel(@ciudad, @calle, @nroCalle))
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].agregarRegimen @idHotel INT, @idRegimen INT
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].RegimenxHotel (codigoRegimen, idHotel) VALUES (@idRegimen, @idHotel)
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].quitarRegimen @idHotel INT, @idRegimen INT
+AS
+BEGIN
+DELETE FROM [PISOS_PICADOS].RegimenxHotel WHERE idHotel = @idHotel and codigoRegimen = @idRegimen
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].modificarHotel @nombre VARCHAR(255), @mail VARCHAR(255), @telefono VARCHAR(255),
+@calle VARCHAR(255), @nroCalle VARCHAR(255), @estrellas INT, @ciudad VARCHAR(255), @idPais INT,
+@fechaCreacion DATE
+AS
+BEGIN
+IF @nombre IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET nombre = @nombre
+IF @mail IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET mail = @mail
+IF @telefono IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET telefono = @telefono
+IF @calle IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET calle = @calle
+IF @nroCalle IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET nroCalle = @nroCalle
+IF @estrellas IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET estrellas = @estrellas
+IF @ciudad IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET ciudad = @ciudad
+IF @idPais IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET pais = @idPais
+IF @fechaCreacion IS NOT NULL UPDATE [PISOS_PICADOS].Hotel SET fechaCreacion = @fechaCreacion
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].agregarEncargado @idHotel INT, @idEncargado INT
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].EmpleadoxHotel (idHotel, idUsuario) VALUES (@idHotel, @idEncargado)
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].quitarEncargado @idHotel INT, @idEncargado INT
+AS
+BEGIN
+DELETE FROM [PISOS_PICADOS].EmpleadoxHotel WHERE idHotel = @idHotel and idUsuario = @idEncargado
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].bajaDeHotel @idHotel INT, @fechaInicio DATE, @fechaFin DATE, @razon VARCHAR(255)
+AS
+BEGIN
+IF [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin) = 0
+INSERT INTO [PISOS_PICADOS].BajaHotel (idHotel, fechaInicio, fechaFin, razon)
+VALUES (@idHotel, @fechaInicio, @fechaFin, @razon)
+END
+GO
 
