@@ -778,9 +778,16 @@ RETURN 0;
 END
 GO
 
-/* Crea funcion que a partir de usuario y contra me da idUsuario */
-/* otra que a partir de id de usuario te de el string rol */
-
+CREATE FUNCTION [PISOS_PICADOS].consultarRegimen (@idReserva INT)
+RETURNS VARCHAR(255)
+AS
+BEGIN
+RETURN (SELECT descripcion
+		FROM [PISOS_PICADOS].Regimen, [PISOS_PICADOS].Reserva 
+		WHERE codigoReserva = @idReserva and
+		Regimen.codigoRegimen = Reserva.codigoRegimen)
+END
+GO
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 
