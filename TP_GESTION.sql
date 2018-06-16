@@ -799,6 +799,54 @@ RETURN		(SELECT SUM(cantidad*precio)
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].cantidadPersonasHabitacion(@idHabitacion INT)
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT tipo FROM [PISOS_PICADOS].Habitacion where idHabitacion = @idHabitacion) ;
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].incrementoHotel(@idHabitacion INT)
+RETURNS INT
+AS 
+BEGIN
+RETURN (10*(SELECT estrellas  FROM [PISOS_PICADOS].Hotel where idHotel = (
+SELECT idHotel FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = @idHabitacion))) ;
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].precioRegimen(@codigoRegimen INT)
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT precioBase FROM [PISOS_PICADOS].Regimen WHERE codigoRegimen = @codigoRegimen) ;
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].precioHabitacion(@idHabitacion INT , @idRegimen INT)
+RETURNS INT
+AS 
+BEGIN
+RETURN ([PISOS_PICADOS].cantidadPersonasHabitacion(@idHabitacion) * 
+[PISOS_PICADOS].precioRegimen(@idRegimen) *  [PISOS_PICADOS].incrementoHotel(@idHabitacion)) ;
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].hotelCumple(@cantHabitaciones INT , @tipo INT, @idHotel INT)
+RETURNS INT
+AS 
+BEGIN
+if ( @cantHabitaciones = (SELECT COUNT (*) FROM [PISOS_PICADOS].Habitacion 
+WHERE tipo = @tipo AND idHotel = @idHotel AND idHabitacion NOT IN (
+SELECT p.idHabitacion FROM [PISOS_PICADOS].Reserva AS q JOIN [PISOS_PICADOS].HabitacionxReserva AS p 
+ON q.codigoReserva = p.codigoReserva  ) ) ) 
+RETURN 1 ;
+RETURN 0 ;
+END
+GO
+
+
 /* STORED PROCEDURES ------------------------------------------------------*/
 
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255), @estado BIT
