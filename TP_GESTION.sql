@@ -1052,6 +1052,8 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].quitarRegimen @idHotel INT, @idRegimen INT
 AS
 BEGIN
+IF NOT EXISTS (SELECT codigoReserva FROM [PISOS_PICADOS].Reservas WHERE Reservas.codigoRegimen = @idRegimen and
+(fechaInicio > GetDate() or GetDate() BETWEEN fechaInicio AND fechaFin))
 DELETE FROM [PISOS_PICADOS].RegimenxHotel WHERE idHotel = @idHotel and codigoRegimen = @idRegimen
 END
 GO
