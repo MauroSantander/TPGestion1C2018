@@ -1109,3 +1109,18 @@ INSERT INTO [PISOS_PICADOS].Modificacion (estadoReserva, descripcion, usuario, f
 VALUES (@idEstado, @motivo, @idUsuario, @fecha)
 END
 GO
+
+CREATE PROCEDURE [PISOS_PICADOS].agregarConsumible @idEstadia INT, @idConsumible INT, @cantidad INT
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].EstadiaxConsumible (idEstadia, idConsumible, cantidad)
+VALUES (@idEstadia, @idConsumible, @cantidad)
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].quitarConsumible @idEstadia INT, @idConsumible INT
+AS
+BEGIN
+DELETE FROM [PISOS_PICADOS].EstadiaxConsumible WHERE idEstadia = @idEstadia and idConsumible = @idConsumible
+END
+GO
