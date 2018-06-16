@@ -148,7 +148,7 @@ idCliente INT REFERENCES [PISOS_PICADOS].Cliente
 CREATE TABLE [PISOS_PICADOS].Modificacion
 (
 codigoModificacion INT PRIMARY KEY IDENTITY,
-reserva INT REFERENCES [PISOS_PICADOS].Reserva,
+estadoReserva INT REFERENCES [PISOS_PICADOS].Estado,
 descripcion VARCHAR(255),
 usuario INT REFERENCES [PISOS_PICADOS].Usuario,
 fecha DATE
@@ -1098,3 +1098,14 @@ VALUES (@idHotel, @fechaInicio, @fechaFin, @razon)
 END
 GO
 
+CREATE PROCEDURE [PISOS_PICADOS].cancelarReserva @codigoReserva INT, @motivo VARCHAR(255), @fecha DATE, @idUsuario INT
+AS
+BEGIN
+IF @fecha < (SELECT fechaInicio FROM [PISOS_PICADOS].Reserva where codigoReserva = @codigoReserva)
+INSERT INTO [PISOS_PICADOS].Estado VALUES ('Cancelada')
+DECLARE @idEstado INT = SCOPE_IDENTITY();
+UPDATE [PISOS_PICADOS].Reserva SET estado = @idEstado WHERE codigoReserva = @codigoReserva;
+INSERT INTO [PISOS_PICADOS].Modificacion (estadoReserva, descripcion, usuario, fecha)
+VALUES (@idEstado, @motivo, @idUsuario, @fecha)
+END
+GO
