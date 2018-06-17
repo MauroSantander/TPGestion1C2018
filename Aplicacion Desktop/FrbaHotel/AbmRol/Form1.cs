@@ -89,6 +89,9 @@ namespace FrbaHotel.AbmRol
             Conexion con = new Conexion();
 
             con.mostrarTodasLasFuncionalidadesDisponibles(FuncionalidadesxRol);
+
+            //aca se tienen que  mostrar solo la del rol seleccionado, por ende usamos la tabla 
+            //rolxfuncionalidad
         }
 
         private void buttonSalir_Click(object sender, EventArgs e)
@@ -109,6 +112,17 @@ namespace FrbaHotel.AbmRol
         private void buttonModificar_Click(object sender, EventArgs e)
         {
             //abrir pantalla de modificacion
+            //podemos agregar funcionalidades, quitarlas y modificarRol (funciondes de sql)
+        }
+
+        private void buttonBaja_Click(object sender, EventArgs e)
+        {
+            //usar la funcion de sql bajaRol
+        }
+
+        private void buttonCrearRol_Click_1(object sender, EventArgs e)
+        {
+            //funcion en el sql, alta rol
         }
 
     }

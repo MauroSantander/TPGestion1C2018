@@ -136,16 +136,7 @@ namespace FrbaHotel.AbmCliente
         }
 
         private void BotonCrear_Click(object sender, EventArgs e)
-        {
-            /*foreach (Control _textbox in this.Controls)
-            {
-                if (_textbox is TextBox && _textbox.Text == string.Empty)
-                {
-                    MessageBox.Show("Error de campos incompletos");
-                }
-            }*/   //puede que sea util para verificar que todos los campos esten llenos
-
-            //Conexion con = new Conexion();
+        { 
           
             SqlConnection con = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true");
 
@@ -216,7 +207,7 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente;
             
 
-            comandoAltaCliente.ExecuteNonQuery();
+          int rows =  comandoAltaCliente.ExecuteNonQuery();
             MessageBox.Show("Alta realizada correctamente");
             
             //reinicio de los textbox

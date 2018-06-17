@@ -25,8 +25,8 @@ namespace FrbaHotel
 
             try
             {
-                conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;user=gdHotel2018;password=gd2018");
-                conexion.Open();
+                conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;");
+              //  conexion.Open();
             // MessageBox.Show("Conexion exitosa");
             }
             catch (Exception er)
@@ -35,6 +35,12 @@ namespace FrbaHotel
             }
 
         }
+
+ /*       public void conectar()
+        {
+            this.Open(); quizas no sea necesario
+        }
+        */
 
         public void mostrarClientes(DataGridView dgv)
         {
@@ -80,32 +86,43 @@ namespace FrbaHotel
         public int verificarUsuario(String usuario, String contrasena)
         {
 
-            String cadenaVerificarLogIn = "EXECUTE [PISOS_PICADOS].usuarioValido(@usuario,@contraseña)";
-           // String cadenaVerificarLogIn = "EXECUTE [PISOS_PICADOS].usuarioValidoProcedure @usuario, @contrasena, @resultado";
+            String cadenaVerificarLogIn = "EXECUTE [PISOS_PICADOS].usuarioValido(@usuario, @contraseña)";
+         
             SqlCommand verificar = new SqlCommand(cadenaVerificarLogIn, conexion);
+                        verificar.Parameters.AddWithValue("@usuario", usuario);
+            verificar.Parameters.AddWithValue("@contrasena", contrasena);
+          
             
-           // verificar.CommandType = CommandType.StoredProcedure;
-            verificar.Parameters.Add("@usuario", SqlDbType.VarChar);
+            
+            // verificar.CommandType = CommandType.StoredProcedure;
+           /* verificar.Parameters.Add("@usuario", SqlDbType.VarChar);
             verificar.Parameters.Add("@contraseña", SqlDbType.VarChar);
             verificar.Parameters["@usuario"].Value = usuario;
             verificar.Parameters["@contraseña"].Value = contrasena;
 
-
-            /*
-            verificar.Parameters.AddWithValue("@usuario", usuario);
-            verificar.Parameters.AddWithValue   ("@contrasena", contrasena);
             */
+            
 
-            verificar.ExecuteNonQuery();
-            verificar.Parameters.Add("@resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
-            int valor = (int) verificar.Parameters["@resultado"].Value;
+            
+
+         ///   verificar.ExecuteNonQuery();
+           /// verificar.Parameters.Add("@resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+            ///int valor = (int) verificar.Parameters["@resultado"].Value;
            
             
             /*valor =*/ //verificar.ExecuteNonQuery();
             //var result = (int)cmd.Parameters["RetVal"].Value;
             //SqlDataReader lector = verificar.ExecuteReader();
-            conexion.Close();
-            return valor;
+            ///conexion.Close();
+            ///return valor;
+
+            
+               conexion.Open();
+            int result = Convert.ToInt32(verificar.ExecuteScalar());
+                conexion.Close();
+
+                return result;
+
         }
         
     }
