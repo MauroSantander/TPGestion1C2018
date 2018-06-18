@@ -210,6 +210,7 @@ numeroTarjeta INT
 CREATE TABLE [PISOS_PICADOS].Factura
 (
 numeroFactura INT PRIMARY KEY IDENTITY(2396745,1),
+fecha DATE,
 idEstadia INT REFERENCES [PISOS_PICADOS].Estadia,
 formaDePago INT REFERENCES [PISOS_PICADOS].FormaDePago DEFAULT NULL,
 cliente INT REFERENCES [PISOS_PICADOS].Cliente,
@@ -647,14 +648,14 @@ GROUP BY idEstadia, Consumible_Codigo
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Factura ON
 
-INSERT INTO [PISOS_PICADOS].Factura (numeroFactura, cliente, total, idEstadia)
-SELECT Factura_Nro ,idUsuario, Factura_Total, idEstadia
+INSERT INTO [PISOS_PICADOS].Factura (numeroFactura, cliente, total, idEstadia, fecha)
+SELECT Factura_Nro ,idUsuario, Factura_Total, idEstadia, Factura_Fecha
 FROM [PISOS_PICADOS].Usuario, [gd_esquema].Maestra, [PISOS_PICADOS].Estadia as es
 WHERE Cliente_Apellido + Cliente_Nombre = apellido + nombre and
 Cliente_Pasaporte_Nro = numeroIdentificacion and 
 Factura_Total IS NOT NULL and
 es.codigoReserva = Reserva_Codigo
-GROUP BY Factura_Nro ,idUsuario, Factura_Total, idEstadia
+GROUP BY Factura_Nro ,idUsuario, Factura_Total, idEstadia, Factura_Fecha
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Factura OFF
 
@@ -1200,7 +1201,7 @@ DELETE FROM [PISOS_PICADOS].EstadiaxConsumible WHERE idEstadia = @idEstadia and 
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones
+CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones @anio INT, @trimestre INT
 AS
 BEGIN
 	SELECT TOP 5 ho.idHotel, count(*) as cantidad
@@ -1209,14 +1210,17 @@ BEGIN
 	[PISOS_PICADOS].Habitacion as ha on hr.idHabitacion = ha.idHabitacion JOIN
 	[PISOS_PICADOS].Hotel as ho on ho.idHotel = ha.idHotel, 
 	[PISOS_PICADOS].Reserva as re JOIN
-	[PISOS_PICADOS].Estado as es on re.estado = es.idEstado
-	WHERE re.codigoReserva = hr.codigoReserva and es.descripcion = 'Cancelada'
+	[PISOS_PICADOS].Estado as es on re.estado = es.idEstado JOIN
+	[PISOS_PICADOS].Modificacion as mo on es.idEstado = mo.estadoReserva
+	WHERE re.codigoReserva = hr.codigoReserva and es.descripcion = 'Cancelada' and
+	DATEPART(QUARTER,mo.fecha) = @trimestre and
+	DATEPART(YEAR, mo.fecha) = @anio
 	GROUP BY ho.idHotel
 	ORDER BY cantidad DESC
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados
+CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados @anio INT, @trimestre INT
 AS
 BEGIN
 	SELECT TOP 5 hab.idHotel, SUM(re.cantidad) as consumibles
@@ -1226,7 +1230,9 @@ BEGIN
 	[PISOS_PICADOS].Estadia as es on fa.idEstadia = es.idEstadia JOIN
 	[PISOS_PICADOS].Reserva as res on es.codigoReserva = res.codigoReserva,
 	[PISOS_PICADOS].HabitacionxReserva as hr JOIN [PISOS_PICADOS].Habitacion as hab on hr.idHabitacion = hab.idHabitacion
-	WHERE res.codigoReserva = hr.codigoReserva
+	WHERE res.codigoReserva = hr.codigoReserva and
+	DATEPART(QUARTER,fa.fecha) = @trimestre and
+	DATEPART(YEAR, fa.fecha) = @anio
 
 	GROUP BY hab.idHotel
 	ORDER BY consumibles DESC
