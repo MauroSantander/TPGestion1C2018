@@ -121,3 +121,7 @@ DROP FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion
 GO
 DROP PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones
 GO
+DROP FUNCTION [PISOS_PICADOS].consultarRegimen
+GO
+DROP PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados
+GO

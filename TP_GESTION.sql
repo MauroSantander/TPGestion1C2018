@@ -1215,3 +1215,20 @@ BEGIN
 	ORDER BY cantidad DESC
 END
 GO
+
+CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados
+AS
+BEGIN
+	SELECT TOP 5 hab.idHotel, SUM(re.cantidad) as consumibles
+	FROM
+	[PISOS_PICADOS].RenglonFactura as re JOIN
+	[PISOS_PICADOS].Factura as fa on fa.numeroFactura = re.numeroFactura JOIN
+	[PISOS_PICADOS].Estadia as es on fa.idEstadia = es.idEstadia JOIN
+	[PISOS_PICADOS].Reserva as res on es.codigoReserva = res.codigoReserva,
+	[PISOS_PICADOS].HabitacionxReserva as hr JOIN [PISOS_PICADOS].Habitacion as hab on hr.idHabitacion = hab.idHabitacion
+	WHERE res.codigoReserva = hr.codigoReserva
+
+	GROUP BY hab.idHotel
+	ORDER BY consumibles DESC
+END
+GO
