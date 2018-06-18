@@ -210,6 +210,7 @@ numeroTarjeta INT
 CREATE TABLE [PISOS_PICADOS].Factura
 (
 numeroFactura INT PRIMARY KEY IDENTITY(2396745,1),
+idEstadia INT REFERENCES [PISOS_PICADOS].Estadia,
 formaDePago INT REFERENCES [PISOS_PICADOS].FormaDePago DEFAULT NULL,
 cliente INT REFERENCES [PISOS_PICADOS].Cliente,
 total NUMERIC(8,2)
@@ -646,13 +647,14 @@ GROUP BY idEstadia, Consumible_Codigo
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Factura ON
 
-INSERT INTO [PISOS_PICADOS].Factura (numeroFactura ,cliente, total)
-SELECT Factura_Nro ,idUsuario, Factura_Total
-FROM [PISOS_PICADOS].Usuario, [gd_esquema].Maestra
+INSERT INTO [PISOS_PICADOS].Factura (numeroFactura, cliente, total, idEstadia)
+SELECT Factura_Nro ,idUsuario, Factura_Total, idEstadia
+FROM [PISOS_PICADOS].Usuario, [gd_esquema].Maestra, [PISOS_PICADOS].Estadia as es
 WHERE Cliente_Apellido + Cliente_Nombre = apellido + nombre and
 Cliente_Pasaporte_Nro = numeroIdentificacion and 
-Factura_Total IS NOT NULL
-GROUP BY Factura_Nro ,idUsuario, Factura_Total
+Factura_Total IS NOT NULL and
+es.codigoReserva = Reserva_Codigo
+GROUP BY Factura_Nro ,idUsuario, Factura_Total, idEstadia
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Factura OFF
 
