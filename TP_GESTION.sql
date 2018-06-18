@@ -846,6 +846,14 @@ RETURN 0 ;
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion (@idHabitacion INT)
+RETURNS INT
+AS
+BEGIN
+RETURN (SELECT idHotel FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = @idHabitacion)
+END
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 
@@ -1187,5 +1195,21 @@ CREATE PROCEDURE [PISOS_PICADOS].quitarConsumible @idEstadia INT, @idConsumible 
 AS
 BEGIN
 DELETE FROM [PISOS_PICADOS].EstadiaxConsumible WHERE idEstadia = @idEstadia and idConsumible = @idConsumible
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones
+AS
+BEGIN
+	SELECT TOP 5 ho.idHotel, count(*) as cantidad
+	FROM
+	[PISOS_PICADOS].HabitacionxReserva as hr JOIN
+	[PISOS_PICADOS].Habitacion as ha on hr.idHabitacion = ha.idHabitacion JOIN
+	[PISOS_PICADOS].Hotel as ho on ho.idHotel = ha.idHotel, 
+	[PISOS_PICADOS].Reserva as re JOIN
+	[PISOS_PICADOS].Estado as es on re.estado = es.idEstado
+	WHERE re.codigoReserva = hr.codigoReserva and es.descripcion = 'Cancelada'
+	GROUP BY ho.idHotel
+	ORDER BY cantidad DESC
 END
 GO
