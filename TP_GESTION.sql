@@ -1238,3 +1238,27 @@ BEGIN
 	ORDER BY consumibles DESC
 END
 GO
+
+CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasDiasDeBaja @anio INT, @trimestre INT
+AS
+BEGIN
+	SELECT TOP 5 bh.idHotel, SUM(CASE
+	WHEN DATEPART(QUARTER,fechaInicio) = DATEPART(QUARTER,fechaFin) 
+	THEN DATEDIFF(DAY, fechaInicio, fechaFin)
+	WHEN DATEPART(QUARTER,fechaInicio) < DATEPART(QUARTER,fechaFin) and DATEPART(QUARTER,fechaInicio) < @trimestre
+	THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()), 0), fechaFin)
+	WHEN DATEPART(QUARTER,fechaInicio) < DATEPART(QUARTER,fechaFin) and DATEPART(QUARTER,fechaFin) > @trimestre
+	THEN DATEDIFF(DAY, fechaInicio, DATEADD (dd, -1, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()) +1, 0)))
+	END) as diasbaja
+	FROM
+	[PISOS_PICADOS].BajaHotel as bh
+	WHERE
+	(DATEPART(QUARTER,bh.fechaInicio) = @trimestre and
+	DATEPART(YEAR, bh.fechaInicio) = @anio) or
+	(DATEPART(QUARTER,bh.fechaFin) = @trimestre and
+	DATEPART(YEAR, bh.fechaFin) = @anio)
+
+	GROUP BY bh.idHotel
+	ORDER BY diasbaja DESC
+END
+GO
