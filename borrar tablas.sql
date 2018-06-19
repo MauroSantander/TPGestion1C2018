@@ -118,6 +118,8 @@ DROP FUNCTION [PISOS_PICADOS].precioHabitacion
 GO
 DROP FUNCTION [PISOS_PICADOS].hotelCumple
 GO
+DROP FUNCTION [PISOS_PICADOS].habitacionQueCumple
+GO
 DROP FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion
 GO
 DROP PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones
@@ -127,4 +129,6 @@ GO
 DROP PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados
 GO
 DROP PROCEDURE [PISOS_PICADOS].hotelesConMasDiasDeBaja
+GO
+DROP PROCEDURE [PISOS_PICADOS].registrarReserva
 GO

@@ -142,7 +142,8 @@ fechaFin DATE DEFAULT NULL,
 cantidadHuespedes INT DEFAULT NULL,
 codigoRegimen INT REFERENCES [PISOS_PICADOS].Regimen,
 estado INT REFERENCES [PISOS_PICADOS].Estado DEFAULT NULL,
-idCliente INT REFERENCES [PISOS_PICADOS].Cliente
+idCliente INT REFERENCES [PISOS_PICADOS].Cliente,
+precioTotal INT DEFAULT NULL
 )
 
 CREATE TABLE [PISOS_PICADOS].Modificacion
@@ -522,7 +523,8 @@ FROM [gd_esquema].Maestra;
 
 INSERT INTO [PISOS_PICADOS].Tipo 
 SELECT DISTINCT Habitacion_Tipo_Descripcion , Habitacion_Tipo_Porcentual 
-FROM [gd_esquema].Maestra;
+FROM [gd_esquema].Maestra
+ORDER BY Habitacion_Tipo_Porcentual;
 
 INSERT INTO [PISOS_PICADOS].Usuario 
 (nombre, apellido, mail, calle, numeroIdentificacion, fechaNacimiento)
@@ -802,20 +804,21 @@ RETURN		(SELECT SUM(cantidad*precio)
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].cantidadPersonasHabitacion(@idHabitacion INT)
+
+
+CREATE FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion (@idHabitacion INT)
 RETURNS INT
-AS 
+AS
 BEGIN
-RETURN (SELECT tipo FROM [PISOS_PICADOS].Habitacion where idHabitacion = @idHabitacion) ;
+RETURN (SELECT idHotel FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = @idHabitacion)
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].incrementoHotel(@idHabitacion INT)
+CREATE FUNCTION [PISOS_PICADOS].incrementoHotel(@idHotelActual INT)
 RETURNS INT
 AS 
 BEGIN
-RETURN (10*(SELECT estrellas  FROM [PISOS_PICADOS].Hotel where idHotel = (
-SELECT idHotel FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = @idHabitacion))) ;
+RETURN (10*(SELECT estrellas  FROM [PISOS_PICADOS].Hotel where idHotel = @idHotelActual)) 
 END
 GO
 
@@ -827,33 +830,36 @@ RETURN (SELECT precioBase FROM [PISOS_PICADOS].Regimen WHERE codigoRegimen = @co
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].precioHabitacion(@idHabitacion INT , @idRegimen INT)
+CREATE FUNCTION [PISOS_PICADOS].precioHabitacion(@idTipo INT , @idRegimen INT, @idHotel INT)
 RETURNS INT
 AS 
 BEGIN
-RETURN ([PISOS_PICADOS].cantidadPersonasHabitacion(@idHabitacion) * 
-[PISOS_PICADOS].precioRegimen(@idRegimen) *  [PISOS_PICADOS].incrementoHotel(@idHabitacion)) ;
+RETURN ( @idTipo *  [PISOS_PICADOS].precioRegimen(@idRegimen) *  [PISOS_PICADOS].incrementoHotel(@idHotel)) ;
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].hotelCumple(@cantHabitaciones INT , @tipo INT, @idHotel INT)
+
+CREATE FUNCTION [PISOS_PICADOS].hotelCumple(@cantHabitaciones INT , @tipo INT, @idHotel INT, @fechaReserva DATE)
 RETURNS INT
 AS 
 BEGIN
 if ( @cantHabitaciones = (SELECT COUNT (*) FROM [PISOS_PICADOS].Habitacion 
 WHERE tipo = @tipo AND idHotel = @idHotel AND idHabitacion NOT IN (
 SELECT p.idHabitacion FROM [PISOS_PICADOS].Reserva AS q JOIN [PISOS_PICADOS].HabitacionxReserva AS p 
-ON q.codigoReserva = p.codigoReserva  ) ) ) 
-RETURN 1 ;
+ON q.codigoReserva = p.codigoReserva WHERE @fechaReserva  NOT BETWEEN fechaInicio AND fechaFin)  ) ) 
+RETURN 1 ; 
 RETURN 0 ;
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion (@idHabitacion INT)
+CREATE FUNCTION [PISOS_PICADOS].habitacionQueCumple (@tipo INT, @idHotel INT, @fechaReserva DATE)
 RETURNS INT
-AS
+AS 
 BEGIN
-RETURN (SELECT idHotel FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = @idHabitacion)
+RETURN (SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion 
+WHERE tipo = @tipo AND idHotel = @idHotel  AND idHabitacion NOT IN (
+SELECT p.idHabitacion FROM [PISOS_PICADOS].Reserva AS q JOIN [PISOS_PICADOS].HabitacionxReserva AS p 
+ON q.codigoReserva = p.codigoReserva WHERE @fechaReserva  NOT BETWEEN fechaInicio AND fechaFin )) ; 
 END
 GO
 
@@ -1262,3 +1268,77 @@ BEGIN
 	ORDER BY diasbaja DESC
 END
 GO
+
+CREATE PROCEDURE [PISOS_PICADOS].registrarReserva  @fechaReserva DATE,@fechaInicio DATE , @fechaFin DATE , 
+@cantHuespedes INT , @codRegimen INT , @idCliente INT,@idHotel INT ,@cantSimple INT,@cantDoble INT, @cantTriple INT, 
+@cantCuadru INT , @cantKing INT
+AS
+BEGIN 
+
+INSERT INTO [PISOS_PICADOS].Reserva(fechaRealizacion,fechaInicio,fechaFin,cantidadHuespedes,codigoRegimen,
+estado,idCliente,precioTotal)
+VALUES (@fechaReserva,@fechaInicio,@fechaFin,@cantHuespedes,@codRegimen,1,@idCliente,
+((@cantSimple* [PISOS_PICADOS].precioHabitacion (1,@codRegimen,@idHotel)) + 
+(@cantDoble* [PISOS_PICADOS].precioHabitacion (2,@codRegimen,@idHotel)) + 
+(@cantTriple* [PISOS_PICADOS].precioHabitacion (3,@codRegimen,@idHotel)) + 
+(@cantCuadru* [PISOS_PICADOS].precioHabitacion (4,@codRegimen,@idHotel)) + 
+(@cantKing* [PISOS_PICADOS].precioHabitacion (5,@codRegimen,@idHotel))));
+
+DECLARE @idReserva INT = SCOPE_IDENTITY();
+DECLARE @cont INT ;
+SET  @cont = 0
+
+WHILE ( @cont < @cantSimple) 
+BEGIN	
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva 
+VALUES ((SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = 
+[PISOS_PICADOS].habitacionQueCumple(1,@idHotel , @fechaReserva)), @idReserva);
+SET @cont = @cont + 1
+END
+
+SET  @cont = 0
+
+WHILE ( @cont < @cantDoble) 
+BEGIN	
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva 
+VALUES ((SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = 
+[PISOS_PICADOS].habitacionQueCumple(2,@idHotel , @fechaReserva)), @idReserva);
+SET @cont = @cont + 1
+END
+
+SET  @cont = 0
+
+
+WHILE ( @cont < @cantTriple) 
+BEGIN	
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva 
+VALUES ((SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = 
+[PISOS_PICADOS].habitacionQueCumple(3,@idHotel , @fechaReserva)), @idReserva);
+SET @cont = @cont + 1
+END
+
+SET  @cont = 0
+
+
+WHILE ( @cont < @cantCuadru) 
+BEGIN	
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva 
+VALUES ((SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = 
+[PISOS_PICADOS].habitacionQueCumple(4,@idHotel , @fechaReserva)), @idReserva);
+SET @cont = @cont + 1
+END
+
+SET  @cont = 0
+
+
+WHILE ( @cont < @cantKing) 
+BEGIN	
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva 
+VALUES ((SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion WHERE idHabitacion = 
+[PISOS_PICADOS].habitacionQueCumple(5,@idHotel , @fechaReserva)), @idReserva);
+SET @cont = @cont + 1
+END
+
+END;
+GO
+
