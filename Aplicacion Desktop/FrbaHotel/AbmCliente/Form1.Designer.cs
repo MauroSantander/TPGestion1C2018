@@ -181,6 +181,15 @@
             // 
             // TipoId
             // 
+            this.TipoId.AutoCompleteCustomSource.AddRange(new string[] {
+            "L. E/DNI",
+            "CARNET EXT.",
+            "RUC",
+            "PASAPORTE",
+            "P. NAC.",
+            "OTROS"});
+            this.TipoId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.TipoId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.TipoId.FormattingEnabled = true;
             this.TipoId.Items.AddRange(new object[] {
             "L. E/DNI",

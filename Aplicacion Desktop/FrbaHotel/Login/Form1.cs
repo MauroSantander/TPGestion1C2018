@@ -64,14 +64,28 @@ namespace FrbaHotel.Login
         {
             //boton de inicio de sesion
 
-            Conexion conection = new Conexion();
+            SqlConnection conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;");
 
             String usuario = textBoxUsuario.Text;
             String contrasena = textBoxContrasena.Text;
-            
-            int valor = conection.verificarUsuario(usuario, contrasena);
 
-            if (valor == 1)
+            conexion.Open();
+
+            SqlCommand verificar = new SqlCommand("SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario=@usuario AND contraseña=@contrasena ", conexion);
+            verificar.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
+            verificar.Parameters.Add("@contrasena", SqlDbType.VarChar).Value = contrasena;
+
+            SqlDataReader dr = verificar.ExecuteReader();
+
+            int rows = 0;
+
+            if (dr.HasRows)
+                while (dr.Read())
+                    rows++;
+
+            conexion.Close();
+            
+            if (rows > 0)
             {
                 (new FrbaHotel.AbmCliente.Form1()).ShowDialog();
             }
@@ -83,9 +97,9 @@ namespace FrbaHotel.Login
 
         private void buttonSalir_Click(object sender, EventArgs e)
         {
-
+         //boton de salida
             this.Close();
-            //boton de salida
+   
         }
 
 
