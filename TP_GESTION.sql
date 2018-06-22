@@ -529,7 +529,7 @@ ORDER BY Habitacion_Tipo_Porcentual;
 INSERT INTO [PISOS_PICADOS].Usuario 
 (nombre, apellido, mail, calle, numeroIdentificacion, fechaNacimiento)
 SELECT DISTINCT
-Cliente_Nombre, Cliente_Apellido, Cliente_Mail, Cliente_Dom_Calle,
+Cliente_Nombre, Cliente_Apellido, [PISOS_PICADOS].normalizarMail (Cliente_Mail), Cliente_Dom_Calle,
 Cliente_Pasaporte_Nro, Cliente_Fecha_Nac
 FROM [gd_esquema].Maestra;
 
@@ -863,6 +863,53 @@ ON q.codigoReserva = p.codigoReserva WHERE @fechaReserva  NOT BETWEEN fechaInici
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].normalizarMail(@mail VARCHAR(255))
+RETURNS VARCHAR(255)
+AS
+BEGIN
+   
+   SELECT @mail = LOWER(LTRIM(RTRIM(@mail)))
+   SELECT @mail = REPLACE(@mail,',', '.')
+   SELECT @mail = REPLACE(@mail,'@ ', '@')
+   SELECT @mail = REPLACE(@mail,' @',  '@')
+   SELECT @mail = REPLACE(@mail,'. ', '.')
+   SELECT @mail = REPLACE(@mail,' .', '.')
+   SELECT @mail = REPLACE(@mail,'ñ', 'n')
+   DECLARE @USER AS VARCHAR(60)
+   DECLARE @DOM AS VARCHAR(60)
+   SET @USER=SUBSTRING(@mail,1,CHARINDEX( '@',@mail)-1)
+   SET @DOM=SUBSTRING(@mail,CHARINDEX( '@',@mail)+1, 100)
+   SET @USER=LTRIM(RTRIM(@USER))
+   SET @DOM=LTRIM(RTRIM(@DOM))
+   SELECT @DOM = REPLACE(@DOM, ' ','')
+   SELECT @USER = REPLACE(@USER, ' ','_')
+   RETURN @USER + '@'  + @DOM
+END 
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].validarMail(@mail VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN 
+DECLARE @mailNormalizado VARCHAR(255) = [PISOS_PICADOS].normalizarMail(@mail)
+IF CHARINDEX('@',@mailNormalizado,1)>0 AND CHARINDEX('.', @mailNormalizado, CHARINDEX( '@', @mail))>0
+IF NOT charindex('@' , @mailNormalizado, CHARINDEX('@',@mailNormalizado,1)+1)>0
+RETURN 1
+RETURN 0
+END 
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].existeMail(@mail VARCHAR(255))
+RETURNS INT
+AS 
+BEGIN 
+DECLARE @mailNormalizado VARCHAR(255) = [PISOS_PICADOS].normalizarMail(@mail)
+if @mailNormalizado = (SELECT idUsuario FROM [PISOS_PICADOS].Usuario WHERE mail = @mailNormalizado)
+RETURN 0
+RETURN 1 
+END 
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 
@@ -982,10 +1029,6 @@ UPDATE [PISOS_PICADOS].Usuario SET estado = 0 WHERE idUsuario = @idUsuario
 END;
 GO
 
-/* ABM CLIENTE */
-
-/* ALTA CLIENTE*/
-
 CREATE PROCEDURE [PISOS_PICADOS].SPAltaCliente @nombre VARCHAR(255), @apellido VARCHAR(255),@tipo VARCHAR(255),
 @numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT,
 @localidad VARCHAR(255),@pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE
@@ -998,15 +1041,15 @@ tipoIdentificacion,numeroIdentificacion,fechaNacimiento,estado)
 values (@nombre,@apellido,@mail,@telefono,@calle,@numeroC,@localidad, [PISOS_PICADOS].obtenerIDPais(@pais) ,
 @tipo,@numeroI,@fechaNacimiento,1);
 
+DECLARE @idusuario INT = SCOPE_IDENTITY();
+
 INSERT INTO [PISOS_PICADOS].Cliente
-VALUES ( [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI) , @nacionalidad);
+VALUES ( @idusuario , @nacionalidad);
 
 INSERT INTO [PISOS_PICADOS].RolxUsuario
-VALUES (3, [PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroI));
+VALUES (3,@idusuario);
 END;
 GO
-
-/* MODIFICACION CLIENTE */ 
 
 CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT,@nombre VARCHAR(255), @apellido VARCHAR(255),@tipo VARCHAR(255),
 @numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT, 
@@ -1044,8 +1087,6 @@ WHERE @idUsuario = idUsuario
 END;
 GO
 
-/* MODIFICAR ESTADO CLIENTE */
-
 CREATE PROCEDURE [PISOS_PICADOS].SPEstadoCliente @idUsuario INT, @Estado BIT
 AS 
 BEGIN
@@ -1053,11 +1094,6 @@ UPDATE [PISOS_PICADOS].Usuario set estado = @Estado
 WHERE @idUsuario = idUsuario
 END;
 GO
-
-/* ABM HABITACION */
-
-/* ALTA HABITACION (EL numero de habitacion no puede repetirse en un mismo hotel*/
-
 
 CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@frente CHAR(1),@tipo INT, 
 @descripcion VARCHAR(255), @piso INT, @habilitado BIT
@@ -1094,8 +1130,6 @@ WHERE  idHabitacion = @idHabitacion
 
 END;
 GO
-
-/* BAJA HABITACION   */
 
 CREATE PROCEDURE [PISOS_PICADOS].SPEstadoHabitacion @idHabitacion INT, @habilitado BIT,
  @fechaInicio DATE , @fechaFin DATE
