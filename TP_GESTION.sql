@@ -1402,23 +1402,36 @@ END
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces
+CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces @anio INT, @trimestre INT
 AS
 BEGIN
 	SELECT top 5 ha.idHotel, ha.idHabitacion, count(*)
-	FROM [PISOS_PICADOS].Habitacion as ha JOIN [PISOS_PICADOS].HabitacionxReserva as hr on hr.idHabitacion = ha.idHabitacion
+	FROM [PISOS_PICADOS].Habitacion as ha JOIN [PISOS_PICADOS].HabitacionxReserva as hr on hr.idHabitacion = ha.idHabitacion,
+	[PISOS_PICADOS].Reserva as re
+	WHERE re.codigoReserva = hr.codigoReserva and
+	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
+	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)
 	GROUP BY ha.idHotel, ha.idHabitacion
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias
+CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias @anio INT, @trimestre INT
 AS
 BEGIN
-	SELECT top 5 ha.idHotel, ha.idHabitacion, SUM(DATEDIFF(DAY,re.fechaInicio,re.fechaFin))
+	SELECT top 5 ha.idHotel, ha.idHabitacion, SUM(CASE
+	WHEN DATEPART(QUARTER,fechaInicio) = DATEPART(QUARTER,fechaFin) 
+	THEN DATEDIFF(DAY, fechaInicio, fechaFin)
+	WHEN DATEPART(QUARTER,fechaInicio) < DATEPART(QUARTER,fechaFin) and DATEPART(QUARTER,fechaInicio) < @trimestre
+	THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()), 0), fechaFin)
+	WHEN DATEPART(QUARTER,fechaInicio) < DATEPART(QUARTER,fechaFin) and DATEPART(QUARTER,fechaFin) > @trimestre
+	THEN DATEDIFF(DAY, fechaInicio, DATEADD (dd, -1, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()) +1, 0)))
+	END) as dias
 	FROM [PISOS_PICADOS].Habitacion as ha JOIN 
 	[PISOS_PICADOS].HabitacionxReserva as hr on hr.idHabitacion = ha.idHabitacion, 
 	[PISOS_PICADOS].Reserva as re
-	WHERE re.codigoReserva = hr.codigoReserva
+	WHERE re.codigoReserva = hr.codigoReserva and
+	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
+	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)
 	GROUP BY ha.idHotel, ha.idHabitacion
 END
 GO
