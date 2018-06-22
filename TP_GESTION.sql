@@ -910,6 +910,19 @@ RETURN 1
 END 
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].habilitadoCLiente(@nombre VARCHAR(255), @apellido VARCHAR(255), 
+@numeroIdentificacion INT)
+RETURNS INT
+AS 
+BEGIN
+DECLARE @id INT ;
+SET @id = [PISOS_PICADOS].obtenerIDUsuario (@nombre,@apellido,@numeroIdentificacion)
+IF (1 = (SELECT estado FROM [PISOS_PICADOS].Usuario WHERE idUsuario = @id ))
+RETURN 1
+RETURN 0
+END
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 
