@@ -140,3 +140,7 @@ DROP FUNCTION [PISOS_PICADOS].existeMail
 GO
 DROP FUNCTION [PISOS_PICADOS].habilitadoCLiente
 GO
+DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces
+GO
+DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias
+GO
