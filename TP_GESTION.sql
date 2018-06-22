@@ -529,7 +529,7 @@ ORDER BY Habitacion_Tipo_Porcentual;
 INSERT INTO [PISOS_PICADOS].Usuario 
 (nombre, apellido, mail, calle, numeroIdentificacion, fechaNacimiento)
 SELECT DISTINCT
-Cliente_Nombre, Cliente_Apellido, [PISOS_PICADOS].normalizarMail (Cliente_Mail), Cliente_Dom_Calle,
+Cliente_Nombre, Cliente_Apellido, Cliente_Mail, Cliente_Dom_Calle,
 Cliente_Pasaporte_Nro, Cliente_Fecha_Nac
 FROM [gd_esquema].Maestra;
 
@@ -709,7 +709,7 @@ RETURN (SELECT idHotel FROM [PISOS_PICADOS].Hotel
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].existeEnHotel(@idHotel INT,@numero INT)
+CREATE FUNCTION [PISOS_PICADOS].existeNumEnHotel(@idHotel INT,@numero INT)
 RETURNS INT
 AS 
 BEGIN
@@ -922,6 +922,23 @@ RETURN 1
 RETURN 0
 END
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].precioReserva( @cantSimple INT, @cantDoble INT, @cantTriple INT, @cantCuadru INT, @cantKing INT,
+ @codRegimen INT , @idHotel INT)  
+RETURNS INT
+AS
+BEGIN
+DECLARE @resultado INT
+SET @resultado = ( @cantSimple * [PISOS_PICADOS].precioHabitacion (1,@codRegimen,@idHotel) + 
+@cantDoble* [PISOS_PICADOS].precioHabitacion (2,@codRegimen,@idHotel) + 
+@cantTriple* [PISOS_PICADOS].precioHabitacion (3,@codRegimen,@idHotel) + 
+@cantCuadru* [PISOS_PICADOS].precioHabitacion (4,@codRegimen,@idHotel) + 
+@cantKing* [PISOS_PICADOS].precioHabitacion (5,@codRegimen,@idHotel))
+RETURN @resultado
+END
+GO
+
+
 
 
 /* STORED PROCEDURES ------------------------------------------------------*/
@@ -1325,11 +1342,7 @@ BEGIN
 INSERT INTO [PISOS_PICADOS].Reserva(fechaRealizacion,fechaInicio,fechaFin,cantidadHuespedes,codigoRegimen,
 estado,idCliente,precioTotal)
 VALUES (@fechaReserva,@fechaInicio,@fechaFin,@cantHuespedes,@codRegimen,1,@idCliente,
-((@cantSimple* [PISOS_PICADOS].precioHabitacion (1,@codRegimen,@idHotel)) + 
-(@cantDoble* [PISOS_PICADOS].precioHabitacion (2,@codRegimen,@idHotel)) + 
-(@cantTriple* [PISOS_PICADOS].precioHabitacion (3,@codRegimen,@idHotel)) + 
-(@cantCuadru* [PISOS_PICADOS].precioHabitacion (4,@codRegimen,@idHotel)) + 
-(@cantKing* [PISOS_PICADOS].precioHabitacion (5,@codRegimen,@idHotel))));
+[PISOS_PICADOS].precioReserva( @cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel));
 
 DECLARE @idReserva INT = SCOPE_IDENTITY();
 DECLARE @cont INT ;
