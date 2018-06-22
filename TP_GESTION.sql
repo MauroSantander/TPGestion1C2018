@@ -1404,3 +1404,26 @@ END
 
 END;
 GO
+
+
+CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces
+AS
+BEGIN
+	SELECT top 5 ha.idHotel, ha.idHabitacion, count(*)
+	FROM [PISOS_PICADOS].Habitacion as ha JOIN [PISOS_PICADOS].HabitacionxReserva as hr on hr.idHabitacion = ha.idHabitacion
+	GROUP BY ha.idHotel, ha.idHabitacion
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias
+AS
+BEGIN
+	SELECT top 5 ha.idHotel, ha.idHabitacion, SUM(DATEDIFF(DAY,re.fechaInicio,re.fechaFin))
+	FROM [PISOS_PICADOS].Habitacion as ha JOIN 
+	[PISOS_PICADOS].HabitacionxReserva as hr on hr.idHabitacion = ha.idHabitacion, 
+	[PISOS_PICADOS].Reserva as re
+	WHERE re.codigoReserva = hr.codigoReserva
+	GROUP BY ha.idHotel, ha.idHabitacion
+END
+GO
+
