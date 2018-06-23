@@ -1342,11 +1342,13 @@ BEGIN
 INSERT INTO [PISOS_PICADOS].Reserva(fechaRealizacion,fechaInicio,fechaFin,cantidadHuespedes,codigoRegimen,
 estado,idCliente,precioTotal)
 VALUES (@fechaReserva,@fechaInicio,@fechaFin,@cantHuespedes,@codRegimen,1,@idCliente,
-[PISOS_PICADOS].precioReserva( @cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel));
+((DATEDIFF(day, @fechaInicio,@fechaFIN))* [PISOS_PICADOS].precioReserva( @cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel)));
 
 DECLARE @idReserva INT = SCOPE_IDENTITY();
 DECLARE @cont INT ;
 SET  @cont = 0
+
+
 
 INSERT INTO [PISOS_PICADOS].Estadia(codigoReserva)
 VALUES (@idReserva);
@@ -1424,6 +1426,15 @@ BEGIN
 	[PISOS_PICADOS].Reserva as re
 	WHERE re.codigoReserva = hr.codigoReserva
 	GROUP BY ha.idHotel, ha.idHabitacion
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada @fechaActual DATE
+AS
+BEGIN
+DELETE es FROM [PISOS_PICADOS].Estadia as es JOIN [PISOS_PICADOS].Reserva as re 
+ON es.codigoReserva = re.codigoReserva 
+WHERE re.fechaInicio < @fechaActual; 
 END
 GO
 
