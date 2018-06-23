@@ -183,7 +183,8 @@ codigoReserva INT REFERENCES [PISOS_PICADOS].Reserva,
 fechaCheckIn DATE DEFAULT NULL,
 encargadoCheckIn INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL,
 fechaCheckOut DATE DEFAULT NULL,
-encargadoCheckOut INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL
+encargadoCheckOut INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL,
+estado INT DEFAULT 1
 )
 
 CREATE TABLE [PISOS_PICADOS].Consumible
@@ -1439,18 +1440,26 @@ BEGIN
 	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)))
 	GROUP BY ha.idHotel, ha.idHabitacion
 END
-<<<<<<< HEAD
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada @fechaActual DATE
 AS
 BEGIN
-DELETE es FROM [PISOS_PICADOS].Estadia as es JOIN [PISOS_PICADOS].Reserva as re 
-ON es.codigoReserva = re.codigoReserva 
-WHERE re.fechaInicio < @fechaActual; 
+
+UPDATE es 
+SET es.estado = 0
+FROM [PISOS_PICADOS].Estadia AS es JOIN [PISOS_PICADOS].Reserva AS re ON es.codigoReserva = re.codigoReserva 
+WHERE re.fechaInicio < @fechaActual;
+
+UPDATE re
+SET re.estado = 5
+FROM [PISOS_PICADOS].Reserva AS re JOIN [PISOS_PICADOS].Estadia AS es ON re.codigoReserva = es.codigoReserva
+WHERE es.estado = 0;
+
+DELETE hr
+FROM [PISOS_PICADOS].HabitacionxReserva AS hr JOIN [PISOS_PICADOS].Reserva AS re ON hr.codigoReserva = re.codigoReserva 
+WHERE re.estado = 5
 END
 GO
 
-=======
-GO
->>>>>>> 63c9b4534a8cc6e43dc7cbad678a8402ee2243e9
+
