@@ -63,36 +63,46 @@ namespace FrbaHotel.Login
         private void buttonIniciarSesion_Click(object sender, EventArgs e)
         {
             //boton de inicio de sesion
-
+            
+            String cadenaVerificarLogIn = "SELECT [PISOS_PICADOS].usuarioValido(@usuario, @contraseña)";
             SqlConnection conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;");
-
+            conexion.Open();
+            SqlCommand verificar = new SqlCommand(cadenaVerificarLogIn, conexion);
+            
             String usuario = textBoxUsuario.Text;
             String contrasena = textBoxContrasena.Text;
+            
+            verificar.Parameters.Add("@usuario", SqlDbType.VarChar);
+            verificar.Parameters.Add("@contraseña", SqlDbType.VarChar);
+            verificar.Parameters["@usuario"].Value = usuario;
+            verificar.Parameters["@contraseña"].Value = contrasena;
 
-            conexion.Open();
+            String q = "SELECT [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario, @contraseña)";
+            SqlCommand qu = new SqlCommand(q, conexion);
+            
+            qu.Parameters.Add("@usuario", SqlDbType.VarChar);
+            qu.Parameters.Add("@contraseña", SqlDbType.VarChar);
+            qu.Parameters["@usuario"].Value = usuario;
+            qu.Parameters["@contraseña"].Value = contrasena;
 
-            SqlCommand verificar = new SqlCommand("SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario=@usuario AND contraseña=@contrasena ", conexion);
-            verificar.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
-            verificar.Parameters.Add("@contrasena", SqlDbType.VarChar).Value = contrasena;
+            
+            int valor = (int) verificar.ExecuteScalar();
+            int rol = (int) qu.ExecuteScalar();
 
-            SqlDataReader dr = verificar.ExecuteReader();
+            if (valor == 1)
+            {
 
-            int rows = 0;
+                (new FrbaHotel.Form2()).asignarRol(rol);
 
-            if (dr.HasRows)
-                while (dr.Read())
-                    rows++;
+                //Form2.Form2().ShowDialog();
+
+                this.Close();
+            }
+            else {
+                MessageBox.Show("Usuario Inválido");
+            }
 
             conexion.Close();
-            
-            if (rows > 0)
-            {
-                (new FrbaHotel.AbmCliente.Form1()).ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("usuario no valido");
-            }
         }
 
         private void buttonSalir_Click(object sender, EventArgs e)

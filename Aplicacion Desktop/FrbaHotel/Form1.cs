@@ -30,11 +30,8 @@ namespace FrbaHotel
         private void buttonIniciar_Click(object sender, EventArgs e)
         {
 
-
             (new FrbaHotel.Login.Form1()).ShowDialog();
             this.Close();
-            
-           
             
         }
 
