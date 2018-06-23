@@ -1411,13 +1411,14 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces @anio INT, @trimestre INT
 AS
 BEGIN
-	SELECT top 5 ha.idHotel, ha.idHabitacion, count(*)
+	SELECT top 5 ha.idHotel, ha.idHabitacion, count(*) as veces
 	FROM [PISOS_PICADOS].Habitacion as ha JOIN [PISOS_PICADOS].HabitacionxReserva as hr on hr.idHabitacion = ha.idHabitacion,
 	[PISOS_PICADOS].Reserva as re
 	WHERE re.codigoReserva = hr.codigoReserva and
 	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
 	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)))
 	GROUP BY ha.idHotel, ha.idHabitacion
+	ORDER BY veces DESC
 END
 GO
 
@@ -1439,6 +1440,30 @@ BEGIN
 	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
 	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)))
 	GROUP BY ha.idHotel, ha.idHabitacion
+	ORDER BY dias DESC
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].topClientesPorPuntos @anio INT, @trimestre INT
+AS
+BEGIN
+	SELECT TOP 5 fact.cliente, 
+	CAST((SUM(reng.total)/10 + 
+	SUM(CASE
+		WHEN DATEPART(QUARTER,fechaCheckIn) = DATEPART(QUARTER,fechaCheckOut)
+		THEN (DATEDIFF(DAY,es.fechaCheckIn,es.fechaCheckOut))*[PISOS_PICADOS].precioRegimen(re.codigoRegimen)/20
+		WHEN DATEPART(QUARTER,fechaCheckIn) < DATEPART(QUARTER,fechaCheckOut) and DATEPART(QUARTER,fechaCheckIn) < @trimestre
+		THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()), 0), fechaCheckOut)
+		WHEN DATEPART(QUARTER,fechaCheckIn) < DATEPART(QUARTER,fechaCheckOut) and DATEPART(QUARTER,fechaCheckOut) > @trimestre
+		THEN DATEDIFF(DAY, fechaCheckIn, DATEADD (dd, -1, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()) +1, 0)))
+		END))
+	as bigint) as puntos
+	FROM [PISOS_PICADOS].Factura as fact JOIN  [PISOS_PICADOS].RenglonFactura as reng on fact.numeroFactura = reng.numeroFactura,
+	[PISOS_PICADOS].Estadia as es, [PISOS_PICADOS].Reserva as re
+	WHERE re.codigoReserva = es.codigoReserva and re.idCliente = fact.cliente and
+	(DATEPART(YEAR,fact.fecha) = @anio and DATEPART(QUARTER,fact.fecha) = @trimestre)
+	GROUP BY fact.cliente
+	ORDER BY puntos DESC
 END
 GO
 
@@ -1461,5 +1486,4 @@ FROM [PISOS_PICADOS].HabitacionxReserva AS hr JOIN [PISOS_PICADOS].Reserva AS re
 WHERE re.estado = 5
 END
 GO
-
 

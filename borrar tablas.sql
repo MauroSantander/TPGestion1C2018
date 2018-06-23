@@ -146,5 +146,7 @@ DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias
 GO
 DROP FUNCTION [PISOS_PICADOS].precioReserva
 GO
+DROP PROCEDURE [PISOS_PICADOS].topClientesPorPuntos
+GO
 DROP PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada
 GO
