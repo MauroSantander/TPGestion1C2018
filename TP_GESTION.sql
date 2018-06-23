@@ -1342,11 +1342,13 @@ BEGIN
 INSERT INTO [PISOS_PICADOS].Reserva(fechaRealizacion,fechaInicio,fechaFin,cantidadHuespedes,codigoRegimen,
 estado,idCliente,precioTotal)
 VALUES (@fechaReserva,@fechaInicio,@fechaFin,@cantHuespedes,@codRegimen,1,@idCliente,
-[PISOS_PICADOS].precioReserva( @cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel));
+((DATEDIFF(day, @fechaInicio,@fechaFIN))* [PISOS_PICADOS].precioReserva( @cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel)));
 
 DECLARE @idReserva INT = SCOPE_IDENTITY();
 DECLARE @cont INT ;
 SET  @cont = 0
+
+
 
 INSERT INTO [PISOS_PICADOS].Estadia(codigoReserva)
 VALUES (@idReserva);
@@ -1408,13 +1410,14 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces @anio INT, @trimestre INT
 AS
 BEGIN
-	SELECT top 5 ha.idHotel, ha.idHabitacion, count(*)
+	SELECT top 5 ha.idHotel, ha.idHabitacion, count(*) as veces
 	FROM [PISOS_PICADOS].Habitacion as ha JOIN [PISOS_PICADOS].HabitacionxReserva as hr on hr.idHabitacion = ha.idHabitacion,
 	[PISOS_PICADOS].Reserva as re
 	WHERE re.codigoReserva = hr.codigoReserva and
 	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
 	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)))
 	GROUP BY ha.idHotel, ha.idHabitacion
+	ORDER BY veces DESC
 END
 GO
 
@@ -1436,6 +1439,7 @@ BEGIN
 	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
 	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)))
 	GROUP BY ha.idHotel, ha.idHabitacion
+	ORDER BY dias DESC
 END
 GO
 
@@ -1459,5 +1463,14 @@ BEGIN
 	(DATEPART(YEAR,fact.fecha) = @anio and DATEPART(QUARTER,fact.fecha) = @trimestre)
 	GROUP BY fact.cliente
 	ORDER BY puntos DESC
+END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada @fechaActual DATE
+AS
+BEGIN
+DELETE es FROM [PISOS_PICADOS].Estadia as es JOIN [PISOS_PICADOS].Reserva as re 
+ON es.codigoReserva = re.codigoReserva 
+WHERE re.fechaInicio < @fechaActual; 
 END
 GO
