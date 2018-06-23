@@ -180,7 +180,7 @@ CREATE TABLE [PISOS_PICADOS].Estadia
 (
 idEstadia INT PRIMARY KEY IDENTITY,
 codigoReserva INT REFERENCES [PISOS_PICADOS].Reserva,
-fechaCheckIn DATE,
+fechaCheckIn DATE DEFAULT NULL,
 encargadoCheckIn INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL,
 fechaCheckOut DATE DEFAULT NULL,
 encargadoCheckOut INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL
@@ -569,7 +569,7 @@ SET IDENTITY_INSERT [PISOS_PICADOS].Reserva OFF
 INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva correcta');
 INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva modificada');
 INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva cancelada por recepción');
-INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva modificada por cliente');
+INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva cancelada por cliente');
 INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva cancelada por No-Show');
 INSERT INTO [PISOS_PICADOS].Estado (descripcion) VALUES('Reserva efectivizada');
 
@@ -1348,6 +1348,9 @@ DECLARE @idReserva INT = SCOPE_IDENTITY();
 DECLARE @cont INT ;
 SET  @cont = 0
 
+INSERT INTO [PISOS_PICADOS].Estadia(codigoReserva)
+VALUES (@idReserva);
+
 WHILE ( @cont < @cantSimple) 
 BEGIN	
 INSERT INTO [PISOS_PICADOS].HabitacionxReserva 
@@ -1410,7 +1413,7 @@ BEGIN
 	[PISOS_PICADOS].Reserva as re
 	WHERE re.codigoReserva = hr.codigoReserva and
 	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
-	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)
+	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)))
 	GROUP BY ha.idHotel, ha.idHabitacion
 END
 GO
@@ -1431,7 +1434,7 @@ BEGIN
 	[PISOS_PICADOS].Reserva as re
 	WHERE re.codigoReserva = hr.codigoReserva and
 	((DATEPART(YEAR, re.fechaInicio) = @anio and (DATEPART(QUARTER, re.fechaInicio) = @trimestre) or
-	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)
+	(DATEPART(YEAR, re.fechaFin) = @anio and DATEPART(QUARTER, re.fechaFin) = @trimestre)))
 	GROUP BY ha.idHotel, ha.idHabitacion
 END
 GO
