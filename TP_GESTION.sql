@@ -1081,9 +1081,9 @@ UPDATE [PISOS_PICADOS].Usuario SET estado = 0 WHERE idUsuario = @idUsuario
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].SPAltaCliente @nombre VARCHAR(255), @apellido VARCHAR(255),@tipo VARCHAR(255),
-@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT,
-@localidad VARCHAR(255),@pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE
+CREATE PROCEDURE [PISOS_PICADOS].SPAltaCliente @nombre VARCHAR(255), @apellido VARCHAR(255), @tipo VARCHAR(255),
+@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255), @numeroC INT,
+@localidad VARCHAR(255), @pais VARCHAR(255),@nacionalidad VARCHAR(255), @fechaNacimiento DATE
 
 AS
 BEGIN 
@@ -1103,9 +1103,9 @@ VALUES (3,@idusuario);
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT,@nombre VARCHAR(255), @apellido VARCHAR(255),@tipo VARCHAR(255),
-@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255),@numeroC INT, 
-@localidad VARCHAR(255), @pais VARCHAR(255) ,@nacionalidad VARCHAR(255),@fechaNacimiento DATE, 
+CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT,@nombre VARCHAR(255), @apellido VARCHAR(255), @tipo VARCHAR(255),
+@numeroI INT, @mail VARCHAR(255), @telefono VARCHAR(255), @calle VARCHAR(255), @numeroC INT, 
+@localidad VARCHAR(255), @pais VARCHAR(255) ,@nacionalidad VARCHAR(255), @fechaNacimiento DATE, 
 @estado BIT
 
 AS
@@ -1147,7 +1147,7 @@ WHERE @idUsuario = idUsuario
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@frente CHAR(1),@tipo INT, 
+CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT, @IDhotel INT, @frente CHAR(1), @tipo INT, 
 @descripcion VARCHAR(255), @piso INT, @habilitado BIT
 
 AS
@@ -1163,7 +1163,7 @@ GO
 
 /* MODIFICACION HABITACION (VERIFICAR QUE EL NUMERO DE HABITACION NO SE REPITA EN EL HOTEL) */
 
-CREATE PROCEDURE [PISOS_PICADOS].SPModificarHabitacion @idHabitacion INT,@numeroH INT,@frente CHAR(1), 
+CREATE PROCEDURE [PISOS_PICADOS].SPModificarHabitacion @idHabitacion INT, @numeroH INT, @frente CHAR(1), 
 @descripcion VARCHAR(255), @piso INT, @habilitado BIT
 
 AS
@@ -1184,7 +1184,7 @@ END;
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].SPEstadoHabitacion @idHabitacion INT, @habilitado BIT,
- @fechaInicio DATE , @fechaFin DATE
+@fechaInicio DATE, @fechaFin DATE
 AS
 BEGIN 
 
