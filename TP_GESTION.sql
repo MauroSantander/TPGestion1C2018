@@ -40,7 +40,7 @@ CREATE TABLE [PISOS_PICADOS].Empleado
 (
 idUsuario INT PRIMARY KEY REFERENCES [PISOS_PICADOS].Usuario(idUsuario),
 usuario VARCHAR(255) UNIQUE,
-contraseña VARCHAR(255)
+contrasena VARCHAR(255)
 )
 
 CREATE TABLE [PISOS_PICADOS].Hotel
@@ -508,7 +508,7 @@ VALUES (96945,'admin','admin','admin@gmail.com','admincalle',123,13,12345678,'19
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Usuario OFF
 
-INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña) VALUES (96945,'admin','admin');
+INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contrasena) VALUES (96945,'admin','admin');
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Consumible ON
 
@@ -743,43 +743,43 @@ RETURN 0;
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].existeEmpleado(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+CREATE FUNCTION [PISOS_PICADOS].existeEmpleado(@usuario VARCHAR(255),@contrasena VARCHAR(255))
 RETURNS INT
 AS 
 BEGIN
 if ( @usuario IN (SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
-if ( @contraseña IN (SELECT contraseña FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
+if ( @contrasena IN (SELECT contrasena FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
 RETURN 1;
 RETURN 0;
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].usuarioValido(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+CREATE FUNCTION [PISOS_PICADOS].usuarioValido(@usuario VARCHAR(255),@contrasena VARCHAR(255))
 RETURNS INT
 AS 
 BEGIN
 if ( @usuario IN (SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
-if ( @contraseña IN (SELECT contraseña FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
+if ( @contrasena IN (SELECT contrasena FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario))
 RETURN 1;
 RETURN 0;
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario VARCHAR(255),@contrasena VARCHAR(255))
 RETURNS INT
 AS 
 BEGIN
 RETURN (SELECT idUsuario FROM [PISOS_PICADOS].Empleado
-WHERE  usuario = @usuario and contraseña=@contraseña )
+WHERE  usuario = @usuario and contrasena=@contrasena )
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].obtenerRolEmpleado(@usuario VARCHAR(255),@contraseña VARCHAR(255))
+CREATE FUNCTION [PISOS_PICADOS].obtenerRolEmpleado(@usuario VARCHAR(255),@contrasena VARCHAR(255))
 RETURNS INT
 AS 
 BEGIN
 RETURN (SELECT idRol FROM [PISOS_PICADOS].RolxUsuario
-WHERE  idUsuario = [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario , @contraseña) )
+WHERE  idUsuario = [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario , @contrasena) )
 END
 GO
 
@@ -1016,7 +1016,7 @@ AS
 BEGIN
 INSERT INTO [PISOS_PICADOS].Usuario VALUES(@nombre, @apellido, @mail, @telefono, @calle, @numeroCalle, @localidad,
 (SELECT idPais FROM [PISOS_PICADOS].Pais WHERE nombrePais = @pais), @tipoDocumento, @numeroDocumento, @fechaNacimiento, @estado);
-INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contraseña)
+INSERT INTO [PISOS_PICADOS].Empleado (idUsuario, usuario, contrasena)
 VALUES ([PISOS_PICADOS].obtenerIDUsuario(@nombre,@apellido,@numeroDocumento), @username, HASHBYTES('SHA2_256', @password));
 INSERT INTO [PISOS_PICADOS].RolxUsuario VALUES((SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @rol), (SELECT idUsuario FROM [PISOS_PICADOS].Usuario as p WHERE p.numeroIdentificacion = @numeroDocumento and
 p.apellido = @apellido and p.nombre = @nombre))
@@ -1030,7 +1030,7 @@ CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado
 AS
 BEGIN
 IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
-IF @password IS NOT NULL UPDATE [PISOS_PICADOS].Empleado set contraseña = @password
+IF @password IS NOT NULL UPDATE [PISOS_PICADOS].Empleado set contrasena = @password
 WHERE @idUsuario = idUsuario
 IF @nombre IS NOT NULL UPDATE [PISOS_PICADOS].Usuario set nombre = @nombre
 WHERE @idUsuario = idUsuario
