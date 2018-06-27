@@ -184,6 +184,8 @@ fechaCheckIn DATE DEFAULT NULL,
 encargadoCheckIn INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL,
 fechaCheckOut DATE DEFAULT NULL,
 encargadoCheckOut INT REFERENCES [PISOS_PICADOS].Empleado DEFAULT NULL,
+diasReserva INT,
+diasEstadia INT,
 estado INT DEFAULT 1
 )
 
@@ -677,9 +679,30 @@ CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (@nombre VARCHAR(255), @apellid
 RETURNS INT
 AS
 BEGIN
-RETURN (SELECT idUsuario 
+return (SELECT  idUsuario 
 FROM [PISOS_PICADOS].Usuario 
 WHERE nombre = @nombre and apellido = @apellido and numeroIdentificacion = @numeroIdentificacion)
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].existeUsuario (@nombre VARCHAR(255), @apellido VARCHAR(255), @numeroIdentificacion INT)
+RETURNS INT
+AS
+BEGIN
+IF EXISTS(SELECT  idUsuario 
+FROM [PISOS_PICADOS].Usuario 
+WHERE nombre = @nombre and apellido = @apellido and numeroIdentificacion = @numeroIdentificacion)
+RETURN 1 
+RETURN 0
+END
+GO
+
+
+CREATE FUNCTION [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario INT)
+RETURNS INT
+AS
+BEGIN
+RETURN (SELECT u.estado FROM [PISOS_PICADOS].Usuario AS u WHERE u.idUsuario = @idUsuario)
 END
 GO
 
@@ -1349,8 +1372,8 @@ SET  @cont = 0
 
 
 
-INSERT INTO [PISOS_PICADOS].Estadia(codigoReserva)
-VALUES (@idReserva);
+INSERT INTO [PISOS_PICADOS].Estadia(codigoReserva,diasReserva)
+VALUES (@idReserva,DATEDIFF(DAY,@fechaFin,@fechaFin));
 
 WHILE ( @cont < @cantSimple) 
 BEGIN	
@@ -1498,7 +1521,10 @@ CREATE PROCEDURE [PISOS_PICADOS].registrarCheckOut @fechaEgreso DATE , @idEncarg
 AS
 BEGIN
 UPDATE PISOS_PICADOS.Estadia 
-SET encargadoCheckIn = @idEncargado , fechaCheckOut = @fechaEgreso
+SET encargadoCheckOut = @idEncargado , fechaCheckOut = @fechaEgreso 
+WHERE codigoReserva = @codReserva
+UPDATE PISOS_PICADOS.Estadia 
+SET diasEstadia = DATEDIFF ( DAY, fechaCheckIn,fechaCheckOut)
 WHERE codigoReserva = @codReserva
 END
 GO
@@ -1584,3 +1610,4 @@ END
 
 END 
 GO
+
