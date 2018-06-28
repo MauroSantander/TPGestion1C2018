@@ -42,6 +42,7 @@
             this.btnFacturarEstadia = new System.Windows.Forms.Button();
             this.btnListadoEstadistico = new System.Windows.Forms.Button();
             this.labelMenuPrincipal = new System.Windows.Forms.Label();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnRegistrarConsumibles
@@ -198,11 +199,22 @@
             this.labelMenuPrincipal.Text = "Menú Principal";
             this.labelMenuPrincipal.Click += new System.EventHandler(this.labelMenuPrincipal_Click);
             // 
+            // btnSalir
+            // 
+            this.btnSalir.Location = new System.Drawing.Point(451, 328);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(75, 23);
+            this.btnSalir.TabIndex = 14;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 399);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.labelMenuPrincipal);
             this.Controls.Add(this.btnListadoEstadistico);
             this.Controls.Add(this.btnFacturarEstadia);
@@ -240,5 +252,6 @@
         private System.Windows.Forms.Button btnFacturarEstadia;
         private System.Windows.Forms.Button btnListadoEstadistico;
         private System.Windows.Forms.Label labelMenuPrincipal;
+        private System.Windows.Forms.Button btnSalir;
     }
 }

@@ -77,7 +77,7 @@ namespace FrbaHotel.Login
             verificar.Parameters["@usuario"].Value = usuario;
             verificar.Parameters["@contraseña"].Value = contrasena;
 
-            String q = "SELECT [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario, @contraseña)";
+            String q = "SELECT [PISOS_PICADOS].obtenerRolEmpleado(@usuario, @contraseña)";
             SqlCommand qu = new SqlCommand(q, conexion);
             
             qu.Parameters.Add("@usuario", SqlDbType.VarChar);
