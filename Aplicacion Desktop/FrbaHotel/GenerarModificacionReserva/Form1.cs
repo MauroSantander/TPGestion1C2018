@@ -16,5 +16,22 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             InitializeComponent();
         }
+
+        TabControl tabControl1 = new TabControl();
+
+        public void tabControl(int tabNumber)
+        {
+            this.tabControl1.SelectTab(tabNumber);
+        }
+
+        private void tabGenerarReserva_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabModificarReserva_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

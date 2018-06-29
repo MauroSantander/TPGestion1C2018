@@ -89,9 +89,11 @@ namespace FrbaHotel.Login
             int valor = (int) verificar.ExecuteScalar();
             int rol = (int) qu.ExecuteScalar();
 
+            int intentosFallidos = 0;
+
             if (valor == 1)
             {
-
+                intentosFallidos = 0;
                 (new FrbaHotel.Form2()).asignarRol(rol);
 
                 //Form2.Form2().ShowDialog();
@@ -99,7 +101,9 @@ namespace FrbaHotel.Login
                 this.Close();
             }
             else {
-                MessageBox.Show("Usuario Inválido");
+                intentosFallidos++;
+                MessageBox.Show("Usuario Inválido.");
+
             }
 
             conexion.Close();

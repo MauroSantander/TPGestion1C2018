@@ -16,5 +16,20 @@ namespace FrbaHotel.RegistrarConsumible
         {
             InitializeComponent();
         }
+
+        private void labelngreseConsumible_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxConsumibles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

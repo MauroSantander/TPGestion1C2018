@@ -132,7 +132,7 @@
             this.Pais.Location = new System.Drawing.Point(155, 236);
             this.Pais.Name = "Pais";
             this.Pais.Size = new System.Drawing.Size(100, 20);
-            this.Pais.TabIndex = 45;
+            this.Pais.TabIndex = 10;
             this.Pais.TextChanged += new System.EventHandler(this.Pais_TextChanged);
             // 
             // labelPais
@@ -149,7 +149,7 @@
             this.Localidad.Location = new System.Drawing.Point(155, 210);
             this.Localidad.Name = "Localidad";
             this.Localidad.Size = new System.Drawing.Size(100, 20);
-            this.Localidad.TabIndex = 43;
+            this.Localidad.TabIndex = 9;
             this.Localidad.TextChanged += new System.EventHandler(this.Localidad_TextChanged);
             // 
             // labelLocalidad
@@ -167,7 +167,7 @@
             this.NroCalle.Location = new System.Drawing.Point(155, 184);
             this.NroCalle.Name = "NroCalle";
             this.NroCalle.Size = new System.Drawing.Size(100, 20);
-            this.NroCalle.TabIndex = 41;
+            this.NroCalle.TabIndex = 8;
             this.NroCalle.TextChanged += new System.EventHandler(this.NroCalle_TextChanged);
             // 
             // labelNumeroCalle
@@ -201,16 +201,19 @@
             this.TipoId.Location = new System.Drawing.Point(156, 78);
             this.TipoId.Name = "TipoId";
             this.TipoId.Size = new System.Drawing.Size(100, 21);
-            this.TipoId.TabIndex = 39;
+            this.TipoId.TabIndex = 3;
             this.TipoId.Text = "Tipo";
             this.TipoId.SelectedIndexChanged += new System.EventHandler(this.TipoId_SelectedIndexChanged);
             // 
             // FechaNacimiento
             // 
+            this.FechaNacimiento.CustomFormat = "yyyy-MM-dd";
+            this.FechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.FechaNacimiento.Location = new System.Drawing.Point(155, 310);
             this.FechaNacimiento.Name = "FechaNacimiento";
             this.FechaNacimiento.Size = new System.Drawing.Size(200, 20);
-            this.FechaNacimiento.TabIndex = 38;
+            this.FechaNacimiento.TabIndex = 12;
+            this.FechaNacimiento.Value = new System.DateTime(2018, 6, 28, 0, 0, 0, 0);
             this.FechaNacimiento.ValueChanged += new System.EventHandler(this.FechaNacimiento_ValueChanged);
             // 
             // Calle
@@ -218,7 +221,7 @@
             this.Calle.Location = new System.Drawing.Point(155, 158);
             this.Calle.Name = "Calle";
             this.Calle.Size = new System.Drawing.Size(100, 20);
-            this.Calle.TabIndex = 37;
+            this.Calle.TabIndex = 7;
             this.Calle.TextChanged += new System.EventHandler(this.Calle_TextChanged);
             // 
             // Telefono
@@ -226,7 +229,7 @@
             this.Telefono.Location = new System.Drawing.Point(156, 132);
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(100, 20);
-            this.Telefono.TabIndex = 36;
+            this.Telefono.TabIndex = 6;
             this.Telefono.TextChanged += new System.EventHandler(this.Telefono_TextChanged);
             // 
             // Nacionalidad
@@ -234,7 +237,7 @@
             this.Nacionalidad.Location = new System.Drawing.Point(155, 270);
             this.Nacionalidad.Name = "Nacionalidad";
             this.Nacionalidad.Size = new System.Drawing.Size(100, 20);
-            this.Nacionalidad.TabIndex = 35;
+            this.Nacionalidad.TabIndex = 11;
             this.Nacionalidad.TextChanged += new System.EventHandler(this.Nacionalidad_TextChanged);
             // 
             // Mail
@@ -242,7 +245,7 @@
             this.Mail.Location = new System.Drawing.Point(155, 105);
             this.Mail.Name = "Mail";
             this.Mail.Size = new System.Drawing.Size(100, 20);
-            this.Mail.TabIndex = 34;
+            this.Mail.TabIndex = 5;
             this.Mail.TextChanged += new System.EventHandler(this.Mail_TextChanged);
             // 
             // nroId
@@ -250,7 +253,7 @@
             this.nroId.Location = new System.Drawing.Point(262, 77);
             this.nroId.Name = "nroId";
             this.nroId.Size = new System.Drawing.Size(100, 20);
-            this.nroId.TabIndex = 33;
+            this.nroId.TabIndex = 4;
             this.nroId.TextChanged += new System.EventHandler(this.nroId_TextChanged);
             // 
             // Apellido
@@ -258,7 +261,7 @@
             this.Apellido.Location = new System.Drawing.Point(156, 53);
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(100, 20);
-            this.Apellido.TabIndex = 32;
+            this.Apellido.TabIndex = 2;
             this.Apellido.TextChanged += new System.EventHandler(this.textBox2_TextChanged_1);
             // 
             // Nombre
@@ -266,7 +269,7 @@
             this.Nombre.Location = new System.Drawing.Point(156, 27);
             this.Nombre.Name = "Nombre";
             this.Nombre.Size = new System.Drawing.Size(100, 20);
-            this.Nombre.TabIndex = 31;
+            this.Nombre.TabIndex = 1;
             this.Nombre.TextChanged += new System.EventHandler(this.Nombre_TextChanged);
             // 
             // BotonCancelar
@@ -274,7 +277,7 @@
             this.BotonCancelar.Location = new System.Drawing.Point(382, 369);
             this.BotonCancelar.Name = "BotonCancelar";
             this.BotonCancelar.Size = new System.Drawing.Size(75, 23);
-            this.BotonCancelar.TabIndex = 30;
+            this.BotonCancelar.TabIndex = 14;
             this.BotonCancelar.Text = "Cancelar";
             this.BotonCancelar.UseVisualStyleBackColor = true;
             this.BotonCancelar.Click += new System.EventHandler(this.BotonCancelar_Click);
@@ -284,7 +287,7 @@
             this.BotonCrear.Location = new System.Drawing.Point(285, 369);
             this.BotonCrear.Name = "BotonCrear";
             this.BotonCrear.Size = new System.Drawing.Size(75, 23);
-            this.BotonCrear.TabIndex = 29;
+            this.BotonCrear.TabIndex = 13;
             this.BotonCrear.Text = "Crear";
             this.BotonCrear.UseVisualStyleBackColor = true;
             this.BotonCrear.Click += new System.EventHandler(this.BotonCrear_Click);

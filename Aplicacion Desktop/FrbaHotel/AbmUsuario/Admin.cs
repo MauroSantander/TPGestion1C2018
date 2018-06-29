@@ -53,30 +53,43 @@ namespace FrbaHotel.AbmUsuario
 
 
         }
-        private void button1_Click(object sender, EventArgs e) { }
+        private void button1_Click(object sender, EventArgs e) {
+
+            String user = usernameText.Text;
+            using (SqlConnection cnn = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;user=gdHotel2018;password=gd2018"))
+            {
+
+                string query = "Select from [PISOS_PICADOS].Empleado where  usuario= @user";
+
+                SqlCommand cmd = new SqlCommand(query, cnn);
+
+                cmd.Parameters.AddWithValue("@user", user);
+                cmd.ExecuteNonQuery();
+            }
+        }
 
 
         //----------------TAB Eliminar----------------------------------------------------------------------
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-            c.mostrarUsuarios(dataGridView1);
+            c.mostrarClientes(dataGridView1);
 
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            c.mostrarUsuarios(dataGridView1);
+            /*c.mostrarClientes(dataGridView1);
             DataView DV = new DataView(dataTable);
             if (!String.IsNullOrEmpty(textBoxUsrNameBorrar.Text) ){ 
             DV.RowFilter = string.Format("nombre LIKE '%{0}%' ", textBoxUsrNameBorrar.Text);
             dataGridView1.DataSource = DV;
-            }
+            }*/
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            c.mostrarUsuarios(dataGridView1);
+            c.mostrarClientes(dataGridView1);
             DataView DV = new DataView(dataTable);
             if (!String.IsNullOrEmpty(textBox1.Text) && !String.IsNullOrEmpty(comboBox2.SelectedText))
             {
@@ -117,7 +130,7 @@ namespace FrbaHotel.AbmUsuario
                 using (SqlConnection cnn = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;user=gdHotel2018;password=gd2018"))
                 {
 
-                    string query = "delete from Usuario where idUsuario = @id";
+                    string query = "delete from [PISOS_PICADOS].Usuario where idUsuario = @id";
 
                     SqlCommand cmd = new SqlCommand(query, cnn);
 
@@ -383,7 +396,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void nombreBox_TextChanged(object sender, EventArgs e)
         {
-
+          
         }
 
         private void textBoxMail_TextChanged(object sender, EventArgs e)
@@ -490,6 +503,116 @@ namespace FrbaHotel.AbmUsuario
 
         }
 
+        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox13_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label38_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox14_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label39_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox15_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label40_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numDoc_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBoxTel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+        
+        
 
     }
 }

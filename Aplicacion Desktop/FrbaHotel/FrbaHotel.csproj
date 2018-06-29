@@ -56,6 +56,30 @@
     <Compile Include="AbmHabitacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmHotel\BajaHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\BajaHotel.Designer.cs">
+      <DependentUpon>BajaHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHotel\Hoteles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\Hoteles.Designer.cs">
+      <DependentUpon>Hoteles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHotel\ModificarHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\ModificarHotel.Designer.cs">
+      <DependentUpon>ModificarHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHotel\NuevoHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\NuevoHotel.Designer.cs">
+      <DependentUpon>NuevoHotel.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRegimen\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +91,12 @@
     </Compile>
     <Compile Include="AbmRol\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmUsuario\Admin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\Admin.Designer.cs">
+      <DependentUpon>Admin.cs</DependentUpon>
     </Compile>
     <Compile Include="CancelarReserva\Form1.cs">
       <SubType>Form</SubType>
@@ -122,14 +152,32 @@
     <EmbeddedResource Include="AbmCliente\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\BajaHotel.resx">
+      <DependentUpon>BajaHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\Hoteles.resx">
+      <DependentUpon>Hoteles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\ModificarHotel.resx">
+      <DependentUpon>ModificarHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\NuevoHotel.resx">
+      <DependentUpon>NuevoHotel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\Admin.resx">
+      <DependentUpon>Admin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenerarModificacionReserva\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -143,6 +191,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RegistrarConsumible\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
