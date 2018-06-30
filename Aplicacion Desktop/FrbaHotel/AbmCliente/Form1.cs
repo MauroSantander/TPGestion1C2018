@@ -149,7 +149,7 @@ namespace FrbaHotel.AbmCliente
             if (string.IsNullOrEmpty(nroId.Text)) {MessageBox.Show("Completar numero de id cliente"); return;}
             
             int NroIdCliente = int.Parse(nroId.Text);
-            String MailCliente = Mail.Text;
+            String MailCliente = Mail.Text; //usar la clase Mail para chequeos
             String TelefonoCliente = Telefono.Text;
             String CalleCliente = Calle.Text;
 
@@ -159,8 +159,12 @@ namespace FrbaHotel.AbmCliente
             String LocalidadCliente = Localidad.Text;
             String PaisCliente = Pais.Text;
             String NacionalidadCliente = Nacionalidad.Text;
-            DateTime FechaNacimientoCliente = FechaNacimiento.Value;
             
+            DateTime FechaNacimientoCliente = FechaNacimiento.Value;
+            //String fechaString = String.Format(FechaNacimientoCliente,"yyyy-MM-dd");
+            string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");
+
+
             //String EjecutarProcedure = "EXEC SP ";
             if (NombreCliente == ""){MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
             if (ApellidoCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -173,7 +177,9 @@ namespace FrbaHotel.AbmCliente
             if (PaisCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (NacionalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
-            String cadenaAltaCliente = "EXECUTE [PISOS_PICADOS].SPAltaCliente @nombre, @apellido ,@tipo, @numeroI, @mail, @telefono, @calle, @numeroC, @localidad, @pais, @nacionalidad, @fechaNacimiento";
+            //String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente @nombre, @apellido, @tipo, @numeroI, @mail, @telefono, @calle, @numeroC, @localidad, @pais, @nacionalidad, @fechaNacimiento ;";
+
+            String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
             
             SqlCommand comandoAltaCliente = new SqlCommand(cadenaAltaCliente, con);
             comandoAltaCliente.CommandType = CommandType.StoredProcedure;
@@ -190,7 +196,7 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters.Add("@localidad", SqlDbType.VarChar);
             comandoAltaCliente.Parameters.Add("@pais", SqlDbType.VarChar);
             comandoAltaCliente.Parameters.Add("@nacionalidad", SqlDbType.VarChar);
-            comandoAltaCliente.Parameters.Add("@fechaNacimiento", SqlDbType.Date);
+            comandoAltaCliente.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
             
             //cargar valores
             comandoAltaCliente.Parameters["@nombre"].Value = NombreCliente;
@@ -204,10 +210,12 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters["@localidad"].Value = LocalidadCliente;
             comandoAltaCliente.Parameters["@pais"].Value = PaisCliente;
             comandoAltaCliente.Parameters["@nacionalidad"].Value = NacionalidadCliente;
-            comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente;
+            //FechaNacimientoCliente = DateTime.Parse("yyyy-MM-dd");
+            comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");//ToShortDateString().; //selectDateAsString;
             
-
-          int rows =  comandoAltaCliente.ExecuteNonQuery();
+            
+          //comandoAltaCliente.ExecuteNonQuery();
+            comandoAltaCliente.ExecuteReader().Close();
             MessageBox.Show("Alta realizada correctamente");
             
             //reinicio de los textbox
@@ -223,7 +231,7 @@ namespace FrbaHotel.AbmCliente
             Nacionalidad.ResetText();
             FechaNacimiento.ResetText();
 
-            con.Close();
+            //con.Close();
         }
 
         private void BotonCancelar_Click(object sender, EventArgs e)

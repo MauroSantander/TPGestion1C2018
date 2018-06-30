@@ -77,7 +77,7 @@ namespace FrbaHotel.Login
             verificar.Parameters["@usuario"].Value = usuario;
             verificar.Parameters["@contraseña"].Value = contrasena;
 
-            String q = "SELECT [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario, @contraseña)";
+            String q = "SELECT [PISOS_PICADOS].obtenerRolEmpleado(@usuario, @contraseña)";
             SqlCommand qu = new SqlCommand(q, conexion);
             
             qu.Parameters.Add("@usuario", SqlDbType.VarChar);
@@ -89,9 +89,11 @@ namespace FrbaHotel.Login
             int valor = (int) verificar.ExecuteScalar();
             int rol = (int) qu.ExecuteScalar();
 
+            int intentosFallidos = 0;
+
             if (valor == 1)
             {
-
+                intentosFallidos = 0;
                 (new FrbaHotel.Form2()).asignarRol(rol);
 
                 //Form2.Form2().ShowDialog();
@@ -99,7 +101,9 @@ namespace FrbaHotel.Login
                 this.Close();
             }
             else {
-                MessageBox.Show("Usuario Inválido");
+                intentosFallidos++;
+                MessageBox.Show("Usuario Inválido.");
+
             }
 
             conexion.Close();

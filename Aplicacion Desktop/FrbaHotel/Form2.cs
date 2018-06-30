@@ -18,7 +18,6 @@ namespace FrbaHotel
         public Form2()
         {
             InitializeComponent();
-
         }
 
         private void labelMenuPrincipal_Click(object sender, EventArgs e)
@@ -28,42 +27,43 @@ namespace FrbaHotel
 
         private void btnABMRol_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.AbmRol.Form1()).ShowDialog();
         }
 
         private void btnABMHotel_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.AbmHotel.Hoteles()).ShowDialog();
         }
 
         private void btnGenerarReserva_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.GenerarModificacionReserva.Form1()).ShowDialog();
         }
 
         private void btnRegistarEstadia_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.RegistrarEstadia.Form1()).ShowDialog();
         }
 
         private void btnABMUsuario_Click(object sender, EventArgs e)
         {
-
+            //(new FrbaHotel.AbmUsuario.Admin()).ShowDialog();
+            MessageBox.Show("falta corregir");
         }
 
         private void btnABMHabitacion_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.AbmHabitacion.Form1()).ShowDialog();
         }
 
         private void btnModificarReserva_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.GenerarModificacionReserva.Form1()/*.tabControl(1)*/).ShowDialog();
         }
 
         private void btnRegistrarConsumibles_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.RegistrarConsumible.Form1()).ShowDialog();
         }
 
         private void btnABMCliente_Click(object sender, EventArgs e)
@@ -73,22 +73,22 @@ namespace FrbaHotel
 
         private void btnABMRegimenEstadia_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.RegistrarEstadia.Form1()).ShowDialog();
         }
 
         private void btnCancelarReserva_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.CancelarReserva.Form1()).ShowDialog();
         }
 
         private void btnFacturarEstadia_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("No implementado");
         }
 
         private void btnListadoEstadistico_Click(object sender, EventArgs e)
         {
-
+            (new FrbaHotel.ListadoEstadistico.Form1()).ShowDialog();
         }
 
         private void habilitarBoton(int id)
@@ -180,6 +180,11 @@ namespace FrbaHotel
               conexion.Close();
               this.ShowDialog();
           }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
         }
 
