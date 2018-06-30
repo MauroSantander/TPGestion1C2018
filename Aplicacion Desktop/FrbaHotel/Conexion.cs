@@ -13,34 +13,13 @@ namespace FrbaHotel
 {
     class Conexion
     {
-        SqlConnection conexion;
         SqlCommand comando;
         SqlDataReader lector;
 
         SqlDataAdapter adapter;
         DataTable dataTable;
 
-        public Conexion()
-        {
-
-            try
-            {
-                conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;");
-               conexion.Open();
-            // MessageBox.Show("Conexion exitosa");
-            }
-            catch (Exception er)
-            {
-                MessageBox.Show("Error al conectarse con la base de datos");
-            }
-
-        }
-
- /*       public void conectar()
-        {
-            this.Open(); quizas no sea necesario
-        }
-        */
+        public SqlConnection conexion = new SqlConnection();
 
         public void mostrarClientes(DataGridView dgv)
         {
@@ -106,6 +85,25 @@ namespace FrbaHotel
                 return result;
 
         }
-        
+
+        public SqlConnection ObtenerConexion()
+        {
+            conexion = new SqlConnection("Password=gd2018;Persist Security Info=True;User ID=gdHotel2018;Initial Catalog=GD1C2018;Data Source=localhost\\SQLSERVER2012");
+            try
+            {
+                conexion.Open();
+                return conexion;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool DescargarConexion()
+        {
+            conexion.Dispose();
+            return true;
+        }
     }
 }

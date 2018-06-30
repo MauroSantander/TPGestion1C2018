@@ -149,11 +149,10 @@ namespace FrbaHotel
 
         public void asignarRol(int idRol)
         {
-
-              SqlConnection conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;");
+              Conexion objConexion = new Conexion();
+              SqlConnection conexion = objConexion.ObtenerConexion();
               String querySelect = "SELECT idFuncionalidad FROM [PISOS_PICADOS].RolxFuncionalidad WHERE idRol = @id ";
 
-              conexion.Open();
               SqlCommand commandSelect = new SqlCommand(querySelect, conexion);
               commandSelect.Parameters.Add("@id", SqlDbType.Int);
               commandSelect.Parameters["@id"].Value = idRol;

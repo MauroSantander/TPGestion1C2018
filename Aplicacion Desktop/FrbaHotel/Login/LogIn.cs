@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Login
 {
-    public partial class Form1 : Form
+    public partial class LogIn : Form
     {
-        public Form1()
+        public LogIn()
         {
             InitializeComponent();
         }
@@ -61,12 +61,10 @@ namespace FrbaHotel.Login
         }
 
         private void buttonIniciarSesion_Click(object sender, EventArgs e)
-        {
-            //boton de inicio de sesion
-            
+        {            
             String cadenaVerificarLogIn = "SELECT [PISOS_PICADOS].usuarioValido(@usuario, @contraseña)";
-            SqlConnection conexion = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true;");
-            conexion.Open();
+            Conexion objConexion = new Conexion();
+            SqlConnection conexion = objConexion.ObtenerConexion();
             SqlCommand verificar = new SqlCommand(cadenaVerificarLogIn, conexion);
             
             String usuario = textBoxUsuario.Text;

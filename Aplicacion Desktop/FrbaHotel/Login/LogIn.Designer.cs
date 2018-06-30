@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.Login
 {
-    partial class Form1
+    partial class LogIn
     {
         /// <summary>
         /// Required designer variable.
