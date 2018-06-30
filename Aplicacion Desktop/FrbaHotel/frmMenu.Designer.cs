@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel
 {
-    partial class Form2
+    partial class frmMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -209,7 +209,7 @@
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
-            // Form2
+            // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -229,7 +229,7 @@
             this.Controls.Add(this.btnABMUsuario);
             this.Controls.Add(this.btnABMRol);
             this.Controls.Add(this.btnRegistrarConsumibles);
-            this.Name = "Form2";
+            this.Name = "Menu";
             this.Text = "Inicio";
             this.ResumeLayout(false);
             this.PerformLayout();

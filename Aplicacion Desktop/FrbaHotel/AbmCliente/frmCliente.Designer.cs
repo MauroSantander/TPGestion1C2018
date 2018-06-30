@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.AbmCliente
 {
-    partial class Form1
+    partial class frmCliente
     {
         /// <summary>
         /// Required designer variable.
@@ -445,14 +445,14 @@
             this.BotonVerClientes.UseVisualStyleBackColor = true;
             this.BotonVerClientes.Click += new System.EventHandler(this.BotonVerClientes_Click);
             // 
-            // Form1
+            // frmCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(548, 482);
             this.Controls.Add(this.tabCliente);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "frmCliente";
             this.Text = "ABM Cliente";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabCliente.ResumeLayout(false);

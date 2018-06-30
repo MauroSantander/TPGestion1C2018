@@ -12,10 +12,10 @@ using System.Data.Sql;
 
 namespace FrbaHotel
 {
-    public partial class Form2 : Form
+    public partial class frmMenu : Form
     {
         int rol;
-        public Form2()
+        public frmMenu()
         {
             InitializeComponent();
         }
@@ -68,7 +68,7 @@ namespace FrbaHotel
 
         private void btnABMCliente_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.AbmCliente.Form1()).ShowDialog();
+            (new FrbaHotel.AbmCliente.frmCliente()).ShowDialog();
         }
 
         private void btnABMRegimenEstadia_Click(object sender, EventArgs e)
@@ -149,11 +149,9 @@ namespace FrbaHotel
 
         public void asignarRol(int idRol)
         {
-              Conexion objConexion = new Conexion();
-              SqlConnection conexion = objConexion.ObtenerConexion();
               String querySelect = "SELECT idFuncionalidad FROM [PISOS_PICADOS].RolxFuncionalidad WHERE idRol = @id ";
 
-              SqlCommand commandSelect = new SqlCommand(querySelect, conexion);
+              SqlCommand commandSelect = new SqlCommand(querySelect, Globals.conexionGlobal);
               commandSelect.Parameters.Add("@id", SqlDbType.Int);
               commandSelect.Parameters["@id"].Value = idRol;
               
@@ -175,8 +173,7 @@ namespace FrbaHotel
               {
                   habilitarBoton(id);
               }*/
-
-              conexion.Close();
+              reader.Close();
               this.ShowDialog();
           }
 

@@ -12,12 +12,12 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.AbmCliente
 {
-    public partial class Form1 : Form
+    public partial class frmCliente : Form
     {
 
 
 
-        public Form1()
+        public frmCliente()
         {
             InitializeComponent();
         }
@@ -136,12 +136,7 @@ namespace FrbaHotel.AbmCliente
         }
 
         private void BotonCrear_Click(object sender, EventArgs e)
-        { 
-          
-            SqlConnection con = new SqlConnection("server=LENOVO-PC\\SQLSERVER2012; database=GD1C2018;integrated security = true");
-
-            con.Open();
-
+        {
             String NombreCliente = Nombre.Text;
             String ApellidoCliente = Apellido.Text;
             String TipoIdCliente = TipoId.Text;
@@ -181,7 +176,7 @@ namespace FrbaHotel.AbmCliente
 
             String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
             
-            SqlCommand comandoAltaCliente = new SqlCommand(cadenaAltaCliente, con);
+            SqlCommand comandoAltaCliente = new SqlCommand(cadenaAltaCliente, Globals.conexionGlobal);
             comandoAltaCliente.CommandType = CommandType.StoredProcedure;
             
             //agregar parametros
@@ -210,11 +205,10 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters["@localidad"].Value = LocalidadCliente;
             comandoAltaCliente.Parameters["@pais"].Value = PaisCliente;
             comandoAltaCliente.Parameters["@nacionalidad"].Value = NacionalidadCliente;
-            //FechaNacimientoCliente = DateTime.Parse("yyyy-MM-dd");
-            comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");//ToShortDateString().; //selectDateAsString;
+            comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");
             
             
-          //comandoAltaCliente.ExecuteNonQuery();
+            //comandoAltaCliente.ExecuteNonQuery();
             comandoAltaCliente.ExecuteReader().Close();
             MessageBox.Show("Alta realizada correctamente");
             

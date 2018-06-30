@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Login
 {
-    public partial class LogIn : Form
+    public partial class frmLogIn : Form
     {
-        public LogIn()
+        public frmLogIn()
         {
             InitializeComponent();
         }
@@ -62,56 +62,40 @@ namespace FrbaHotel.Login
 
         private void buttonIniciarSesion_Click(object sender, EventArgs e)
         {            
-            String cadenaVerificarLogIn = "SELECT [PISOS_PICADOS].usuarioValido(@usuario, @contraseña)";
-            Conexion objConexion = new Conexion();
-            SqlConnection conexion = objConexion.ObtenerConexion();
-            SqlCommand verificar = new SqlCommand(cadenaVerificarLogIn, conexion);
-            
-            String usuario = textBoxUsuario.Text;
-            String contrasena = textBoxContrasena.Text;
-            
-            verificar.Parameters.Add("@usuario", SqlDbType.VarChar);
-            verificar.Parameters.Add("@contraseña", SqlDbType.VarChar);
-            verificar.Parameters["@usuario"].Value = usuario;
-            verificar.Parameters["@contraseña"].Value = contrasena;
 
-            String q = "SELECT [PISOS_PICADOS].obtenerRolEmpleado(@usuario, @contraseña)";
-            SqlCommand qu = new SqlCommand(q, conexion);
-            
-            qu.Parameters.Add("@usuario", SqlDbType.VarChar);
-            qu.Parameters.Add("@contraseña", SqlDbType.VarChar);
-            qu.Parameters["@usuario"].Value = usuario;
-            qu.Parameters["@contraseña"].Value = contrasena;
+            SqlCommand verificarUsuario = new SqlCommand("SELECT [PISOS_PICADOS].usuarioValido(@usuario, @contraseña)", Globals.conexionGlobal);
 
+            verificarUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
+            verificarUsuario.Parameters.Add("@contraseña", SqlDbType.VarChar);
+            verificarUsuario.Parameters["@usuario"].Value = textBoxUsuario.Text;
+            verificarUsuario.Parameters["@contraseña"].Value = textBoxContrasena.Text;
             
-            int valor = (int) verificar.ExecuteScalar();
-            int rol = (int) qu.ExecuteScalar();
+            int respuestaVerificacionUsuario = (int) verificarUsuario.ExecuteScalar();
 
             int intentosFallidos = 0;
 
-            if (valor == 1)
+            if (respuestaVerificacionUsuario == 1)
             {
                 intentosFallidos = 0;
-                (new FrbaHotel.Form2()).asignarRol(rol);
-
-                //Form2.Form2().ShowDialog();
-
+                frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
+                frmElegirRol.ShowDialog();
                 this.Close();
             }
             else {
                 intentosFallidos++;
                 MessageBox.Show("Usuario Inválido.");
-
             }
 
-            conexion.Close();
         }
 
         private void buttonSalir_Click(object sender, EventArgs e)
         {
-         //boton de salida
-            this.Close();
-   
+            Application.Exit();
+        }
+
+        private void ingresarInvitado_Click(object sender, EventArgs e)
+        {
+            (new FrbaHotel.frmMenu()).asignarRol(3);
         }
 
 

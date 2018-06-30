@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace FrbaHotel
 {
-    class Conexion
+   class Conexion
     {
         SqlCommand comando;
         SqlDataReader lector;
@@ -19,14 +19,12 @@ namespace FrbaHotel
         SqlDataAdapter adapter;
         DataTable dataTable;
 
-        public SqlConnection conexion = new SqlConnection();
-
         public void mostrarClientes(DataGridView dgv)
         {
             try
             {
 
-                adapter = new SqlDataAdapter("SELECT * FROM [PISOS_PICADOS].Cliente", conexion);
+                adapter = new SqlDataAdapter("SELECT * FROM [PISOS_PICADOS].Cliente", Globals.conexionGlobal);
                 dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 dgv.DataSource = dataTable;
@@ -42,7 +40,7 @@ namespace FrbaHotel
             try
             {
 
-                adapter = new SqlDataAdapter("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", conexion);
+                adapter = new SqlDataAdapter("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
                 dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 dgv.DataSource = dataTable;
@@ -69,10 +67,10 @@ namespace FrbaHotel
 //SqlCommand verificar = new SqlCommand(cadenaVerificarLogIn, conexion);
             String prueba = "SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario=@usuario AND contraseña=@contraseña";
 
-            
-                           conexion.Open();
 
-            SqlCommand verificar = new SqlCommand(prueba, conexion);
+            Globals.conexionGlobal.Open();
+
+            SqlCommand verificar = new SqlCommand(prueba, Globals.conexionGlobal);
             verificar.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
             verificar.Parameters.Add("@contraseña", SqlDbType.VarChar).Value = contrasena;
           
@@ -80,30 +78,10 @@ namespace FrbaHotel
 
                int result = verificar.ExecuteNonQuery(); 
             //int result = Convert.ToInt32(verificar.ExecuteScalar());
-                conexion.Close();
+               Globals.conexionGlobal.Close();
 
                 return result;
 
-        }
-
-        public SqlConnection ObtenerConexion()
-        {
-            conexion = new SqlConnection("Password=gd2018;Persist Security Info=True;User ID=gdHotel2018;Initial Catalog=GD1C2018;Data Source=localhost\\SQLSERVER2012");
-            try
-            {
-                conexion.Open();
-                return conexion;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public bool DescargarConexion()
-        {
-            conexion.Dispose();
-            return true;
         }
     }
 }
