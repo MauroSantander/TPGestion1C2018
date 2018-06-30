@@ -160,3 +160,11 @@ DROP FUNCTION [PISOS_PICADOS].obtenerEstadoUsuario
 GO
 DROP FUNCTION [PISOS_PICADOS].existeUsuario
 GO
+DROP FUNCTION [PISOS_PICADOS].calcularPrecioRenglones
+GO
+DROP FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasHospedados
+GO
+DROP FUNCTION [PISOS_PICADOS].precioPorDia
+GO
+DROP FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasNoHospedados
+GO

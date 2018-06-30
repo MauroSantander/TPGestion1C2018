@@ -1153,7 +1153,7 @@ CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT,@IDhotel INT ,@fre
 AS
 BEGIN 
 
-SELECT * FROM PISOS_PICADOS.Tipo
+SELECT * FROM [PISOS_PICADOS].Tipo
 
 INSERT INTO [PISOS_PICADOS].Habitacion(numero,idHotel,frente,tipo,descripcion,piso,habilitada)
 VALUES (@numero,@IDhotel,@frente,@tipo,@descripcion,@piso,@habilitado)
@@ -1610,4 +1610,53 @@ END
 
 END 
 GO
+
+
+CREATE FUNCTION [PISOS_PICADOS].calcularPrecioRenglones (@idEstadia INT )
+RETURNS INT 
+AS 
+BEGIN
+DECLARE @total int
+SELECT @total = 
+SUM(ec.cantidad * 
+(SELECT c.precio FROM [PISOS_PICADOS].Consumible AS c WHERE c.idConsumible = ec.idConsumible)) 
+FROM [PISOS_PICADOS].EstadiaxConsumible AS ec WHERE  ec.idEstadia= @idEstadia GROUP BY ec.idEstadia
+RETURN @total
+END 
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].precioPorDia (@codReserva INT ) 
+RETURNS INT 
+AS 
+BEGIN
+RETURN (SELECT r.precioTotal / DATEDIFF (DAY,r.fechaInicio,r.fechaFin)
+FROM [PISOS_PICADOS].Reserva AS r WHERE r.codigoReserva = @codReserva ) 
+END 
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idestadia INT )
+RETURNS INT
+AS 
+BEGIN
+DECLARE @resultado INT 
+SELECT @resultado = ISNULL (DATEDIFF (DAY,e.fechaCheckIn,e.fechaCheckOut),0) *
+[PISOS_PICADOS].precioPorDia(e.codigoReserva)
+FROM [PISOS_PICADOS].Estadia AS e WHERE e.idEstadia = @idestadia
+RETURN @resultado
+END 
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idestadia INT )
+RETURNS INT
+AS 
+BEGIN
+DECLARE @resultado INT 
+SELECT @resultado = ISNULL (DATEDIFF (DAY,e.fechaCheckOut,r.fechaRealizacion),0) *
+[PISOS_PICADOS].precioPorDia(e.codigoReserva)
+FROM [PISOS_PICADOS].Estadia AS e JOIN [PISOS_PICADOS].Reserva AS r ON e.codigoReserva = r.codigoReserva 
+WHERE e.idEstadia = @idestadia
+RETURN @resultado
+END 
+GO
+
 
