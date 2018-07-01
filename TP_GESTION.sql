@@ -1955,7 +1955,75 @@ BEGIN
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].filtroClientes (
+	@nombre VARCHAR(255)
+	,@apellido VARCHAR(255)
+	,@tipoIden VARCHAR(255)
+	,@numIdem INT
+	,@mail VARCHAR(255)
+	)
+RETURNS TABLE
+AS
+RETURN (
+		SELECT u.idUsuario
+			,u.nombre
+			,u.apellido
+			,u.mail
+			,u.telefono
+			,u.calle
+			,u.nroCalle
+			,u.localidad
+			,u.pais
+			,u.tipoIdentificacion
+			,u.numeroIdentificacion
+			,u.fechaNacimiento
+			,u.estado
+			,c.nacionalidad
+		FROM [PISOS_PICADOS].Usuario AS u
+		INNER JOIN [PISOS_PICADOS].Cliente AS c ON u.idUsuario = c.idUsuario
+		WHERE (
+				(
+					u.nombre = @nombre
+					OR @nombre IS NULL
+					)
+				AND (
+					u.apellido = @apellido
+					OR @apellido IS NULL
+					)
+				AND (
+					u.tipoIdentificacion = @tipoIden
+					OR @tipoIden IS NULL
+					)
+				AND (
+					u.numeroIdentificacion = @numIdem
+					OR @numIdem IS NULL
+					)
+				AND (
+					u.mail = @mail
+					OR @mail IS NULL
+					)
+				)
+		)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].existeRol (@nombreRol VARCHAR(255))
+RETURNS INT
+AS
+BEGIN
+	IF (
+			@nombreRol IN (
+				SELECT nombreRol
+				FROM [PISOS_PICADOS].Rol
+				)
+			)
+		RETURN 1;
+
+	RETURN 0;
+END
+GO
+
 /* STORED PROCEDURES ------------------------------------------------------*/
+
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
 AS
@@ -2010,7 +2078,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].modificarRol @idRol INT
+CREATE PROCEDURE [PISOS_PICADOS].modificarRol @nombreRolViejo VARCHAR(255) 
 	,@nombreRol VARCHAR(255)
 	,@estado BIT
 AS
@@ -2018,10 +2086,13 @@ BEGIN
 	IF @nombreRol IS NOT NULL
 		UPDATE [PISOS_PICADOS].Rol
 		SET nombreRol = @nombreRol
+		WHERE nombreRol = @nombreRolViejo
 
 	IF @estado IS NOT NULL
 		UPDATE [PISOS_PICADOS].Rol
 		SET estado = @estado
+		WHERE nombreRol = @nombreRolViejo
+
 END;
 GO
 
