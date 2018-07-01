@@ -32,7 +32,7 @@ namespace FrbaHotel
 
         private void btnABMHotel_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.AbmHotel.Hoteles()).ShowDialog();
+            (new FrbaHotel.AbmHotel.frmHoteles()).ShowDialog();
         }
 
         private void btnGenerarReserva_Click(object sender, EventArgs e)
