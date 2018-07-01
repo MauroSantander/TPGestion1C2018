@@ -14,7 +14,7 @@ namespace FrbaHotel
 
         public static void AbrirConexion()
         {
-            Globals.conexionGlobal = new SqlConnection("Password=gd2018;Persist Security Info=True;User ID=gdHotel2018;Initial Catalog=GD1C2018;Data Source=localhost\\SQLSERVER2012");
+            Globals.conexionGlobal = new SqlConnection("Password=gd2018;Persist Security Info=True;User ID=gdHotel2018;Initial Catalog=GD1C2018;Data Source=localhost\\SQLSERVER2012; MultipleActiveResultSets=true");
             try
             {
                 Globals.conexionGlobal.Open();

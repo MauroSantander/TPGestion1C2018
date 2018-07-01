@@ -112,9 +112,13 @@ namespace FrbaHotel.AbmRol
             //Cargo valores en parametros
             bajaRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
 
-            if (bajaRol.ExecuteNonQuery() > 0)
+            int respuesta = bajaRol.ExecuteNonQuery();
+
+            if (respuesta > 0)
             {
                 MessageBox.Show("Baja realizada correctamente");
+                cbRol.Items.Clear();
+                cargarRoles();
             }
 
         }
@@ -199,7 +203,27 @@ namespace FrbaHotel.AbmRol
         private void frmABMRol_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            cargarFuncionalidades();
+            cargarRoles();
+        }
 
+        public void cargarRoles() 
+        {
+            SqlCommand cmdBuscarRoles = new SqlCommand("SELECT nombreRol FROM [PISOS_PICADOS].Rol WHERE estado = 1", Globals.conexionGlobal);
+            SqlDataReader reader2 = cmdBuscarRoles.ExecuteReader();
+
+            while (reader2.Read())
+            {
+                cbRol.Items.Add((reader2["nombreRol"]).ToString());
+            }
+
+            reader2.Close();
+            cbRol.SelectedItem = cbRol.Items[0];
+            return;
+        }
+
+        public void cargarFuncionalidades()
+        {
             SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
             SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
 
@@ -209,15 +233,24 @@ namespace FrbaHotel.AbmRol
             }
 
             reader.Close();
+            return;
+        }
 
-            SqlCommand cmdBuscarRoles = new SqlCommand("SELECT nombreRol FROM [PISOS_PICADOS].Rol", Globals.conexionGlobal);
-            SqlDataReader reader2 = cmdBuscarRoles.ExecuteReader();
+        private void cbRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
-            while (reader2.Read())
+            SqlCommand cmdFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad as f JOIN [PISOS_PICADOS].RolxFuncionalidad as rf on f.idFuncionalidad = rf.idFuncionalidad JOIN [PISOS_PICADOS].Rol as r on rf.idRol = r.idRol WHERE r.nombreRol = @rol", Globals.conexionGlobal);
+            cmdFuncionalidades.Parameters.Add("@Rol", SqlDbType.VarChar);
+            cmdFuncionalidades.Parameters["@Rol"].Value = cbRol.SelectedItem.ToString();
+            SqlDataReader reader = cmdFuncionalidades.ExecuteReader();
+            checkListFuncionalidades2.Items.Clear();
+
+            while (reader.Read())
             {
-                cbRol.Items.Add((reader2["nombreRol"]).ToString());
-                cbRol.SelectedItem = cbRol.Items[0];
+                checkListFuncionalidades2.Items.Add((reader["descripcion"]).ToString());
             }
+
+            reader.Close();
 
         }
 
