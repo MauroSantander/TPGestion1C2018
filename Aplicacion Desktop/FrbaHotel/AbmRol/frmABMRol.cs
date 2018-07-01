@@ -106,6 +106,32 @@ namespace FrbaHotel.AbmRol
             {
                 modificarRol.Parameters["@estado"].Value = 0;
             }
+
+            for (int i = 0; i < checkListFuncionalidades2.Items.Count; i++) 
+            {
+                if (!checkListFuncionalidades2.GetItemChecked(i))
+                {
+                    string spQuitarFuncionalidad = "[PISOS_PICADOS].quitarFuncionalidad";
+                    SqlCommand quitarFuncionalidad = new SqlCommand(spQuitarFuncionalidad, Globals.conexionGlobal);
+                    quitarFuncionalidad.CommandType = CommandType.StoredProcedure;
+
+                    //agrego parametros
+                    quitarFuncionalidad.Parameters.Add("@nombreRol", SqlDbType.VarChar);
+                    quitarFuncionalidad.Parameters.Add("@funcionalidad", SqlDbType.VarChar);
+
+                    //agrego valores
+                    quitarFuncionalidad.Parameters["@nombreRol"].Value = cbRol.Text;
+                    quitarFuncionalidad.Parameters["@funcionalidad"].Value = checkListFuncionalidades2.Items[i].ToString();
+
+                    //ejecuto el SP
+                    quitarFuncionalidad.ExecuteNonQuery();
+
+                }
+
+                modificarRol.ExecuteNonQuery();
+
+            }
+
         }
 
         private void buttonBaja_Click(object sender, EventArgs e)
