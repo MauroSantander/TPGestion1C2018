@@ -11,6 +11,11 @@ CREATE TABLE [PISOS_PICADOS].Pais (
 	,nombrePais VARCHAR(255)
 	)
 
+CREATE TABLE [PISOS_PICADOS].EstadoUsuario (
+	 idEstado INT PRIMARY KEY IDENTITY
+	,detalleEstado VARCHAR(255)
+	)
+
 CREATE TABLE [PISOS_PICADOS].Usuario (
 	idUsuario INT PRIMARY KEY IDENTITY
 	,nombre VARCHAR(255)
@@ -24,7 +29,7 @@ CREATE TABLE [PISOS_PICADOS].Usuario (
 	,tipoIdentificacion VARCHAR(255) DEFAULT 'Pasaporte'
 	,numeroIdentificacion INT
 	,fechaNacimiento DATE
-	,estado BIT DEFAULT 1
+	,estado INT REFERENCES [PISOS_PICADOS].EstadoUsuario
 	)
 
 CREATE TABLE [PISOS_PICADOS].Cliente (
@@ -158,19 +163,7 @@ CREATE TABLE [PISOS_PICADOS].HabitacionxReserva (
 		)
 	)
 
-/*CREATE TABLE [PISOS_PICADOS].CheckIn
-(
-idCheckIn INT PRIMARY KEY IDENTITY,
-fecha DATE,
-usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario DEFAULT NULL 
-)
 
-CREATE TABLE [PISOS_PICADOS].CheckOut
-(
-idCheckOut INT PRIMARY KEY IDENTITY,
-fecha DATE,
-usuarioEncargado INT REFERENCES [PISOS_PICADOS].Usuario DEFAULT NULL
-) */
 CREATE TABLE [PISOS_PICADOS].Estadia (
 	idEstadia INT PRIMARY KEY IDENTITY
 	,codigoReserva INT REFERENCES [PISOS_PICADOS].Reserva
@@ -1013,6 +1006,18 @@ VALUES ('FACTURAR_ESTADIA');
 INSERT INTO [PISOS_PICADOS].Funcionalidad
 VALUES ('LISTADO_ESTADISTICO');
 
+INSERT INTO [PISOS_PICADOS].EstadoUsuario
+VALUES ('Habilitado')
+
+INSERT INTO [PISOS_PICADOS].EstadoUsuario
+VALUES ('Deshabilitado')
+
+INSERT INTO [PISOS_PICADOS].EstadoUsuario
+VALUES ('Pasaporte Repetido')
+
+INSERT INTO [PISOS_PICADOS].EstadoUsuario
+VALUES ('Mail Repetido')
+
 SET IDENTITY_INSERT [PISOS_PICADOS].Usuario ON
 
 INSERT INTO [PISOS_PICADOS].Usuario (
@@ -1048,7 +1053,7 @@ INSERT INTO [PISOS_PICADOS].Empleado (
 VALUES (
 	96945
 	,'admin'
-	,'w23e'
+	,HASHBYTES('SHA2_256', 'w23e')
 	);
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Consumible ON
@@ -1505,33 +1510,6 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].existeEmpleado (
-	@usuario VARCHAR(255)
-	,@contrasena VARCHAR(255)
-	)
-RETURNS INT
-AS
-BEGIN
-	IF (
-			@usuario IN (
-				SELECT usuario
-				FROM [PISOS_PICADOS].Empleado
-				WHERE usuario = @usuario
-				)
-			)
-		IF (
-				@contrasena IN (
-					SELECT contrasena
-					FROM [PISOS_PICADOS].Empleado
-					WHERE usuario = @usuario
-					)
-				)
-			RETURN 1;
-
-	RETURN 0;
-END
-GO
-
 CREATE FUNCTION [PISOS_PICADOS].usuarioValido (
 	@usuario VARCHAR(255)
 	,@contrasena VARCHAR(255)
@@ -1543,7 +1521,7 @@ BEGIN
 			@usuario IN (
 				SELECT usuario
 				FROM [PISOS_PICADOS].Empleado
-				WHERE usuario = @usuario
+				WHERE usuario = @usuario 
 				)
 			)
 		IF (
@@ -1895,12 +1873,9 @@ AS
 BEGIN
 	DECLARE @total INT
 
-	SELECT @total = SUM(ec.cantidad * (
-				SELECT c.precio
-				FROM [PISOS_PICADOS].Consumible AS c
-				WHERE c.idConsumible = ec.idConsumible
-				))
-	FROM [PISOS_PICADOS].EstadiaxConsumible AS ec
+	SELECT @total = SUM(ec.cantidad * c.precio)
+	FROM [PISOS_PICADOS].EstadiaxConsumible AS ec JOIN Consumible AS c 
+	ON ec.idConsumible =c.idConsumible
 	WHERE ec.idEstadia = @idEstadia
 	GROUP BY ec.idEstadia
 
@@ -1961,16 +1936,42 @@ BEGIN
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte (@pasaporte INT)
+RETURNS INT
+AS
+BEGIN
+	IF (
+			@pasaporte IN (
+				SELECT u.numeroIdentificacion
+				FROM [PISOS_PICADOS].Usuario AS u
+				WHERE u.tipoIdentificacion = 'Pasaporte'
+				GROUP BY u.numeroIdentificacion
+				HAVING COUNT(DISTINCT (u.nombre + u.apellido)) > 1
+				)
+			)
+		RETURN 1;
+
+	RETURN 0;
+END
+GO
+
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
 AS
 BEGIN
+	IF @nombre NOT IN (SELECT nombreRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @nombre)  
+	BEGIN
 	INSERT INTO [PISOS_PICADOS].Rol
 	VALUES (
 		@nombre
 		,@estado
 		);
+	END
+	ELSE
+	UPDATE [PISOS_PICADOS].Rol
+	SET estado = 1
+	WHERE nombreRol = @nombre
 END;
 GO
 
@@ -2002,7 +2003,7 @@ BEGIN
 	UPDATE [PISOS_PICADOS].Rol
 	SET estado = 0
 	WHERE idRol = (
-			SELECT p.idRol
+			SELECT TOP 1  p.idRol
 			FROM [PISOS_PICADOS].Rol AS p
 			WHERE nombreRol = @nombreRol
 			)
@@ -3287,6 +3288,31 @@ BEGIN
 	DEALLOCATE c1
 END
 GO
- 
 
+CREATE PROCEDURE [PISOS_PICADOS].corregirUsuarios
+AS
+BEGIN
+	UPDATE [PISOS_PICADOS].Usuario
+	SET estado = 3
+	WHERE numeroIdentificacion IN (
+			SELECT u.numeroIdentificacion
+			FROM [PISOS_PICADOS].Usuario AS u
+			WHERE u.tipoIdentificacion = 'Pasaporte'
+			GROUP BY u.numeroIdentificacion
+			HAVING COUNT(DISTINCT (u.nombre + u.apellido)) > 1
+			)
 
+	UPDATE [PISOS_PICADOS].Usuario
+	SET estado = 4
+	WHERE mail IN (
+			SELECT u.mail
+			FROM [PISOS_PICADOS].Usuario AS u
+			GROUP BY u.apellido
+				,u.nombre
+				,u.mail
+			HAVING COUNT(DISTINCT u.numeroIdentificacion) > 1
+			)
+END
+GO
+
+EXEC [PISOS_PICADOS].CorregirUsuarios
