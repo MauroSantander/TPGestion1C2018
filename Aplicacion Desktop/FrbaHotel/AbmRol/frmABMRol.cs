@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.AbmRol
 {
-    public partial class Form1 : Form
+    public partial class frmABMRol : Form
     {
-        public Form1()
+        public frmABMRol()
         {
             InitializeComponent();
         }

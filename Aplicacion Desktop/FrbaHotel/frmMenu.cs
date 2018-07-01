@@ -27,7 +27,7 @@ namespace FrbaHotel
 
         private void btnABMRol_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.AbmRol.Form1()).ShowDialog();
+            (new FrbaHotel.AbmRol.frmABMRol()).ShowDialog();
         }
 
         private void btnABMHotel_Click(object sender, EventArgs e)
