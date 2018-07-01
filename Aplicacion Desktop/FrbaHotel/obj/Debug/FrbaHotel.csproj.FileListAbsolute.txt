@@ -34,11 +34,6 @@ C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\bin
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.exe
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.pdb
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.csprojResolveAssemblyReference.cache
-C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.BajaHotel.resources
-C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.Hoteles.resources
-C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.ModificarHotel.resources
-C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.NuevoHotel.resources
-C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRol.Form1.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmUsuario.Admin.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.GenerarModificacionReserva.Form1.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Properties.Resources.resources
@@ -54,3 +49,8 @@ C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion 
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.frmElegirRol.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.frmMenu.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.frmLogIn.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.frmBajaHotel.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.frmHoteles.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.frmModificarHotel.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.frmNuevoHotel.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRol.frmABMRol.resources

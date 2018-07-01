@@ -16,6 +16,18 @@ namespace FrbaHotel.AbmRol
         public frmABMRol()
         {
             InitializeComponent();
+
+            SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
+
+            SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
+
+            while (reader.Read())
+            {
+                checkListFuncionalidades.Items.Add((reader["descripcion"]).ToString());
+            }
+
+            reader.Close();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -103,7 +115,7 @@ namespace FrbaHotel.AbmRol
         private void FuncionalidadesxRol_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-           // String cadena = "SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad";
+          // String cadena = "SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad";
             
           //  SqlCommand comando = new SqlCommand(cadena,Conexion conection = new Conexion());
 
@@ -123,15 +135,25 @@ namespace FrbaHotel.AbmRol
 
         private void buttonCrearRol_Click_1(object sender, EventArgs e)
         {
+            
+            //chequeos
+            if (txtNombreRol.Text == "")
+            {
+                MessageBox.Show("Complete el nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (checkListFuncionalidades.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Seleccione al menos una funcionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             string spAltaRol = "[PISOS_PICADOS].altaRol";
+            string spAgregarFuncionalidad = "[PISOS_PICADOS].agregarFuncionalidad";
 
             SqlCommand crearRol = new SqlCommand(spAltaRol, Globals.conexionGlobal);
             crearRol.CommandType = CommandType.StoredProcedure;
-
-            if (txtNombreRol.Text == "") { 
-                MessageBox.Show("Complete el nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
-                return;
-            }
 
             //Agrego parametros
             crearRol.Parameters.Add("@nombre", SqlDbType.VarChar);
@@ -149,8 +171,27 @@ namespace FrbaHotel.AbmRol
                 crearRol.Parameters["@estado"].Value = 0;
             }
 
+            for (int i = 0; i < (int)checkListFuncionalidades.Items.Count; i++)
+            {
+                if (checkListFuncionalidades.GetItemChecked(i))
+                {
+                    SqlCommand agregarFuncionalidad = new SqlCommand(spAgregarFuncionalidad, Globals.conexionGlobal);
+                    agregarFuncionalidad.CommandType = CommandType.StoredProcedure;
 
+                    //Agrego parametros
+                    agregarFuncionalidad.Parameters.Add("@nombre", SqlDbType.VarChar);
+                    agregarFuncionalidad.Parameters.Add("@funcionalidad", SqlDbType.VarChar);
 
+                    //Cargo valores en parametros
+                    agregarFuncionalidad.Parameters["@nombre"].Value = txtNombreRol.Text;
+                    agregarFuncionalidad.Parameters["@funcionalidad"].Value = checkListFuncionalidades.Items[i];
+
+                    agregarFuncionalidad.ExecuteNonQuery();
+                    MessageBox.Show("Alta realizada correctamente");
+                }
+            }
+
+            crearRol.ExecuteNonQuery();
         }
 
         private void tabPage1_Click(object sender, EventArgs e)

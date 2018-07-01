@@ -44,6 +44,9 @@ namespace FrbaHotel.Login
             cmdBuscarIdRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
             int idRol = (int) cmdBuscarIdRol.ExecuteScalar();
             (new FrbaHotel.frmMenu()).asignarRol(idRol);
+
+            frmLogIn.ActiveForm.Close();
+            this.Close();
             
         }
 

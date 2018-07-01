@@ -56,29 +56,29 @@
     <Compile Include="AbmHabitacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmHotel\BajaHotel.cs">
+    <Compile Include="AbmHotel\frmBajaHotel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmHotel\BajaHotel.Designer.cs">
-      <DependentUpon>BajaHotel.cs</DependentUpon>
+    <Compile Include="AbmHotel\frmBajaHotel.Designer.cs">
+      <DependentUpon>frmBajaHotel.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmHotel\Hoteles.cs">
+    <Compile Include="AbmHotel\frmHoteles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmHotel\Hoteles.Designer.cs">
-      <DependentUpon>Hoteles.cs</DependentUpon>
+    <Compile Include="AbmHotel\frmHoteles.Designer.cs">
+      <DependentUpon>frmHoteles.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmHotel\ModificarHotel.cs">
+    <Compile Include="AbmHotel\frmModificarHotel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmHotel\ModificarHotel.Designer.cs">
-      <DependentUpon>ModificarHotel.cs</DependentUpon>
+    <Compile Include="AbmHotel\frmModificarHotel.Designer.cs">
+      <DependentUpon>frmModificarHotel.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmHotel\NuevoHotel.cs">
+    <Compile Include="AbmHotel\frmNuevoHotel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmHotel\NuevoHotel.Designer.cs">
-      <DependentUpon>NuevoHotel.cs</DependentUpon>
+    <Compile Include="AbmHotel\frmNuevoHotel.Designer.cs">
+      <DependentUpon>frmNuevoHotel.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRegimen\Form1.cs">
       <SubType>Form</SubType>
@@ -86,11 +86,11 @@
     <Compile Include="AbmRegimen\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\Form1.cs">
+    <Compile Include="AbmRol\frmABMRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRol\frmABMRol.Designer.cs">
+      <DependentUpon>frmABMRol.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmUsuario\Admin.cs">
       <SubType>Form</SubType>
@@ -153,20 +153,20 @@
     <EmbeddedResource Include="AbmCliente\frmCliente.resx">
       <DependentUpon>frmCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmHotel\BajaHotel.resx">
-      <DependentUpon>BajaHotel.cs</DependentUpon>
+    <EmbeddedResource Include="AbmHotel\frmBajaHotel.resx">
+      <DependentUpon>frmBajaHotel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmHotel\Hoteles.resx">
-      <DependentUpon>Hoteles.cs</DependentUpon>
+    <EmbeddedResource Include="AbmHotel\frmHoteles.resx">
+      <DependentUpon>frmHoteles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmHotel\ModificarHotel.resx">
-      <DependentUpon>ModificarHotel.cs</DependentUpon>
+    <EmbeddedResource Include="AbmHotel\frmModificarHotel.resx">
+      <DependentUpon>frmModificarHotel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmHotel\NuevoHotel.resx">
-      <DependentUpon>NuevoHotel.cs</DependentUpon>
+    <EmbeddedResource Include="AbmHotel\frmNuevoHotel.resx">
+      <DependentUpon>frmNuevoHotel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AbmRol\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="AbmRol\frmABMRol.resx">
+      <DependentUpon>frmABMRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmUsuario\Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>

@@ -46,7 +46,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.checkListFuncionalidades = new System.Windows.Forms.CheckedListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FuncionalidadesxRol)).BeginInit();
@@ -154,7 +154,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.checkedListBox1);
+            this.tabPage2.Controls.Add(this.checkListFuncionalidades);
             this.tabPage2.Controls.Add(this.txtNombreRol);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.checkActivo);
@@ -247,13 +247,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCrearRol_Click_1);
             // 
-            // checkedListBox1
+            // checkListFuncionalidades
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(144, 70);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(168, 109);
-            this.checkedListBox1.TabIndex = 22;
+            this.checkListFuncionalidades.FormattingEnabled = true;
+            this.checkListFuncionalidades.Location = new System.Drawing.Point(144, 70);
+            this.checkListFuncionalidades.Name = "checkListFuncionalidades";
+            this.checkListFuncionalidades.Size = new System.Drawing.Size(168, 109);
+            this.checkListFuncionalidades.TabIndex = 22;
             // 
             // frmABMRol
             // 
@@ -294,7 +294,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.TextBox txtNombreRol;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox checkListFuncionalidades;
 
     }
 }
