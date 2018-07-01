@@ -112,9 +112,13 @@ namespace FrbaHotel.AbmRol
             //Cargo valores en parametros
             bajaRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
 
-            if (bajaRol.ExecuteNonQuery() > 0)
+            int respuesta = bajaRol.ExecuteNonQuery();
+
+            if (respuesta > 0)
             {
                 MessageBox.Show("Baja realizada correctamente");
+                cbRol.Items.Clear();
+                cargarRoles();
             }
 
         }
@@ -199,7 +203,26 @@ namespace FrbaHotel.AbmRol
         private void frmABMRol_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            cargarFuncionalidades();
+            cargarRoles();
+        }
 
+        public void cargarRoles() 
+        {
+            SqlCommand cmdBuscarRoles = new SqlCommand("SELECT nombreRol FROM [PISOS_PICADOS].Rol WHERE estado = 1", Globals.conexionGlobal);
+            SqlDataReader reader2 = cmdBuscarRoles.ExecuteReader();
+
+            while (reader2.Read())
+            {
+                cbRol.Items.Add((reader2["nombreRol"]).ToString());
+                cbRol.SelectedItem = cbRol.Items[0];
+            }
+
+            reader2.Close();
+        }
+
+        public void cargarFuncionalidades()
+        {
             SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
             SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
 
@@ -209,16 +232,6 @@ namespace FrbaHotel.AbmRol
             }
 
             reader.Close();
-
-            SqlCommand cmdBuscarRoles = new SqlCommand("SELECT nombreRol FROM [PISOS_PICADOS].Rol", Globals.conexionGlobal);
-            SqlDataReader reader2 = cmdBuscarRoles.ExecuteReader();
-
-            while (reader2.Read())
-            {
-                cbRol.Items.Add((reader2["nombreRol"]).ToString());
-                cbRol.SelectedItem = cbRol.Items[0];
-            }
-
         }
 
     }
