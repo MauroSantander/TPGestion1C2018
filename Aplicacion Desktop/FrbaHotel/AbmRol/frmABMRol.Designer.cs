@@ -264,7 +264,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "frmABMRol";
             this.Text = "Abm Rol";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.frmABMRol_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

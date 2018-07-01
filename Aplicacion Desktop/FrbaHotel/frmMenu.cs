@@ -14,7 +14,6 @@ namespace FrbaHotel
 {
     public partial class frmMenu : Form
     {
-        int rol;
         public frmMenu()
         {
             InitializeComponent();
@@ -188,6 +187,11 @@ namespace FrbaHotel
             this.CenterToScreen();
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            Globals.getLogin().Show();
         }
+    }
 
 }

@@ -16,23 +16,6 @@ namespace FrbaHotel.AbmRol
         public frmABMRol()
         {
             InitializeComponent();
-
-            SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
-
-            SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
-
-            while (reader.Read())
-            {
-                checkListFuncionalidades.Items.Add((reader["descripcion"]).ToString());
-            }
-
-            reader.Close();
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -208,6 +191,22 @@ namespace FrbaHotel.AbmRol
         private void button2_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void frmABMRol_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
+
+            SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
+
+            SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
+
+            while (reader.Read())
+            {
+                checkListFuncionalidades.Items.Add((reader["descripcion"]).ToString());
+            }
+
+            reader.Close();
         }
 
     }

@@ -46,12 +46,15 @@ namespace FrbaHotel.Login
                 MessageBox.Show("Elija un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             cmdBuscarIdRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
             int idRol = (int) cmdBuscarIdRol.ExecuteScalar();
-            (new FrbaHotel.frmMenu()).asignarRol(idRol);
 
+            frmMenu frmMenuInstance = new frmMenu();
+            frmMenuInstance.asignarRol(idRol);
+            frmMenuInstance.Show();
             this.Close();
-            frmLogIn.ActiveForm.Close();
+            Globals.getLogin().Hide();
             return;
         }
 
