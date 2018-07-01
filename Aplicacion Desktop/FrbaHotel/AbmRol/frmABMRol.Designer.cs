@@ -30,6 +30,10 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtNuevoNombre = new System.Windows.Forms.TextBox();
+            this.checkBoxEstado = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.cbRol = new System.Windows.Forms.ComboBox();
             this.checkListFuncionalidades2 = new System.Windows.Forms.CheckedListBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -47,8 +51,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -66,7 +68,9 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.checkBox1);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.txtNuevoNombre);
+            this.tabPage1.Controls.Add(this.checkBoxEstado);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.cbRol);
             this.tabPage1.Controls.Add(this.checkListFuncionalidades2);
@@ -83,6 +87,42 @@
             this.tabPage1.Text = "Modificar/Eliminar Rol";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.label8.Location = new System.Drawing.Point(21, 207);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(109, 13);
+            this.label8.TabIndex = 32;
+            this.label8.Text = "Nuevo nombre de rol:";
+            // 
+            // txtNuevoNombre
+            // 
+            this.txtNuevoNombre.Location = new System.Drawing.Point(142, 204);
+            this.txtNuevoNombre.Name = "txtNuevoNombre";
+            this.txtNuevoNombre.Size = new System.Drawing.Size(192, 20);
+            this.txtNuevoNombre.TabIndex = 31;
+            // 
+            // checkBoxEstado
+            // 
+            this.checkBoxEstado.AutoSize = true;
+            this.checkBoxEstado.Location = new System.Drawing.Point(68, 78);
+            this.checkBoxEstado.Name = "checkBoxEstado";
+            this.checkBoxEstado.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxEstado.TabIndex = 30;
+            this.checkBoxEstado.Text = "Activo";
+            this.checkBoxEstado.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(21, 78);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(43, 13);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Estado:";
             // 
             // cbRol
             // 
@@ -254,25 +294,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCrearRol_Click_1);
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(21, 201);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(43, 13);
-            this.label7.TabIndex = 29;
-            this.label7.Text = "Estado:";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(142, 201);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(56, 17);
-            this.checkBox1.TabIndex = 30;
-            this.checkBox1.Text = "Activo";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // frmABMRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,8 +333,10 @@
         private System.Windows.Forms.CheckedListBox checkListFuncionalidades;
         private System.Windows.Forms.CheckedListBox checkListFuncionalidades2;
         private System.Windows.Forms.ComboBox cbRol;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBoxEstado;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtNuevoNombre;
 
     }
 }

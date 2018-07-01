@@ -87,8 +87,25 @@ namespace FrbaHotel.AbmRol
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            //abrir pantalla de modificacion
-            //podemos agregar funcionalidades, quitarlas y modificarRol (funciondes de sql)
+            string spModificarRol = "[PISOS_PICADOS].modificarRol";
+            SqlCommand modificarRol = new SqlCommand(spModificarRol, Globals.conexionGlobal);
+            modificarRol.CommandType = CommandType.StoredProcedure;
+
+            modificarRol.Parameters.Add("@nombreRolViejo", SqlDbType.VarChar);
+            modificarRol.Parameters.Add("@nombreRol",SqlDbType.VarChar);
+            modificarRol.Parameters.Add("@estado",SqlDbType.Bit);
+
+            modificarRol.Parameters["@nombreRolViejo"].Value = cbRol.Text;
+            modificarRol.Parameters["@nombreRol"].Value = txtNuevoNombre.Text;
+
+            if (checkBoxEstado.Checked) 
+            {
+                modificarRol.Parameters["@estado"].Value = 1;
+            }
+            else
+            {
+                modificarRol.Parameters["@estado"].Value = 0;
+            }
         }
 
         private void buttonBaja_Click(object sender, EventArgs e)
@@ -141,6 +158,7 @@ namespace FrbaHotel.AbmRol
 
             string spAltaRol = "[PISOS_PICADOS].altaRol";
             string spAgregarFuncionalidad = "[PISOS_PICADOS].agregarFuncionalidad";
+            string funcionExisteRol = "[PISOS_PICADOS].existeRol(@nombreRol)";
 
             SqlCommand crearRol = new SqlCommand(spAltaRol, Globals.conexionGlobal);
             crearRol.CommandType = CommandType.StoredProcedure;
@@ -161,23 +179,30 @@ namespace FrbaHotel.AbmRol
                 crearRol.Parameters["@estado"].Value = 0;
             }
 
-            for (int i = 0; i < (int)checkListFuncionalidades.Items.Count; i++)
+            SqlCommand existeRol = new SqlCommand(funcionExisteRol, Globals.conexionGlobal);
+            existeRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
+            existeRol.Parameters["@nombreRol"].Value = txtNombreRol.Text;
+
+            if ((int)existeRol.ExecuteScalar() == 0)
             {
-                if (checkListFuncionalidades.GetItemChecked(i))
+                for (int i = 0; i < (int)checkListFuncionalidades.Items.Count; i++)
                 {
-                    SqlCommand agregarFuncionalidad = new SqlCommand(spAgregarFuncionalidad, Globals.conexionGlobal);
-                    agregarFuncionalidad.CommandType = CommandType.StoredProcedure;
+                    if (checkListFuncionalidades.GetItemChecked(i))
+                    {
+                        SqlCommand agregarFuncionalidad = new SqlCommand(spAgregarFuncionalidad, Globals.conexionGlobal);
+                        agregarFuncionalidad.CommandType = CommandType.StoredProcedure;
 
-                    //Agrego parametros
-                    agregarFuncionalidad.Parameters.Add("@nombre", SqlDbType.VarChar);
-                    agregarFuncionalidad.Parameters.Add("@funcionalidad", SqlDbType.VarChar);
+                        //Agrego parametros
+                        agregarFuncionalidad.Parameters.Add("@nombre", SqlDbType.VarChar);
+                        agregarFuncionalidad.Parameters.Add("@funcionalidad", SqlDbType.VarChar);
 
-                    //Cargo valores en parametros
-                    agregarFuncionalidad.Parameters["@nombre"].Value = txtNombreRol.Text;
-                    agregarFuncionalidad.Parameters["@funcionalidad"].Value = checkListFuncionalidades.Items[i];
+                        //Cargo valores en parametros
+                        agregarFuncionalidad.Parameters["@nombre"].Value = txtNombreRol.Text;
+                        agregarFuncionalidad.Parameters["@funcionalidad"].Value = checkListFuncionalidades.Items[i];
 
-                    agregarFuncionalidad.ExecuteNonQuery();
-                    MessageBox.Show("Alta realizada correctamente");
+                        agregarFuncionalidad.ExecuteNonQuery();
+                        MessageBox.Show("Alta realizada correctamente");
+                    }
                 }
             }
 
@@ -248,6 +273,11 @@ namespace FrbaHotel.AbmRol
             while (reader.Read())
             {
                 checkListFuncionalidades2.Items.Add((reader["descripcion"]).ToString());
+            }
+
+            for (int i = 0; i < checkListFuncionalidades2.Items.Count; i++)
+            {
+                checkListFuncionalidades2.SetItemChecked(i, true);
             }
 
             reader.Close();
