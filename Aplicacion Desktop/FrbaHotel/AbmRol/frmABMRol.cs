@@ -129,7 +129,6 @@ namespace FrbaHotel.AbmRol
                 }
 
                 modificarRol.ExecuteNonQuery();
-
             }
 
         }

@@ -1525,7 +1525,7 @@ BEGIN
 				)
 			)
 		IF (
-				@contrasena IN (
+				HASHBYTES('SHA2_256', @contrasena) IN (
 					SELECT contrasena
 					FROM [PISOS_PICADOS].Empleado
 					WHERE usuario = @usuario
