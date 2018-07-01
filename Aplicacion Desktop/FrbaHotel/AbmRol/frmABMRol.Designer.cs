@@ -30,13 +30,12 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkListFuncionalidades2 = new System.Windows.Forms.CheckedListBox();
             this.label6 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
-            this.FuncionalidadesxRol = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.checkListFuncionalidades = new System.Windows.Forms.CheckedListBox();
             this.txtNombreRol = new System.Windows.Forms.TextBox();
@@ -47,9 +46,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.cbRol = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FuncionalidadesxRol)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,13 +64,13 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.cbRol);
+            this.tabPage1.Controls.Add(this.checkListFuncionalidades2);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.button5);
-            this.tabPage1.Controls.Add(this.FuncionalidadesxRol);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.button4);
             this.tabPage1.Controls.Add(this.button3);
-            this.tabPage1.Controls.Add(this.comboBox3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -80,6 +79,14 @@
             this.tabPage1.Text = "Modificar/Eliminar Rol";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // checkListFuncionalidades2
+            // 
+            this.checkListFuncionalidades2.FormattingEnabled = true;
+            this.checkListFuncionalidades2.Location = new System.Drawing.Point(142, 47);
+            this.checkListFuncionalidades2.Name = "checkListFuncionalidades2";
+            this.checkListFuncionalidades2.Size = new System.Drawing.Size(192, 139);
+            this.checkListFuncionalidades2.TabIndex = 27;
             // 
             // label6
             // 
@@ -99,15 +106,6 @@
             this.button5.Text = "Salir";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.buttonSalir_Click);
-            // 
-            // FuncionalidadesxRol
-            // 
-            this.FuncionalidadesxRol.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.FuncionalidadesxRol.Location = new System.Drawing.Point(142, 47);
-            this.FuncionalidadesxRol.Name = "FuncionalidadesxRol";
-            this.FuncionalidadesxRol.Size = new System.Drawing.Size(204, 150);
-            this.FuncionalidadesxRol.TabIndex = 24;
-            this.FuncionalidadesxRol.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FuncionalidadesxRol_CellContentClick);
             // 
             // label5
             // 
@@ -138,19 +136,6 @@
             this.button3.Text = "Modificar";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.buttonModificar_Click);
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "Administrador",
-            "Recepcionista",
-            "Guest"});
-            this.comboBox3.Location = new System.Drawing.Point(142, 13);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(148, 21);
-            this.comboBox3.TabIndex = 20;
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBoxSeleccionDeRol_SelectedIndexChanged);
             // 
             // tabPage2
             // 
@@ -256,6 +241,14 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCrearRol_Click_1);
             // 
+            // cbRol
+            // 
+            this.cbRol.FormattingEnabled = true;
+            this.cbRol.Location = new System.Drawing.Point(142, 13);
+            this.cbRol.Name = "cbRol";
+            this.cbRol.Size = new System.Drawing.Size(192, 21);
+            this.cbRol.TabIndex = 28;
+            // 
             // frmABMRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,7 +261,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FuncionalidadesxRol)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
@@ -289,13 +281,13 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.DataGridView FuncionalidadesxRol;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.TextBox txtNombreRol;
         private System.Windows.Forms.CheckedListBox checkListFuncionalidades;
+        private System.Windows.Forms.CheckedListBox checkListFuncionalidades2;
+        private System.Windows.Forms.ComboBox cbRol;
 
     }
 }

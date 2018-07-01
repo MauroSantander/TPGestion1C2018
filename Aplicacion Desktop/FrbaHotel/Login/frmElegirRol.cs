@@ -61,6 +61,7 @@ namespace FrbaHotel.Login
         private void ElegirRol_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            cbRol.SelectedItem = cbRol.Items[0];
         }
     }
 }

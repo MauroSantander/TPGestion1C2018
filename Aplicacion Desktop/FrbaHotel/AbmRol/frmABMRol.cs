@@ -80,29 +80,9 @@ namespace FrbaHotel.AbmRol
 
         }
 
-        private void comboBoxSeleccionDeRol_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Utils con = new Utils();
-
-            con.mostrarTodasLasFuncionalidadesDisponibles(FuncionalidadesxRol);
-
-            //aca se tienen que  mostrar solo la del rol seleccionado, por ende usamos la tabla 
-            //rolxfuncionalidad
-        }
-
         private void buttonSalir_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void FuncionalidadesxRol_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-          // String cadena = "SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad";
-            
-          //  SqlCommand comando = new SqlCommand(cadena,Conexion conection = new Conexion());
-
-            
         }
 
         private void buttonModificar_Click(object sender, EventArgs e)
@@ -113,7 +93,30 @@ namespace FrbaHotel.AbmRol
 
         private void buttonBaja_Click(object sender, EventArgs e)
         {
-            //usar la funcion de sql bajaRol
+
+            //chequeos
+            if (cbRol.SelectedItem == null)
+            {
+                MessageBox.Show("Seleccione un rol.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string spBajaRol = "[PISOS_PICADOS].bajaRol";
+
+            SqlCommand bajaRol = new SqlCommand(spBajaRol, Globals.conexionGlobal);
+            bajaRol.CommandType = CommandType.StoredProcedure;
+
+            //Agrego parametros
+            bajaRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
+
+            //Cargo valores en parametros
+            bajaRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
+
+            if (bajaRol.ExecuteNonQuery() > 0)
+            {
+                MessageBox.Show("Baja realizada correctamente");
+            }
+
         }
 
         private void buttonCrearRol_Click_1(object sender, EventArgs e)
@@ -198,7 +201,6 @@ namespace FrbaHotel.AbmRol
             this.CenterToScreen();
 
             SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
-
             SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
 
             while (reader.Read())
@@ -207,6 +209,16 @@ namespace FrbaHotel.AbmRol
             }
 
             reader.Close();
+
+            SqlCommand cmdBuscarRoles = new SqlCommand("SELECT nombreRol FROM [PISOS_PICADOS].Rol", Globals.conexionGlobal);
+            SqlDataReader reader2 = cmdBuscarRoles.ExecuteReader();
+
+            while (reader2.Read())
+            {
+                cbRol.Items.Add((reader2["nombreRol"]).ToString());
+                cbRol.SelectedItem = cbRol.Items[0];
+            }
+
         }
 
     }
