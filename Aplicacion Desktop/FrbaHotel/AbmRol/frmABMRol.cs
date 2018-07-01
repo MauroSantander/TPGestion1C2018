@@ -215,10 +215,11 @@ namespace FrbaHotel.AbmRol
             while (reader2.Read())
             {
                 cbRol.Items.Add((reader2["nombreRol"]).ToString());
-                cbRol.SelectedItem = cbRol.Items[0];
             }
 
             reader2.Close();
+            cbRol.SelectedItem = cbRol.Items[0];
+            return;
         }
 
         public void cargarFuncionalidades()
@@ -232,6 +233,25 @@ namespace FrbaHotel.AbmRol
             }
 
             reader.Close();
+            return;
+        }
+
+        private void cbRol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            SqlCommand cmdFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad as f JOIN [PISOS_PICADOS].RolxFuncionalidad as rf on f.idFuncionalidad = rf.idFuncionalidad JOIN [PISOS_PICADOS].Rol as r on rf.idRol = r.idRol WHERE r.nombreRol = @rol", Globals.conexionGlobal);
+            cmdFuncionalidades.Parameters.Add("@Rol", SqlDbType.VarChar);
+            cmdFuncionalidades.Parameters["@Rol"].Value = cbRol.SelectedItem.ToString();
+            SqlDataReader reader = cmdFuncionalidades.ExecuteReader();
+            checkListFuncionalidades2.Items.Clear();
+
+            while (reader.Read())
+            {
+                checkListFuncionalidades2.Items.Add((reader["descripcion"]).ToString());
+            }
+
+            reader.Close();
+
         }
 
     }
