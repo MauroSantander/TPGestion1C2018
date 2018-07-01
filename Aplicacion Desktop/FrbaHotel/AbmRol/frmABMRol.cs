@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -122,7 +123,44 @@ namespace FrbaHotel.AbmRol
 
         private void buttonCrearRol_Click_1(object sender, EventArgs e)
         {
-            //funcion en el sql, alta rol
+            string spAltaRol = "[PISOS_PICADOS].altaRol";
+
+            SqlCommand crearRol = new SqlCommand(spAltaRol, Globals.conexionGlobal);
+            crearRol.CommandType = CommandType.StoredProcedure;
+
+            if (txtNombreRol.Text == "") { 
+                MessageBox.Show("Complete el nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                return;
+            }
+
+            //Agrego parametros
+            crearRol.Parameters.Add("@nombre", SqlDbType.VarChar);
+            crearRol.Parameters.Add("@estado", SqlDbType.Bit);
+
+            //Cargo valores en parametros
+            crearRol.Parameters["@nombre"].Value = txtNombreRol.Text;
+
+            if (checkActivo.Checked)
+            {
+                crearRol.Parameters["@estado"].Value = 1;
+            }
+            else
+            {
+                crearRol.Parameters["@estado"].Value = 0;
+            }
+
+
+
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click_1(object sender, EventArgs e)
+        {
+
         }
 
     }

@@ -242,17 +242,17 @@ namespace FrbaHotel.AbmCliente
         
             string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-            if (NombreCliente == ""){MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
-            if (ApellidoCliente == "") { MessageBox.Show("Completar apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (TipoIdCliente == "") { MessageBox.Show("Completar tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NroIdCliente < 0) { MessageBox.Show("Completar nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (MailCliente == "") { MessageBox.Show("Completar mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NombreCliente == ""){MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
+            if (ApellidoCliente == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (!validarEmail(Mail.Text)) { MessageBox.Show("Error en el mail"); }
-            if (CalleCliente == "") { MessageBox.Show("Completar calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NroCalleCliente <0) { MessageBox.Show("Completar nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (LocalidadCliente == "") { MessageBox.Show("Completar localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (cbPaises.Text == "") { MessageBox.Show("Completar país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NacionalidadCliente == "") { MessageBox.Show("Completar nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (CalleCliente == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NroCalleCliente <0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (LocalidadCliente == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
             String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
             
@@ -306,8 +306,6 @@ namespace FrbaHotel.AbmCliente
             Localidad.ResetText();
             Nacionalidad.ResetText();
             FechaNacimiento.ResetText();
-
-            //con.Close();
         }
 
         private void BotonCancelar_Click(object sender, EventArgs e)
