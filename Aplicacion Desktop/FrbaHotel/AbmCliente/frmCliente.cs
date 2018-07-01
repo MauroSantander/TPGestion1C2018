@@ -77,7 +77,7 @@ namespace FrbaHotel.AbmCliente
         private void BotonModifVerClientes_Click(object sender, EventArgs e)
         {
            
-            Conexion c = new Conexion();
+            Utils c = new Utils();
 
             c.mostrarClientes(dataGridView2);
                
@@ -108,7 +108,7 @@ namespace FrbaHotel.AbmCliente
         private void BotonVerClientes_Click(object sender, EventArgs e)
         {
 
-            Conexion c = new Conexion();
+            Utils c = new Utils();
 
             c.mostrarClientes(dataGridViewClientes);
             
@@ -218,6 +218,8 @@ namespace FrbaHotel.AbmCliente
 
         private void BotonCrear_Click(object sender, EventArgs e)
         {
+            Utils utilizador = new Utils();
+
             String NombreCliente = Nombre.Text;
             String ApellidoCliente = Apellido.Text;
             String TipoIdCliente = TipoId.Text;
@@ -249,7 +251,7 @@ namespace FrbaHotel.AbmCliente
             if (CalleCliente == "") { MessageBox.Show("Completar calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (NroCalleCliente <0) { MessageBox.Show("Completar nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (LocalidadCliente == "") { MessageBox.Show("Completar localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (cbPaises.SelectedValue == null) { MessageBox.Show("Completar país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (cbPaises.Text == "") { MessageBox.Show("Completar país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             if (NacionalidadCliente == "") { MessageBox.Show("Completar nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
             String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
@@ -281,13 +283,15 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters["@calle"].Value = CalleCliente;
             comandoAltaCliente.Parameters["@numeroC"].Value = NroCalleCliente;
             comandoAltaCliente.Parameters["@localidad"].Value = LocalidadCliente;
-            comandoAltaCliente.Parameters["@pais"].Value = Convert.ToString(cbPaises.SelectedValue);
+            
+            int idPais = utilizador.obtenerIdPais(cbPaises.Text);
+            
+            comandoAltaCliente.Parameters["@pais"].Value = idPais;
             comandoAltaCliente.Parameters["@nacionalidad"].Value = NacionalidadCliente;
             comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");
             
-            
-            //comandoAltaCliente.ExecuteNonQuery();
-            comandoAltaCliente.ExecuteReader().Close();
+            //comandoAltaCliente.ExecuteReader().Close();
+            comandoAltaCliente.ExecuteNonQuery();
             MessageBox.Show("Alta realizada correctamente");
             
             //reinicio de los textbox

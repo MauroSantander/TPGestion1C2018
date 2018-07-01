@@ -16,7 +16,7 @@ namespace FrbaHotel.AbmUsuario
     public partial class Admin : Form
     {
         DataTable dataTable;
-        Conexion c = new Conexion();
+        Utils c = new Utils();
         int idUsrModificar;
         public Admin()
         {
@@ -157,7 +157,7 @@ namespace FrbaHotel.AbmUsuario
         {
             c.mostrarUsuarios(dataGridView1);
             DataView DV = new DataView(dataTable);         
-            if (String.IsNullOrEmpty(textBox1.Text){ MessageBox.Show("Completar Número Identificación"); return;}
+            if (String.IsNullOrEmpty(textBox1.Text)){ MessageBox.Show("Completar Número Identificación"); return;}
             if(String.IsNullOrEmpty(comboBox2.SelectedText)){MessageBox.Show("Seleccionar Tipo"); return;}
             
             DV.RowFilter = string.Format("tipoIdentificacion LIKE '%{0}%' ", comboBox2.SelectedText);

@@ -86,7 +86,7 @@ namespace FrbaHotel.AbmRol
 
         private void comboBoxSeleccionDeRol_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Conexion con = new Conexion();
+            Utils con = new Utils();
 
             con.mostrarTodasLasFuncionalidadesDisponibles(FuncionalidadesxRol);
 

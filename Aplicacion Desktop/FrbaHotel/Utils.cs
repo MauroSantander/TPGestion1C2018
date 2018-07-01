@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace FrbaHotel
 {
-   class Conexion
+   class Utils
     {
         SqlCommand comando;
         SqlDataReader lector;
@@ -79,14 +79,12 @@ namespace FrbaHotel
         public int verificarUsuario(String usuario, String contrasena)
         {
 
-            //String cadenaVerificarLogIn = "EXECUTE [PISOS_PICADOS].usuarioValido(@usuario, @contraseña)";
-//SqlCommand verificar = new SqlCommand(cadenaVerificarLogIn, conexion);
-            String prueba = "SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario=@usuario AND contraseña=@contraseña";
+            String stringVerificar = "SELECT usuario FROM [PISOS_PICADOS].Empleado WHERE usuario=@usuario AND contraseña=@contraseña";
 
 
             Globals.conexionGlobal.Open();
 
-            SqlCommand verificar = new SqlCommand(prueba, Globals.conexionGlobal);
+            SqlCommand verificar = new SqlCommand(stringVerificar, Globals.conexionGlobal);
             verificar.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
             verificar.Parameters.Add("@contraseña", SqlDbType.VarChar).Value = contrasena;
           
@@ -99,5 +97,20 @@ namespace FrbaHotel
                 return result;
 
         }
+
+
+        public int obtenerIdPais(String unPais)
+        {
+            SqlCommand queryIdPais = new SqlCommand("SELECT [PISOS_PICADOS].obtenerIDPais (@nombre)", Globals.conexionGlobal);
+            
+            queryIdPais.Parameters.Add("@nombre", SqlDbType.VarChar);
+            queryIdPais.Parameters["@nombre"].Value = unPais;
+
+            int idPais = (int) queryIdPais.ExecuteScalar();
+
+            return idPais;
+        }
+
+
     }
 }

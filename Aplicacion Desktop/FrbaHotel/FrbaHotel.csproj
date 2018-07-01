@@ -104,7 +104,7 @@
     <Compile Include="CancelarReserva\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Conexion.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Login\frmElegirRol.cs">
       <SubType>Form</SubType>
