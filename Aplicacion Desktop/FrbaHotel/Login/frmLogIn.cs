@@ -83,7 +83,25 @@ namespace FrbaHotel.Login
             }
             else {
                 intentosFallidos++;
+                if (intentosFallidos == 3) 
+                {
+                    //Por ahora lo dejo comentado
+
+                    MessageBox.Show("Ha llegado a la cantidad máxima de intentos fallidos","Error");
+
+/*                    String procedureBaja = "[PISOS_PICADOS].BajaUsuario";
+
+                    SqlCommand cmdBaja = new SqlCommand(procedureBaja, Globals.conexionGlobal);
+
+                    verificarUsuario.Parameters.Add("@idAutor", SqlDbType.VarChar);
+                    verificarUsuario.Parameters.Add("@idUsuario", SqlDbType.VarChar);
+                    verificarUsuario.Parameters["@idAutor"].Value =
+                    verificarUsuario.Parameters["@idUsuario"].Value = 
+*/
+
+                }
                 MessageBox.Show("Usuario Inválido.");
+
             }
 
         }

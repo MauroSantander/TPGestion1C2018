@@ -22,11 +22,7 @@ C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion 
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.csprojResolveAssemblyReference.cache
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Properties.Resources.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
-C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.Form1.resources
-C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmCliente.Form1.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRol.Form1.resources
-C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Form1.resources
-C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Form2.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.BajaHotel.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.Hoteles.resources
 C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.ModificarHotel.resources
@@ -54,3 +50,7 @@ C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.frmElegirRol.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.frmMenu.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.frmLogIn.resources
+C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmCliente.frmCliente.resources
+C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.frmElegirRol.resources
+C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.frmMenu.resources
+C:\Users\Lenovo\Documents\Facultad\Gestión de Datos\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.frmLogIn.resources

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Mail;
 
 
 namespace FrbaHotel.AbmCliente
@@ -20,6 +21,18 @@ namespace FrbaHotel.AbmCliente
         public frmCliente()
         {
             InitializeComponent();
+
+            SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
+
+            SqlDataReader reader = cmdBuscarPaises.ExecuteReader();
+
+            while (reader.Read())
+            {
+                cbPaises.Items.Add((reader["nombrePais"]).ToString());
+            }
+
+            reader.Close();
+
         }
 
      
@@ -39,9 +52,26 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void textBox2_TextChanged_1(object sender, EventArgs e)
+        private void Nombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+
+        private void Apellido_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Apellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
         }
 
         private void BotonModifVerClientes_Click(object sender, EventArgs e)
@@ -72,13 +102,7 @@ namespace FrbaHotel.AbmCliente
             String LocalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["localidad"].Value;
             String PaisCliente = (String)dataGridViewClientes.CurrentRow.Cells["pais"].Value;
             String NacionalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["nacionalidad"].Value;
-            
 
-            /*SqlCommand comandoBaja = new SqlCommand(String.Format("EXEC SPBajaCliente '{0}','{1}','{2}', '{3}','{4}','{5}','{6}', '{7}','{8}','{9}','{10}','{11}'",
-               NombreCliente, ApellidoCliente, TipoIdCliente, NroIdCliente.ToString(), MailCliente, TelefonoCliente, CalleCliente, NroCalleCliente.ToString(), LocalidadCliente, PaisCliente, NacionalidadCliente
-
-
-               ));*/
         }
 
         private void BotonVerClientes_Click(object sender, EventArgs e)
@@ -105,29 +129,86 @@ namespace FrbaHotel.AbmCliente
 
         }
 
+        private void TipoId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
         private void nroId_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        private void nroId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
         private void Mail_TextChanged(object sender, EventArgs e)
         {
+            
 
         }
+
+        static bool validarEmail(string email)
+        {
+            try
+            {
+                new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+
 
         private void Telefono_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        private void Telefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsSeparator(e.KeyChar) || Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+
         private void Calle_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+
+        private void Calle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
         private void Nacionalidad_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Nacionalidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
         }
 
         private void FechaNacimiento_ValueChanged(object sender, EventArgs e)
@@ -152,27 +233,24 @@ namespace FrbaHotel.AbmCliente
 
             int NroCalleCliente = int.Parse(NroCalle.Text);
             String LocalidadCliente = Localidad.Text;
-            String PaisCliente = Pais.Text;
+
             String NacionalidadCliente = Nacionalidad.Text;
             
             DateTime FechaNacimientoCliente = FechaNacimiento.Value;
-            //String fechaString = String.Format(FechaNacimientoCliente,"yyyy-MM-dd");
+        
             string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-
-            //String EjecutarProcedure = "EXEC SP ";
             if (NombreCliente == ""){MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
-            if (ApellidoCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (TipoIdCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NroIdCliente < 0) { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (MailCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (CalleCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NroCalleCliente <0) { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (LocalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (PaisCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NacionalidadCliente == "") { MessageBox.Show("Completar nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-
-            //String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente @nombre, @apellido, @tipo, @numeroI, @mail, @telefono, @calle, @numeroC, @localidad, @pais, @nacionalidad, @fechaNacimiento ;";
+            if (ApellidoCliente == "") { MessageBox.Show("Completar apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (TipoIdCliente == "") { MessageBox.Show("Completar tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NroIdCliente < 0) { MessageBox.Show("Completar nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (MailCliente == "") { MessageBox.Show("Completar mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (!validarEmail(Mail.Text)) { MessageBox.Show("Error en el mail"); }
+            if (CalleCliente == "") { MessageBox.Show("Completar calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NroCalleCliente <0) { MessageBox.Show("Completar nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (LocalidadCliente == "") { MessageBox.Show("Completar localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (cbPaises.SelectedValue == null) { MessageBox.Show("Completar país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NacionalidadCliente == "") { MessageBox.Show("Completar nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
             String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
             
@@ -203,7 +281,7 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters["@calle"].Value = CalleCliente;
             comandoAltaCliente.Parameters["@numeroC"].Value = NroCalleCliente;
             comandoAltaCliente.Parameters["@localidad"].Value = LocalidadCliente;
-            comandoAltaCliente.Parameters["@pais"].Value = PaisCliente;
+            comandoAltaCliente.Parameters["@pais"].Value = Convert.ToString(cbPaises.SelectedValue);
             comandoAltaCliente.Parameters["@nacionalidad"].Value = NacionalidadCliente;
             comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");
             
@@ -283,16 +361,32 @@ namespace FrbaHotel.AbmCliente
 
         }
 
+        private void NroCalle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+
         private void Localidad_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void Pais_TextChanged(object sender, EventArgs e)
+        private void Localidad_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
         }
 
+        private void cbPaises_SelectedIndexChanged(object sender, EventArgs e)
+        {
+                
+        }
         
     }
 }
