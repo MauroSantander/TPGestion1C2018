@@ -170,3 +170,5 @@ DROP FUNCTION [PISOS_PICADOS].precioConsumible
 GO
 DROP PROCEDURE [PISOS_PICADOS].facturarReserva
 GO
+
+
