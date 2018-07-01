@@ -38,6 +38,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkListFuncionalidades = new System.Windows.Forms.CheckedListBox();
             this.txtNombreRol = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.checkActivo = new System.Windows.Forms.CheckBox();
@@ -46,7 +47,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.checkListFuncionalidades = new System.Windows.Forms.CheckedListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FuncionalidadesxRol)).BeginInit();
@@ -172,6 +172,14 @@
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPageCrearRol_Click);
             // 
+            // checkListFuncionalidades
+            // 
+            this.checkListFuncionalidades.FormattingEnabled = true;
+            this.checkListFuncionalidades.Location = new System.Drawing.Point(144, 70);
+            this.checkListFuncionalidades.Name = "checkListFuncionalidades";
+            this.checkListFuncionalidades.Size = new System.Drawing.Size(168, 109);
+            this.checkListFuncionalidades.TabIndex = 22;
+            // 
             // txtNombreRol
             // 
             this.txtNombreRol.Location = new System.Drawing.Point(144, 43);
@@ -236,6 +244,7 @@
             this.button2.TabIndex = 13;
             this.button2.Text = "Cancelar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // button1
             // 
@@ -246,14 +255,6 @@
             this.button1.Text = "Crear";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCrearRol_Click_1);
-            // 
-            // checkListFuncionalidades
-            // 
-            this.checkListFuncionalidades.FormattingEnabled = true;
-            this.checkListFuncionalidades.Location = new System.Drawing.Point(144, 70);
-            this.checkListFuncionalidades.Name = "checkListFuncionalidades";
-            this.checkListFuncionalidades.Size = new System.Drawing.Size(168, 109);
-            this.checkListFuncionalidades.TabIndex = 22;
             // 
             // frmABMRol
             // 

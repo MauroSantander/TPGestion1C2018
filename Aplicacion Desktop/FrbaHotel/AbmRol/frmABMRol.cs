@@ -192,6 +192,7 @@ namespace FrbaHotel.AbmRol
             }
 
             crearRol.ExecuteNonQuery();
+            this.Close();
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -202,6 +203,11 @@ namespace FrbaHotel.AbmRol
         private void label2_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     }

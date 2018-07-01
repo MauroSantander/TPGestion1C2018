@@ -10,6 +10,7 @@ namespace FrbaHotel
     public static class Globals
     {
         public static SqlConnection conexionGlobal = new SqlConnection();
+        public static Login.frmLogIn frmLogInInstance;
 
         public static void AbrirConexion()
         {
@@ -28,6 +29,15 @@ namespace FrbaHotel
         {
             Globals.conexionGlobal.Dispose();
             return true;
+        }
+
+        public static Login.frmLogIn getLogin()
+        {
+            if (frmLogInInstance == null)
+            {
+                frmLogInInstance = new Login.frmLogIn();
+            }
+            return frmLogInInstance;
         }
 
     }

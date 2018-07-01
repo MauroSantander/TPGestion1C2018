@@ -104,7 +104,7 @@
             this.ingresarInvitado.UseVisualStyleBackColor = true;
             this.ingresarInvitado.Click += new System.EventHandler(this.ingresarInvitado_Click);
             // 
-            // LogIn
+            // frmLogIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -116,9 +116,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonSalir);
             this.Controls.Add(this.buttonIniciarSesion);
-            this.Name = "LogIn";
+            this.Name = "frmLogIn";
             this.Text = "FRBAHotel - LogIn";
-            this.Load += new System.EventHandler(this.Form1_Load_1);
+            this.Load += new System.EventHandler(this.frmLogIn_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

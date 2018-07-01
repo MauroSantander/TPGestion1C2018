@@ -209,7 +209,7 @@
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
-            // Menu
+            // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -229,8 +229,9 @@
             this.Controls.Add(this.btnABMUsuario);
             this.Controls.Add(this.btnABMRol);
             this.Controls.Add(this.btnRegistrarConsumibles);
-            this.Name = "Menu";
+            this.Name = "frmMenu";
             this.Text = "Inicio";
+            this.Load += new System.EventHandler(this.frmMenu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

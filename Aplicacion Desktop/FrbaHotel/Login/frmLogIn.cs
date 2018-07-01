@@ -13,9 +13,11 @@ namespace FrbaHotel.Login
 {
     public partial class frmLogIn : Form
     {
+
         public frmLogIn()
         {
             InitializeComponent();
+            Globals.frmLogInInstance = this;
         }
 
 
@@ -30,11 +32,6 @@ namespace FrbaHotel.Login
         }
 
         private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
         {
 
         }
@@ -79,7 +76,6 @@ namespace FrbaHotel.Login
                 intentosFallidos = 0;
                 frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
                 frmElegirRol.ShowDialog();
-                this.Close();
             }
             else {
                 intentosFallidos++;
@@ -113,7 +109,15 @@ namespace FrbaHotel.Login
 
         private void ingresarInvitado_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.frmMenu()).asignarRol(3);
+            frmMenu frmMenuInstance = new frmMenu();
+            frmMenuInstance.asignarRol(3);
+            frmMenuInstance.Show();
+            this.Hide();
+        }
+
+        private void frmLogIn_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
         }
 
 

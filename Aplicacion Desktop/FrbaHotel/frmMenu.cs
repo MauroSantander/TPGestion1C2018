@@ -174,12 +174,18 @@ namespace FrbaHotel
                   habilitarBoton(id);
               }*/
               reader.Close();
-              this.ShowDialog();
+              //this.ShowDialog();
           }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
+            Globals.getLogin().Show();
             this.Close();
+        }
+
+        private void frmMenu_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
         }
 
         }

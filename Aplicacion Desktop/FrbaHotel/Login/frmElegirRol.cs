@@ -41,18 +41,23 @@ namespace FrbaHotel.Login
         {
             SqlCommand cmdBuscarIdRol = new SqlCommand("SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @nombreRol", Globals.conexionGlobal);
             cmdBuscarIdRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
+            if (cbRol.SelectedItem == null)
+            {
+                MessageBox.Show("Elija un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             cmdBuscarIdRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
             int idRol = (int) cmdBuscarIdRol.ExecuteScalar();
             (new FrbaHotel.frmMenu()).asignarRol(idRol);
 
-            frmLogIn.ActiveForm.Close();
             this.Close();
-            
+            frmLogIn.ActiveForm.Close();
+            return;
         }
 
         private void ElegirRol_Load(object sender, EventArgs e)
         {
-
+            this.CenterToScreen();
         }
     }
 }
