@@ -1048,7 +1048,7 @@ INSERT INTO [PISOS_PICADOS].Empleado (
 VALUES (
 	96945
 	,'admin'
-	,'admin'
+	,'w23e'
 	);
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Consumible ON
