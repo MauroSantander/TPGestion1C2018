@@ -39,7 +39,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.checkListFuncionalidades = new System.Windows.Forms.CheckedListBox();
@@ -77,7 +76,6 @@
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.button5);
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.button4);
             this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -170,21 +168,11 @@
             this.label5.Text = "Seleccione el rol:";
             this.label5.Click += new System.EventHandler(this.labelNombreRol_Click);
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(142, 238);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 22;
-            this.button4.Text = "Eliminar";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.buttonBaja_Click);
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(24, 238);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(213, 23);
             this.button3.TabIndex = 21;
             this.button3.Text = "Modificar";
             this.button3.UseVisualStyleBackColor = true;
@@ -327,7 +315,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox txtNombreRol;
         private System.Windows.Forms.CheckedListBox checkListFuncionalidades;
