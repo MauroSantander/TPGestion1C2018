@@ -1547,6 +1547,46 @@ BEGIN
 END
 GO
 
+/* Dado un usuario revuelve 1 si este tiene un solo rol */ 
+CREATE FUNCTION [PISOS_PICADOS].tieneUnSoloRol(
+	@usuario VARCHAR(255)
+	)
+RETURNS INT
+AS 
+BEGIN
+	IF ( 
+			(SELECT COUNT (DISTINCT rxu.idRol )
+			FROM [PISOS_PICADOS].Empleado AS e 
+			JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+			JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario= rxu.idUsuario
+			WHERE e.usuario = @usuario
+			GROUP BY e.idUsuario) > 1 
+		)
+		RETURN 0
+	RETURN 1
+END 
+GO
+
+/* Dado un usuario revuelve 1 si este tiene un solo rol */ 
+CREATE FUNCTION [PISOS_PICADOS].obtenerRol(
+	@usuario VARCHAR(255)
+	)
+RETURNS INT
+AS 
+BEGIN
+	RETURN ( 
+			(SELECT rxu.idRol 
+			FROM [PISOS_PICADOS].Empleado AS e 
+			JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+			JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario= rxu.idUsuario
+			WHERE e.usuario = @usuario
+			) 
+			)
+		RETURN 0
+	RETURN 1
+END 
+GO
+
 /* Dada el usuario y contraseña correspondiete, se devuelve el id de usuario al cual pertenece */
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado (
 	@usuario VARCHAR(255)
