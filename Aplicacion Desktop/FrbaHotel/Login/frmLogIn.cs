@@ -94,7 +94,12 @@ namespace FrbaHotel.Login
                 frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
                 frmElegirRol.ShowDialog();
             }
-            if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 0)
+            if (respuestaVerificacionUsuario == 1 && respuestaVerificacionUsuarioDeshabilitado == 1)
+            {
+                MessageBox.Show("Usuario deshabilitado.", "Error");
+                return;
+            }
+            if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 0 && respuestaVerificacionUsuarioDeshabilitado == 0)
             {
                 SqlCommand sumarIntento = new SqlCommand("[PISOS_PICADOS].sumarIntento", Globals.conexionGlobal);
                 sumarIntento.CommandType = CommandType.StoredProcedure;
@@ -119,6 +124,8 @@ namespace FrbaHotel.Login
                     return;
                 }
 
+                MessageBox.Show("Contraseña incorrecta. Le quedan " + (3-intentosFallidos) + " intentos.", "Error");
+                return;
             }
 
         }
