@@ -41,6 +41,7 @@ CREATE TABLE [PISOS_PICADOS].Empleado (
 	idUsuario INT PRIMARY KEY REFERENCES [PISOS_PICADOS].Usuario(idUsuario)
 	,usuario VARCHAR(255) UNIQUE
 	,contrasena VARCHAR(255)
+	,intentos INT DEFAULT 0
 	)
 
 CREATE TABLE [PISOS_PICADOS].Hotel (
@@ -1386,6 +1387,7 @@ GROUP BY Factura_Nro
 GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
+
 /* FUNCIONES ---------------------------------------------------------------------*/
 
 /* FUNCIONES USUARIO */
@@ -1471,6 +1473,203 @@ BEGIN
 END
 GO
 
+/* Devuelve el numero de intentos realizados para ingresar al sistema correspondientes a el nombre de 
+usuario que se recibe de parametro*/
+
+CREATE FUNCTION [PISOS_PICADOS].intentosRestantes (
+	@usuario VARCHAR(255)
+	)
+RETURNS INT
+AS 
+BEGIN
+	RETURN (SELECT e.intentos FROM [PISOS_PICADOS].Empleado AS e WHERE e.usuario = @usuario)
+END 
+GO
+
+/* Verifica que el usuario y contraseña ingresados correspondan algun empleado registrado en la base, 
+devuelve 1 si existe  */
+
+CREATE FUNCTION [PISOS_PICADOS].usuarioValido (
+	@usuario VARCHAR(255)
+	)
+RETURNS INT
+AS
+BEGIN
+	IF (
+			@usuario IN (
+				SELECT usuario
+				FROM [PISOS_PICADOS].Empleado
+				)
+			)
+			RETURN 1;
+	RETURN 0;
+END
+GO
+
+/* Devuelve 1 si la contraseña es correcta para un usuario*/
+
+CREATE FUNCTION [PISOS_PICADOS].contrasenaValida (
+	@usuario VARCHAR(255)
+	,@contrasena VARCHAR(255)
+	)
+RETURNS INT
+AS
+BEGIN
+	IF (
+			HASHBYTES('SHA2_256',@contrasena) IN (
+				SELECT contrasena
+				FROM [PISOS_PICADOS].Empleado AS e
+				WHERE e.usuario = @usuario
+
+				)
+			)
+			RETURN 1;
+	RETURN 0;
+END
+GO
+
+/*Devuelve la cantidad de intentos de inicio de sesion para un usuario */
+
+CREATE FUNCTION [PISOS_PICADOS].cantidadIntentosFallidos (
+	@usuario VARCHAR(255)
+	)
+RETURNS INT
+AS
+BEGIN
+RETURN (SELECT intentos FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario)
+END
+GO
+
+/* Dada el usuario y contraseña correspondiete, se devuelve el id de usuario al cual pertenece */
+
+CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado (
+	@usuario VARCHAR(255)
+	,@contrasena VARCHAR(255)
+	)
+RETURNS INT
+AS
+BEGIN
+	RETURN (
+			SELECT idUsuario
+			FROM [PISOS_PICADOS].Empleado
+			WHERE usuario = @usuario
+				AND contrasena = @contrasena
+			)
+END
+GO
+
+/* Verifica que un pasaporte dado no se encuentra ya registrado en la base de datos*/
+
+CREATE FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte (@pasaporte INT)
+RETURNS INT
+AS
+BEGIN
+	IF (
+			@pasaporte IN (
+				SELECT u.numeroIdentificacion
+				FROM [PISOS_PICADOS].Usuario AS u
+				WHERE u.tipoIdentificacion = 'Pasaporte'
+				GROUP BY u.numeroIdentificacion
+				HAVING COUNT(DISTINCT (u.nombre + u.apellido)) >= 1
+				)
+			)
+		RETURN 1;
+	RETURN 0;
+END
+GO
+
+/* Verifica que un mail dado no se encuentre registrado en la base de datos */
+
+CREATE FUNCTION [PISOS_PICADOS].estaRepetidoMail (@mail VARCHAR(255))
+RETURNS INT
+AS
+BEGIN
+	IF (
+			@mail IN (
+				SELECT u.mail
+				FROM [PISOS_PICADOS].Usuario AS u
+				GROUP BY u.mail
+				HAVING COUNT(DISTINCT (u.numeroIdentificacion)) >= 1
+				)
+			)
+		RETURN 1;
+	RETURN 0;
+END
+GO
+
+/* Crear un filtro de los clientes por 5 parametros. pueden estar los 5 filtros o un subconjunto del mismo */
+
+CREATE FUNCTION [PISOS_PICADOS].filtroClientes (
+	@nombre VARCHAR(255)
+	,@apellido VARCHAR(255)
+	,@tipoIden VARCHAR(255)
+	,@numIdem INT
+	,@mail VARCHAR(255)
+	)
+RETURNS TABLE
+AS
+RETURN (
+		SELECT u.idUsuario
+			,u.nombre
+			,u.apellido
+			,u.mail
+			,u.telefono
+			,u.calle
+			,u.nroCalle
+			,u.localidad
+			,u.pais
+			,u.tipoIdentificacion
+			,u.numeroIdentificacion
+			,u.fechaNacimiento
+			,u.estado
+			,c.nacionalidad
+		FROM [PISOS_PICADOS].Usuario AS u
+		INNER JOIN [PISOS_PICADOS].Cliente AS c ON u.idUsuario = c.idUsuario
+		WHERE (
+				(
+					u.nombre = @nombre
+					OR @nombre IS NULL
+					)
+				AND (
+					u.apellido = @apellido
+					OR @apellido IS NULL
+					)
+				AND (
+					u.tipoIdentificacion = @tipoIden
+					OR @tipoIden IS NULL
+					)
+				AND (
+					u.numeroIdentificacion = @numIdem
+					OR @numIdem IS NULL
+					)
+				AND (
+					u.mail = @mail
+					OR @mail IS NULL
+					)
+				)
+		)
+GO
+
+/* FUNCIONES ROLES */
+
+/* Dado un nombre de rol verifica si este exite en la base de datos, si es asi devuelve 1 */
+
+CREATE FUNCTION [PISOS_PICADOS].existeRol (@nombreRol VARCHAR(255))
+RETURNS INT
+AS
+BEGIN
+	IF (
+			@nombreRol IN (
+				SELECT nombreRol
+				FROM [PISOS_PICADOS].Rol
+				)
+			)
+		RETURN 1;
+	RETURN 0;
+END
+GO
+
+
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDPais (@nombre VARCHAR(255))
 RETURNS INT
 AS
@@ -1521,63 +1720,11 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].usuarioValido (
-	@usuario VARCHAR(255)
-	,@contrasena VARCHAR(255)
-	)
-RETURNS INT
-AS
-BEGIN
-	IF (
-			@usuario IN (
-				SELECT usuario
-				FROM [PISOS_PICADOS].Empleado
-				WHERE usuario = @usuario 
-				)
-			)
-		IF (
-				HASHBYTES('SHA2_256', @contrasena) IN (
-					SELECT contrasena
-					FROM [PISOS_PICADOS].Empleado
-					WHERE usuario = @usuario
-					)
-				)
-			RETURN 1;
 
-	RETURN 0;
-END
-GO
 
-CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado (
-	@usuario VARCHAR(255)
-	,@contrasena VARCHAR(255)
-	)
-RETURNS INT
-AS
-BEGIN
-	RETURN (
-			SELECT idUsuario
-			FROM [PISOS_PICADOS].Empleado
-			WHERE usuario = @usuario
-				AND contrasena = @contrasena
-			)
-END
-GO
 
-CREATE FUNCTION [PISOS_PICADOS].obtenerRolEmpleado (
-	@usuario VARCHAR(255)
-	,@contrasena VARCHAR(255)
-	)
-RETURNS INT
-AS
-BEGIN
-	RETURN (
-			SELECT idRol
-			FROM [PISOS_PICADOS].RolxUsuario
-			WHERE idUsuario = [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario, @contrasena)
-			)
-END
-GO
+
+
 
 CREATE FUNCTION [PISOS_PICADOS].HotelTieneReservas (
 	@idHotel INT
@@ -1881,106 +2028,9 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte (@pasaporte INT)
-RETURNS INT
-AS
-BEGIN
-	IF (
-			@pasaporte IN (
-				SELECT u.numeroIdentificacion
-				FROM [PISOS_PICADOS].Usuario AS u
-				WHERE u.tipoIdentificacion = 'Pasaporte'
-				GROUP BY u.numeroIdentificacion
-				HAVING COUNT(DISTINCT (u.nombre + u.apellido)) >= 1
-				)
-			)
-		RETURN 1;
-	RETURN 0;
-END
-GO
 
-CREATE FUNCTION [PISOS_PICADOS].estaRepetidoMail (@mail VARCHAR(255))
-RETURNS INT
-AS
-BEGIN
-	IF (
-			@mail IN (
-				SELECT u.mail
-				FROM [PISOS_PICADOS].Usuario AS u
-				GROUP BY u.mail
-				HAVING COUNT(DISTINCT (u.numeroIdentificacion)) >= 1
-				)
-			)
-		RETURN 1;
-	RETURN 0;
-END
-GO
 
-CREATE FUNCTION [PISOS_PICADOS].filtroClientes (
-	@nombre VARCHAR(255)
-	,@apellido VARCHAR(255)
-	,@tipoIden VARCHAR(255)
-	,@numIdem INT
-	,@mail VARCHAR(255)
-	)
-RETURNS TABLE
-AS
-RETURN (
-		SELECT u.idUsuario
-			,u.nombre
-			,u.apellido
-			,u.mail
-			,u.telefono
-			,u.calle
-			,u.nroCalle
-			,u.localidad
-			,u.pais
-			,u.tipoIdentificacion
-			,u.numeroIdentificacion
-			,u.fechaNacimiento
-			,u.estado
-			,c.nacionalidad
-		FROM [PISOS_PICADOS].Usuario AS u
-		INNER JOIN [PISOS_PICADOS].Cliente AS c ON u.idUsuario = c.idUsuario
-		WHERE (
-				(
-					u.nombre = @nombre
-					OR @nombre IS NULL
-					)
-				AND (
-					u.apellido = @apellido
-					OR @apellido IS NULL
-					)
-				AND (
-					u.tipoIdentificacion = @tipoIden
-					OR @tipoIden IS NULL
-					)
-				AND (
-					u.numeroIdentificacion = @numIdem
-					OR @numIdem IS NULL
-					)
-				AND (
-					u.mail = @mail
-					OR @mail IS NULL
-					)
-				)
-		)
-GO
 
-CREATE FUNCTION [PISOS_PICADOS].existeRol (@nombreRol VARCHAR(255))
-RETURNS INT
-AS
-BEGIN
-	IF (
-			@nombreRol IN (
-				SELECT nombreRol
-				FROM [PISOS_PICADOS].Rol
-				)
-			)
-		RETURN 1;
-	RETURN 0;
-END
-GO
 
 
 /* STORED PROCEDURES ------------------------------------------------------*/
@@ -2243,13 +2293,22 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].bajaUsuario @idAutor INT
-	,@idUsuario INT
+CREATE PROCEDURE [PISOS_PICADOS].deshabilitarUsuario @usuario VARCHAR(255)
 AS
 BEGIN
-	IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
+		UPDATE u
+		SET u.estado = 2
+		FROM [PISOS_PICADOS].Usuario AS u JOIN 
+		[PISOS_PICADOS].Empleado AS e ON u.idUsuario=e.idUsuario 
+		WHERE e.usuario = @usuario 
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].bajaUsuario @idUsuario INT
+AS
+BEGIN
 		UPDATE [PISOS_PICADOS].Usuario
-		SET estado = 0
+		SET estado = 2
 		WHERE idUsuario = @idUsuario
 END;
 GO
@@ -3335,6 +3394,25 @@ BEGIN
 	WHERE  estado IS NULL
 END
 GO
+
+CREATE PROCEDURE [PISOS_PICADOS].sumarIntento(@usuarioEmpleado VARCHAR(255))
+AS
+BEGIN
+UPDATE [PISOS_PICADOS].Empleado 
+SET intentos = intentos + 1 
+WHERE usuario = @usuarioEmpleado
+END 
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].resetearIntentos(@usuarioEmpleado VARCHAR(255))
+AS
+BEGIN
+UPDATE [PISOS_PICADOS].Empleado 
+SET intentos = 0
+WHERE usuario = @usuarioEmpleado
+END 
+GO
+
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
 
