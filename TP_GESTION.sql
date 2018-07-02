@@ -1,5 +1,3 @@
-/*SELECT * FROM gd_esquema.Maestra*/
-
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
 	,nombreRol VARCHAR(255)
@@ -12,7 +10,7 @@ CREATE TABLE [PISOS_PICADOS].Pais (
 	)
 
 CREATE TABLE [PISOS_PICADOS].EstadoUsuario (
-	 idEstado INT PRIMARY KEY IDENTITY
+	idEstado INT PRIMARY KEY IDENTITY
 	,detalleEstado VARCHAR(255)
 	)
 
@@ -163,7 +161,6 @@ CREATE TABLE [PISOS_PICADOS].HabitacionxReserva (
 		,codigoReserva
 		)
 	)
-
 
 CREATE TABLE [PISOS_PICADOS].Estadia (
 	idEstadia INT PRIMARY KEY IDENTITY
@@ -1387,13 +1384,9 @@ GROUP BY Factura_Nro
 GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
-
 /* FUNCIONES ---------------------------------------------------------------------*/
-
 /* FUNCIONES USUARIO */
-
-/* Dado un nombre apellido y pasaporte informa el id de usuario correspondiente    */ 
-
+/* Dado un nombre apellido y pasaporte informa el id de usuario correspondiente    */
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (
 	@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -1414,7 +1407,6 @@ GO
 
 /* Dado un nombre apellido y num de identificacion informa de la existencia de un id de usuario que se
  corresponda con esos datos*/
-
 CREATE FUNCTION [PISOS_PICADOS].existeUsuario (
 	@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -1431,13 +1423,13 @@ BEGIN
 				AND numeroIdentificacion = @numeroIdentificacion
 			)
 		RETURN 1
+
 	RETURN 0
 END
 GO
 
 /* Dado un id de usuario informa el estado correspondiente al usuario. 1 habilitado , 2 inhabilitado , 3 
-pasaporteRepetido, 4 MailRepetido */ 
-
+pasaporteRepetido, 4 MailRepetido */
 CREATE FUNCTION [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario INT)
 RETURNS INT
 AS
@@ -1451,7 +1443,6 @@ END
 GO
 
 /* dado un id de usuario informa un 1 si este es admin y 0 si no lo es */
-
 CREATE FUNCTION [PISOS_PICADOS].esAdmin (@idUsuario INT)
 RETURNS BIT
 AS
@@ -1475,23 +1466,39 @@ GO
 
 /* Devuelve el numero de intentos realizados para ingresar al sistema correspondientes a el nombre de 
 usuario que se recibe de parametro*/
-
-CREATE FUNCTION [PISOS_PICADOS].intentosRestantes (
-	@usuario VARCHAR(255)
-	)
+CREATE FUNCTION [PISOS_PICADOS].intentosRestantes (@usuario VARCHAR(255))
 RETURNS INT
-AS 
+AS
 BEGIN
-	RETURN (SELECT e.intentos FROM [PISOS_PICADOS].Empleado AS e WHERE e.usuario = @usuario)
-END 
+	RETURN (
+			SELECT e.intentos
+			FROM [PISOS_PICADOS].Empleado AS e
+			WHERE e.usuario = @usuario
+			)
+END
+GO
+
+/*Verifica si el estado de un empleado es deshabilitado, es decir 0 */
+CREATE FUNCTION [PISOS_PICADOS].empleadoDeshabilitado (@usuario VARCHAR(255))
+RETURNS INT
+AS
+BEGIN
+	IF ( 2 =
+				(SELECT u.estado
+				FROM [PISOS_PICADOS].Empleado AS e JOIN
+				[PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+				WHERE e.usuario = @usuario
+				)
+		)
+		RETURN 1;
+
+	RETURN 0;
+END
 GO
 
 /* Verifica que el usuario y contraseña ingresados correspondan algun empleado registrado en la base, 
 devuelve 1 si existe  */
-
-CREATE FUNCTION [PISOS_PICADOS].usuarioValido (
-	@usuario VARCHAR(255)
-	)
+CREATE FUNCTION [PISOS_PICADOS].usuarioValido (@usuario VARCHAR(255))
 RETURNS INT
 AS
 BEGIN
@@ -1501,13 +1508,13 @@ BEGIN
 				FROM [PISOS_PICADOS].Empleado
 				)
 			)
-			RETURN 1;
+		RETURN 1;
+
 	RETURN 0;
 END
 GO
 
 /* Devuelve 1 si la contraseña es correcta para un usuario*/
-
 CREATE FUNCTION [PISOS_PICADOS].contrasenaValida (
 	@usuario VARCHAR(255)
 	,@contrasena VARCHAR(255)
@@ -1516,32 +1523,32 @@ RETURNS INT
 AS
 BEGIN
 	IF (
-			HASHBYTES('SHA2_256',@contrasena) IN (
+			HASHBYTES('SHA2_256', @contrasena) IN (
 				SELECT contrasena
 				FROM [PISOS_PICADOS].Empleado AS e
 				WHERE e.usuario = @usuario
-
 				)
 			)
-			RETURN 1;
+		RETURN 1;
+
 	RETURN 0;
 END
 GO
 
 /*Devuelve la cantidad de intentos de inicio de sesion para un usuario */
-
-CREATE FUNCTION [PISOS_PICADOS].cantidadIntentosFallidos (
-	@usuario VARCHAR(255)
-	)
+CREATE FUNCTION [PISOS_PICADOS].cantidadIntentosFallidos (@usuario VARCHAR(255))
 RETURNS INT
 AS
 BEGIN
-RETURN (SELECT intentos FROM [PISOS_PICADOS].Empleado WHERE usuario = @usuario)
+	RETURN (
+			SELECT intentos
+			FROM [PISOS_PICADOS].Empleado
+			WHERE usuario = @usuario
+			)
 END
 GO
 
 /* Dada el usuario y contraseña correspondiete, se devuelve el id de usuario al cual pertenece */
-
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado (
 	@usuario VARCHAR(255)
 	,@contrasena VARCHAR(255)
@@ -1559,7 +1566,6 @@ END
 GO
 
 /* Verifica que un pasaporte dado no se encuentra ya registrado en la base de datos*/
-
 CREATE FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte (@pasaporte INT)
 RETURNS INT
 AS
@@ -1574,12 +1580,12 @@ BEGIN
 				)
 			)
 		RETURN 1;
+
 	RETURN 0;
 END
 GO
 
 /* Verifica que un mail dado no se encuentre registrado en la base de datos */
-
 CREATE FUNCTION [PISOS_PICADOS].estaRepetidoMail (@mail VARCHAR(255))
 RETURNS INT
 AS
@@ -1593,12 +1599,12 @@ BEGIN
 				)
 			)
 		RETURN 1;
+
 	RETURN 0;
 END
 GO
 
 /* Crear un filtro de los clientes por 5 parametros. pueden estar los 5 filtros o un subconjunto del mismo */
-
 CREATE FUNCTION [PISOS_PICADOS].filtroClientes (
 	@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -1651,9 +1657,7 @@ RETURN (
 GO
 
 /* FUNCIONES ROLES */
-
 /* Dado un nombre de rol verifica si este exite en la base de datos, si es asi devuelve 1 */
-
 CREATE FUNCTION [PISOS_PICADOS].existeRol (@nombreRol VARCHAR(255))
 RETURNS INT
 AS
@@ -1665,10 +1669,10 @@ BEGIN
 				)
 			)
 		RETURN 1;
+
 	RETURN 0;
 END
 GO
-
 
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDPais (@nombre VARCHAR(255))
 RETURNS INT
@@ -1719,12 +1723,6 @@ BEGIN
 	RETURN 0;
 END
 GO
-
-
-
-
-
-
 
 CREATE FUNCTION [PISOS_PICADOS].HotelTieneReservas (
 	@idHotel INT
@@ -1966,8 +1964,8 @@ BEGIN
 	DECLARE @total INT
 
 	SELECT @total = SUM(ec.cantidad * c.precio)
-	FROM [PISOS_PICADOS].EstadiaxConsumible AS ec JOIN Consumible AS c 
-	ON ec.idConsumible =c.idConsumible
+	FROM [PISOS_PICADOS].EstadiaxConsumible AS ec
+	INNER JOIN Consumible AS c ON ec.idConsumible = c.idConsumible
 	WHERE ec.idEstadia = @idEstadia
 	GROUP BY ec.idEstadia
 
@@ -2028,29 +2026,27 @@ BEGIN
 END
 GO
 
-
-
-
-
-
 /* STORED PROCEDURES ------------------------------------------------------*/
-
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
 AS
 BEGIN
-	IF @nombre NOT IN (SELECT nombreRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @nombre)  
+	IF @nombre NOT IN (
+			SELECT nombreRol
+			FROM [PISOS_PICADOS].Rol
+			WHERE nombreRol = @nombre
+			)
 	BEGIN
-	INSERT INTO [PISOS_PICADOS].Rol
-	VALUES (
-		@nombre
-		,@estado
-		);
+		INSERT INTO [PISOS_PICADOS].Rol
+		VALUES (
+			@nombre
+			,@estado
+			);
 	END
 	ELSE
-	UPDATE [PISOS_PICADOS].Rol
-	SET estado = 1
-	WHERE nombreRol = @nombre
+		UPDATE [PISOS_PICADOS].Rol
+		SET estado = 1
+		WHERE nombreRol = @nombre
 END;
 GO
 
@@ -2063,8 +2059,8 @@ BEGIN
 		,idFuncionalidad
 	FROM [PISOS_PICADOS].Rol
 		,[PISOS_PICADOS].Funcionalidad
-	WHERE nombreRol = @nombre 
-		  and descripcion = @funcionalidad
+	WHERE nombreRol = @nombre
+		AND descripcion = @funcionalidad
 END
 GO
 
@@ -2074,14 +2070,14 @@ BEGIN
 	UPDATE [PISOS_PICADOS].Rol
 	SET estado = 0
 	WHERE idRol = (
-			SELECT TOP 1  p.idRol
+			SELECT TOP 1 p.idRol
 			FROM [PISOS_PICADOS].Rol AS p
 			WHERE nombreRol = @nombreRol
 			)
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].modificarRol @nombreRolViejo VARCHAR(255) 
+CREATE PROCEDURE [PISOS_PICADOS].modificarRol @nombreRolViejo VARCHAR(255)
 	,@nombreRol VARCHAR(255)
 	,@estado BIT
 AS
@@ -2095,7 +2091,6 @@ BEGIN
 		UPDATE [PISOS_PICADOS].Rol
 		SET estado = @estado
 		WHERE nombreRol = @nombreRolViejo
-
 END;
 GO
 
@@ -2296,20 +2291,20 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].deshabilitarUsuario @usuario VARCHAR(255)
 AS
 BEGIN
-		UPDATE u
-		SET u.estado = 2
-		FROM [PISOS_PICADOS].Usuario AS u JOIN 
-		[PISOS_PICADOS].Empleado AS e ON u.idUsuario=e.idUsuario 
-		WHERE e.usuario = @usuario 
+	UPDATE u
+	SET u.estado = 2
+	FROM [PISOS_PICADOS].Usuario AS u
+	INNER JOIN [PISOS_PICADOS].Empleado AS e ON u.idUsuario = e.idUsuario
+	WHERE e.usuario = @usuario
 END;
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].bajaUsuario @idUsuario INT
 AS
 BEGIN
-		UPDATE [PISOS_PICADOS].Usuario
-		SET estado = 2
-		WHERE idUsuario = @idUsuario
+	UPDATE [PISOS_PICADOS].Usuario
+	SET estado = 2
+	WHERE idUsuario = @idUsuario
 END;
 GO
 
@@ -3389,30 +3384,29 @@ BEGIN
 				,u.mail
 			HAVING COUNT(DISTINCT u.numeroIdentificacion) > 1
 			)
+
 	UPDATE [PISOS_PICADOS].Usuario
-	SET estado = 1 
-	WHERE  estado IS NULL
+	SET estado = 1
+	WHERE estado IS NULL
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].sumarIntento(@usuarioEmpleado VARCHAR(255))
+CREATE PROCEDURE [PISOS_PICADOS].sumarIntento (@usuarioEmpleado VARCHAR(255))
 AS
 BEGIN
-UPDATE [PISOS_PICADOS].Empleado 
-SET intentos = intentos + 1 
-WHERE usuario = @usuarioEmpleado
-END 
+	UPDATE [PISOS_PICADOS].Empleado
+	SET intentos = intentos + 1
+	WHERE usuario = @usuarioEmpleado
+END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].resetearIntentos(@usuarioEmpleado VARCHAR(255))
+CREATE PROCEDURE [PISOS_PICADOS].resetearIntentos (@usuarioEmpleado VARCHAR(255))
 AS
 BEGIN
-UPDATE [PISOS_PICADOS].Empleado 
-SET intentos = 0
-WHERE usuario = @usuarioEmpleado
-END 
+	UPDATE [PISOS_PICADOS].Empleado
+	SET intentos = 0
+	WHERE usuario = @usuarioEmpleado
+END
 GO
-
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
-

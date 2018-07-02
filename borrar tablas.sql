@@ -186,6 +186,8 @@ DROP FUNCTION [PISOS_PICADOS].intentosRestantes
 GO
 DROP PROCEDURE [PISOS_PICADOS].deshabilitarUsuario
 GO
+DROP FUNCTION [PISOS_PICADOS].empleadoDeshabilitado
+GO
 
 
 
