@@ -1388,6 +1388,10 @@ GO
 /*Migracion FIN-------------------------------------------------------------------*/
 /* FUNCIONES ---------------------------------------------------------------------*/
 
+/* FUNCIONES USUARIO */
+
+/* Dado un nombre apellido y pasaporte informa el id de usuario correspondiente    */ 
+
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (
 	@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -1406,6 +1410,9 @@ BEGIN
 END
 GO
 
+/* Dado un nombre apellido y num de identificacion informa de la existencia de un id de usuario que se
+ corresponda con esos datos*/
+
 CREATE FUNCTION [PISOS_PICADOS].existeUsuario (
 	@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -1422,10 +1429,12 @@ BEGIN
 				AND numeroIdentificacion = @numeroIdentificacion
 			)
 		RETURN 1
-
 	RETURN 0
 END
 GO
+
+/* Dado un id de usuario informa el estado correspondiente al usuario. 1 habilitado , 2 inhabilitado , 3 
+pasaporteRepetido, 4 MailRepetido */ 
 
 CREATE FUNCTION [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario INT)
 RETURNS INT
@@ -1438,6 +1447,8 @@ BEGIN
 			)
 END
 GO
+
+/* dado un id de usuario informa un 1 si este es admin y 0 si no lo es */
 
 CREATE FUNCTION [PISOS_PICADOS].esAdmin (@idUsuario INT)
 RETURNS BIT
@@ -2039,7 +2050,6 @@ END;
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].quitarFuncionalidad @nombreRol VARCHAR(255)
-	,@funcionalidad VARCHAR(255)
 AS
 BEGIN
 	DELETE
@@ -2048,11 +2058,6 @@ BEGIN
 			SELECT p.idRol
 			FROM [PISOS_PICADOS].Rol AS p
 			WHERE p.nombreRol = @nombreRol
-			)
-		AND idFuncionalidad = (
-			SELECT e.idFuncionalidad
-			FROM [PISOS_PICADOS].Funcionalidad AS e
-			WHERE e.descripcion = @funcionalidad
 			)
 END;
 GO
@@ -3332,3 +3337,4 @@ END
 GO
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
+
