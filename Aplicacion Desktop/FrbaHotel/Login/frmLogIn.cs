@@ -60,27 +60,54 @@ namespace FrbaHotel.Login
         private void buttonIniciarSesion_Click(object sender, EventArgs e)
         {            
 
-            SqlCommand verificarUsuario = new SqlCommand("SELECT [PISOS_PICADOS].usuarioValido(@usuario, @contraseña)", Globals.conexionGlobal);
+            SqlCommand verificarUsuario = new SqlCommand("SELECT [PISOS_PICADOS].usuarioValido(@usuario)", Globals.conexionGlobal);
+            SqlCommand verificarContraseña = new SqlCommand("SELECT [PISOS_PICADOS].contrasenaValida(@usuario, @contraseña)", Globals.conexionGlobal);
 
             verificarUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
-            verificarUsuario.Parameters.Add("@contraseña", SqlDbType.VarChar);
             verificarUsuario.Parameters["@usuario"].Value = textBoxUsuario.Text;
-            verificarUsuario.Parameters["@contraseña"].Value = textBoxContrasena.Text;
+
+            verificarContraseña.Parameters.Add("@usuario", SqlDbType.VarChar);
+            verificarContraseña.Parameters.Add("@contraseña", SqlDbType.VarChar);
+            verificarContraseña.Parameters["@usuario"].Value = textBoxUsuario.Text;
+            verificarContraseña.Parameters["@contrasena"].Value = textBoxContrasena.Text;
             
             int respuestaVerificacionUsuario = (int) verificarUsuario.ExecuteScalar();
+            int respuestaVerificacionContraseña = (int)verificarContraseña.ExecuteScalar();
 
-            if (respuestaVerificacionUsuario == 1)
+            if (respuestaVerificacionUsuario == 0)
             {
+                MessageBox.Show("El usuario no existe.", "Error");
+            }
+
+            if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 1)
+            {
+                SqlCommand resetearIntentos = new SqlCommand("[PISOS_PICADOS].resetearIntentos", Globals.conexionGlobal);
+                resetearIntentos.CommandType = CommandType.StoredProcedure;
+                resetearIntentos.ExecuteNonQuery();
                 frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
                 frmElegirRol.ShowDialog();
             }
-            else 
+            if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 0)
             {
+                SqlCommand sumarIntento = new SqlCommand("[PISOS_PICADOS].sumarIntento", Globals.conexionGlobal);
+                sumarIntento.CommandType = CommandType.StoredProcedure;
+                sumarIntento.ExecuteNonQuery();
 
-                
+                SqlCommand cantidadIntentosFallidos = new SqlCommand("[PISOS_PICADOS].cantidadIntentosFallidos(@usuario)", Globals.conexionGlobal);
+                cantidadIntentosFallidos.Parameters.Add("@usuario");
+                cantidadIntentosFallidos.Parameters["@usuario"].Value = textBoxUsuario.Text;
 
-                MessageBox.Show("Usuario o contraseña no válidos.");
-                return;
+                int intentosFallidos = (int)cantidadIntentosFallidos.ExecuteScalar();
+
+                if (intentosFallidos >= 3) 
+                {
+                    MessageBox.Show("Ha llegado a la cantidad máxima de intentos fallidos. Su usuario será deshabilitado.","Error");
+                    SqlCommand deshabilitarUsuario = new SqlCommand("[PISOS_PICADOS].deshabilitarUsuario(@usuario)", Globals.conexionGlobal);
+                    deshabilitarUsuario.Parameters.Add("@usuario");
+                    deshabilitarUsuario.Parameters["@usuario"].Value = textBoxUsuario.Text;
+                    deshabilitarUsuario.ExecuteScalar();
+                    return;
+                }
 
             }
 
