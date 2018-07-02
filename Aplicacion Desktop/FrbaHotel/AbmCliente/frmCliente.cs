@@ -73,7 +73,7 @@ namespace FrbaHotel.AbmCliente
            
             Utils c = new Utils();
 
-            c.mostrarClientes(dataGridView2);
+            //c.mostrarClientes(dataGridView2);
                
         }
 
@@ -298,9 +298,9 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters["@numeroC"].Value = NroCalleCliente;
             comandoAltaCliente.Parameters["@localidad"].Value = LocalidadCliente;
             
-            int idPais = utilizador.obtenerIdPais(cbPaises.Text);
+         //   int idPais = utilizador.obtenerIdPais(cbPaises.Text);
             
-            comandoAltaCliente.Parameters["@pais"].Value = idPais;
+            comandoAltaCliente.Parameters["@pais"].Value = cbPaises.Text;
             comandoAltaCliente.Parameters["@nacionalidad"].Value = NacionalidadCliente;
             comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");
             
@@ -438,7 +438,7 @@ namespace FrbaHotel.AbmCliente
         public void mostrarClientesFiltrado(DataGridView dgv)
         {
             String cadenaFiltro = "SELECT * FROM [PISOS_PICADOS].filtroClientes";
-
+            
             SqlCommand cmdFiltro = new SqlCommand(cadenaFiltro, Globals.conexionGlobal);
 
             cmdFiltro.Parameters.Add("@nombre",SqlDbType.VarChar);
@@ -446,14 +446,16 @@ namespace FrbaHotel.AbmCliente
             cmdFiltro.Parameters.Add("@tipoId",SqlDbType.VarChar);
             cmdFiltro.Parameters.Add("@nroId",SqlDbType.Int);
             cmdFiltro.Parameters.Add("@mail",SqlDbType.VarChar);
-
+        
+            //SqlParameter[] listaDeParametros = new SqlParameter[5];
+            
             if (textBoxNombre.Text == "") { cmdFiltro.Parameters["@nombre"].Value = DBNull.Value;}
             else {cmdFiltro.Parameters["@nombre"].Value = textBoxNombre.Text;}
 
             if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@apellido"].Value = DBNull.Value; }
             else { cmdFiltro.Parameters["@apellido"].Value = textBoxApellido.Text; }
 
-            if (cbTipoId.Text == "") { cmdFiltro.Parameters["@tipoIdo"].Value = DBNull.Value; }
+            if (cbTipoId.Text == "") { cmdFiltro.Parameters["@tipoId"].Value = DBNull.Value; }
             else { cmdFiltro.Parameters["@tipoId"].Value = cbTipoId.Text; }
 
             if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@nroId"].Value = DBNull.Value; }
@@ -461,15 +463,41 @@ namespace FrbaHotel.AbmCliente
 
             if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@mail"].Value = DBNull.Value; }
             else { cmdFiltro.Parameters["@mail"].Value = textBoxMail.Text; }
+            
+           /*
+            String pNombre, pApellido, pTipoId, pMail;
+            int pNroId;
 
-            string queryFinal = cmdFiltro.ToString();
+
+            if (textBoxNombre.Text == "") { pNombre = DBNull.Value; }
+            else { pNombre = textBoxNombre.Text; }
+
+            if (textBoxApellido.Text == "") { pApellido = DBNull.Value; }
+            else { pApellido = textBoxApellido.Text; }
+
+            if (cbTipoId.Text == "") { pTipoId = DBNull.Value; }
+            else { pTipoId = cbTipoId.Text; }
+           
+            int ident = int.Parse(textBoxNroId.Text);
+
+            if (ident <0) { pNroId = DBNull.Value; }
+            else { pNroId = ident; }
+
+            if (textBoxApellido.Text == "") { pMail = DBNull.Value; }
+            else { pMail = textBoxMail.Text; }
+
+
+            String cadenaFiltroParametrizada = cadenaFiltro + pNombre + pApellido + pTipoId + pNroId.ToString() + pMail;
+            */
+           string queryFinal = cmdFiltro.ToString();
 
             try
             {
-                SqlDataAdapter adapter = new SqlDataAdapter(queryFinal, Globals.conexionGlobal);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-                dgv.DataSource = dataTable;
+                //SqlDataAdapter adapter = new SqlDataAdapter(cmdFiltro, Globals.conexionGlobal);
+                //DataTable dataTable = new DataTable();
+                //adapter.Fill(dataTable);
+                //dgv.DataSource = dataTable;
+                dgv.DataSource = cmdFiltro;
             }
             catch (Exception exc)
             {
@@ -496,7 +524,12 @@ namespace FrbaHotel.AbmCliente
             dataGridViewClientes.DataSource = DV;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnBuscarFiltrado(object sender, EventArgs e)
+        {
+            mostrarClientesFiltrado(dataGridViewClientes);
+        }
+
+        private void textBoxNombre_TextChanged(object sender, EventArgs e)
         {
 
         }
