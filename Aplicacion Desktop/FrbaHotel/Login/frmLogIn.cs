@@ -91,8 +91,29 @@ namespace FrbaHotel.Login
                 resetearIntentos.Parameters.Add("@usuarioEmpleado",SqlDbType.VarChar);
                 resetearIntentos.Parameters["@usuarioEmpleado"].Value = textBoxUsuario.Text;
                 resetearIntentos.ExecuteNonQuery();
-                frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
-                frmElegirRol.ShowDialog();
+
+                SqlCommand tieneUnSoloRol = new SqlCommand("SELECT [PISOS_PICADOS].tieneUnSoloRol(@usuario)", Globals.conexionGlobal);
+                tieneUnSoloRol.Parameters.Add("@usuario", SqlDbType.VarChar);
+                tieneUnSoloRol.Parameters["@usuario"].Value = textBoxUsuario.Text;
+                int unRol = (int)tieneUnSoloRol.ExecuteScalar();
+
+                if (unRol == 1)
+                {
+                    SqlCommand rol = new SqlCommand("SELECT [PISOS_PICADOS].obtenerRol(@usuario)", Globals.conexionGlobal);
+                    rol.Parameters.Add("@usuario", SqlDbType.VarChar);
+                    rol.Parameters["@Usuario"].Value = textBoxUsuario.Text;
+                    int idRol = (int)rol.ExecuteScalar();
+                    frmMenu frmMenuInstance = new frmMenu();
+                    frmMenuInstance.asignarRol(idRol);
+                    frmMenuInstance.Show();
+                    Globals.getLogin().Hide();
+                    return;
+                }
+                else
+                {
+                    frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
+                    frmElegirRol.ShowDialog();
+                }
             }
             if (respuestaVerificacionUsuario == 1 && respuestaVerificacionUsuarioDeshabilitado == 1)
             {
