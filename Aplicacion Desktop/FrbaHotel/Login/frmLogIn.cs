@@ -61,17 +61,22 @@ namespace FrbaHotel.Login
         {            
 
             SqlCommand verificarUsuario = new SqlCommand("SELECT [PISOS_PICADOS].usuarioValido(@usuario)", Globals.conexionGlobal);
-            SqlCommand verificarContraseña = new SqlCommand("SELECT [PISOS_PICADOS].contrasenaValida(@usuario, @contraseña)", Globals.conexionGlobal);
+            SqlCommand verificarContraseña = new SqlCommand("SELECT [PISOS_PICADOS].contrasenaValida(@usuario, @contrasena)", Globals.conexionGlobal);
+            SqlCommand verificarUsuarioDeshabilitado = new SqlCommand("SELECT [PISOS_PICADOS].empleadoDeshabilitado(@usuario)", Globals.conexionGlobal);
 
             verificarUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
             verificarUsuario.Parameters["@usuario"].Value = textBoxUsuario.Text;
 
+            verificarUsuarioDeshabilitado.Parameters.Add("@usuario", SqlDbType.VarChar);
+            verificarUsuarioDeshabilitado.Parameters["@usuario"].Value = textBoxUsuario.Text;
+
             verificarContraseña.Parameters.Add("@usuario", SqlDbType.VarChar);
-            verificarContraseña.Parameters.Add("@contraseña", SqlDbType.VarChar);
+            verificarContraseña.Parameters.Add("@contrasena", SqlDbType.VarChar);
             verificarContraseña.Parameters["@usuario"].Value = textBoxUsuario.Text;
             verificarContraseña.Parameters["@contrasena"].Value = textBoxContrasena.Text;
             
             int respuestaVerificacionUsuario = (int) verificarUsuario.ExecuteScalar();
+            int respuestaVerificacionUsuarioDeshabilitado = (int)verificarUsuarioDeshabilitado.ExecuteScalar();
             int respuestaVerificacionContraseña = (int)verificarContraseña.ExecuteScalar();
 
             if (respuestaVerificacionUsuario == 0)
@@ -79,10 +84,12 @@ namespace FrbaHotel.Login
                 MessageBox.Show("El usuario no existe.", "Error");
             }
 
-            if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 1)
+            if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 1 && respuestaVerificacionUsuarioDeshabilitado == 0)
             {
                 SqlCommand resetearIntentos = new SqlCommand("[PISOS_PICADOS].resetearIntentos", Globals.conexionGlobal);
                 resetearIntentos.CommandType = CommandType.StoredProcedure;
+                resetearIntentos.Parameters.Add("@usuarioEmpleado",SqlDbType.VarChar);
+                resetearIntentos.Parameters["@usuarioEmpleado"].Value = textBoxUsuario.Text;
                 resetearIntentos.ExecuteNonQuery();
                 frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
                 frmElegirRol.ShowDialog();
@@ -91,10 +98,12 @@ namespace FrbaHotel.Login
             {
                 SqlCommand sumarIntento = new SqlCommand("[PISOS_PICADOS].sumarIntento", Globals.conexionGlobal);
                 sumarIntento.CommandType = CommandType.StoredProcedure;
+                sumarIntento.Parameters.Add("@usuarioEmpleado", SqlDbType.VarChar);
+                sumarIntento.Parameters["@usuarioEmpleado"].Value = textBoxUsuario.Text;
                 sumarIntento.ExecuteNonQuery();
 
-                SqlCommand cantidadIntentosFallidos = new SqlCommand("[PISOS_PICADOS].cantidadIntentosFallidos(@usuario)", Globals.conexionGlobal);
-                cantidadIntentosFallidos.Parameters.Add("@usuario");
+                SqlCommand cantidadIntentosFallidos = new SqlCommand("SELECT [PISOS_PICADOS].cantidadIntentosFallidos(@usuario)", Globals.conexionGlobal);
+                cantidadIntentosFallidos.Parameters.Add("@usuario", SqlDbType.VarChar);
                 cantidadIntentosFallidos.Parameters["@usuario"].Value = textBoxUsuario.Text;
 
                 int intentosFallidos = (int)cantidadIntentosFallidos.ExecuteScalar();
@@ -102,10 +111,11 @@ namespace FrbaHotel.Login
                 if (intentosFallidos >= 3) 
                 {
                     MessageBox.Show("Ha llegado a la cantidad máxima de intentos fallidos. Su usuario será deshabilitado.","Error");
-                    SqlCommand deshabilitarUsuario = new SqlCommand("[PISOS_PICADOS].deshabilitarUsuario(@usuario)", Globals.conexionGlobal);
-                    deshabilitarUsuario.Parameters.Add("@usuario");
+                    SqlCommand deshabilitarUsuario = new SqlCommand("[PISOS_PICADOS].deshabilitarUsuario", Globals.conexionGlobal);
+                    deshabilitarUsuario.CommandType = CommandType.StoredProcedure;
+                    deshabilitarUsuario.Parameters.Add("@usuario", SqlDbType.VarChar);
                     deshabilitarUsuario.Parameters["@usuario"].Value = textBoxUsuario.Text;
-                    deshabilitarUsuario.ExecuteScalar();
+                    deshabilitarUsuario.ExecuteNonQuery();
                     return;
                 }
 

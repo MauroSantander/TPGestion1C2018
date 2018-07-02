@@ -230,6 +230,35 @@ namespace FrbaHotel.AbmCliente
 
         }
 
+        public bool estaRepetidoMail(String mail) 
+        {
+
+            String cadenaRepMail = "SELECT [PISOS_PICADOS].estaRepetidoMail (@mail)";
+            SqlCommand verificarMail = new SqlCommand(cadenaRepMail,Globals.conexionGlobal);
+
+            verificarMail.Parameters.Add("@mail",SqlDbType.VarChar);
+            verificarMail.Parameters["@mail"].Value = mail;
+
+            int resultado = (int)verificarMail.ExecuteScalar();
+
+            if (resultado == 1) { return true; }
+            else { return false; }
+        }
+
+        public bool estaRepetidoPasaporte(int nroPasaporte)
+        {
+            String cadenaRepPasaporte = "SELECT [PISOS_PICADOS].estaRepetidoPasaporte (@nroPasaporte)";
+            SqlCommand verificarMail = new SqlCommand(cadenaRepPasaporte, Globals.conexionGlobal);
+
+            verificarMail.Parameters.Add("@nroPasaporte", SqlDbType.Int);
+            verificarMail.Parameters["@nroPasaporte"].Value = nroPasaporte;
+
+            int resultado = (int)verificarMail.ExecuteScalar();
+
+            if (resultado == 1) { return true; }
+            else { return false; }
+        }
+
         private void BotonCrear_Click(object sender, EventArgs e)
         {
             Utils utilizador = new Utils();
@@ -256,17 +285,25 @@ namespace FrbaHotel.AbmCliente
         
             string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-            if (NombreCliente == ""){MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
-            if (ApellidoCliente == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (!validarEmail(Mail.Text)) { MessageBox.Show("Error en el mail"); }
-            if (CalleCliente == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NroCalleCliente <0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (LocalidadCliente == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            if (NombreCliente == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (ApellidoCliente == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (!validarEmail(Mail.Text) || estaRepetidoMail(Mail.Text)) { MessageBox.Show("Error en el mail", "Error"); return; }
+            if (CalleCliente == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (LocalidadCliente == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+
+            if (TipoIdCliente == "PASAPORTE") {
+                if (estaRepetidoPasaporte(NroIdCliente))
+                {
+                    MessageBox.Show("Pasaporte Repetido");
+                    return;
+                }
+            }
 
             String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
             
