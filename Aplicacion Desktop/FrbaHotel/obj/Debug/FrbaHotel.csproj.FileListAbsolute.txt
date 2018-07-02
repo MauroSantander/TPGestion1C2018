@@ -54,3 +54,6 @@ C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.frmModificarHotel.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHotel.frmNuevoHotel.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRol.frmABMRol.resources
+C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\bin\Debug\FrbaHotel.exe.config
+C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.exe
+C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.pdb

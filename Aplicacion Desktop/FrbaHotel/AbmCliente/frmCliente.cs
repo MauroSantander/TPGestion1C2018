@@ -38,13 +38,7 @@ namespace FrbaHotel.AbmCliente
      
         private void Form1_Load(object sender, EventArgs e)
         {
-
-        }
-
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
+            this.CenterToScreen();
         }
 
         private void Nombre_TextChanged(object sender, EventArgs e)
@@ -91,7 +85,7 @@ namespace FrbaHotel.AbmCliente
         private void BotonBaja_Click(object sender, EventArgs e)
         {
 
-            String NombreCliente = (String)dataGridViewClientes.CurrentRow.Cells["nombre"].Value;
+            /*String NombreCliente = (String)dataGridViewClientes.CurrentRow.Cells["nombre"].Value;
             String ApellidoCliente = (String)dataGridViewClientes.CurrentRow.Cells["apellido"].Value;
             String TipoIdCliente = (String)dataGridViewClientes.CurrentRow.Cells["tipoIdentificacion"].Value;
             int NroIdCliente = (int)dataGridViewClientes.CurrentRow.Cells["numeroIdentificacion"].Value;
@@ -102,6 +96,26 @@ namespace FrbaHotel.AbmCliente
             String LocalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["localidad"].Value;
             String PaisCliente = (String)dataGridViewClientes.CurrentRow.Cells["pais"].Value;
             String NacionalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["nacionalidad"].Value;
+            */
+            if (dataGridViewClientes.CurrentRow == null) return;
+
+            int id = Convert.ToInt32(dataGridViewClientes.CurrentRow.Cells["idUsuario"].Value);
+
+            using (SqlConnection cnn = Globals.conexionGlobal)
+            {
+                String cadenaBajaUsuario = "PISOS_PICADOS.bajaUsuario";
+
+                SqlCommand comandoBajaUsuario = new SqlCommand(cadenaBajaUsuario, Globals.conexionGlobal);
+                comandoBajaUsuario.CommandType = CommandType.StoredProcedure;
+
+                comandoBajaUsuario.Parameters.AddWithValue("@id", id);
+                comandoBajaUsuario.ExecuteReader().Close();
+                MessageBox.Show("Usuario eliminado correctamente");
+
+            }
+
+            dataGridViewClientes.Rows.Remove(dataGridViewClientes.CurrentRow);
+
 
         }
 
@@ -389,6 +403,106 @@ namespace FrbaHotel.AbmCliente
         {
                 
         }
+
+        private void textBoxUsrNameBorrar_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+       /* private void btnBuscarUserName_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            Utils utilizador = new Utils();
+            
+            utilizador.mostrarClientes(dataGridViewClientes);
+            DataView DV = new DataView(dt);
+            if (!String.IsNullOrEmpty(textBoxUsrNameBorrar.Text))
+            {
+                DV.RowFilter = string.Format("nombre LIKE '%{0}%' ", textBoxUsrNameBorrar.Text);
+                dataGridViewClientes.DataSource = DV;
+            }
+            else { MessageBox.Show("Completar Username"); return; }
+        }*/
+
+        private void cbTipoId_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nroIdentificacion_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        public void mostrarClientesFiltrado(DataGridView dgv)
+        {
+            String cadenaFiltro = "SELECT * FROM [PISOS_PICADOS].filtroClientes";
+
+            SqlCommand cmdFiltro = new SqlCommand(cadenaFiltro, Globals.conexionGlobal);
+
+            cmdFiltro.Parameters.Add("@nombre",SqlDbType.VarChar);
+            cmdFiltro.Parameters.Add("@apellido",SqlDbType.VarChar);
+            cmdFiltro.Parameters.Add("@tipoId",SqlDbType.VarChar);
+            cmdFiltro.Parameters.Add("@nroId",SqlDbType.Int);
+            cmdFiltro.Parameters.Add("@mail",SqlDbType.VarChar);
+
+            if (textBoxNombre.Text == "") { cmdFiltro.Parameters["@nombre"].Value = DBNull.Value;}
+            else {cmdFiltro.Parameters["@nombre"].Value = textBoxNombre.Text;}
+
+            if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@apellido"].Value = DBNull.Value; }
+            else { cmdFiltro.Parameters["@apellido"].Value = textBoxApellido.Text; }
+
+            if (cbTipoId.Text == "") { cmdFiltro.Parameters["@tipoIdo"].Value = DBNull.Value; }
+            else { cmdFiltro.Parameters["@tipoId"].Value = cbTipoId.Text; }
+
+            if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@nroId"].Value = DBNull.Value; }
+            else { cmdFiltro.Parameters["@nroId"].Value = textBoxNroId.Text; }
+
+            if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@mail"].Value = DBNull.Value; }
+            else { cmdFiltro.Parameters["@mail"].Value = textBoxMail.Text; }
+
+            string queryFinal = cmdFiltro.ToString();
+
+            try
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(queryFinal, Globals.conexionGlobal);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                dgv.DataSource = dataTable;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView");
+            }
+        }
+
+
+
+
+
+        private void btnBuscarPorId_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            //Utils utilizador = new Utils();
+
+            mostrarClientesFiltrado(dataGridViewClientes);
+            DataView DV = new DataView(dt);
+           // if (String.IsNullOrEmpty(cbTipoId.SelectedText)) { MessageBox.Show("Seleccionar Tipo"); return; }
+           // if (String.IsNullOrEmpty(textBoxNroId.Text)) { MessageBox.Show("Completar Número Identificación"); return; }
+
+            DV.RowFilter = string.Format("numeroIdentificacion LIKE '%{0}%' ", textBoxNroId.Text);
+            DV.RowFilter = string.Format("tipoIdentificacion LIKE '%{0}%' ", cbTipoId.SelectedText);
+            dataGridViewClientes.DataSource = DV;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
         
     }
 }
