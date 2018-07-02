@@ -1756,72 +1756,6 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].normalizarMail (@mail VARCHAR(255))
-RETURNS VARCHAR(255)
-AS
-BEGIN
-	SELECT @mail = LOWER(LTRIM(RTRIM(@mail)))
-
-	SELECT @mail = REPLACE(@mail, ',', '.')
-
-	SELECT @mail = REPLACE(@mail, '@ ', '@')
-
-	SELECT @mail = REPLACE(@mail, ' @', '@')
-
-	SELECT @mail = REPLACE(@mail, '. ', '.')
-
-	SELECT @mail = REPLACE(@mail, ' .', '.')
-
-	SELECT @mail = REPLACE(@mail, 'ñ', 'n')
-
-	DECLARE @USER AS VARCHAR(60)
-	DECLARE @DOM AS VARCHAR(60)
-
-	SET @USER = SUBSTRING(@mail, 1, CHARINDEX('@', @mail) - 1)
-	SET @DOM = SUBSTRING(@mail, CHARINDEX('@', @mail) + 1, 100)
-	SET @USER = LTRIM(RTRIM(@USER))
-	SET @DOM = LTRIM(RTRIM(@DOM))
-
-	SELECT @DOM = REPLACE(@DOM, ' ', '')
-
-	SELECT @USER = REPLACE(@USER, ' ', '_')
-
-	RETURN @USER + '@' + @DOM
-END
-GO
-
-CREATE FUNCTION [PISOS_PICADOS].validarMail (@mail VARCHAR(255))
-RETURNS INT
-AS
-BEGIN
-	DECLARE @mailNormalizado VARCHAR(255) = [PISOS_PICADOS].normalizarMail(@mail)
-
-	IF CHARINDEX('@', @mailNormalizado, 1) > 0
-		AND CHARINDEX('.', @mailNormalizado, CHARINDEX('@', @mail)) > 0
-		IF NOT charindex('@', @mailNormalizado, CHARINDEX('@', @mailNormalizado, 1) + 1) > 0
-			RETURN 1
-
-	RETURN 0
-END
-GO
-
-CREATE FUNCTION [PISOS_PICADOS].existeMail (@mail VARCHAR(255))
-RETURNS INT
-AS
-BEGIN
-	DECLARE @mailNormalizado VARCHAR(255) = [PISOS_PICADOS].normalizarMail(@mail)
-
-	IF @mailNormalizado = (
-			SELECT idUsuario
-			FROM [PISOS_PICADOS].Usuario
-			WHERE mail = @mailNormalizado
-			)
-		RETURN 0
-
-	RETURN 1
-END
-GO
-
 CREATE FUNCTION [PISOS_PICADOS].habilitadoCLiente (
 	@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -1946,11 +1880,27 @@ BEGIN
 				FROM [PISOS_PICADOS].Usuario AS u
 				WHERE u.tipoIdentificacion = 'Pasaporte'
 				GROUP BY u.numeroIdentificacion
-				HAVING COUNT(DISTINCT (u.nombre + u.apellido)) > 1
+				HAVING COUNT(DISTINCT (u.nombre + u.apellido)) >= 1
 				)
 			)
 		RETURN 1;
+	RETURN 0;
+END
+GO
 
+CREATE FUNCTION [PISOS_PICADOS].estaRepetidoMail (@mail VARCHAR(255))
+RETURNS INT
+AS
+BEGIN
+	IF (
+			@mail IN (
+				SELECT u.mail
+				FROM [PISOS_PICADOS].Usuario AS u
+				GROUP BY u.mail
+				HAVING COUNT(DISTINCT (u.numeroIdentificacion)) >= 1
+				)
+			)
+		RETURN 1;
 	RETURN 0;
 END
 GO
@@ -2017,10 +1967,10 @@ BEGIN
 				)
 			)
 		RETURN 1;
-
 	RETURN 0;
 END
 GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 
@@ -2052,16 +2002,8 @@ BEGIN
 		,idFuncionalidad
 	FROM [PISOS_PICADOS].Rol
 		,[PISOS_PICADOS].Funcionalidad
-	WHERE idRol = (
-			SELECT p.idRol
-			FROM [PISOS_PICADOS].Rol AS p
-			WHERE p.nombreRol = @nombre
-			)
-		AND idFuncionalidad = (
-			SELECT e.idFuncionalidad
-			FROM [PISOS_PICADOS].Funcionalidad AS e
-			WHERE e.descripcion = @funcionalidad
-			)
+	WHERE nombreRol = @nombre 
+		  and descripcion = @funcionalidad
 END
 GO
 
@@ -3383,6 +3325,9 @@ BEGIN
 				,u.mail
 			HAVING COUNT(DISTINCT u.numeroIdentificacion) > 1
 			)
+	UPDATE [PISOS_PICADOS].Usuario
+	SET estado = 1 
+	WHERE  estado IS NULL
 END
 GO
 
