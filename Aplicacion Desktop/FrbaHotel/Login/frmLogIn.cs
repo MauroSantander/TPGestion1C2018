@@ -77,7 +77,8 @@ namespace FrbaHotel.Login
                 frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
                 frmElegirRol.ShowDialog();
             }
-            else {
+            else 
+            {
                 intentosFallidos++;
                 if (intentosFallidos == 3) 
                 {
@@ -96,7 +97,7 @@ namespace FrbaHotel.Login
 */
 
                 }
-                MessageBox.Show("Usuario Inválido.");
+                MessageBox.Show("Usuario o contraseña no válidos.");
 
             }
 
