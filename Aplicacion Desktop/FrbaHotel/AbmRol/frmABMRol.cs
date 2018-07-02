@@ -96,15 +96,7 @@ namespace FrbaHotel.AbmRol
             modificarRol.Parameters.Add("@estado",SqlDbType.Bit);
 
             modificarRol.Parameters["@nombreRolViejo"].Value = cbRol.Text;
-
-            if (txtNuevoNombre.Text != "")
-            {
-                modificarRol.Parameters["@nombreRol"].Value = txtNuevoNombre.Text;
-            }
-            else 
-            {
-                modificarRol.Parameters["@nombreRol"].Value = cbRol.Text;
-            }
+            modificarRol.Parameters["@nombreRol"].Value = txtNuevoNombre.Text;
 
             if (checkBoxEstado.Checked) 
             {
@@ -129,11 +121,11 @@ namespace FrbaHotel.AbmRol
                agregarFuncionalidad.CommandType = CommandType.StoredProcedure;
 
                //agrego parametros
-               agregarFuncionalidad.Parameters.Add("@nombreRol", SqlDbType.VarChar);
+               agregarFuncionalidad.Parameters.Add("@nombre", SqlDbType.VarChar);
                agregarFuncionalidad.Parameters.Add("@funcionalidad", SqlDbType.VarChar);
 
                //agrego valores
-               agregarFuncionalidad.Parameters["@nombreRol"].Value = cbRol.Text;
+               agregarFuncionalidad.Parameters["@nombre"].Value = cbRol.Text;
                agregarFuncionalidad.Parameters["@funcionalidad"].Value = checkListFuncionalidades2.CheckedItems[i].ToString();
 
                //ejecuto el SP
@@ -145,38 +137,6 @@ namespace FrbaHotel.AbmRol
             MessageBox.Show("Modificación realizada correctamente");
             cbRol.Items.Clear();
             cargarRoles();
-
-        }
-
-        private void buttonBaja_Click(object sender, EventArgs e)
-        {
-
-            //chequeos
-            if (cbRol.SelectedItem == null)
-            {
-                MessageBox.Show("Seleccione un rol.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string spBajaRol = "[PISOS_PICADOS].bajaRol";
-
-            SqlCommand bajaRol = new SqlCommand(spBajaRol, Globals.conexionGlobal);
-            bajaRol.CommandType = CommandType.StoredProcedure;
-
-            //Agrego parametros
-            bajaRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
-
-            //Cargo valores en parametros
-            bajaRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
-
-            int respuesta = bajaRol.ExecuteNonQuery();
-
-            if (respuesta > 0)
-            {
-                MessageBox.Show("Baja realizada correctamente");
-                cbRol.Items.Clear();
-                cargarRoles();
-            }
 
         }
 
@@ -308,7 +268,7 @@ namespace FrbaHotel.AbmRol
 
         private void cbRol_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            txtNuevoNombre.Text = cbRol.Text;
             SqlCommand cmdFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad as f JOIN [PISOS_PICADOS].RolxFuncionalidad as rf on f.idFuncionalidad = rf.idFuncionalidad JOIN [PISOS_PICADOS].Rol as r on rf.idRol = r.idRol WHERE r.nombreRol = @rol", Globals.conexionGlobal);
             cmdFuncionalidades.Parameters.Add("@Rol", SqlDbType.VarChar);
             cmdFuncionalidades.Parameters["@Rol"].Value = cbRol.SelectedItem.ToString();

@@ -73,7 +73,7 @@ namespace FrbaHotel.AbmCliente
            
             Utils c = new Utils();
 
-            c.mostrarClientes(dataGridView2);
+            //c.mostrarClientes(dataGridView2);
                
         }
 
