@@ -67,6 +67,22 @@ namespace FrbaHotel
             }
 
         }
+      
+       public void llenarDataGridView(DataGridView dgv, String tabla)
+        {
+            try
+            {
+
+                adapter = new SqlDataAdapter("SELECT * FROM [PISOS_PICADOS]."+tabla, Globals.conexionGlobal);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                dgv.DataSource = dataTable;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView");
+            }
+        }
 
        /* public void mostrarFuncionalidadesPara(Rol unRol, DataGridView dgv) 
         { 
