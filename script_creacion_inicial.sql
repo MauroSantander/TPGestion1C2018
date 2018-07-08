@@ -160,7 +160,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].calcularPrecioPorDiasNoHospedados', N'FN') IS NOT
 IF OBJECT_ID(N'[PISOS_PICADOS].precioConsumible', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].precioConsumible;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].estaRepetidoPasaporte', N'FN') IS NOT NULL
+IF OBJECT_ID(N'[PISOS_PICADOS].estaRepetido', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].filtroClientes', N'IF') IS NOT NULL
@@ -1934,16 +1934,17 @@ BEGIN
 END
 GO
 
-/* Verifica que un pasaporte dado no se encuentra ya registrado en la base de datos*/
-CREATE FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte (@pasaporte INT)
+/* Verifica que un numero de identificacion de un determinado tipo dado no se encuentra ya 
+registrado en la base de datos*/
+CREATE FUNCTION [PISOS_PICADOS].estaRepetido (@tipo VARCHAR(255),@numero INT)
 RETURNS INT
 AS
 BEGIN
 	IF (
-			@pasaporte IN (
+			@numero IN (
 				SELECT u.numeroIdentificacion
 				FROM [PISOS_PICADOS].Usuario AS u
-				WHERE u.tipoIdentificacion = 'Pasaporte'
+				WHERE u.tipoIdentificacion = @tipo
 				GROUP BY u.numeroIdentificacion
 				HAVING COUNT(DISTINCT (u.nombre + u.apellido)) >= 1
 				)

@@ -258,15 +258,18 @@ namespace FrbaHotel.AbmCliente
             else { return false; }
         }
 
-        public bool estaRepetidoPasaporte(int nroPasaporte)
+        public bool estaRepetidoIdentificacion(int nroPasaporte, String tipoIdentificacion)
         {
-            String cadenaRepPasaporte = "SELECT [PISOS_PICADOS].estaRepetidoPasaporte (@nroPasaporte)";
-            SqlCommand verificarMail = new SqlCommand(cadenaRepPasaporte, Globals.conexionGlobal);
+            String cadenaRepPasaporte = "SELECT [PISOS_PICADOS].estaRepetido (@nroPasaporte)";
+            SqlCommand verificarIdentificacion = new SqlCommand(cadenaRepPasaporte, Globals.conexionGlobal);
 
-            verificarMail.Parameters.Add("@nroPasaporte", SqlDbType.Int);
-            verificarMail.Parameters["@nroPasaporte"].Value = nroPasaporte;
+            verificarIdentificacion.Parameters.Add("@tipo",SqlDbType.VarChar);
+            verificarIdentificacion.Parameters["@tipo"].Value = tipoIdentificacion;
 
-            int resultado = (int)verificarMail.ExecuteScalar();
+            verificarIdentificacion.Parameters.Add("@numero", SqlDbType.Int);
+            verificarIdentificacion.Parameters["@numero"].Value = nroPasaporte;
+
+            int resultado = (int)verificarIdentificacion.ExecuteScalar();
 
             if (resultado == 1) { return true; }
             else { return false; }
@@ -310,13 +313,11 @@ namespace FrbaHotel.AbmCliente
             if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-            if (TipoIdCliente == "PASAPORTE") {
-                if (estaRepetidoPasaporte(NroIdCliente))
+                if (estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
                 {
-                    MessageBox.Show("Pasaporte Repetido");
+                    MessageBox.Show("Identificación Repetida");
                     return;
                 }
-            }
 
             String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
             
@@ -628,6 +629,11 @@ namespace FrbaHotel.AbmCliente
 
             frmModificacionCliente modificacion = new frmModificacionCliente(); //fijarme si paso por parametro el formulario que lo invoca para los datos necesarios
             modificacion.Show();
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
 
         }
 
