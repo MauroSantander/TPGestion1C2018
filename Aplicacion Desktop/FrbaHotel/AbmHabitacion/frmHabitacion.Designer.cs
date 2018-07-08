@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnModificar = new System.Windows.Forms.Button();
             this.btnSalir2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -38,19 +37,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHabitaciones)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnModificar
-            // 
-            this.btnModificar.Location = new System.Drawing.Point(367, 373);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(75, 23);
-            this.btnModificar.TabIndex = 7;
-            this.btnModificar.Text = "Modificar";
-            this.btnModificar.UseVisualStyleBackColor = true;
-            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
-            // 
             // btnSalir2
             // 
-            this.btnSalir2.Location = new System.Drawing.Point(208, 373);
+            this.btnSalir2.Location = new System.Drawing.Point(687, 373);
             this.btnSalir2.Name = "btnSalir2";
             this.btnSalir2.Size = new System.Drawing.Size(75, 23);
             this.btnSalir2.TabIndex = 6;
@@ -62,7 +51,7 @@
             // 
             this.groupBox1.Location = new System.Drawing.Point(9, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(433, 100);
+            this.groupBox1.Size = new System.Drawing.Size(840, 100);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
@@ -72,7 +61,7 @@
             this.groupBox2.Controls.Add(this.dataGridViewHabitaciones);
             this.groupBox2.Location = new System.Drawing.Point(9, 118);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(433, 249);
+            this.groupBox2.Size = new System.Drawing.Size(840, 249);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Habitaciones";
@@ -82,13 +71,13 @@
             this.dataGridViewHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewHabitaciones.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewHabitaciones.Name = "dataGridViewHabitaciones";
-            this.dataGridViewHabitaciones.Size = new System.Drawing.Size(421, 224);
+            this.dataGridViewHabitaciones.Size = new System.Drawing.Size(828, 224);
             this.dataGridViewHabitaciones.TabIndex = 0;
             this.dataGridViewHabitaciones.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHabitaciones_CellClick);
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(289, 373);
+            this.btnCrear.Location = new System.Drawing.Point(768, 373);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
             this.btnCrear.TabIndex = 8;
@@ -100,9 +89,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 405);
+            this.ClientSize = new System.Drawing.Size(861, 405);
             this.Controls.Add(this.btnCrear);
-            this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnSalir2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
@@ -118,7 +106,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnSalir2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
