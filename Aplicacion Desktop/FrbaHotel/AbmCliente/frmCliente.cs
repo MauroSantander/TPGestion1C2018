@@ -260,14 +260,15 @@ namespace FrbaHotel.AbmCliente
 
         public bool estaRepetidoIdentificacion(int nroPasaporte, String tipoIdentificacion)
         {
-            String cadenaRepPasaporte = "SELECT [PISOS_PICADOS].estaRepetido (@nroPasaporte)";
-            SqlCommand verificarIdentificacion = new SqlCommand(cadenaRepPasaporte, Globals.conexionGlobal);
+            String cadenaRepID = "SELECT [PISOS_PICADOS].estaRepetido (@tipo, @numero)";
+            SqlCommand verificarIdentificacion = new SqlCommand(cadenaRepID, Globals.conexionGlobal);
 
-            verificarIdentificacion.Parameters.Add("@tipo",SqlDbType.VarChar);
-            verificarIdentificacion.Parameters["@tipo"].Value = tipoIdentificacion;
 
             verificarIdentificacion.Parameters.Add("@numero", SqlDbType.Int);
             verificarIdentificacion.Parameters["@numero"].Value = nroPasaporte;
+
+            verificarIdentificacion.Parameters.Add("@tipo", SqlDbType.VarChar);
+            verificarIdentificacion.Parameters["@tipo"].Value = tipoIdentificacion;
 
             int resultado = (int)verificarIdentificacion.ExecuteScalar();
 
@@ -507,10 +508,8 @@ namespace FrbaHotel.AbmCliente
             else { cadenaNroIdentificacion = "numeroIdentificacion LIKE '" + int.Parse(textBoxNroId.Text) + "'"; };
 
             if (textBoxMail.Text == "") { cadenaMail = "mail LIKE '%'"; }
-//            else
-//            {
-/*                if (validarEmail(textBoxMail.Text))*/ { cadenaMail = "mail LIKE '" + textBoxMail.Text + "'"; };
- //           }
+            else{ cadenaMail = "mail LIKE '" + textBoxMail.Text + "'"; };
+
 
             string compuesto = " SELECT * FROM [PISOS_PICADOS].Usuario WHERE " + cadenaNombre 
                 + " AND " + cadenaApellido + " AND " + cadenaTipoId + " AND " 
@@ -530,32 +529,40 @@ namespace FrbaHotel.AbmCliente
 
         public void mostrarClientesFiltradoParaModif(DataGridView dgv)
         {
+            string cadenaNombre;
+            string cadenaApellido;
+            string cadenaTipoId;
+            string cadenaNroIdentificacion;
+            string cadenaMail;
 
-            DataSet ds = new DataSet();
+            if (txtNombreModif.Text == "") { cadenaNombre = "nombre LIKE '%'"; }
+            else { cadenaNombre = "nombre LIKE '" + txtNombreModif.Text + "'"; };
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM [PISOS_PICADOS].Usuario ", Globals.conexionGlobal);
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.SelectCommand = cmd;
-            da.Fill(ds, "Usuario");
+            if (txtApellidoModif.Text == "") { cadenaApellido = "apellido LIKE '%'"; }
+            else { cadenaApellido = "apellido LIKE '" + txtApellidoModif.Text + "'"; };
 
-           
+            if (cmbTipoIdModif.SelectedItem == null || cmbTipoIdModif.SelectedItem.ToString() == "") { cadenaTipoId = "tipoIdentificacion LIKE '%'"; }
+            else { cadenaTipoId = "tipoIdentificacion LIKE '" + cmbTipoIdModif.SelectedItem.ToString() + "'"; };
 
-            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("nombre LIKE '%{0}%' ", txtNombreModif.Text);
+            if (txtNroIdModif.Text == "") { cadenaNroIdentificacion = "numeroIdentificacion LIKE '%'"; }
+            else { cadenaNroIdentificacion = "numeroIdentificacion LIKE '" + int.Parse(txtNroIdModif.Text) + "'"; };
 
-            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("apellido LIKE '%{0}%' ", txtApellidoModif.Text);
+            if (txtMailModif.Text == "") { cadenaMail = "mail LIKE '%'"; }
+            else { cadenaMail = "mail LIKE '" + txtMailModif.Text + "'"; };
 
-            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("tipoIdentificacion LIKE '%{0}%' ", cmbTipoIdModif.SelectedText);
 
-            //ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("numeroIdentificacion LIKE %{0}% ", (int.Parse(txtNroIdModif.Text)));
+            string compuesto = " SELECT * FROM [PISOS_PICADOS].Usuario WHERE " + cadenaNombre
+                + " AND " + cadenaApellido + " AND " + cadenaTipoId + " AND "
+                + cadenaNroIdentificacion + " AND " + cadenaMail;
 
-            //ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("numeroIdentificacion LIKE %{0}% ", txtNroIdModif.Text);
-
-            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("mail LIKE '%{0}%' ", txtMailModif.Text);
-
-             dgv.DataSource = ds.Tables["Usuario"];
 
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
+
+            SqlDataAdapter adapter = new SqlDataAdapter(compuesto, Globals.conexionGlobal);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            dgv.DataSource = dataTable;
 
         }
 

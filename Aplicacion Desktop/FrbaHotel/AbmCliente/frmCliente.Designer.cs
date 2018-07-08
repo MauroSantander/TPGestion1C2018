@@ -158,6 +158,8 @@
             // 
             // cbPaises
             // 
+            this.cbPaises.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbPaises.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbPaises.FormattingEnabled = true;
             this.cbPaises.Location = new System.Drawing.Point(155, 380);
             this.cbPaises.Name = "cbPaises";
@@ -214,22 +216,17 @@
             // TipoId
             // 
             this.TipoId.AutoCompleteCustomSource.AddRange(new string[] {
-            "L. E/DNI",
-            "CARNET EXT.",
-            "RUC",
-            "PASAPORTE",
-            "P. NAC.",
-            "OTROS"});
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
             this.TipoId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.TipoId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.TipoId.FormattingEnabled = true;
             this.TipoId.Items.AddRange(new object[] {
             "DNI",
-            "",
             "L.E",
-            "",
             "Carnet Ext.",
-            "",
             "Pasaporte"});
             this.TipoId.Location = new System.Drawing.Point(158, 140);
             this.TipoId.Name = "TipoId";
@@ -545,11 +542,8 @@
             this.cmbTipoIdModif.FormattingEnabled = true;
             this.cmbTipoIdModif.Items.AddRange(new object[] {
             "DNI",
-            "",
             "L.E",
-            "",
             "Carnet Ext.",
-            "",
             "Pasaporte"});
             this.cmbTipoIdModif.Location = new System.Drawing.Point(312, 65);
             this.cmbTipoIdModif.Name = "cmbTipoIdModif";
@@ -697,11 +691,8 @@
             this.cbTipoId.FormattingEnabled = true;
             this.cbTipoId.Items.AddRange(new object[] {
             "DNI",
-            "",
             "L.E",
-            "",
             "Carnet Ext.",
-            "",
             "Pasaporte"});
             this.cbTipoId.Location = new System.Drawing.Point(312, 65);
             this.cbTipoId.Name = "cbTipoId";
