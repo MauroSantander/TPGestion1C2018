@@ -137,6 +137,7 @@
             this.btnABMHabitacion.TabIndex = 4;
             this.btnABMHabitacion.Text = "ABM Habitacion";
             this.btnABMHabitacion.UseVisualStyleBackColor = true;
+            this.btnABMHabitacion.Click += new System.EventHandler(this.btnABMHabitacion_Click_1);
             // 
             // btnABMUsuario
             // 
