@@ -33,27 +33,30 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.listFuncionalidades = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblEstado = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listRoles = new System.Windows.Forms.ListBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.checkActivo = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.checkListFuncionalidades = new System.Windows.Forms.CheckedListBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtNombreRol = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkActivo = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.lblEstado = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -110,6 +113,14 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Estado";
             // 
+            // lblEstado
+            // 
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Location = new System.Drawing.Point(6, 16);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(0, 13);
+            this.lblEstado.TabIndex = 38;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.listRoles);
@@ -151,13 +162,10 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.checkListFuncionalidades);
-            this.tabPage2.Controls.Add(this.txtNombreRol);
+            this.tabPage2.Controls.Add(this.groupBox6);
+            this.tabPage2.Controls.Add(this.groupBox5);
+            this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.checkActivo);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -168,73 +176,75 @@
             this.tabPage2.Text = "Crear Rol";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // checkListFuncionalidades
+            // groupBox6
             // 
-            this.checkListFuncionalidades.FormattingEnabled = true;
-            this.checkListFuncionalidades.Location = new System.Drawing.Point(144, 70);
-            this.checkListFuncionalidades.Name = "checkListFuncionalidades";
-            this.checkListFuncionalidades.Size = new System.Drawing.Size(168, 109);
-            this.checkListFuncionalidades.TabIndex = 22;
-            // 
-            // txtNombreRol
-            // 
-            this.txtNombreRol.Location = new System.Drawing.Point(144, 43);
-            this.txtNombreRol.Name = "txtNombreRol";
-            this.txtNombreRol.Size = new System.Drawing.Size(168, 20);
-            this.txtNombreRol.TabIndex = 21;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 15);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(240, 13);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "Para crear un rol complete los siguientes campos:";
+            this.groupBox6.Controls.Add(this.checkActivo);
+            this.groupBox6.Location = new System.Drawing.Point(6, 95);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(137, 47);
+            this.groupBox6.TabIndex = 25;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Estado";
             // 
             // checkActivo
             // 
             this.checkActivo.AutoSize = true;
             this.checkActivo.Checked = true;
             this.checkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkActivo.Location = new System.Drawing.Point(144, 200);
+            this.checkActivo.Location = new System.Drawing.Point(9, 19);
             this.checkActivo.Name = "checkActivo";
             this.checkActivo.Size = new System.Drawing.Size(56, 17);
-            this.checkActivo.TabIndex = 17;
+            this.checkActivo.TabIndex = 18;
             this.checkActivo.Text = "Activo";
             this.checkActivo.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // groupBox5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 200);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Estado:";
+            this.groupBox5.Controls.Add(this.checkListFuncionalidades);
+            this.groupBox5.Location = new System.Drawing.Point(153, 43);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(169, 172);
+            this.groupBox5.TabIndex = 24;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Funcionalidades";
             // 
-            // label2
+            // checkListFuncionalidades
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 70);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(87, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Funcionalidades:";
-            this.label2.Click += new System.EventHandler(this.label2_Click_1);
+            this.checkListFuncionalidades.FormattingEnabled = true;
+            this.checkListFuncionalidades.Location = new System.Drawing.Point(10, 19);
+            this.checkListFuncionalidades.Name = "checkListFuncionalidades";
+            this.checkListFuncionalidades.Size = new System.Drawing.Size(149, 139);
+            this.checkListFuncionalidades.TabIndex = 23;
             // 
-            // label1
+            // groupBox4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Nombre del Rol:";
+            this.groupBox4.Controls.Add(this.txtNombreRol);
+            this.groupBox4.Location = new System.Drawing.Point(6, 43);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(137, 46);
+            this.groupBox4.TabIndex = 23;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Nombre del rol";
+            // 
+            // txtNombreRol
+            // 
+            this.txtNombreRol.Location = new System.Drawing.Point(6, 19);
+            this.txtNombreRol.Name = "txtNombreRol";
+            this.txtNombreRol.Size = new System.Drawing.Size(124, 20);
+            this.txtNombreRol.TabIndex = 22;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(240, 13);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Para crear un rol complete los siguientes campos:";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(237, 237);
+            this.button2.Location = new System.Drawing.Point(163, 237);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 13;
@@ -244,21 +254,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(144, 237);
+            this.button1.Location = new System.Drawing.Point(247, 237);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
             this.button1.Text = "Crear";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCrearRol_Click_1);
-            // 
-            // lblEstado
-            // 
-            this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(6, 16);
-            this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(0, 13);
-            this.lblEstado.TabIndex = 38;
             // 
             // frmABMRol
             // 
@@ -277,6 +279,11 @@
             this.groupBox1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -287,22 +294,22 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkActivo;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox txtNombreRol;
-        private System.Windows.Forms.CheckedListBox checkListFuncionalidades;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListBox listFuncionalidades;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox listRoles;
         private System.Windows.Forms.Label lblEstado;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox txtNombreRol;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckedListBox checkListFuncionalidades;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox checkActivo;
 
     }
 }
