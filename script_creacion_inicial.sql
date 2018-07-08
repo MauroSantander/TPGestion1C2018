@@ -326,6 +326,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].agregarHotelAUsuario', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].darNombreAHoteles', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].darNombreAHoteles;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].quitarHotelAUsuario', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].quitarHotelAUsuario;
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -2669,6 +2672,22 @@ BEGIN
 END;
 GO
 
+CREATE PROCEDURE [PISOS_PICADOS].quitarHotelAUsuario @idUsuario INT
+	,@nombreHotel VARCHAR(255)
+AS
+BEGIN
+	DELETE
+	FROM [PISOS_PICADOS].EmpleadoxHotel
+	WHERE idUsuario = @idUsuario
+		AND idHotel = (
+			SELECT h.idHotel
+			FROM [PISOS_PICADOS].Hotel AS h
+			WHERE nombre = @nombreHotel
+			)
+END;
+GO
+
+
 CREATE PROCEDURE [PISOS_PICADOS].agregarRolAUsuario @idUsuario INT
 	,@nombreRol VARCHAR(255)
 AS
@@ -2692,7 +2711,11 @@ BEGIN
 	INSERT INTO [PISOS_PICADOS].EmpleadoxHotel
 	VALUES (
 		@idUsuario
-		,@nombreHotel
+		,(
+			SELECT idHotel
+			FROM [PISOS_PICADOS].Hotel
+			WHERE nombre = @nombreHotel
+			)
 		)
 END;
 GO
