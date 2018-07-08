@@ -1,6 +1,5 @@
 /* Borrado */
 /*Tablas*/
-
 IF OBJECT_ID(N'[PISOS_PICADOS].EstadiaxConsumible', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].EstadiaxConsumible
 
@@ -1931,7 +1930,10 @@ GO
 
 /* Verifica que un numero de identificacion de un determinado tipo dado no se encuentra ya 
 registrado en la base de datos*/
-CREATE FUNCTION [PISOS_PICADOS].estaRepetido (@tipo VARCHAR(255),@numero INT)
+CREATE FUNCTION [PISOS_PICADOS].estaRepetido (
+	@tipo VARCHAR(255)
+	,@numero INT
+	)
 RETURNS INT
 AS
 BEGIN
@@ -2420,7 +2422,6 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].Hotel AS ht ON hb.idHotel = ht.idHotel
 		)
 GO
-
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
@@ -3808,12 +3809,11 @@ CREATE PROCEDURE [PISOS_PICADOS].darNombreAHoteles
 AS
 BEGIN
 	UPDATE [PISOS_PICADOS].Hotel
-	SET nombre = LTRIM(RTRIM(ciudad)) + '-' + LTRIM(RTRIM(calle)) + '-' + 
-	LTRIM(RTRIM(CONVERT(VARCHAR(255), nroCalle)))
+	SET nombre = LTRIM(RTRIM(ciudad)) + '-' + LTRIM(RTRIM(calle)) + '-' + LTRIM(RTRIM(CONVERT(VARCHAR(255), nroCalle)))
 	WHERE nombre IS NULL
-END 
+END
 GO
 
-
 EXEC [PISOS_PICADOS].CorregirUsuarios
+
 EXEC [PISOS_PICADOS].darNombreAHoteles
