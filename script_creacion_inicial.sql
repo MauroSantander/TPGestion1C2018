@@ -1,7 +1,5 @@
 /* Borrado */
 /*Tablas*/
-IF OBJECT_ID(N'[PISOS_PICADOS].BajaHabitacion', N'U') IS NOT NULL
-	DROP TABLE [PISOS_PICADOS].BajaHabitacion
 
 IF OBJECT_ID(N'[PISOS_PICADOS].EstadiaxConsumible', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].EstadiaxConsumible
@@ -326,8 +324,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].deshabilitarUsuario', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].agregarHotelAUsuario', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].agregarHotelAUsuario;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].darNombresAHoteles', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].darNombresAHotles;
+IF OBJECT_ID(N'[PISOS_PICADOS].darNombreAHoteles', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].darNombreAHoteles;
 
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
@@ -426,14 +424,6 @@ CREATE TABLE [PISOS_PICADOS].Habitacion (
 	,descripcion VARCHAR(255) DEFAULT NULL
 	,piso INT
 	,habilitada BIT DEFAULT 1
-	,
-	)
-
-CREATE TABLE [PISOS_PICADOS].BajaHabitacion (
-	idBaja INT PRIMARY KEY IDENTITY
-	,idHabitacion INT REFERENCES [PISOS_PICADOS].Habitacion
-	,fechaIncio DATE
-	,fechaFin DATE
 	,
 	)
 
@@ -2694,7 +2684,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].agregarHotelAAUsuario @idUsuario INT
+CREATE PROCEDURE [PISOS_PICADOS].agregarHotelAUsuario @idUsuario INT
 	,@nombreHotel VARCHAR(255)
 AS
 BEGIN
@@ -2943,24 +2933,11 @@ GO
 
 CREATE PROCEDURE [PISOS_PICADOS].SPEstadoHabitacion @idHabitacion INT
 	,@habilitado BIT
-	,@fechaInicio DATE
-	,@fechaFin DATE
 AS
 BEGIN
 	UPDATE [PISOS_PICADOS].Habitacion
 	SET habilitada = @habilitado
 	WHERE idHabitacion = @idHabitacion
-
-	INSERT INTO [PISOS_PICADOS].BajaHabitacion (
-		idHabitacion
-		,fechaIncio
-		,fechaFin
-		)
-	VALUES (
-		@idHabitacion
-		,@fechaInicio
-		,@fechaFin
-		)
 END;
 GO
 
