@@ -197,11 +197,11 @@ namespace FrbaHotel.AbmRol
 
             if (respuesta == 1)
             {
-                checkBoxEstado.Checked = true;
+                lblEstado.Text = "Activo";
             }
             else
             {
-                checkBoxEstado.Checked = false;
+                lblEstado.Text = "No activo";
             }
 
         }

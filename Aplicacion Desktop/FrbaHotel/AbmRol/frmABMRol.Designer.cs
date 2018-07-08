@@ -30,6 +30,11 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.listFuncionalidades = new System.Windows.Forms.ListBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listRoles = new System.Windows.Forms.ListBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -42,18 +47,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listRoles = new System.Windows.Forms.ListBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.checkBoxEstado = new System.Windows.Forms.CheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.listFuncionalidades = new System.Windows.Forms.ListBox();
+            this.lblEstado = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -81,6 +81,53 @@
             this.tabPage1.Text = "Modificar/Eliminar Rol";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.listFuncionalidades);
+            this.groupBox3.Location = new System.Drawing.Point(159, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(163, 205);
+            this.groupBox3.TabIndex = 36;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Funcionalidades";
+            // 
+            // listFuncionalidades
+            // 
+            this.listFuncionalidades.FormattingEnabled = true;
+            this.listFuncionalidades.Location = new System.Drawing.Point(6, 19);
+            this.listFuncionalidades.Name = "listFuncionalidades";
+            this.listFuncionalidades.Size = new System.Drawing.Size(151, 173);
+            this.listFuncionalidades.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lblEstado);
+            this.groupBox2.Location = new System.Drawing.Point(6, 172);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(147, 39);
+            this.groupBox2.TabIndex = 35;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Estado";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.listRoles);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(147, 160);
+            this.groupBox1.TabIndex = 33;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Roles";
+            // 
+            // listRoles
+            // 
+            this.listRoles.FormattingEnabled = true;
+            this.listRoles.Location = new System.Drawing.Point(6, 19);
+            this.listRoles.Name = "listRoles";
+            this.listRoles.Size = new System.Drawing.Size(135, 134);
+            this.listRoles.TabIndex = 1;
+            this.listRoles.SelectedIndexChanged += new System.EventHandler(this.listRoles_SelectedIndexChanged);
             // 
             // button5
             // 
@@ -205,62 +252,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonCrearRol_Click_1);
             // 
-            // groupBox1
+            // lblEstado
             // 
-            this.groupBox1.Controls.Add(this.listRoles);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(147, 160);
-            this.groupBox1.TabIndex = 33;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Roles";
-            // 
-            // listRoles
-            // 
-            this.listRoles.FormattingEnabled = true;
-            this.listRoles.Location = new System.Drawing.Point(6, 19);
-            this.listRoles.Name = "listRoles";
-            this.listRoles.Size = new System.Drawing.Size(135, 134);
-            this.listRoles.TabIndex = 1;
-            this.listRoles.SelectedIndexChanged += new System.EventHandler(this.listRoles_SelectedIndexChanged);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.checkBoxEstado);
-            this.groupBox2.Location = new System.Drawing.Point(6, 172);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(147, 44);
-            this.groupBox2.TabIndex = 35;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Estado";
-            // 
-            // checkBoxEstado
-            // 
-            this.checkBoxEstado.AutoSize = true;
-            this.checkBoxEstado.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxEstado.Name = "checkBoxEstado";
-            this.checkBoxEstado.Size = new System.Drawing.Size(56, 17);
-            this.checkBoxEstado.TabIndex = 35;
-            this.checkBoxEstado.Text = "Activo";
-            this.checkBoxEstado.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.listFuncionalidades);
-            this.groupBox3.Location = new System.Drawing.Point(159, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(163, 210);
-            this.groupBox3.TabIndex = 36;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Funcionalidades";
-            // 
-            // listFuncionalidades
-            // 
-            this.listFuncionalidades.FormattingEnabled = true;
-            this.listFuncionalidades.Location = new System.Drawing.Point(6, 19);
-            this.listFuncionalidades.Name = "listFuncionalidades";
-            this.listFuncionalidades.Size = new System.Drawing.Size(151, 186);
-            this.listFuncionalidades.TabIndex = 1;
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Location = new System.Drawing.Point(6, 16);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(0, 13);
+            this.lblEstado.TabIndex = 38;
             // 
             // frmABMRol
             // 
@@ -273,12 +271,12 @@
             this.Load += new System.EventHandler(this.frmABMRol_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -302,9 +300,9 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListBox listFuncionalidades;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox checkBoxEstado;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox listRoles;
+        private System.Windows.Forms.Label lblEstado;
 
     }
 }
