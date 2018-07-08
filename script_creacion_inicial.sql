@@ -2405,7 +2405,8 @@ CREATE FUNCTION [PISOS_PICADOS].listadoHabitaciones ()
 RETURNS TABLE
 AS
 RETURN (
-		SELECT (
+		SELECT hb.idHabitacion AS idHabitacion
+			,(
 				CASE 
 					WHEN ht.nombre IS NULL
 						THEN LTRIM(RTRIM(ht.ciudad)) + '-' + LTRIM(RTRIM(ht.calle)) + '-' + LTRIM(RTRIM(CONVERT(VARCHAR(255), ht.nroCalle)))
@@ -2415,7 +2416,11 @@ RETURN (
 				) AS Hotel
 			,hb.piso AS Piso
 			,hb.numero AS Numero
-			,(SELECT T.tipoCamas FROM [PISOS_PICADOS].Tipo AS t WHERE T.idTipo = hb.tipo) AS Tipo 
+			,(
+				SELECT T.tipoCamas
+				FROM [PISOS_PICADOS].Tipo AS t
+				WHERE T.idTipo = hb.tipo
+				) AS Tipo
 			,hb.frente AS Frente
 			,hb.descripcion AS Descripcion
 			,hb.habilitada AS Habilitada
@@ -2423,6 +2428,7 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].Hotel AS ht ON hb.idHotel = ht.idHotel
 		)
 GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
