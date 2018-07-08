@@ -193,12 +193,7 @@ namespace FrbaHotel
             Globals.getLogin().Show();
         }
 
-        private void btnABMHabitacion_Click_1(object sender, EventArgs e)
-        {
-            (new AbmHabitacion.frmHabitacion()).ShowDialog();
-        }
-
-        private void btnABMRol_Click_1(object sender, EventArgs e)
+        private void btnRegistrarEstadia_Click(object sender, EventArgs e)
         {
 
         }

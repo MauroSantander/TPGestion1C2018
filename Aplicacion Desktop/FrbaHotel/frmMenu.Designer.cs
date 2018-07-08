@@ -107,6 +107,7 @@
             this.btnABMRegimenEstadia.TabIndex = 5;
             this.btnABMRegimenEstadia.Text = "ABM Regimen de Estadía";
             this.btnABMRegimenEstadia.UseVisualStyleBackColor = true;
+            this.btnABMRegimenEstadia.Click += new System.EventHandler(this.btnABMRegimenEstadia_Click);
             // 
             // btnABMCliente
             // 
@@ -117,6 +118,7 @@
             this.btnABMCliente.TabIndex = 2;
             this.btnABMCliente.Text = "ABM Cliente";
             this.btnABMCliente.UseVisualStyleBackColor = true;
+            this.btnABMCliente.Click += new System.EventHandler(this.btnABMCliente_Click);
             // 
             // btnABMHotel
             // 
@@ -127,6 +129,7 @@
             this.btnABMHotel.TabIndex = 3;
             this.btnABMHotel.Text = "ABM Hotel";
             this.btnABMHotel.UseVisualStyleBackColor = true;
+            this.btnABMHotel.Click += new System.EventHandler(this.btnABMHotel_Click);
             // 
             // btnABMHabitacion
             // 
@@ -137,7 +140,7 @@
             this.btnABMHabitacion.TabIndex = 4;
             this.btnABMHabitacion.Text = "ABM Habitacion";
             this.btnABMHabitacion.UseVisualStyleBackColor = true;
-            this.btnABMHabitacion.Click += new System.EventHandler(this.btnABMHabitacion_Click_1);
+            this.btnABMHabitacion.Click += new System.EventHandler(this.btnABMHabitacion_Click);
             // 
             // btnABMUsuario
             // 
@@ -148,6 +151,7 @@
             this.btnABMUsuario.TabIndex = 1;
             this.btnABMUsuario.Text = "ABM Usuario";
             this.btnABMUsuario.UseVisualStyleBackColor = true;
+            this.btnABMUsuario.Click += new System.EventHandler(this.btnABMUsuario_Click);
             // 
             // btnABMRol
             // 
@@ -158,7 +162,7 @@
             this.btnABMRol.TabIndex = 0;
             this.btnABMRol.Text = "ABM Rol";
             this.btnABMRol.UseVisualStyleBackColor = true;
-            this.btnABMRol.Click += new System.EventHandler(this.btnABMRol_Click_1);
+            this.btnABMRol.Click += new System.EventHandler(this.btnABMRol_Click);
             // 
             // groupBox2
             // 
@@ -181,6 +185,7 @@
             this.btnCancelarReserva.TabIndex = 2;
             this.btnCancelarReserva.Text = "Cancelar Reserva";
             this.btnCancelarReserva.UseVisualStyleBackColor = true;
+            this.btnCancelarReserva.Click += new System.EventHandler(this.btnCancelarReserva_Click);
             // 
             // btnModificarReserva
             // 
@@ -191,6 +196,7 @@
             this.btnModificarReserva.TabIndex = 1;
             this.btnModificarReserva.Text = "Modificar Reserva";
             this.btnModificarReserva.UseVisualStyleBackColor = true;
+            this.btnModificarReserva.Click += new System.EventHandler(this.btnModificarReserva_Click);
             // 
             // btnGenerarReserva
             // 
@@ -201,6 +207,7 @@
             this.btnGenerarReserva.TabIndex = 0;
             this.btnGenerarReserva.Text = "Generar Reserva";
             this.btnGenerarReserva.UseVisualStyleBackColor = true;
+            this.btnGenerarReserva.Click += new System.EventHandler(this.btnGenerarReserva_Click);
             // 
             // btnRegistrarConsumibles
             // 
@@ -211,6 +218,7 @@
             this.btnRegistrarConsumibles.TabIndex = 1;
             this.btnRegistrarConsumibles.Text = "Registrar Consumibles";
             this.btnRegistrarConsumibles.UseVisualStyleBackColor = true;
+            this.btnRegistrarConsumibles.Click += new System.EventHandler(this.btnRegistrarConsumibles_Click);
             // 
             // btnRegistrarEstadia
             // 
@@ -221,6 +229,7 @@
             this.btnRegistrarEstadia.TabIndex = 0;
             this.btnRegistrarEstadia.Text = "Registrar Estadía";
             this.btnRegistrarEstadia.UseVisualStyleBackColor = true;
+            this.btnRegistrarEstadia.Click += new System.EventHandler(this.btnRegistrarEstadia_Click);
             // 
             // btnFacturarEstadia
             // 
@@ -231,6 +240,7 @@
             this.btnFacturarEstadia.TabIndex = 2;
             this.btnFacturarEstadia.Text = "Facturar Estadía";
             this.btnFacturarEstadia.UseVisualStyleBackColor = true;
+            this.btnFacturarEstadia.Click += new System.EventHandler(this.btnFacturarEstadia_Click);
             // 
             // groupBox3
             // 
