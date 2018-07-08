@@ -46,7 +46,7 @@
             this.btnAceptar.Location = new System.Drawing.Point(137, 271);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
-            this.btnAceptar.TabIndex = 6;
+            this.btnAceptar.TabIndex = 4;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
@@ -56,7 +56,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(59, 271);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(72, 23);
-            this.btnCancelar.TabIndex = 7;
+            this.btnCancelar.TabIndex = 3;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
@@ -67,7 +67,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 51);
-            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nombre";
             // 
@@ -76,7 +76,7 @@
             this.txtNombre.Location = new System.Drawing.Point(7, 19);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(187, 20);
-            this.txtNombre.TabIndex = 4;
+            this.txtNombre.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -84,7 +84,7 @@
             this.groupBox2.Location = new System.Drawing.Point(12, 69);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 146);
-            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Funcionalidades";
             // 
@@ -94,7 +94,7 @@
             this.checkListFuncionalidades.Location = new System.Drawing.Point(7, 19);
             this.checkListFuncionalidades.Name = "checkListFuncionalidades";
             this.checkListFuncionalidades.Size = new System.Drawing.Size(187, 109);
-            this.checkListFuncionalidades.TabIndex = 5;
+            this.checkListFuncionalidades.TabIndex = 0;
             // 
             // groupBox3
             // 
@@ -102,7 +102,7 @@
             this.groupBox3.Location = new System.Drawing.Point(12, 221);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 43);
-            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Estado";
             // 
@@ -112,7 +112,7 @@
             this.checkBoxEstado.Location = new System.Drawing.Point(6, 19);
             this.checkBoxEstado.Name = "checkBoxEstado";
             this.checkBoxEstado.Size = new System.Drawing.Size(56, 17);
-            this.checkBoxEstado.TabIndex = 6;
+            this.checkBoxEstado.TabIndex = 0;
             this.checkBoxEstado.Text = "Activo";
             this.checkBoxEstado.UseVisualStyleBackColor = true;
             // 

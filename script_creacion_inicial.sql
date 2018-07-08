@@ -1,5 +1,329 @@
-/* Creacion De Tablas */ 
+/* Borrado */
+/*Tablas*/
+IF OBJECT_ID(N'[PISOS_PICADOS].BajaHabitacion', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].BajaHabitacion
 
+IF OBJECT_ID(N'[PISOS_PICADOS].EstadiaxConsumible', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].EstadiaxConsumible
+
+IF OBJECT_ID(N'[PISOS_PICADOS].HabitacionxReserva', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].HabitacionxReserva
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Modificacion', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Modificacion
+
+IF OBJECT_ID(N'[PISOS_PICADOS].RegimenxHotel', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].RegimenxHotel
+
+IF OBJECT_ID(N'[PISOS_PICADOS].RenglonFactura', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].RenglonFactura
+
+IF OBJECT_ID(N'[PISOS_PICADOS].RolxFuncionalidad', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].RolxFuncionalidad
+
+IF OBJECT_ID(N'[PISOS_PICADOS].RolxUsuario', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].RolxUsuario
+
+IF OBJECT_ID(N'[PISOS_PICADOS].EmpleadoxHotel', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].EmpleadoxHotel
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Consumible', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Consumible
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Factura', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Factura
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Estadia', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Estadia
+
+IF OBJECT_ID(N'[PISOS_PICADOS].FormaDePago', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].FormaDePago
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Funcionalidad', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Funcionalidad
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Habitacion', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Habitacion
+
+IF OBJECT_ID(N'[PISOS_PICADOS].BajaHotel', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].BajaHotel
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Hotel', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Hotel
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Reserva', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Reserva
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Rol', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Rol
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Tipo', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Tipo
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Cliente', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Cliente
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Estado', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Estado
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Regimen', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Regimen
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Empleado', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Empleado
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Usuario', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Usuario
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Empleado', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Empleado
+
+IF OBJECT_ID(N'[PISOS_PICADOS].Pais', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].Pais
+
+IF OBJECT_ID(N'[PISOS_PICADOS].EstadoUsuario', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].EstadoUsuario
+
+/*Funciones*/
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDHotel', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerIDHotel;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDPais', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerIDPais;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].esAdmin', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].esAdmin;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].existeNumEnHotel', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].existeNumEnHotel;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].usuarioValido', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].usuarioValido;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDUsuarioEmpleado', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerIDUsuarioEmpleado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelTieneReservas', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelTieneReservas;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].habilitadoHotel', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].habilitadoHotel;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].netearConsumibles', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].netearConsumibles;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].incrementoHotel', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].incrementoHotel;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].precioRegimen', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].precioRegimen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacion', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].precioHabitacion;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelCumple', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelCumple;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].habitacionQueCumple', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].habitacionQueCumple;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerHotelDeHabitacion', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].consultarRegimen', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].consultarRegimen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].habilitadoCLiente', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].habilitadoCLiente;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].precioReserva', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].precioReserva;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoUsuario', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerEstadoUsuario;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].existeUsuario', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].existeUsuario;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].calcularPrecioRenglones', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].calcularPrecioRenglones;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].calcularPrecioPorDiasHospedados', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasHospedados;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].precioPorDia', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].precioPorDia;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].calcularPrecioPorDiasNoHospedados', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasNoHospedados;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].precioConsumible', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].precioConsumible;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].estaRepetidoPasaporte', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].filtroClientes', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].filtroClientes;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].listadoHabitaciones', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].listadoHabitaciones;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].existeRol', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].existeRol;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].estaRepetidoMail', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].estaRepetidoMail;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].contrasenaValida', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].contrasenaValida;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].cantidadIntentosFallidos', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].cantidadIntentosFallidos;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].intentosRestantes', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].intentosRestantes;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].empleadoDeshabilitado', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].empleadoDeshabilitado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].tieneUnSoloRol', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].tieneUnSoloRol;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerRol', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerRol;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDUsuario', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerIDUsuario;
+
+/* Procedures*/
+IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].altaRol;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].altaEmpleado', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].altaEmpleado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].agregarFuncionalidad', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].agregarFuncionalidad;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].bajaRol', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].bajaRol;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].modificarRol', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].modificarRol;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].quitarFuncionalidad', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].quitarFuncionalidad;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].agregarRolAUsuario', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].agregarRolAUsuario;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].quitarRolAUsuario', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].quitarRolAUsuario;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].modificarEmpleado', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].modificarEmpleado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].bajaUsuario', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].bajaUsuario;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].SPEstadoHabitacion', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].SPEstadoHabitacion;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].SPModificarHabitacion', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].SPModificarHabitacion;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].SPAltaHabitacion', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].SPAltaHabitacion;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].SPEstadoCliente', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].SPEstadoCliente;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].SPModificarCliente', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].SPModificarCliente;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].SPAltaCliente', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].SPAltaCliente;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].bajaDeHotel', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].bajaDeHotel;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].quitarEncargado', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].quitarEncargado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].agregarEncargado', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].agregarEncargado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].modificarHotel', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].modificarHotel;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].agregarRegimen', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].agregarRegimen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].quitarRegimen', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].quitarRegimen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].crearHotel', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].crearHotel;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].cancelarReserva', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].cancelarReserva;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].agregarConsumible', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].agregarConsumible;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].quitarConsumible', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].quitarConsumible;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasCancelaciones', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasConsumiblesFacturados', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasDiasDeBaja', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasDiasDeBaja;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].registrarReserva', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].registrarReserva;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasVeces', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasDias', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topClientesPorPuntos', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].topClientesPorPuntos;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].EliminarReservasNoEfectivizada', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].registrarCheckIn', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].registrarCheckIn;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].registrarCheckOut', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].registrarCheckOut;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].modificarReserva', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].modificarReserva;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].facturarReserva', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].facturarReserva;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].corregirUsuarios', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].corregirUsuarios;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].sumarIntento', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].sumarIntento;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].resetearIntentos', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].resetearIntentos;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].deshabilitarUsuario', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].deshabilitarUsuario;
+
+/* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
 	,nombreRol VARCHAR(255)
@@ -1485,14 +1809,16 @@ CREATE FUNCTION [PISOS_PICADOS].empleadoDeshabilitado (@usuario VARCHAR(255))
 RETURNS INT
 AS
 BEGIN
-	IF ( 2 =
-				(SELECT u.estado
-				FROM [PISOS_PICADOS].Empleado AS e JOIN
-				[PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+	IF (
+			2 = (
+				SELECT u.estado
+				FROM [PISOS_PICADOS].Empleado AS e
+				INNER JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
 				WHERE e.usuario = @usuario
 				)
-		)
+			)
 		RETURN 1;
+
 	RETURN 0;
 END
 GO
@@ -1549,44 +1875,46 @@ BEGIN
 END
 GO
 
-/* Dado un usuario revuelve 1 si este tiene un solo rol */ 
-CREATE FUNCTION [PISOS_PICADOS].tieneUnSoloRol(
-	@usuario VARCHAR(255)
-	)
+/* Dado un usuario revuelve 1 si este tiene un solo rol */
+CREATE FUNCTION [PISOS_PICADOS].tieneUnSoloRol (@usuario VARCHAR(255))
 RETURNS INT
-AS 
+AS
 BEGIN
-	IF ( 
-			(SELECT COUNT (DISTINCT rxu.idRol )
-			FROM [PISOS_PICADOS].Empleado AS e 
-			JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
-			JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario= rxu.idUsuario
-			WHERE e.usuario = @usuario
-			GROUP BY e.idUsuario) > 1 
-		)
-		RETURN 0
-	RETURN 1
-END 
-GO
-
-/* Dado un el usuario de un empleado devuelve su rol */ 
-CREATE FUNCTION [PISOS_PICADOS].obtenerRol(
-	@usuario VARCHAR(255)
-	)
-RETURNS INT
-AS 
-BEGIN
-	RETURN ( 
-			(SELECT rxu.idRol 
-			FROM [PISOS_PICADOS].Empleado AS e 
-			JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
-			JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario= rxu.idUsuario
-			WHERE e.usuario = @usuario
-			) 
+	IF (
+			(
+				SELECT COUNT(DISTINCT rxu.idRol)
+				FROM [PISOS_PICADOS].Empleado AS e
+				INNER JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+				INNER JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario = rxu.idUsuario
+				WHERE e.usuario = @usuario
+				GROUP BY e.idUsuario
+				) > 1
 			)
 		RETURN 0
+
 	RETURN 1
-END 
+END
+GO
+
+/* Dado un el usuario de un empleado devuelve su rol */
+CREATE FUNCTION [PISOS_PICADOS].obtenerRol (@usuario VARCHAR(255))
+RETURNS INT
+AS
+BEGIN
+	RETURN (
+			(
+				SELECT rxu.idRol
+				FROM [PISOS_PICADOS].Empleado AS e
+				INNER JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+				INNER JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario = rxu.idUsuario
+				WHERE e.usuario = @usuario
+				)
+			)
+
+	RETURN 0
+
+	RETURN 1
+END
 GO
 
 /* Dada el usuario y contraseña correspondiete, se devuelve el id de usuario al cual pertenece */
@@ -1697,7 +2025,7 @@ RETURN (
 		)
 GO
 
-/* Dado un nombre de rol verifica si este existe en la base de datos, si es asi devuelve 1 */
+/* Dado un nombre de rol verifica si este exite en la base de datos, si es asi devuelve 1 */
 CREATE FUNCTION [PISOS_PICADOS].existeRol (@nombreRol VARCHAR(255))
 RETURNS INT
 AS
@@ -1714,6 +2042,7 @@ BEGIN
 END
 GO
 
+/* Dado un nombre de pais informa su id Correspondiente*/
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDPais (@nombre VARCHAR(255))
 RETURNS INT
 AS
@@ -1726,6 +2055,8 @@ BEGIN
 END
 GO
 
+/*Funciones Hotel */
+/* Dada una ciudad calle y nroCalle devuelve el id de hotel correspondiente */
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDHotel (
 	@ciudad VARCHAR(255)
 	,@calle VARCHAR(255)
@@ -1744,6 +2075,8 @@ BEGIN
 END
 GO
 
+/*Verifica dado un numero de habitacion y un id de hotel, si ese numero de habitacion pertenece a ese hotel
+Devuelve 1 si pertenece y 0 si no lo hace*/
 CREATE FUNCTION [PISOS_PICADOS].existeNumEnHotel (
 	@idHotel INT
 	,@numero INT
@@ -1764,6 +2097,7 @@ BEGIN
 END
 GO
 
+/*Devuelvo 1 si un hotel tiene una reserva para el el periodo de inicio y fin dados por parametro*/
 CREATE FUNCTION [PISOS_PICADOS].hotelTieneReservas (
 	@idHotel INT
 	,@fechaInicio DATE
@@ -2066,6 +2400,35 @@ BEGIN
 			)
 END
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].listadoHabitaciones ()
+RETURNS TABLE
+AS
+RETURN (
+		SELECT hb.idHabitacion AS idHabitacion
+			,(
+				CASE 
+					WHEN ht.nombre IS NULL
+						THEN LTRIM(RTRIM(ht.ciudad)) + '-' + LTRIM(RTRIM(ht.calle)) + '-' + LTRIM(RTRIM(CONVERT(VARCHAR(255), ht.nroCalle)))
+					WHEN ht.nombre IS NOT NULL
+						THEN ht.nombre
+					END
+				) AS Hotel
+			,hb.piso AS Piso
+			,hb.numero AS Numero
+			,(
+				SELECT T.tipoCamas
+				FROM [PISOS_PICADOS].Tipo AS t
+				WHERE T.idTipo = hb.tipo
+				) AS Tipo
+			,hb.frente AS Frente
+			,hb.descripcion AS Descripcion
+			,hb.habilitada AS Habilitada
+		FROM [PISOS_PICADOS].Habitacion AS hb
+		INNER JOIN [PISOS_PICADOS].Hotel AS ht ON hb.idHotel = ht.idHotel
+		)
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)

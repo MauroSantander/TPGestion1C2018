@@ -42,7 +42,7 @@
             this.buttonIniciarSesion.Location = new System.Drawing.Point(12, 51);
             this.buttonIniciarSesion.Name = "buttonIniciarSesion";
             this.buttonIniciarSesion.Size = new System.Drawing.Size(83, 24);
-            this.buttonIniciarSesion.TabIndex = 0;
+            this.buttonIniciarSesion.TabIndex = 2;
             this.buttonIniciarSesion.Text = "Iniciar Sesión";
             this.buttonIniciarSesion.UseVisualStyleBackColor = true;
             this.buttonIniciarSesion.Click += new System.EventHandler(this.buttonIniciarSesion_Click);
@@ -52,7 +52,7 @@
             this.buttonSalir.Location = new System.Drawing.Point(201, 51);
             this.buttonSalir.Name = "buttonSalir";
             this.buttonSalir.Size = new System.Drawing.Size(89, 24);
-            this.buttonSalir.TabIndex = 1;
+            this.buttonSalir.TabIndex = 4;
             this.buttonSalir.Text = "Salir";
             this.buttonSalir.UseVisualStyleBackColor = true;
             this.buttonSalir.Click += new System.EventHandler(this.buttonSalir_Click);
@@ -63,7 +63,7 @@
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 13);
-            this.label1.TabIndex = 2;
+            this.label1.TabIndex = 5;
             this.label1.Text = "Usuario:";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
@@ -73,7 +73,7 @@
             this.label2.Location = new System.Drawing.Point(160, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 13);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 6;
             this.label2.Text = "Contraseña:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
@@ -82,7 +82,7 @@
             this.textBoxUsuario.Location = new System.Drawing.Point(12, 25);
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(128, 20);
-            this.textBoxUsuario.TabIndex = 4;
+            this.textBoxUsuario.TabIndex = 0;
             this.textBoxUsuario.Text = "admin";
             this.textBoxUsuario.TextChanged += new System.EventHandler(this.textBoxUsuario_TextChanged_1);
             // 
@@ -92,7 +92,7 @@
             this.textBoxContrasena.Name = "textBoxContrasena";
             this.textBoxContrasena.PasswordChar = '*';
             this.textBoxContrasena.Size = new System.Drawing.Size(128, 20);
-            this.textBoxContrasena.TabIndex = 5;
+            this.textBoxContrasena.TabIndex = 1;
             this.textBoxContrasena.Text = "w23e";
             this.textBoxContrasena.TextChanged += new System.EventHandler(this.textBox2_TextChanged_1);
             // 
@@ -101,7 +101,7 @@
             this.ingresarInvitado.Location = new System.Drawing.Point(106, 51);
             this.ingresarInvitado.Name = "ingresarInvitado";
             this.ingresarInvitado.Size = new System.Drawing.Size(89, 24);
-            this.ingresarInvitado.TabIndex = 6;
+            this.ingresarInvitado.TabIndex = 3;
             this.ingresarInvitado.Text = "Invitado";
             this.ingresarInvitado.UseVisualStyleBackColor = true;
             this.ingresarInvitado.Click += new System.EventHandler(this.ingresarInvitado_Click);
@@ -118,7 +118,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonSalir);
             this.Controls.Add(this.buttonIniciarSesion);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmLogIn";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FRBAHotel - LogIn";
             this.Load += new System.EventHandler(this.frmLogIn_Load);
             this.ResumeLayout(false);
