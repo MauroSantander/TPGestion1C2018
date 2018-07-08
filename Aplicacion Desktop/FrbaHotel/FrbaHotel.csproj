@@ -50,6 +50,12 @@
     <Compile Include="AbmCliente\frmCliente.Designer.cs">
       <DependentUpon>frmCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmCliente\frmModificacionCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\frmModificacionCliente.Designer.cs">
+      <DependentUpon>frmModificacionCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmHabitacion\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +164,9 @@
     </Compile>
     <EmbeddedResource Include="AbmCliente\frmCliente.resx">
       <DependentUpon>frmCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCliente\frmModificacionCliente.resx">
+      <DependentUpon>frmModificacionCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmHotel\frmBajaHotel.resx">
       <DependentUpon>frmBajaHotel.cs</DependentUpon>
