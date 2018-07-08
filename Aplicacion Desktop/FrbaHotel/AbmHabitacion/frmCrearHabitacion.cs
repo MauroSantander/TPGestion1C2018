@@ -13,9 +13,11 @@ namespace FrbaHotel.AbmHabitacion
 {
     public partial class frmCrearHabitacion : Form
     {
-        public frmCrearHabitacion()
+        frmHabitacion instanciaformHabitacion;
+        public frmCrearHabitacion(frmHabitacion instanciafrmHab)
         {
             InitializeComponent();
+            instanciaformHabitacion = instanciafrmHab;
         }
 
         private void frmCrearHabitacion_Load(object sender, EventArgs e)
@@ -159,6 +161,7 @@ namespace FrbaHotel.AbmHabitacion
             {
                 crearHabitacion.ExecuteNonQuery();
                 MessageBox.Show("Alta realizada correctamente.");
+                instanciaformHabitacion.recargarHabitaciones();
                 this.Close();
             }
             else

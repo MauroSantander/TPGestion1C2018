@@ -56,11 +56,23 @@
     <Compile Include="AbmCliente\frmModificacionCliente.Designer.cs">
       <DependentUpon>frmModificacionCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmHabitacion\Form1.cs">
+    <Compile Include="AbmHabitacion\frmCrearHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmHabitacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmHabitacion\frmCrearHabitacion.Designer.cs">
+      <DependentUpon>frmCrearHabitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHabitacion\frmHabitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHabitacion\frmHabitacion.Designer.cs">
+      <DependentUpon>frmHabitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHabitacion\frmModificarHabitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHabitacion\frmModificarHabitacion.Designer.cs">
+      <DependentUpon>frmModificarHabitacion.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmHotel\frmBajaHotel.cs">
       <SubType>Form</SubType>
@@ -167,6 +179,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\frmModificacionCliente.resx">
       <DependentUpon>frmModificacionCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHabitacion\frmCrearHabitacion.resx">
+      <DependentUpon>frmCrearHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHabitacion\frmHabitacion.resx">
+      <DependentUpon>frmHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHabitacion\frmModificarHabitacion.resx">
+      <DependentUpon>frmModificarHabitacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmHotel\frmBajaHotel.resx">
       <DependentUpon>frmBajaHotel.cs</DependentUpon>

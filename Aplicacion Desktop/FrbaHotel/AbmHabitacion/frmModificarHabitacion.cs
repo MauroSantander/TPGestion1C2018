@@ -15,11 +15,24 @@ namespace FrbaHotel.AbmHabitacion
     {
         int habitacionAModificar;
         int hotelDeHabitacion;
-        public frmModificarHabitacion(int habitacion, int idHotel)
+        int numeroHab;
+        int pisoHab;
+        string ubicacionHab;
+        Boolean habilitadaHab;
+        string descripcionHab;
+        frmHabitacion instanciaformHabitaciones;
+
+        public frmModificarHabitacion(int habitacion, int idHotel, int numero, int piso, string ubicacion, Boolean habilitada, string descripcion, frmHabitacion instanciafrmHab)
         {
             InitializeComponent();
             habitacionAModificar = habitacion;
             hotelDeHabitacion = idHotel;
+            numeroHab = numero;
+            pisoHab = piso;
+            ubicacionHab = ubicacion;
+            habilitadaHab = habilitada;
+            descripcionHab = descripcion;
+            instanciaformHabitaciones = instanciafrmHab;
         }
 
         private void frmModificarHabitacion_Load(object sender, EventArgs e)
@@ -27,6 +40,25 @@ namespace FrbaHotel.AbmHabitacion
             this.CenterToScreen();
             comboBoxUbicacion.Items.Add("Frente");
             comboBoxUbicacion.Items.Add("Interno");
+            textBoxNumero.Text = numeroHab.ToString();
+            textBoxPiso.Text = pisoHab.ToString();
+            if (ubicacionHab == "S")
+            {
+                comboBoxUbicacion.SelectedIndex = 0;
+            }
+            if (ubicacionHab == "N")
+            {
+                comboBoxUbicacion.SelectedIndex = 1;
+            }
+            if (habilitadaHab)
+            {
+                checkBoxEstado.CheckState = CheckState.Checked;
+            }
+            else
+            {
+                checkBoxEstado.CheckState = CheckState.Unchecked;
+            }
+            textBoxDescripcion.Text = descripcionHab;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -113,13 +145,13 @@ namespace FrbaHotel.AbmHabitacion
             {
                 modificarHab.ExecuteNonQuery();
                 MessageBox.Show("Alta realizada correctamente.");
+                instanciaformHabitaciones.recargarHabitaciones();
                 this.Close();
             }
             else
             {
                 MessageBox.Show("Ya existe ese número de habitación en el hotel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
     }
 }
