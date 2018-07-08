@@ -33,7 +33,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewHabitaciones = new System.Windows.Forms.DataGridView();
             this.btnCrear = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnSalir2 = new System.Windows.Forms.Button();
@@ -56,7 +56,7 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHabitaciones)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -120,7 +120,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.dataGridView1);
+            this.groupBox2.Controls.Add(this.dataGridViewHabitaciones);
             this.groupBox2.Location = new System.Drawing.Point(6, 112);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(433, 214);
@@ -128,13 +128,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Habitaciones";
             // 
-            // dataGridView1
+            // dataGridViewHabitaciones
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(421, 183);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridViewHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewHabitaciones.Location = new System.Drawing.Point(6, 19);
+            this.dataGridViewHabitaciones.Name = "dataGridViewHabitaciones";
+            this.dataGridViewHabitaciones.Size = new System.Drawing.Size(421, 183);
+            this.dataGridViewHabitaciones.TabIndex = 0;
             // 
             // btnCrear
             // 
@@ -302,6 +302,7 @@
             this.btnModificar.TabIndex = 3;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // frmHabitacion
             // 
@@ -316,7 +317,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHabitaciones)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -340,7 +341,7 @@
         private System.Windows.Forms.Button btnSalir2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewHabitaciones;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.GroupBox groupBox8;

@@ -25,6 +25,7 @@ namespace FrbaHotel.AbmHabitacion
             comboBoxUbicacion.Items.Add("Interno");
             cargarTipos();
             cargarHoteles();
+            dataGridViewHabitaciones.DataSource = cargarHabitaciones();
         }
 
         private void btnSalir2_Click(object sender, EventArgs e)
@@ -103,11 +104,11 @@ namespace FrbaHotel.AbmHabitacion
             crearHabitacion.Parameters["@numero"].Value = txtNumero.Text;
             if (comboBoxUbicacion.SelectedItem == "Frente")
             {
-                crearHabitacion.Parameters["@frente"].Value = 1;
+                crearHabitacion.Parameters["@frente"].Value = 'S';
             }
             else
             {
-                crearHabitacion.Parameters["@frente"].Value = 0;
+                crearHabitacion.Parameters["@frente"].Value = 'N';
             
             }
             crearHabitacion.Parameters["@descripcion"].Value = txtDescripcion.Text;
@@ -191,6 +192,24 @@ namespace FrbaHotel.AbmHabitacion
             reader.Close();
 
             return;
+        }
+
+        private DataTable cargarHabitaciones() 
+        {
+            DataTable dtHabitaciones = new DataTable();
+            string query = "SELECT [PISOS_PICADOS].listadoHabitaciones";
+            SqlCommand buscarHabitaciones = new SqlCommand(query, Globals.conexionGlobal);
+            SqlDataReader reader = buscarHabitaciones.ExecuteReader();
+            dtHabitaciones.Load(reader);
+
+            return dtHabitaciones;
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            
+            frmModificarHabitacion modificarHab = new frmModificarHabitacion(,);
+            modificarHab.ShowDialog();
         }
 
     }
