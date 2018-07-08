@@ -119,7 +119,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.BotonBaja = new System.Windows.Forms.Button();
             this.dataGridViewClientes = new System.Windows.Forms.DataGridView();
-            this.BotonVerClientes = new System.Windows.Forms.Button();
+            this.btnCancelarBaja = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabCliente.SuspendLayout();
             this.Alta.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -444,6 +445,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.button4);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.label3);
@@ -528,7 +530,7 @@
             // button3
             // 
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Location = new System.Drawing.Point(461, 552);
+            this.button3.Location = new System.Drawing.Point(345, 553);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(102, 33);
             this.button3.TabIndex = 55;
@@ -1284,6 +1286,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnCancelarBaja);
             this.tabPage3.Controls.Add(this.label5);
             this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Controls.Add(this.label7);
@@ -1299,7 +1302,6 @@
             this.tabPage3.Controls.Add(this.label16);
             this.tabPage3.Controls.Add(this.BotonBaja);
             this.tabPage3.Controls.Add(this.dataGridViewClientes);
-            this.tabPage3.Controls.Add(this.BotonVerClientes);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(578, 595);
@@ -1340,6 +1342,7 @@
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(91, 20);
             this.textBoxMail.TabIndex = 70;
+            this.textBoxMail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
             // 
             // textBoxApellido
             // 
@@ -1347,6 +1350,7 @@
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(100, 20);
             this.textBoxApellido.TabIndex = 69;
+            this.textBoxApellido.TextChanged += new System.EventHandler(this.textBoxApellido_TextChanged);
             // 
             // textBoxNombre
             // 
@@ -1372,14 +1376,20 @@
             this.textBoxNroId.Name = "textBoxNroId";
             this.textBoxNroId.Size = new System.Drawing.Size(80, 20);
             this.textBoxNroId.TabIndex = 62;
+            this.textBoxNroId.TextChanged += new System.EventHandler(this.textBoxNroId_TextChanged);
             // 
             // cbTipoId
             // 
             this.cbTipoId.FormattingEnabled = true;
+            this.cbTipoId.Items.AddRange(new object[] {
+            "L.E./DNI",
+            "CARNET EXT.",
+            "PASAPORTE"});
             this.cbTipoId.Location = new System.Drawing.Point(312, 65);
             this.cbTipoId.Name = "cbTipoId";
             this.cbTipoId.Size = new System.Drawing.Size(80, 21);
             this.cbTipoId.TabIndex = 63;
+            this.cbTipoId.SelectedIndexChanged += new System.EventHandler(this.cbTipoId_SelectedIndexChanged_1);
             // 
             // label8
             // 
@@ -1433,19 +1443,29 @@
             this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClientes.Location = new System.Drawing.Point(15, 224);
             this.dataGridViewClientes.Name = "dataGridViewClientes";
-            this.dataGridViewClientes.Size = new System.Drawing.Size(552, 150);
+            this.dataGridViewClientes.Size = new System.Drawing.Size(552, 196);
             this.dataGridViewClientes.TabIndex = 4;
             this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);
             // 
-            // BotonVerClientes
+            // btnCancelarBaja
             // 
-            this.BotonVerClientes.Location = new System.Drawing.Point(15, 515);
-            this.BotonVerClientes.Name = "BotonVerClientes";
-            this.BotonVerClientes.Size = new System.Drawing.Size(75, 23);
-            this.BotonVerClientes.TabIndex = 3;
-            this.BotonVerClientes.Text = "Ver Clientes";
-            this.BotonVerClientes.UseVisualStyleBackColor = true;
-            this.BotonVerClientes.Click += new System.EventHandler(this.BotonVerClientes_Click);
+            this.btnCancelarBaja.Location = new System.Drawing.Point(440, 537);
+            this.btnCancelarBaja.Name = "btnCancelarBaja";
+            this.btnCancelarBaja.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelarBaja.TabIndex = 74;
+            this.btnCancelarBaja.Text = "Cancelar";
+            this.btnCancelarBaja.UseVisualStyleBackColor = true;
+            this.btnCancelarBaja.Click += new System.EventHandler(this.btnCancelarBaja_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(453, 553);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 33);
+            this.button1.TabIndex = 75;
+            this.button1.Text = "Cancelar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // frmCliente
             // 
@@ -1502,7 +1522,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button BotonBaja;
         private System.Windows.Forms.DataGridView dataGridViewClientes;
-        private System.Windows.Forms.Button BotonVerClientes;
         private System.Windows.Forms.Label labelPais;
         private System.Windows.Forms.TextBox Localidad;
         private System.Windows.Forms.Label labelLocalidad;
@@ -1568,5 +1587,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnCancelarBaja;
+        private System.Windows.Forms.Button button1;
     }
 }
