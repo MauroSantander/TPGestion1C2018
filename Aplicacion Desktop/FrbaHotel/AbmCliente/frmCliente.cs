@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Mail;
 
-
 namespace FrbaHotel.AbmCliente
 {
     public partial class frmCliente : Form
@@ -119,18 +118,10 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void BotonVerClientes_Click(object sender, EventArgs e)
-        {
-
-            Utils c = new Utils();
-
-            c.mostrarClientes(dataGridViewClientes);
-            
-        }
 
         private void dataGridViewClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            
         }
 
         private void Alta_Click(object sender, EventArgs e)
@@ -474,75 +465,128 @@ namespace FrbaHotel.AbmCliente
 
         public void mostrarClientesFiltrado(DataGridView dgv)
         {
-            String cadenaFiltro = "SELECT * FROM [PISOS_PICADOS].filtroClientes";
+            /*
+            String consultaCliente = "SELECT * FROM [PISOS_PICADOS].Usuario ";
+
+            //if que agrega el where 
+            if (
+                !String.IsNullOrEmpty(textBoxNombre.Text) || 
+                !String.IsNullOrEmpty(textBoxApellido.Text) ||
+                !String.IsNullOrEmpty(cbTipoId.SelectedText) ||
+                !String.IsNullOrEmpty(textBoxNroId.Text) || 
+                !String.IsNullOrEmpty(textBoxMail.Text)
+                ) 
             
-            SqlCommand cmdFiltro = new SqlCommand(cadenaFiltro, Globals.conexionGlobal);
+            {
+                string.Concat(consultaCliente, "WHERE ");
 
-            cmdFiltro.Parameters.Add("@nombre",SqlDbType.VarChar);
-            cmdFiltro.Parameters.Add("@apellido",SqlDbType.VarChar);
-            cmdFiltro.Parameters.Add("@tipoId",SqlDbType.VarChar);
-            cmdFiltro.Parameters.Add("@nroId",SqlDbType.Int);
-            cmdFiltro.Parameters.Add("@mail",SqlDbType.VarChar);
-        
-            //SqlParameter[] listaDeParametros = new SqlParameter[5];
-            
-            if (textBoxNombre.Text == "") { cmdFiltro.Parameters["@nombre"].Value = DBNull.Value;}
-            else {cmdFiltro.Parameters["@nombre"].Value = textBoxNombre.Text;}
+                ///ifs para agregar lo que corresponde
+                if (!String.IsNullOrEmpty(textBoxNombre.Text))
+                {
+                    String.Concat(consultaCliente, "nombre LIKE '%{0}%' ", textBoxNombre.Text);
+                }
 
-            if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@apellido"].Value = DBNull.Value; }
-            else { cmdFiltro.Parameters["@apellido"].Value = textBoxApellido.Text; }
+                if (!String.IsNullOrEmpty(textBoxApellido.Text))
+                {
+                    String.Concat(consultaCliente, "apellido LIKE '%{0}%' AND ", textBoxApellido.Text);
+                }
 
-            if (cbTipoId.Text == "") { cmdFiltro.Parameters["@tipoId"].Value = DBNull.Value; }
-            else { cmdFiltro.Parameters["@tipoId"].Value = cbTipoId.Text; }
+                if (!String.IsNullOrEmpty(cbTipoId.SelectedText))
+                {
+                    String.Concat(consultaCliente, "tipoIdentificacion LIKE '%{0}%' AND ", cbTipoId.SelectedText);
+                    //if (!String.IsNullOrEmpty(textBoxNroId.Text)) { string.Concat(consultaCliente, "AND "); };
+                }
 
-            if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@nroId"].Value = DBNull.Value; }
-            else { cmdFiltro.Parameters["@nroId"].Value = textBoxNroId.Text; }
+                if (!String.IsNullOrEmpty(textBoxNroId.Text))
+                {
+                    String.Concat(consultaCliente, "numeroIdentificacion LIKE '%{0}%' AND ", int.Parse(textBoxNroId.Text));
+                    //if (!String.IsNullOrEmpty(textBoxNroId.Text)) { string.Concat(consultaCliente, "AND "); };
+                }
 
-            if (textBoxApellido.Text == "") { cmdFiltro.Parameters["@mail"].Value = DBNull.Value; }
-            else { cmdFiltro.Parameters["@mail"].Value = textBoxMail.Text; }
-            
-           /*
-            String pNombre, pApellido, pTipoId, pMail;
-            int pNroId;
+                if (!String.IsNullOrEmpty(textBoxMail.Text))
+                {
+                    String.Concat(consultaCliente, "mail LIKE '%{0}%' ", textBoxMail.Text);
+                }
 
+            }
 
-            if (textBoxNombre.Text == "") { pNombre = DBNull.Value; }
-            else { pNombre = textBoxNombre.Text; }
+            Console.WriteLine(consultaCliente);
 
-            if (textBoxApellido.Text == "") { pApellido = DBNull.Value; }
-            else { pApellido = textBoxApellido.Text; }
+            //SqlCommand clienteFiltro = new SqlCommand(consultaCliente, Globals.conexionGlobal);
 
-            if (cbTipoId.Text == "") { pTipoId = DBNull.Value; }
-            else { pTipoId = cbTipoId.Text; }
-           
-            int ident = int.Parse(textBoxNroId.Text);
-
-            if (ident <0) { pNroId = DBNull.Value; }
-            else { pNroId = ident; }
-
-            if (textBoxApellido.Text == "") { pMail = DBNull.Value; }
-            else { pMail = textBoxMail.Text; }
+           SqlDataAdapter da = new SqlDataAdapter(consultaCliente, Globals.conexionGlobal);
 
 
-            String cadenaFiltroParametrizada = cadenaFiltro + pNombre + pApellido + pTipoId + pNroId.ToString() + pMail;
+           DataTable dataTable = new DataTable();
+           da.Fill(dataTable);
+           dgv.DataSource = dataTable;
             */
-           string queryFinal = cmdFiltro.ToString();
+            //////////////////////////////////////////////////////////////////////////////////
 
-            try
-            {
-                //SqlDataAdapter adapter = new SqlDataAdapter(cmdFiltro, Globals.conexionGlobal);
-                //DataTable dataTable = new DataTable();
-                //adapter.Fill(dataTable);
-                //dgv.DataSource = dataTable;
-                dgv.DataSource = cmdFiltro;
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("No se pudo llenar el DataGridView");
-            }
+            DataSet ds = new DataSet();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM [PISOS_PICADOS].Usuario ",Globals.conexionGlobal);
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.SelectCommand = cmd;
+            da.Fill(ds,"Usuario");
+
+            
+
+
+            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("nombre LIKE '%{0}%' ", textBoxNombre.Text);
+
+            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("apellido LIKE '%{0}%' ", textBoxApellido.Text);
+
+            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("tipoIdentificacion LIKE '%{0}%' ", cbTipoId.SelectedText);
+
+            //ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("numeroIdentificacion LIKE %{0}% ", (int.Parse(textBoxNroId.Text)));
+
+            //ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("numeroIdentificacion LIKE %{0}% ", textBoxNroId.Text);
+
+            ds.Tables["Usuario"].DefaultView.RowFilter = string.Format("mail LIKE '%{0}%' ", textBoxMail.Text);
+
+            dgv.DataSource = ds.Tables["Usuario"];
+
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            
+            /*
+
+            Utils c = new Utils();
+            DataTable dataTable = new DataTable();
+            
+                c.llenarDataGridView(dataGridViewClientes, "Usuario");
+                DataView DV = new DataView(dataTable);
+
+                if (!String.IsNullOrEmpty(textBoxNombre.Text))
+                {
+                    DV.RowFilter = string.Format("nombre LIKE '%{0}%' ", textBoxNombre.Text);
+                    dataGridViewClientes.DataSource = DV;
+                }
+                if (!String.IsNullOrEmpty(textBoxApellido.Text))
+                {
+                    DV.RowFilter = string.Format("apellido LIKE '%{0}%' ", textBoxApellido.Text);
+                    dataGridViewClientes.DataSource = DV;
+                }
+                if (!String.IsNullOrEmpty(cbTipoId.SelectedText))
+                {
+                    DV.RowFilter = string.Format("tipoIdentificacion LIKE '%{0}%' ", cbTipoId.SelectedText);
+                    dataGridViewClientes.DataSource = DV;
+                }
+                if (!String.IsNullOrEmpty(textBoxNroId.Text))
+                {
+
+                    DV.RowFilter = string.Format("numeroIdentificacion LIKE %{0}% ", (int.Parse(textBoxNroId.Text)));
+                    dataGridViewClientes.DataSource = DV;
+                }
+
+                if (!String.IsNullOrEmpty(textBoxMail.Text))
+                {
+
+                    DV.RowFilter = string.Format("mail LIKE '%{0}%' ", textBoxMail.Text);
+                    dataGridViewClientes.DataSource = DV;
+                }
+*/            
         }
-
-
 
 
 
@@ -567,6 +611,36 @@ namespace FrbaHotel.AbmCliente
         }
 
         private void textBoxNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCancelarBaja_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void cbTipoId_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxNroId_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxMail_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxApellido_TextChanged(object sender, EventArgs e)
         {
 
         }
