@@ -1928,7 +1928,7 @@ BEGIN
 			SELECT idUsuario
 			FROM [PISOS_PICADOS].Empleado
 			WHERE usuario = @usuario
-				AND contrasena = @contrasena
+				AND contrasena = HASHBYTES('SHA2_256', @contrasena)
 			)
 END
 GO
