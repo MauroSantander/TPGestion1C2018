@@ -86,6 +86,12 @@
     <Compile Include="AbmRegimen\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmRol\frmModificacionRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\frmModificacionRol.Designer.cs">
+      <DependentUpon>frmModificacionRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRol\frmABMRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\frmABMRol.resx">
       <DependentUpon>frmABMRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frmModificacionRol.resx">
+      <DependentUpon>frmModificacionRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmUsuario\Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>

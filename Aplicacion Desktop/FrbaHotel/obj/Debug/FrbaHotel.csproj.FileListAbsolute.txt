@@ -74,3 +74,4 @@ C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\ob
 C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.csproj.GenerateResource.Cache
 C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\bin\Debug\FrbaHotel.exe
 C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\bin\Debug\FrbaHotel.pdb
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRol.frmModificacionRol.resources

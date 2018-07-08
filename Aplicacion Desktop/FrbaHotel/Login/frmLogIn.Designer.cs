@@ -83,6 +83,7 @@
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(128, 20);
             this.textBoxUsuario.TabIndex = 4;
+            this.textBoxUsuario.Text = "admin";
             this.textBoxUsuario.TextChanged += new System.EventHandler(this.textBoxUsuario_TextChanged_1);
             // 
             // textBoxContrasena
@@ -92,6 +93,7 @@
             this.textBoxContrasena.PasswordChar = '*';
             this.textBoxContrasena.Size = new System.Drawing.Size(128, 20);
             this.textBoxContrasena.TabIndex = 5;
+            this.textBoxContrasena.Text = "w23e";
             this.textBoxContrasena.TextChanged += new System.EventHandler(this.textBox2_TextChanged_1);
             // 
             // ingresarInvitado
