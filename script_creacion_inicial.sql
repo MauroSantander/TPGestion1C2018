@@ -161,7 +161,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].precioConsumible', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].precioConsumible;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].estaRepetido', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].estaRepetidoPasaporte;
+	DROP FUNCTION [PISOS_PICADOS].estaRepetido;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].filtroClientes', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].filtroClientes;
@@ -1711,7 +1711,6 @@ GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
 /* FUNCIONES ---------------------------------------------------------------------*/
-/* FUNCIONES USUARIO */
 /* Dado un nombre apellido y pasaporte informa el id de usuario correspondiente    */
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDUsuario (
 	@nombre VARCHAR(255)
@@ -2249,6 +2248,7 @@ BEGIN
 				FROM [PISOS_PICADOS].Habitacion
 				WHERE tipo = @tipo
 					AND idHotel = @idHotel
+					AND habilitada = 1
 					AND idHabitacion NOT IN (
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
@@ -2277,6 +2277,7 @@ BEGIN
 			FROM [PISOS_PICADOS].Habitacion
 			WHERE tipo = @tipo
 				AND idHotel = @idHotel
+				AND habilitada = 1
 				AND idHabitacion NOT IN (
 					SELECT p.idHabitacion
 					FROM [PISOS_PICADOS].Reserva AS q
