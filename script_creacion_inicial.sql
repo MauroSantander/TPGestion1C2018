@@ -2406,6 +2406,7 @@ RETURNS TABLE
 AS
 RETURN (
 		SELECT hb.idHabitacion AS idHabitacion
+			,ht.idHotel AS idHotel
 			,(
 				CASE 
 					WHEN ht.nombre IS NULL
