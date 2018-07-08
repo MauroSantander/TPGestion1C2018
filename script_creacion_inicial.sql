@@ -323,6 +323,12 @@ IF OBJECT_ID(N'[PISOS_PICADOS].resetearIntentos', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].deshabilitarUsuario', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].deshabilitarUsuario;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].agregarHotelAUsuario', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].agregarHotelAUsuario;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].darNombresAHoteles', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].darNombresAHotles;
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -2409,14 +2415,7 @@ AS
 RETURN (
 		SELECT hb.idHabitacion AS idHabitacion
 			,ht.idHotel AS idHotel
-			,(
-				CASE 
-					WHEN ht.nombre IS NULL
-						THEN LTRIM(RTRIM(ht.ciudad)) + '-' + LTRIM(RTRIM(ht.calle)) + '-' + LTRIM(RTRIM(CONVERT(VARCHAR(255), ht.nroCalle)))
-					WHEN ht.nombre IS NOT NULL
-						THEN ht.nombre
-					END
-				) AS Hotel
+			,ht.nombre AS Hotel
 			,hb.piso AS Piso
 			,hb.numero AS Numero
 			,(
@@ -2691,6 +2690,18 @@ BEGIN
 			FROM [PISOS_PICADOS].Rol
 			WHERE nombreRol = @nombreRol
 			)
+		)
+END;
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].agregarHotelAAUsuario @idUsuario INT
+	,@nombreHotel VARCHAR(255)
+AS
+BEGIN
+	INSERT INTO [PISOS_PICADOS].EmpleadoxHotel
+	VALUES (
+		@idUsuario
+		,@nombreHotel
 		)
 END;
 GO
@@ -3816,4 +3827,16 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [PISOS_PICADOS].darNombreAHoteles
+AS
+BEGIN
+	UPDATE [PISOS_PICADOS].Hotel
+	SET nombre = LTRIM(RTRIM(ciudad)) + '-' + LTRIM(RTRIM(calle)) + '-' + 
+	LTRIM(RTRIM(CONVERT(VARCHAR(255), nroCalle)))
+	WHERE nombre IS NULL
+END 
+GO
+
+
 EXEC [PISOS_PICADOS].CorregirUsuarios
+EXEC [PISOS_PICADOS].darNombreAHoteles
