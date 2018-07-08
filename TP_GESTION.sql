@@ -1567,7 +1567,7 @@ BEGIN
 END 
 GO
 
-/* Dado un usuario revuelve 1 si este tiene un solo rol */ 
+/* Dado un el usuario de un empleado devuelve su rol */ 
 CREATE FUNCTION [PISOS_PICADOS].obtenerRol(
 	@usuario VARCHAR(255)
 	)
@@ -2129,7 +2129,7 @@ BEGIN
 	IF @estado IS NOT NULL
 		UPDATE [PISOS_PICADOS].Rol
 		SET estado = @estado
-		WHERE nombreRol = @nombreRolViejo
+		WHERE nombreRol = @nombreRol
 END;
 GO
 
