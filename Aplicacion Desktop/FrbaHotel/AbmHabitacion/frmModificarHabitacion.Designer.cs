@@ -171,6 +171,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmModificarHabitacion";
             this.Text = "Modificar habitación";
             this.Load += new System.EventHandler(this.frmModificarHabitacion_Load);
