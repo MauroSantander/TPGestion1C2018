@@ -1,3 +1,5 @@
+/* Creacion De Tablas */ 
+
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
 	,nombreRol VARCHAR(255)
@@ -1695,8 +1697,7 @@ RETURN (
 		)
 GO
 
-/* FUNCIONES ROLES */
-/* Dado un nombre de rol verifica si este exite en la base de datos, si es asi devuelve 1 */
+/* Dado un nombre de rol verifica si este existe en la base de datos, si es asi devuelve 1 */
 CREATE FUNCTION [PISOS_PICADOS].existeRol (@nombreRol VARCHAR(255))
 RETURNS INT
 AS
@@ -1763,7 +1764,7 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].HotelTieneReservas (
+CREATE FUNCTION [PISOS_PICADOS].hotelTieneReservas (
 	@idHotel INT
 	,@fechaInicio DATE
 	,@fechaFin DATE
@@ -1788,7 +1789,8 @@ BEGIN
 						AND (
 							@fechaInicio BETWEEN fechaInicio
 								AND fechaFin
-							OR @fechaFin <> fechaInicio
+							OR @fechaFin BETWEEN fechaInicio
+								AND fechaFin
 							)
 					)
 			)
