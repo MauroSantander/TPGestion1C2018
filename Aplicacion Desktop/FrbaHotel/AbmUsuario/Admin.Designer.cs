@@ -1,5 +1,6 @@
 ﻿namespace FrbaHotel.AbmUsuario
 {
+
     partial class Admin
     {
         /// <summary>
@@ -30,11 +31,13 @@
         {
             this.tabAltaUser = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pass = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkedListHoteles = new System.Windows.Forms.CheckedListBox();
             this.comboBoxPais = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.localidad = new System.Windows.Forms.TextBox();
@@ -43,7 +46,6 @@
             this.label39 = new System.Windows.Forms.Label();
             this.calle = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
-            this.comboBoxHotel = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.mail = new System.Windows.Forms.TextBox();
             this.tel = new System.Windows.Forms.TextBox();
@@ -61,9 +63,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBoxRol = new System.Windows.Forms.ComboBox();
             this.username = new System.Windows.Forms.TextBox();
             this.tabBajaUsr = new System.Windows.Forms.TabPage();
+            this.buttonRecargarTabla = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -78,6 +80,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonLimpiarUPD = new System.Windows.Forms.Button();
             this.tipoYNum = new System.Windows.Forms.Button();
             this.BuscarUyPass = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -87,13 +90,13 @@
             this.label32 = new System.Windows.Forms.Label();
             this.usernameUPD = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxHotelesUPD = new System.Windows.Forms.CheckedListBox();
             this.comboBoxPaisUPD = new System.Windows.Forms.ComboBox();
             this.label37 = new System.Windows.Forms.Label();
             this.localidadUPD = new System.Windows.Forms.TextBox();
             this.label36 = new System.Windows.Forms.Label();
             this.nroUPD = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.comboBoxHotelUPD = new System.Windows.Forms.ComboBox();
             this.dateTimePickerUPD = new System.Windows.Forms.DateTimePicker();
             this.calleUPD = new System.Windows.Forms.TextBox();
             this.mailUPD = new System.Windows.Forms.TextBox();
@@ -102,7 +105,6 @@
             this.comboBoxTipoUPD = new System.Windows.Forms.ComboBox();
             this.nombreUPD = new System.Windows.Forms.TextBox();
             this.apellidoUPD = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -112,7 +114,6 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.comboBoxRolUPD = new System.Windows.Forms.ComboBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label31 = new System.Windows.Forms.Label();
@@ -123,6 +124,22 @@
             this.label27 = new System.Windows.Forms.Label();
             this.textBoxUsrAct = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.checkedListBoxRolesUPD = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxRoles = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxHotelesUPDNo = new System.Windows.Forms.CheckedListBox();
+            this.checkedListBoxRolesUPDNo = new System.Windows.Forms.CheckedListBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.tabAltaUser.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -134,6 +151,9 @@
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabAltaUser
@@ -143,15 +163,16 @@
             this.tabAltaUser.Controls.Add(this.tabPage1);
             this.tabAltaUser.Controls.Add(this.tabBajaUsr);
             this.tabAltaUser.Controls.Add(this.tabPage3);
-            this.tabAltaUser.Location = new System.Drawing.Point(1, 0);
+            this.tabAltaUser.Location = new System.Drawing.Point(-4, 0);
             this.tabAltaUser.Name = "tabAltaUser";
             this.tabAltaUser.SelectedIndex = 0;
-            this.tabAltaUser.Size = new System.Drawing.Size(586, 621);
+            this.tabAltaUser.Size = new System.Drawing.Size(733, 750);
             this.tabAltaUser.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage1.Controls.Add(this.buttonLimpiar);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.label4);
@@ -163,15 +184,25 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(578, 595);
+            this.tabPage1.Size = new System.Drawing.Size(578, 724);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Nuevo Usuario";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // buttonLimpiar
+            // 
+            this.buttonLimpiar.Location = new System.Drawing.Point(23, 672);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(100, 33);
+            this.buttonLimpiar.TabIndex = 30;
+            this.buttonLimpiar.Text = "Limpiar";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
+            // 
             // button1
             // 
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Location = new System.Drawing.Point(414, 525);
+            this.button1.Location = new System.Drawing.Point(432, 672);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(97, 33);
             this.button1.TabIndex = 27;
@@ -209,6 +240,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkedListHoteles);
             this.groupBox2.Controls.Add(this.comboBoxPais);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.localidad);
@@ -217,7 +249,6 @@
             this.groupBox2.Controls.Add(this.label39);
             this.groupBox2.Controls.Add(this.calle);
             this.groupBox2.Controls.Add(this.label40);
-            this.groupBox2.Controls.Add(this.comboBoxHotel);
             this.groupBox2.Controls.Add(this.dateTimePicker1);
             this.groupBox2.Controls.Add(this.mail);
             this.groupBox2.Controls.Add(this.tel);
@@ -233,13 +264,22 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(23, 176);
+            this.groupBox2.Location = new System.Drawing.Point(23, 235);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(488, 343);
+            this.groupBox2.Size = new System.Drawing.Size(488, 431);
             this.groupBox2.TabIndex = 26;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos personales";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // checkedListHoteles
+            // 
+            this.checkedListHoteles.FormattingEnabled = true;
+            this.checkedListHoteles.Location = new System.Drawing.Point(83, 317);
+            this.checkedListHoteles.Name = "checkedListHoteles";
+            this.checkedListHoteles.Size = new System.Drawing.Size(345, 109);
+            this.checkedListHoteles.TabIndex = 34;
+            this.checkedListHoteles.SelectedIndexChanged += new System.EventHandler(this.checkedListHoteles_SelectedIndexChanged);
             // 
             // comboBoxPais
             // 
@@ -709,15 +749,6 @@
             this.label40.Text = "Calle:";
             this.label40.Click += new System.EventHandler(this.label40_Click);
             // 
-            // comboBoxHotel
-            // 
-            this.comboBoxHotel.FormattingEnabled = true;
-            this.comboBoxHotel.Location = new System.Drawing.Point(57, 314);
-            this.comboBoxHotel.Name = "comboBoxHotel";
-            this.comboBoxHotel.Size = new System.Drawing.Size(191, 21);
-            this.comboBoxHotel.TabIndex = 19;
-            this.comboBoxHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxHotel_SelectedIndexChanged);
-            // 
             // dateTimePicker1
             // 
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
@@ -758,11 +789,24 @@
             // 
             // comboBoxTipo
             // 
+            this.comboBoxTipo.AutoCompleteCustomSource.AddRange(new string[] {
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
+            this.comboBoxTipo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxTipo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.comboBoxTipo.FormattingEnabled = true;
+            this.comboBoxTipo.Items.AddRange(new object[] {
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
             this.comboBoxTipo.Location = new System.Drawing.Point(144, 80);
             this.comboBoxTipo.Name = "comboBoxTipo";
             this.comboBoxTipo.Size = new System.Drawing.Size(59, 21);
             this.comboBoxTipo.TabIndex = 13;
+            this.comboBoxTipo.Text = "Tipo";
             this.comboBoxTipo.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // nombre
@@ -873,31 +917,13 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.comboBoxRol);
+            this.groupBox1.Controls.Add(this.checkedListBoxRoles);
             this.groupBox1.Location = new System.Drawing.Point(23, 116);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(488, 41);
+            this.groupBox1.Size = new System.Drawing.Size(488, 113);
             this.groupBox1.TabIndex = 25;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rol";
-            // 
-            // comboBoxRol
-            // 
-            this.comboBoxRol.AutoCompleteCustomSource.AddRange(new string[] {
-            "Administrador",
-            "Recepcionista",
-            "Guest"});
-            this.comboBoxRol.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.comboBoxRol.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.comboBoxRol.FormattingEnabled = true;
-            this.comboBoxRol.Items.AddRange(new object[] {
-            "Administrador",
-            "Recepcionista",
-            "Guest"});
-            this.comboBoxRol.Location = new System.Drawing.Point(57, 14);
-            this.comboBoxRol.Name = "comboBoxRol";
-            this.comboBoxRol.Size = new System.Drawing.Size(155, 21);
-            this.comboBoxRol.TabIndex = 34;
             // 
             // username
             // 
@@ -911,6 +937,7 @@
             // tabBajaUsr
             // 
             this.tabBajaUsr.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabBajaUsr.Controls.Add(this.buttonRecargarTabla);
             this.tabBajaUsr.Controls.Add(this.button4);
             this.tabBajaUsr.Controls.Add(this.button5);
             this.tabBajaUsr.Controls.Add(this.textBox1);
@@ -927,10 +954,20 @@
             this.tabBajaUsr.Location = new System.Drawing.Point(4, 22);
             this.tabBajaUsr.Name = "tabBajaUsr";
             this.tabBajaUsr.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBajaUsr.Size = new System.Drawing.Size(578, 595);
+            this.tabBajaUsr.Size = new System.Drawing.Size(578, 724);
             this.tabBajaUsr.TabIndex = 1;
             this.tabBajaUsr.Text = "Baja Usuario";
             this.tabBajaUsr.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // buttonRecargarTabla
+            // 
+            this.buttonRecargarTabla.Location = new System.Drawing.Point(331, 333);
+            this.buttonRecargarTabla.Name = "buttonRecargarTabla";
+            this.buttonRecargarTabla.Size = new System.Drawing.Size(137, 25);
+            this.buttonRecargarTabla.TabIndex = 56;
+            this.buttonRecargarTabla.Text = "Recargar Tabla";
+            this.buttonRecargarTabla.UseVisualStyleBackColor = true;
+            this.buttonRecargarTabla.Click += new System.EventHandler(this.buttonRecargarTabla_Click);
             // 
             // button4
             // 
@@ -961,11 +998,24 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.AutoCompleteCustomSource.AddRange(new string[] {
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
+            this.comboBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
             this.comboBox2.Location = new System.Drawing.Point(384, 59);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(59, 21);
             this.comboBox2.TabIndex = 46;
+            this.comboBox2.Text = "Tipo";
             // 
             // label13
             // 
@@ -1013,9 +1063,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(212, 350);
+            this.button2.Location = new System.Drawing.Point(206, 423);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(137, 37);
+            this.button2.Size = new System.Drawing.Size(163, 61);
             this.button2.TabIndex = 30;
             this.button2.Text = "Dar de baja";
             this.button2.UseVisualStyleBackColor = true;
@@ -1024,8 +1074,12 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Enabled = false;
             this.dataGridView1.Location = new System.Drawing.Point(86, 176);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(382, 150);
             this.dataGridView1.TabIndex = 29;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -1052,6 +1106,7 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage3.Controls.Add(this.buttonLimpiarUPD);
             this.tabPage3.Controls.Add(this.tipoYNum);
             this.tabPage3.Controls.Add(this.BuscarUyPass);
             this.tabPage3.Controls.Add(this.groupBox3);
@@ -1067,14 +1122,24 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(578, 595);
+            this.tabPage3.Size = new System.Drawing.Size(725, 724);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Actualizar Usuario";
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
+            // buttonLimpiarUPD
+            // 
+            this.buttonLimpiarUPD.Location = new System.Drawing.Point(16, 671);
+            this.buttonLimpiarUPD.Name = "buttonLimpiarUPD";
+            this.buttonLimpiarUPD.Size = new System.Drawing.Size(100, 33);
+            this.buttonLimpiarUPD.TabIndex = 45;
+            this.buttonLimpiarUPD.Text = "Limpiar";
+            this.buttonLimpiarUPD.UseVisualStyleBackColor = true;
+            this.buttonLimpiarUPD.Click += new System.EventHandler(this.buttonLimpiarUPD_Click);
+            // 
             // tipoYNum
             // 
-            this.tipoYNum.Location = new System.Drawing.Point(355, 91);
+            this.tipoYNum.Location = new System.Drawing.Point(375, 57);
             this.tipoYNum.Name = "tipoYNum";
             this.tipoYNum.Size = new System.Drawing.Size(75, 23);
             this.tipoYNum.TabIndex = 44;
@@ -1084,7 +1149,7 @@
             // 
             // BuscarUyPass
             // 
-            this.BuscarUyPass.Location = new System.Drawing.Point(84, 91);
+            this.BuscarUyPass.Location = new System.Drawing.Point(66, 57);
             this.BuscarUyPass.Name = "BuscarUyPass";
             this.BuscarUyPass.Size = new System.Drawing.Size(75, 23);
             this.BuscarUyPass.TabIndex = 43;
@@ -1095,12 +1160,13 @@
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.Silver;
+            this.groupBox3.Controls.Add(this.groupBox7);
             this.groupBox3.Controls.Add(this.groupBox6);
             this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.groupBox5);
-            this.groupBox3.Location = new System.Drawing.Point(16, 130);
+            this.groupBox3.Location = new System.Drawing.Point(16, 86);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(547, 420);
+            this.groupBox3.Size = new System.Drawing.Size(703, 584);
             this.groupBox3.TabIndex = 41;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edite los datos que quiera actualizar";
@@ -1111,9 +1177,9 @@
             this.groupBox6.Controls.Add(this.label33);
             this.groupBox6.Controls.Add(this.label32);
             this.groupBox6.Controls.Add(this.usernameUPD);
-            this.groupBox6.Location = new System.Drawing.Point(31, 21);
+            this.groupBox6.Location = new System.Drawing.Point(31, 15);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(464, 53);
+            this.groupBox6.Size = new System.Drawing.Size(648, 53);
             this.groupBox6.TabIndex = 37;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Inicio de Sesión";
@@ -1156,13 +1222,14 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.groupBox9);
+            this.groupBox4.Controls.Add(this.groupBox8);
             this.groupBox4.Controls.Add(this.comboBoxPaisUPD);
             this.groupBox4.Controls.Add(this.label37);
             this.groupBox4.Controls.Add(this.localidadUPD);
             this.groupBox4.Controls.Add(this.label36);
             this.groupBox4.Controls.Add(this.nroUPD);
             this.groupBox4.Controls.Add(this.label28);
-            this.groupBox4.Controls.Add(this.comboBoxHotelUPD);
             this.groupBox4.Controls.Add(this.dateTimePickerUPD);
             this.groupBox4.Controls.Add(this.calleUPD);
             this.groupBox4.Controls.Add(this.mailUPD);
@@ -1171,7 +1238,6 @@
             this.groupBox4.Controls.Add(this.comboBoxTipoUPD);
             this.groupBox4.Controls.Add(this.nombreUPD);
             this.groupBox4.Controls.Add(this.apellidoUPD);
-            this.groupBox4.Controls.Add(this.label17);
             this.groupBox4.Controls.Add(this.label18);
             this.groupBox4.Controls.Add(this.label19);
             this.groupBox4.Controls.Add(this.label23);
@@ -1180,12 +1246,21 @@
             this.groupBox4.Controls.Add(this.label22);
             this.groupBox4.Controls.Add(this.label24);
             this.groupBox4.Controls.Add(this.label25);
-            this.groupBox4.Location = new System.Drawing.Point(31, 126);
+            this.groupBox4.Location = new System.Drawing.Point(31, 177);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(464, 288);
+            this.groupBox4.Size = new System.Drawing.Size(648, 405);
             this.groupBox4.TabIndex = 36;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Datos personales";
+            // 
+            // checkedListBoxHotelesUPD
+            // 
+            this.checkedListBoxHotelesUPD.FormattingEnabled = true;
+            this.checkedListBoxHotelesUPD.Location = new System.Drawing.Point(101, 19);
+            this.checkedListBoxHotelesUPD.Name = "checkedListBoxHotelesUPD";
+            this.checkedListBoxHotelesUPD.Size = new System.Drawing.Size(187, 94);
+            this.checkedListBoxHotelesUPD.TabIndex = 26;
+            this.checkedListBoxHotelesUPD.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxHotelesUPD_SelectedIndexChanged);
             // 
             // comboBoxPaisUPD
             // 
@@ -1634,15 +1709,6 @@
             this.label28.Text = "Nro:";
             this.label28.Click += new System.EventHandler(this.label28_Click_1);
             // 
-            // comboBoxHotelUPD
-            // 
-            this.comboBoxHotelUPD.FormattingEnabled = true;
-            this.comboBoxHotelUPD.Location = new System.Drawing.Point(63, 265);
-            this.comboBoxHotelUPD.Name = "comboBoxHotelUPD";
-            this.comboBoxHotelUPD.Size = new System.Drawing.Size(255, 21);
-            this.comboBoxHotelUPD.TabIndex = 19;
-            this.comboBoxHotelUPD.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
-            // 
             // dateTimePickerUPD
             // 
             this.dateTimePickerUPD.Location = new System.Drawing.Point(118, 239);
@@ -1688,11 +1754,24 @@
             // 
             // comboBoxTipoUPD
             // 
+            this.comboBoxTipoUPD.AutoCompleteCustomSource.AddRange(new string[] {
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
+            this.comboBoxTipoUPD.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBoxTipoUPD.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.comboBoxTipoUPD.FormattingEnabled = true;
+            this.comboBoxTipoUPD.Items.AddRange(new object[] {
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
             this.comboBoxTipoUPD.Location = new System.Drawing.Point(144, 80);
             this.comboBoxTipoUPD.Name = "comboBoxTipoUPD";
             this.comboBoxTipoUPD.Size = new System.Drawing.Size(59, 21);
             this.comboBoxTipoUPD.TabIndex = 13;
+            this.comboBoxTipoUPD.Text = "Tipo";
             this.comboBoxTipoUPD.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // nombreUPD
@@ -1712,15 +1791,6 @@
             this.apellidoUPD.TabIndex = 11;
             this.apellidoUPD.TextChanged += new System.EventHandler(this.textBox7_TextChanged);
             this.apellidoUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellidoUPD_KeyPress);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(4, 270);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(35, 13);
-            this.label17.TabIndex = 9;
-            this.label17.Text = "Hotel:";
             // 
             // label18
             // 
@@ -1799,36 +1869,20 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.comboBoxRolUPD);
-            this.groupBox5.Location = new System.Drawing.Point(31, 80);
+            this.groupBox5.Controls.Add(this.label49);
+            this.groupBox5.Controls.Add(this.label42);
+            this.groupBox5.Controls.Add(this.label41);
+            this.groupBox5.Controls.Add(this.checkedListBoxRolesUPD);
+            this.groupBox5.Location = new System.Drawing.Point(31, 70);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(464, 41);
+            this.groupBox5.Size = new System.Drawing.Size(306, 102);
             this.groupBox5.TabIndex = 35;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Rol";
-            // 
-            // comboBoxRolUPD
-            // 
-            this.comboBoxRolUPD.AutoCompleteCustomSource.AddRange(new string[] {
-            "Administrador",
-            "Recepcionista",
-            "Guest"});
-            this.comboBoxRolUPD.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.comboBoxRolUPD.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.comboBoxRolUPD.FormattingEnabled = true;
-            this.comboBoxRolUPD.Items.AddRange(new object[] {
-            "Administrador",
-            "Recepcionista",
-            "Guest"});
-            this.comboBoxRolUPD.Location = new System.Drawing.Point(63, 14);
-            this.comboBoxRolUPD.Name = "comboBoxRolUPD";
-            this.comboBoxRolUPD.Size = new System.Drawing.Size(155, 21);
-            this.comboBoxRolUPD.TabIndex = 35;
-            this.comboBoxRolUPD.SelectedIndexChanged += new System.EventHandler(this.comboBoxRolUpd_SelectedIndexChanged);
+            this.groupBox5.Text = "Roles Usuario";
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(355, 61);
+            this.textBox10.Location = new System.Drawing.Point(355, 31);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(137, 20);
             this.textBox10.TabIndex = 20;
@@ -1838,7 +1892,7 @@
             // comboBox5
             // 
             this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(355, 25);
+            this.comboBox5.Location = new System.Drawing.Point(355, 6);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(59, 21);
             this.comboBox5.TabIndex = 20;
@@ -1847,7 +1901,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(253, 68);
+            this.label31.Location = new System.Drawing.Point(253, 34);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(100, 13);
             this.label31.TabIndex = 40;
@@ -1857,7 +1911,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(253, 33);
+            this.label30.Location = new System.Drawing.Point(273, 6);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(28, 13);
             this.label30.TabIndex = 39;
@@ -1867,7 +1921,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(224, 50);
+            this.label29.Location = new System.Drawing.Point(223, 27);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(13, 13);
             this.label29.TabIndex = 38;
@@ -1877,7 +1931,7 @@
             // button3
             // 
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Location = new System.Drawing.Point(391, 556);
+            this.button3.Location = new System.Drawing.Point(558, 673);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(137, 33);
             this.button3.TabIndex = 35;
@@ -1899,7 +1953,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(13, 50);
+            this.label27.Location = new System.Drawing.Point(6, 27);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(58, 13);
             this.label27.TabIndex = 31;
@@ -1908,18 +1962,170 @@
             // 
             // textBoxUsrAct
             // 
-            this.textBoxUsrAct.Location = new System.Drawing.Point(77, 47);
+            this.textBoxUsrAct.Location = new System.Drawing.Point(67, 24);
             this.textBoxUsrAct.Name = "textBoxUsrAct";
             this.textBoxUsrAct.Size = new System.Drawing.Size(137, 20);
             this.textBoxUsrAct.TabIndex = 36;
             this.textBoxUsrAct.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
             this.textBoxUsrAct.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.usernameText_KeyPress);
             // 
+            // checkedListBoxRolesUPD
+            // 
+            this.checkedListBoxRolesUPD.FormattingEnabled = true;
+            this.checkedListBoxRolesUPD.Location = new System.Drawing.Point(103, 17);
+            this.checkedListBoxRolesUPD.Name = "checkedListBoxRolesUPD";
+            this.checkedListBoxRolesUPD.Size = new System.Drawing.Size(189, 79);
+            this.checkedListBoxRolesUPD.TabIndex = 27;
+            this.checkedListBoxRolesUPD.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxRolesUPD_SelectedIndexChanged);
+            // 
+            // checkedListBoxRoles
+            // 
+            this.checkedListBoxRoles.FormattingEnabled = true;
+            this.checkedListBoxRoles.Location = new System.Drawing.Point(76, 17);
+            this.checkedListBoxRoles.Name = "checkedListBoxRoles";
+            this.checkedListBoxRoles.Size = new System.Drawing.Size(336, 79);
+            this.checkedListBoxRoles.TabIndex = 28;
+            // 
+            // checkedListBoxHotelesUPDNo
+            // 
+            this.checkedListBoxHotelesUPDNo.FormattingEnabled = true;
+            this.checkedListBoxHotelesUPDNo.Location = new System.Drawing.Point(111, 26);
+            this.checkedListBoxHotelesUPDNo.Name = "checkedListBoxHotelesUPDNo";
+            this.checkedListBoxHotelesUPDNo.Size = new System.Drawing.Size(195, 94);
+            this.checkedListBoxHotelesUPDNo.TabIndex = 27;
+            this.checkedListBoxHotelesUPDNo.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxHotelesUPDNo_SelectedIndexChanged);
+            // 
+            // checkedListBoxRolesUPDNo
+            // 
+            this.checkedListBoxRolesUPDNo.FormattingEnabled = true;
+            this.checkedListBoxRolesUPDNo.Location = new System.Drawing.Point(117, 16);
+            this.checkedListBoxRolesUPDNo.Name = "checkedListBoxRolesUPDNo";
+            this.checkedListBoxRolesUPDNo.Size = new System.Drawing.Size(193, 79);
+            this.checkedListBoxRolesUPDNo.TabIndex = 28;
+            this.checkedListBoxRolesUPDNo.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxRolesUPDNo_SelectedIndexChanged);
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(4, 30);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(90, 13);
+            this.label41.TabIndex = 29;
+            this.label41.Text = "Seleccione Roles";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(5, 58);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(89, 13);
+            this.label42.TabIndex = 30;
+            this.label42.Text = "que quiera quitar:";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(4, 54);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(99, 13);
+            this.label43.TabIndex = 32;
+            this.label43.Text = "que quiera agregar:";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(6, 26);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(90, 13);
+            this.label44.TabIndex = 31;
+            this.label44.Text = "Seleccione Roles";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(6, 68);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(99, 13);
+            this.label45.TabIndex = 36;
+            this.label45.Text = "que quiera agregar:";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(7, 54);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(88, 13);
+            this.label46.TabIndex = 35;
+            this.label46.Text = "Seleccione Hotel";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(5, 66);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(89, 13);
+            this.label47.TabIndex = 34;
+            this.label47.Text = "que quiera quitar:";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(6, 51);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(88, 13);
+            this.label48.TabIndex = 33;
+            this.label48.Text = "Seleccione Hotel";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(8, 44);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(60, 13);
+            this.label49.TabIndex = 33;
+            this.label49.Text = "del Usuario";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.label44);
+            this.groupBox7.Controls.Add(this.label43);
+            this.groupBox7.Controls.Add(this.checkedListBoxRolesUPDNo);
+            this.groupBox7.Location = new System.Drawing.Point(344, 69);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(335, 103);
+            this.groupBox7.TabIndex = 36;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Otros Roles con posibilidad de agregar";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.checkedListBoxHotelesUPD);
+            this.groupBox8.Controls.Add(this.label48);
+            this.groupBox8.Controls.Add(this.label47);
+            this.groupBox8.Location = new System.Drawing.Point(5, 272);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(304, 126);
+            this.groupBox8.TabIndex = 37;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Hoteles del  Usuario";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.checkedListBoxHotelesUPDNo);
+            this.groupBox9.Controls.Add(this.label45);
+            this.groupBox9.Controls.Add(this.label46);
+            this.groupBox9.Location = new System.Drawing.Point(315, 271);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(311, 126);
+            this.groupBox9.TabIndex = 38;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Otros Hoteles con posibilidad de agregar";
+            // 
             // Admin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(594, 616);
+            this.ClientSize = new System.Drawing.Size(741, 733);
             this.Controls.Add(this.tabAltaUser);
             this.Name = "Admin";
             this.Text = "Admin";
@@ -1941,6 +2147,13 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1957,7 +2170,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox pass;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox comboBoxHotel;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.TextBox mail;
         private System.Windows.Forms.TextBox tel;
@@ -2022,7 +2234,6 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.TextBox nroUPD;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.ComboBox comboBoxHotelUPD;
         private System.Windows.Forms.DateTimePicker dateTimePickerUPD;
         private System.Windows.Forms.TextBox calleUPD;
         private System.Windows.Forms.TextBox mailUPD;
@@ -2031,7 +2242,6 @@
         private System.Windows.Forms.ComboBox comboBoxTipoUPD;
         private System.Windows.Forms.TextBox nombreUPD;
         private System.Windows.Forms.TextBox apellidoUPD;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label23;
@@ -2041,7 +2251,26 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.ComboBox comboBoxRol;
-        private System.Windows.Forms.ComboBox comboBoxRolUPD;
+        private System.Windows.Forms.CheckedListBox checkedListHoteles;
+        private System.Windows.Forms.CheckedListBox checkedListBoxHotelesUPD;
+        private System.Windows.Forms.Button buttonLimpiar;
+        private System.Windows.Forms.Button buttonLimpiarUPD;
+        private System.Windows.Forms.Button buttonRecargarTabla;
+        private System.Windows.Forms.CheckedListBox checkedListBoxRolesUPD;
+        private System.Windows.Forms.CheckedListBox checkedListBoxRoles;
+        private System.Windows.Forms.CheckedListBox checkedListBoxHotelesUPDNo;
+        private System.Windows.Forms.CheckedListBox checkedListBoxRolesUPDNo;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label label41;
     }
 }
