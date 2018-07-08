@@ -141,17 +141,28 @@ namespace FrbaHotel.AbmHabitacion
             cmdExisteHab.Parameters["@numero"].Value = Int32.Parse(textBoxNumero.Text);
             int existeHab = (int)cmdExisteHab.ExecuteScalar();
 
-            if (existeHab == 0)
+            if (numeroHab != Int32.Parse(textBoxNumero.Text))
             {
-                modificarHab.ExecuteNonQuery();
-                MessageBox.Show("Alta realizada correctamente.");
-                instanciaformHabitaciones.recargarHabitaciones();
-                this.Close();
+                if (existeHab == 0)
+                {
+                    modificarHab.ExecuteNonQuery();
+                    MessageBox.Show("Modificación realizada correctamente.");
+                    instanciaformHabitaciones.recargarHabitaciones(null);
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Ya existe ese número de habitación en el hotel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show("Ya existe ese número de habitación en el hotel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                modificarHab.ExecuteNonQuery();
+                MessageBox.Show("Modificación realizada correctamente.");
+                instanciaformHabitaciones.recargarHabitaciones(null);
+                this.Close();
             }
+
         }
     }
 }

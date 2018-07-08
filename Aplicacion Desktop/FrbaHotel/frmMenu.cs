@@ -197,6 +197,11 @@ namespace FrbaHotel
         {
             (new AbmHabitacion.frmHabitacion()).ShowDialog();
         }
+
+        private void btnABMRol_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

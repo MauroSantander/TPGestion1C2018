@@ -43,7 +43,7 @@ namespace FrbaHotel.AbmHabitacion
                 else
                 {
                     string item;
-                    item = reader["ciudad"].ToString().Trim() + " - " + reader["calle"].ToString().Trim() + " - " + reader["nroCalle"].ToString().Trim();
+                    item = reader["ciudad"].ToString().Trim() + "-" + reader["calle"].ToString().Trim() + "-" + reader["nroCalle"].ToString().Trim();
                     comboBoxHotel.Items.Add(item);
                 }
             }
@@ -161,7 +161,7 @@ namespace FrbaHotel.AbmHabitacion
             {
                 crearHabitacion.ExecuteNonQuery();
                 MessageBox.Show("Alta realizada correctamente.");
-                instanciaformHabitacion.recargarHabitaciones();
+                instanciaformHabitacion.recargarHabitaciones(null);
                 this.Close();
             }
             else

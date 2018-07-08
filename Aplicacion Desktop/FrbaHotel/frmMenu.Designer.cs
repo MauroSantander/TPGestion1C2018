@@ -158,6 +158,7 @@
             this.btnABMRol.TabIndex = 0;
             this.btnABMRol.Text = "ABM Rol";
             this.btnABMRol.UseVisualStyleBackColor = true;
+            this.btnABMRol.Click += new System.EventHandler(this.btnABMRol_Click_1);
             // 
             // groupBox2
             // 
