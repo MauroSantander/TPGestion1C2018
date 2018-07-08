@@ -505,9 +505,12 @@ namespace FrbaHotel.AbmCliente
 
             if (textBoxNroId.Text == "") { cadenaNroIdentificacion = "numeroIdentificacion LIKE '%'"; }
             else { cadenaNroIdentificacion = "numeroIdentificacion LIKE '" + int.Parse(textBoxNroId.Text) + "'"; };
-            
+
             if (textBoxMail.Text == "") { cadenaMail = "mail LIKE '%'"; }
-            else { cadenaMail = "mail LIKE '" + textBoxMail.Text + "'"; };
+//            else
+//            {
+/*                if (validarEmail(textBoxMail.Text))*/ { cadenaMail = "mail LIKE '" + textBoxMail.Text + "'"; };
+ //           }
 
             string compuesto = " SELECT * FROM [PISOS_PICADOS].Usuario WHERE " + cadenaNombre 
                 + " AND " + cadenaApellido + " AND " + cadenaTipoId + " AND " 
@@ -635,6 +638,19 @@ namespace FrbaHotel.AbmCliente
         private void tabPage2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtNombreModif_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Nro_IdKeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
         }
 
 

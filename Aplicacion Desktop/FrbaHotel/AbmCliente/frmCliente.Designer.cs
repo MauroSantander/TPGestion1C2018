@@ -510,6 +510,7 @@
             this.txtApellidoModif.Name = "txtApellidoModif";
             this.txtApellidoModif.Size = new System.Drawing.Size(100, 20);
             this.txtApellidoModif.TabIndex = 57;
+            this.txtApellidoModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Apellido_KeyPress);
             // 
             // txtNombreModif
             // 
@@ -517,6 +518,8 @@
             this.txtNombreModif.Name = "txtNombreModif";
             this.txtNombreModif.Size = new System.Drawing.Size(100, 20);
             this.txtNombreModif.TabIndex = 56;
+            this.txtNombreModif.TextChanged += new System.EventHandler(this.txtNombreModif_TextChanged);
+            this.txtNombreModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nombre_KeyPress);
             // 
             // btnSeleccionar
             // 
@@ -535,6 +538,7 @@
             this.txtNroIdModif.Name = "txtNroIdModif";
             this.txtNroIdModif.Size = new System.Drawing.Size(80, 20);
             this.txtNroIdModif.TabIndex = 45;
+            this.txtNroIdModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nro_IdKeyPress);
             // 
             // cmbTipoIdModif
             // 
@@ -551,6 +555,7 @@
             this.cmbTipoIdModif.Name = "cmbTipoIdModif";
             this.cmbTipoIdModif.Size = new System.Drawing.Size(80, 21);
             this.cmbTipoIdModif.TabIndex = 46;
+            this.cmbTipoIdModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TipoId_KeyPress);
             // 
             // label31
             // 
@@ -657,6 +662,7 @@
             this.textBoxApellido.Size = new System.Drawing.Size(100, 20);
             this.textBoxApellido.TabIndex = 69;
             this.textBoxApellido.TextChanged += new System.EventHandler(this.textBoxApellido_TextChanged);
+            this.textBoxApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Apellido_KeyPress);
             // 
             // textBoxNombre
             // 
@@ -665,6 +671,7 @@
             this.textBoxNombre.Size = new System.Drawing.Size(100, 20);
             this.textBoxNombre.TabIndex = 68;
             this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
+            this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nombre_KeyPress);
             // 
             // button2
             // 
@@ -683,6 +690,7 @@
             this.textBoxNroId.Size = new System.Drawing.Size(80, 20);
             this.textBoxNroId.TabIndex = 62;
             this.textBoxNroId.TextChanged += new System.EventHandler(this.textBoxNroId_TextChanged);
+            this.textBoxNroId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nroId_KeyPress);
             // 
             // cbTipoId
             // 
@@ -700,6 +708,7 @@
             this.cbTipoId.Size = new System.Drawing.Size(80, 21);
             this.cbTipoId.TabIndex = 63;
             this.cbTipoId.SelectedIndexChanged += new System.EventHandler(this.cbTipoId_SelectedIndexChanged_1);
+            this.cbTipoId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TipoId_KeyPress);
             // 
             // label8
             // 
