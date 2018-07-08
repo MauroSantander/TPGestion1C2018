@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.AbmHabitacion
 {
-    public partial class Form1 : Form
+    public partial class frmHabitacion : Form
     {
-        public Form1()
+        public frmHabitacion()
         {
             InitializeComponent();
+        }
+
+        private void frmHabitacion_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
         }
     }
 }

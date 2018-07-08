@@ -52,7 +52,7 @@ namespace FrbaHotel
 
         private void btnABMHabitacion_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.AbmHabitacion.Form1()).ShowDialog();
+            (new FrbaHotel.AbmHabitacion.frmHabitacion()).ShowDialog();
         }
 
         private void btnModificarReserva_Click(object sender, EventArgs e)

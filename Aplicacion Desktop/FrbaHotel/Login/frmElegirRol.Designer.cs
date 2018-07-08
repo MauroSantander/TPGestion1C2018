@@ -39,7 +39,7 @@
             this.label1.Location = new System.Drawing.Point(42, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 13);
-            this.label1.TabIndex = 0;
+            this.label1.TabIndex = 2;
             this.label1.Text = "Seleccione un rol";
             // 
             // btnAceptar
@@ -58,9 +58,9 @@
             this.cbRol.Location = new System.Drawing.Point(12, 25);
             this.cbRol.Name = "cbRol";
             this.cbRol.Size = new System.Drawing.Size(152, 21);
-            this.cbRol.TabIndex = 2;
+            this.cbRol.TabIndex = 0;
             // 
-            // ElegirRol
+            // frmElegirRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -68,7 +68,7 @@
             this.Controls.Add(this.cbRol);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.label1);
-            this.Name = "ElegirRol";
+            this.Name = "frmElegirRol";
             this.Text = "ElegirRol";
             this.Load += new System.EventHandler(this.ElegirRol_Load);
             this.ResumeLayout(false);

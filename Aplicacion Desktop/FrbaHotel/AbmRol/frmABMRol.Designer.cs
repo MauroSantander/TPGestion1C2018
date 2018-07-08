@@ -67,7 +67,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(336, 307);
-            this.tabControl1.TabIndex = 12;
+            this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -83,7 +83,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Modificar/Eliminar Rol";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // groupBox3
             // 
@@ -91,7 +90,7 @@
             this.groupBox3.Location = new System.Drawing.Point(159, 6);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(163, 205);
-            this.groupBox3.TabIndex = 36;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Funcionalidades";
             // 
@@ -101,7 +100,7 @@
             this.listFuncionalidades.Location = new System.Drawing.Point(6, 19);
             this.listFuncionalidades.Name = "listFuncionalidades";
             this.listFuncionalidades.Size = new System.Drawing.Size(151, 173);
-            this.listFuncionalidades.TabIndex = 1;
+            this.listFuncionalidades.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -109,7 +108,7 @@
             this.groupBox2.Location = new System.Drawing.Point(6, 172);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(147, 39);
-            this.groupBox2.TabIndex = 35;
+            this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Estado";
             // 
@@ -119,7 +118,7 @@
             this.lblEstado.Location = new System.Drawing.Point(6, 16);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(0, 13);
-            this.lblEstado.TabIndex = 38;
+            this.lblEstado.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -127,7 +126,7 @@
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(147, 160);
-            this.groupBox1.TabIndex = 33;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Roles";
             // 
@@ -137,7 +136,7 @@
             this.listRoles.Location = new System.Drawing.Point(6, 19);
             this.listRoles.Name = "listRoles";
             this.listRoles.Size = new System.Drawing.Size(135, 134);
-            this.listRoles.TabIndex = 1;
+            this.listRoles.TabIndex = 0;
             this.listRoles.SelectedIndexChanged += new System.EventHandler(this.listRoles_SelectedIndexChanged);
             // 
             // button5
@@ -145,7 +144,7 @@
             this.button5.Location = new System.Drawing.Point(157, 238);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 25;
+            this.button5.TabIndex = 3;
             this.button5.Text = "Salir";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.buttonSalir_Click);
@@ -155,7 +154,7 @@
             this.button3.Location = new System.Drawing.Point(238, 238);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(78, 23);
-            this.button3.TabIndex = 21;
+            this.button3.TabIndex = 4;
             this.button3.Text = "Modificar";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.buttonModificar_Click);
