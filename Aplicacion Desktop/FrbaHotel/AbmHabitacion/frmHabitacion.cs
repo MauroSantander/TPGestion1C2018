@@ -22,6 +22,7 @@ namespace FrbaHotel.AbmHabitacion
         {
             this.CenterToScreen();
             dataGridViewHabitaciones.DataSource = cargarHabitaciones(null);
+            dataGridViewHabitaciones.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             ajustarColumnas();
             cargarBotonModificacion();
             cargarHoteles();
@@ -228,6 +229,7 @@ namespace FrbaHotel.AbmHabitacion
             dataGridViewHabitaciones.DataSource = cargarHabitaciones(filtros);
             cargarBotonModificacion();
             ajustarColumnas();
+            dataGridViewHabitaciones.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void btnFiltrar_Click(object sender, EventArgs e)

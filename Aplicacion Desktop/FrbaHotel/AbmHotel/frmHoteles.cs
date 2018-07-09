@@ -100,7 +100,7 @@ namespace FrbaHotel.AbmHotel
             String fechaCreacion = dataGridViewHoteles.CurrentRow.Cells["fechaCreacion"].Value.ToString();
             int estrellas = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["estrellas"].Value);
 
-            (new FrbaHotel.AbmHotel.ModificarHotel()).cargarDatos(id, nombre, mail, telefono, calle, nroCalle, ciudad, pais, fechaCreacion, estrellas, this);
+            (new FrbaHotel.AbmHotel.frmModificarHotel()).cargarDatos(id, nombre, mail, telefono, calle, nroCalle, ciudad, pais, fechaCreacion, estrellas, this);
 
         }
 
@@ -111,7 +111,7 @@ namespace FrbaHotel.AbmHotel
 
             int id = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["idHotel"].Value);
 
-            (new FrbaHotel.AbmHotel.BajaHotel()).asignarId(id, this);
+            (new FrbaHotel.AbmHotel.frmBajaHotel()).asignarId(id, this);
 
         }
 

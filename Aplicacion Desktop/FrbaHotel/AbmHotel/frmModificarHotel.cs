@@ -161,7 +161,7 @@ namespace FrbaHotel.AbmHotel
 
         }
        
-        public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, int nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, Hoteles pantallaHoteles)
+        public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, int nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, frmHoteles pantallaHoteles)
         {
             textBoxName.Text = nombre;
             textBoxMail.Text = mail;

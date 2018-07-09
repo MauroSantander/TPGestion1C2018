@@ -29,6 +29,10 @@ namespace FrbaHotel.ListadoEstadistico
             comboBoxTops.Items.Add("Cliente con mayor cantidad de puntos");
             comboBoxTops.SelectedIndex = 0;
 
+            for (int i = Globals.FechaDelSistema.Year; i > 1998; i--)
+            {
+                comboBoxAño.Items.Add(i);
+            }
             comboBoxAño.Text = Globals.FechaDelSistema.Year.ToString();
 
         }
@@ -53,11 +57,11 @@ namespace FrbaHotel.ListadoEstadistico
             }
             else if (consulta == 3)
             {
-                query = "SELECT * FROM [PISOS_PICADOS].topHabitacionesOcupadasDias (@año, @trimestre)";
+                query = "SELECT * FROM [PISOS_PICADOS].topHabitacionesOcupadasDias (@año, @trimestre, @fechaActual)";
             }
             else if (consulta == 4)
             {
-                query = "SELECT * FROM [PISOS_PICADOS].topHabitacionesOcupadasDias (@año, @trimestre)";
+                query = "SELECT * FROM [PISOS_PICADOS].topHabitacionesOcupadasVeces (@año, @trimestre)";
             }
             else if (consulta == 5)
             {
@@ -69,7 +73,7 @@ namespace FrbaHotel.ListadoEstadistico
             cmd.Parameters.Add("@trimestre", SqlDbType.Int);
             cmd.Parameters["@año"].Value = Int32.Parse(comboBoxAño.Text);
             cmd.Parameters["@trimestre"].Value = Int32.Parse(Trimestre.Text);
-            if (consulta == 2 || consulta == 5)
+            if (consulta == 2 || consulta == 3 || consulta == 5)
             {
                 cmd.Parameters.Add("@fechaActual", SqlDbType.Date);
                 cmd.Parameters["@fechaActual"].Value = Globals.FechaDelSistema.ToString("yyyy-MM-dd");
@@ -84,6 +88,7 @@ namespace FrbaHotel.ListadoEstadistico
             dataGridResultados.Columns.Clear();
             dataGridResultados.Rows.Clear();
             dataGridResultados.DataSource = dt;
+            dataGridResultados.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
 

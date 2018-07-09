@@ -47,7 +47,7 @@
             this.dataGridResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridResultados.Location = new System.Drawing.Point(12, 172);
             this.dataGridResultados.Name = "dataGridResultados";
-            this.dataGridResultados.Size = new System.Drawing.Size(590, 137);
+            this.dataGridResultados.Size = new System.Drawing.Size(590, 155);
             this.dataGridResultados.TabIndex = 0;
             // 
             // groupBox1
@@ -145,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 321);
+            this.ClientSize = new System.Drawing.Size(614, 339);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridResultados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
