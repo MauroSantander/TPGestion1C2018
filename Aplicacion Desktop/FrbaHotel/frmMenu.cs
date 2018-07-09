@@ -87,7 +87,7 @@ namespace FrbaHotel
 
         private void btnListadoEstadistico_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.ListadoEstadistico.Form1()).ShowDialog();
+            (new FrbaHotel.ListadoEstadistico.frmListadoEstadistico()).ShowDialog();
         }
 
         private void habilitarBoton(int id)

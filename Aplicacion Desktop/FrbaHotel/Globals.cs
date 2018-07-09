@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrbaHotel.Properties;
+using System.Configuration;
 
 namespace FrbaHotel
 {
@@ -12,9 +14,14 @@ namespace FrbaHotel
         public static SqlConnection conexionGlobal = new SqlConnection();
         public static Login.frmLogIn frmLogInInstance;
 
+        public static string obtenerStringConexion()
+        {
+            return ConfigurationManager.ConnectionStrings["DBGDD"].ConnectionString;     
+        }
+
         public static void AbrirConexion()
         {
-            Globals.conexionGlobal = new SqlConnection("Password=gd2018;Persist Security Info=True;User ID=gdHotel2018;Initial Catalog=GD1C2018;Data Source=localhost\\SQLSERVER2012; MultipleActiveResultSets=true");
+            Globals.conexionGlobal = new SqlConnection(obtenerStringConexion());
             try
             {
                 Globals.conexionGlobal.Open();

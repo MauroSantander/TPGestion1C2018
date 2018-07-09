@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FrbaHotel.ListadoEstadistico
+namespace FrbaHotel.AbmRegimen
 {
-    public partial class Form1 : Form
+    public partial class frmRegimen : Form
     {
-        public Form1()
+        public frmRegimen()
         {
             InitializeComponent();
         }
