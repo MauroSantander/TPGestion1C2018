@@ -211,6 +211,10 @@ IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasDias', N'IF') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].topClientesPorPuntos', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].topClientesPorPuntos;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerNacionalidadCliente', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente;
+
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2056,7 +2060,6 @@ BEGIN
 END
 GO
 
-/*Funciones Hotel */
 /* Dada una ciudad calle y nroCalle devuelve el id de hotel correspondiente */
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDHotel (
 	@ciudad VARCHAR(255)
@@ -2173,6 +2176,7 @@ BEGIN
 END
 GO
 
+/*Dado una estadia devuelve el valor total para todos los consumibles*/
 CREATE FUNCTION [PISOS_PICADOS].netearConsumibles (@idEstadia INT)
 RETURNS NUMERIC(9, 2)
 AS
@@ -2187,6 +2191,7 @@ BEGIN
 END
 GO
 
+/*Dado un id de habitacion devuelve el id del hotel al que pertenece*/
 CREATE FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion (@idHabitacion INT)
 RETURNS INT
 AS
@@ -2199,6 +2204,7 @@ BEGIN
 END
 GO
 
+/*Dado un id de hotel devuelve el incremento por las estrellas del mismo*/
 CREATE FUNCTION [PISOS_PICADOS].incrementoHotel (@idHotelActual INT)
 RETURNS INT
 AS
@@ -2213,6 +2219,7 @@ BEGIN
 END
 GO
 
+/*Dado un codigo de régimen devuelve su precio*/
 CREATE FUNCTION [PISOS_PICADOS].precioRegimen (@codigoRegimen INT)
 RETURNS INT
 AS
@@ -2225,6 +2232,7 @@ BEGIN
 END
 GO
 
+/*Dado un tipo de habitacion, el regimen elegido y el id del hotel devuelve el total por dia de la habitacio */
 CREATE FUNCTION [PISOS_PICADOS].precioHabitacion (
 	@idTipo INT
 	,@idRegimen INT
@@ -2237,6 +2245,8 @@ BEGIN
 END
 GO
 
+/*Dada una fecha un hotel y una determinada cant de habitaciones de un tipo verifica si el hotel 
+puede cumplir la demanda en la fecha dada*/
 CREATE FUNCTION [PISOS_PICADOS].hotelCumple (
 	@cantHabitaciones INT
 	,@tipo INT
@@ -2257,17 +2267,18 @@ BEGIN
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
 						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-						WHERE @fechaReserva NOT BETWEEN fechaInicio
+						WHERE @fechaReserva  BETWEEN fechaInicio
 								AND fechaFin
 						)
 				)
 			)
 		RETURN 1;
-
 	RETURN 0;
 END
 GO
 
+/*Dado un hotel un tipo de habitacion y una fecha de reserva devuelve el id de la primera habiatcion 
+disponible del hotel con esas caracteristicas */
 CREATE FUNCTION [PISOS_PICADOS].habitacionQueCumple (
 	@tipo INT
 	,@idHotel INT
@@ -2277,7 +2288,7 @@ RETURNS INT
 AS
 BEGIN
 	RETURN (
-			SELECT idHabitacion
+			SELECT TOP 1 idHabitacion
 			FROM [PISOS_PICADOS].Habitacion
 			WHERE tipo = @tipo
 				AND idHotel = @idHotel
@@ -2590,6 +2601,16 @@ AS
 	GROUP BY fact.cliente
 	ORDER BY puntos DESC)
 GO
+
+/*Dado un id de cliente devuelve su nacionalidad*/
+CREATE FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente(@idCliente INT)
+RETURNS VARCHAR(255)
+AS
+BEGIN
+RETURN (SELECT c.nacionalidad FROM [PISOS_PICADOS].Cliente AS c WHERE c.idUsuario = @idCliente )
+END
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
