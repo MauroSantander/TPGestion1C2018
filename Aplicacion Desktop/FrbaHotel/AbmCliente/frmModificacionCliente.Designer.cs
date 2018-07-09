@@ -30,19 +30,19 @@
         {
             this.cbPaises = new System.Windows.Forms.ComboBox();
             this.labelPais = new System.Windows.Forms.Label();
-            this.Localidad = new System.Windows.Forms.TextBox();
+            this.txtLocalidad = new System.Windows.Forms.TextBox();
             this.labelLocalidad = new System.Windows.Forms.Label();
-            this.NroCalle = new System.Windows.Forms.TextBox();
+            this.txtNroCalle = new System.Windows.Forms.TextBox();
             this.labelNumeroCalle = new System.Windows.Forms.Label();
-            this.TipoId = new System.Windows.Forms.ComboBox();
-            this.FechaNacimiento = new System.Windows.Forms.DateTimePicker();
-            this.Calle = new System.Windows.Forms.TextBox();
-            this.Telefono = new System.Windows.Forms.TextBox();
-            this.Nacionalidad = new System.Windows.Forms.TextBox();
-            this.Mail = new System.Windows.Forms.TextBox();
-            this.nroId = new System.Windows.Forms.TextBox();
-            this.Apellido = new System.Windows.Forms.TextBox();
-            this.Nombre = new System.Windows.Forms.TextBox();
+            this.cbTipoId = new System.Windows.Forms.ComboBox();
+            this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
+            this.txtCalle = new System.Windows.Forms.TextBox();
+            this.txtTelefono = new System.Windows.Forms.TextBox();
+            this.txtNacionalidad = new System.Windows.Forms.TextBox();
+            this.txtMail = new System.Windows.Forms.TextBox();
+            this.txtNroId = new System.Windows.Forms.TextBox();
+            this.txtApellido = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.labelFechaNac = new System.Windows.Forms.Label();
             this.labelNacionalidad = new System.Windows.Forms.Label();
             this.labelCalle = new System.Windows.Forms.Label();
@@ -57,6 +57,8 @@
             // 
             // cbPaises
             // 
+            this.cbPaises.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbPaises.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbPaises.FormattingEnabled = true;
             this.cbPaises.Location = new System.Drawing.Point(176, 355);
             this.cbPaises.Name = "cbPaises";
@@ -72,12 +74,12 @@
             this.labelPais.TabIndex = 67;
             this.labelPais.Text = "País:";
             // 
-            // Localidad
+            // txtLocalidad
             // 
-            this.Localidad.Location = new System.Drawing.Point(176, 315);
-            this.Localidad.Name = "Localidad";
-            this.Localidad.Size = new System.Drawing.Size(100, 20);
-            this.Localidad.TabIndex = 53;
+            this.txtLocalidad.Location = new System.Drawing.Point(176, 315);
+            this.txtLocalidad.Name = "txtLocalidad";
+            this.txtLocalidad.Size = new System.Drawing.Size(100, 20);
+            this.txtLocalidad.TabIndex = 53;
             // 
             // labelLocalidad
             // 
@@ -88,12 +90,12 @@
             this.labelLocalidad.TabIndex = 66;
             this.labelLocalidad.Text = "Localidad:";
             // 
-            // NroCalle
+            // txtNroCalle
             // 
-            this.NroCalle.Location = new System.Drawing.Point(176, 275);
-            this.NroCalle.Name = "NroCalle";
-            this.NroCalle.Size = new System.Drawing.Size(100, 20);
-            this.NroCalle.TabIndex = 52;
+            this.txtNroCalle.Location = new System.Drawing.Point(176, 275);
+            this.txtNroCalle.Name = "txtNroCalle";
+            this.txtNroCalle.Size = new System.Drawing.Size(100, 20);
+            this.txtNroCalle.TabIndex = 52;
             // 
             // labelNumeroCalle
             // 
@@ -104,86 +106,85 @@
             this.labelNumeroCalle.TabIndex = 65;
             this.labelNumeroCalle.Text = "Número:";
             // 
-            // TipoId
+            // cbTipoId
             // 
-            this.TipoId.AutoCompleteCustomSource.AddRange(new string[] {
-            "L. E/DNI",
-            "CARNET EXT.",
-            "RUC",
-            "PASAPORTE",
-            "P. NAC.",
-            "OTROS"});
-            this.TipoId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.TipoId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.TipoId.FormattingEnabled = true;
-            this.TipoId.Items.AddRange(new object[] {
+            this.cbTipoId.AutoCompleteCustomSource.AddRange(new string[] {
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
+            this.cbTipoId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbTipoId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.cbTipoId.FormattingEnabled = true;
+            this.cbTipoId.Items.AddRange(new object[] {
             "L. E/DNI",
             "CARNET EXT.",
             "PASAPORTE"});
-            this.TipoId.Location = new System.Drawing.Point(179, 115);
-            this.TipoId.Name = "TipoId";
-            this.TipoId.Size = new System.Drawing.Size(100, 21);
-            this.TipoId.TabIndex = 47;
-            this.TipoId.Text = "Tipo";
+            this.cbTipoId.Location = new System.Drawing.Point(179, 115);
+            this.cbTipoId.Name = "cbTipoId";
+            this.cbTipoId.Size = new System.Drawing.Size(100, 21);
+            this.cbTipoId.TabIndex = 47;
+            this.cbTipoId.Text = "Tipo";
             // 
-            // FechaNacimiento
+            // dtpFechaNacimiento
             // 
-            this.FechaNacimiento.CustomFormat = "yyyy-MM-dd";
-            this.FechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.FechaNacimiento.Location = new System.Drawing.Point(179, 435);
-            this.FechaNacimiento.Name = "FechaNacimiento";
-            this.FechaNacimiento.Size = new System.Drawing.Size(200, 20);
-            this.FechaNacimiento.TabIndex = 56;
-            this.FechaNacimiento.Value = new System.DateTime(2018, 6, 28, 0, 0, 0, 0);
+            this.dtpFechaNacimiento.CustomFormat = "yyyy-MM-dd";
+            this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(179, 435);
+            this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
+            this.dtpFechaNacimiento.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaNacimiento.TabIndex = 56;
+            this.dtpFechaNacimiento.Value = new System.DateTime(2018, 6, 28, 0, 0, 0, 0);
             // 
-            // Calle
+            // txtCalle
             // 
-            this.Calle.Location = new System.Drawing.Point(176, 235);
-            this.Calle.Name = "Calle";
-            this.Calle.Size = new System.Drawing.Size(100, 20);
-            this.Calle.TabIndex = 51;
+            this.txtCalle.Location = new System.Drawing.Point(176, 235);
+            this.txtCalle.Name = "txtCalle";
+            this.txtCalle.Size = new System.Drawing.Size(100, 20);
+            this.txtCalle.TabIndex = 51;
             // 
-            // Telefono
+            // txtTelefono
             // 
-            this.Telefono.Location = new System.Drawing.Point(177, 195);
-            this.Telefono.Name = "Telefono";
-            this.Telefono.Size = new System.Drawing.Size(100, 20);
-            this.Telefono.TabIndex = 50;
+            this.txtTelefono.Location = new System.Drawing.Point(177, 195);
+            this.txtTelefono.Name = "txtTelefono";
+            this.txtTelefono.Size = new System.Drawing.Size(100, 20);
+            this.txtTelefono.TabIndex = 50;
             // 
-            // Nacionalidad
+            // txtNacionalidad
             // 
-            this.Nacionalidad.Location = new System.Drawing.Point(176, 395);
-            this.Nacionalidad.Name = "Nacionalidad";
-            this.Nacionalidad.Size = new System.Drawing.Size(100, 20);
-            this.Nacionalidad.TabIndex = 55;
+            this.txtNacionalidad.Location = new System.Drawing.Point(176, 395);
+            this.txtNacionalidad.Name = "txtNacionalidad";
+            this.txtNacionalidad.Size = new System.Drawing.Size(100, 20);
+            this.txtNacionalidad.TabIndex = 55;
             // 
-            // Mail
+            // txtMail
             // 
-            this.Mail.Location = new System.Drawing.Point(179, 155);
-            this.Mail.Name = "Mail";
-            this.Mail.Size = new System.Drawing.Size(100, 20);
-            this.Mail.TabIndex = 49;
+            this.txtMail.Location = new System.Drawing.Point(179, 155);
+            this.txtMail.Name = "txtMail";
+            this.txtMail.Size = new System.Drawing.Size(100, 20);
+            this.txtMail.TabIndex = 49;
             // 
-            // nroId
+            // txtNroId
             // 
-            this.nroId.Location = new System.Drawing.Point(317, 115);
-            this.nroId.Name = "nroId";
-            this.nroId.Size = new System.Drawing.Size(100, 20);
-            this.nroId.TabIndex = 48;
+            this.txtNroId.Location = new System.Drawing.Point(317, 115);
+            this.txtNroId.Name = "txtNroId";
+            this.txtNroId.Size = new System.Drawing.Size(100, 20);
+            this.txtNroId.TabIndex = 48;
             // 
-            // Apellido
+            // txtApellido
             // 
-            this.Apellido.Location = new System.Drawing.Point(179, 75);
-            this.Apellido.Name = "Apellido";
-            this.Apellido.Size = new System.Drawing.Size(100, 20);
-            this.Apellido.TabIndex = 46;
+            this.txtApellido.Location = new System.Drawing.Point(179, 75);
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(100, 20);
+            this.txtApellido.TabIndex = 46;
             // 
-            // Nombre
+            // txtNombre
             // 
-            this.Nombre.Location = new System.Drawing.Point(179, 35);
-            this.Nombre.Name = "Nombre";
-            this.Nombre.Size = new System.Drawing.Size(100, 20);
-            this.Nombre.TabIndex = 45;
+            this.txtNombre.Location = new System.Drawing.Point(179, 35);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(100, 20);
+            this.txtNombre.TabIndex = 45;
+            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
             // 
             // labelFechaNac
             // 
@@ -266,7 +267,7 @@
             this.btnAceptarModif2.TabIndex = 68;
             this.btnAceptarModif2.Text = "Aceptar";
             this.btnAceptarModif2.UseVisualStyleBackColor = true;
-            this.btnAceptarModif2.Click += new System.EventHandler(this.button1_Click);
+            this.btnAceptarModif2.Click += new System.EventHandler(this.btnAceptarModif);
             // 
             // btnCancelarModif2
             // 
@@ -287,19 +288,19 @@
             this.Controls.Add(this.btnAceptarModif2);
             this.Controls.Add(this.cbPaises);
             this.Controls.Add(this.labelPais);
-            this.Controls.Add(this.Localidad);
+            this.Controls.Add(this.txtLocalidad);
             this.Controls.Add(this.labelLocalidad);
-            this.Controls.Add(this.NroCalle);
+            this.Controls.Add(this.txtNroCalle);
             this.Controls.Add(this.labelNumeroCalle);
-            this.Controls.Add(this.TipoId);
-            this.Controls.Add(this.FechaNacimiento);
-            this.Controls.Add(this.Calle);
-            this.Controls.Add(this.Telefono);
-            this.Controls.Add(this.Nacionalidad);
-            this.Controls.Add(this.Mail);
-            this.Controls.Add(this.nroId);
-            this.Controls.Add(this.Apellido);
-            this.Controls.Add(this.Nombre);
+            this.Controls.Add(this.cbTipoId);
+            this.Controls.Add(this.dtpFechaNacimiento);
+            this.Controls.Add(this.txtCalle);
+            this.Controls.Add(this.txtTelefono);
+            this.Controls.Add(this.txtNacionalidad);
+            this.Controls.Add(this.txtMail);
+            this.Controls.Add(this.txtNroId);
+            this.Controls.Add(this.txtApellido);
+            this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.labelFechaNac);
             this.Controls.Add(this.labelNacionalidad);
             this.Controls.Add(this.labelCalle);
@@ -319,19 +320,19 @@
 
         private System.Windows.Forms.ComboBox cbPaises;
         private System.Windows.Forms.Label labelPais;
-        private System.Windows.Forms.TextBox Localidad;
+        private System.Windows.Forms.TextBox txtLocalidad;
         private System.Windows.Forms.Label labelLocalidad;
-        private System.Windows.Forms.TextBox NroCalle;
+        private System.Windows.Forms.TextBox txtNroCalle;
         private System.Windows.Forms.Label labelNumeroCalle;
-        private System.Windows.Forms.ComboBox TipoId;
-        private System.Windows.Forms.DateTimePicker FechaNacimiento;
-        private System.Windows.Forms.TextBox Calle;
-        private System.Windows.Forms.TextBox Telefono;
-        private System.Windows.Forms.TextBox Nacionalidad;
-        private System.Windows.Forms.TextBox Mail;
-        private System.Windows.Forms.TextBox nroId;
-        private System.Windows.Forms.TextBox Apellido;
-        private System.Windows.Forms.TextBox Nombre;
+        private System.Windows.Forms.ComboBox cbTipoId;
+        private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
+        private System.Windows.Forms.TextBox txtCalle;
+        private System.Windows.Forms.TextBox txtTelefono;
+        private System.Windows.Forms.TextBox txtNacionalidad;
+        private System.Windows.Forms.TextBox txtMail;
+        private System.Windows.Forms.TextBox txtNroId;
+        private System.Windows.Forms.TextBox txtApellido;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label labelFechaNac;
         private System.Windows.Forms.Label labelNacionalidad;
         private System.Windows.Forms.Label labelCalle;

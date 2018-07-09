@@ -121,18 +121,24 @@ namespace FrbaHotel.AbmCliente
 
                 int idUsuario =(int) getId.ExecuteScalar();
 
-                String cadenaBajaUsuario = "PISOS_PICADOS.bajaUsuario @idUsuario";
+                using (SqlConnection con = Globals.conexionGlobal)
+                {
+                    String cadenaBajaUsuario = "[PISOS_PICADOS].bajaUsuario";
 
-                SqlCommand comandoBajaUsuario = new SqlCommand(cadenaBajaUsuario, Globals.conexionGlobal);
-                comandoBajaUsuario.CommandType = CommandType.StoredProcedure;
+                    SqlCommand comandoBajaUsuario = new SqlCommand(cadenaBajaUsuario, Globals.conexionGlobal);
+                    comandoBajaUsuario.CommandType = CommandType.StoredProcedure;
 
 
-                comandoBajaUsuario.Parameters.Add("@idUsuario", SqlDbType.Int);
-                comandoBajaUsuario.Parameters["@idUsuario"].Value = idUsuario;
+                    comandoBajaUsuario.Parameters.Add("@idUsuario", SqlDbType.Int);
+                    comandoBajaUsuario.Parameters["@idUsuario"].Value = idUsuario;
 
-                comandoBajaUsuario.ExecuteReader().Close();
-                MessageBox.Show("Usuario eliminado correctamente");
+                    //SqlDataReader dr = comandoBajaUsuario.ExecuteReader();
+                    //dr.Close();
 
+                    comandoBajaUsuario.ExecuteNonQuery();
+
+                    MessageBox.Show("Usuario eliminado correctamente");
+                }
             }
 
             dataGridViewClientes.Rows.Remove(dataGridViewClientes.CurrentRow);
