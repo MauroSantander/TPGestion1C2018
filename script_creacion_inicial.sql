@@ -2464,7 +2464,7 @@ AS
 		OR es.descripcion='Reserva cancelada por No-Show')
 		AND DATEPART(QUARTER, mo.fecha) = @trimestre
 		AND DATEPART(YEAR, mo.fecha) = @anio
-	GROUP BY ho.idHotel,ho.nombre,ho.ciudad,ho.calle,ho.nroCalle,ho.estrellas
+	GROUP BY ho.idHotel,ho.nombre,ho.ciudad,ho.calle,ho.nroCalle,ho.estrellas,ho.pais
 	ORDER BY cantidad DESC)
 GO
 
@@ -2499,7 +2499,7 @@ CREATE FUNCTION [PISOS_PICADOS].hotelesConMasDiasDeBaja (@anio INT
 	,@fechaActual DATE)
 	RETURNS TABLE
 AS
-	RETURN(SELECT TOP 5 bh.idHotel AS IdHotel
+	RETURN(SELECT TOP 5 h.idHotel AS IdHotel
 		,SUM(CASE 
 				WHEN DATEPART(QUARTER, fechaInicio) = DATEPART(QUARTER, fechaFin)
 					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
@@ -2526,7 +2526,7 @@ AS
 			DATEPART(QUARTER, bh.fechaFin) = @trimestre
 			AND DATEPART(YEAR, bh.fechaFin) = @anio
 			)
-	GROUP BY h.idHotel
+	GROUP BY h.idHotel,h.calle,h.ciudad,h.pais,h.estrellas,h.nombre,h.nroCalle
 	ORDER BY diasbaja DESC)
 GO
 
