@@ -85,3 +85,4 @@ C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\ob
 C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHabitacion.frmHabitacion.resources
 C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmHabitacion.frmModificarHabitacion.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRegimen.frmRegimen.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.ListadoEstadistico.frmListadoEstadistico.resources

@@ -28,11 +28,148 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.dataGridResultados = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Trimestre = new System.Windows.Forms.NumericUpDown();
+            this.comboBoxAño = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxTops = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnConsulta = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridResultados)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Trimestre)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dataGridResultados
+            // 
+            this.dataGridResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridResultados.Location = new System.Drawing.Point(12, 172);
+            this.dataGridResultados.Name = "dataGridResultados";
+            this.dataGridResultados.Size = new System.Drawing.Size(590, 137);
+            this.dataGridResultados.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.Trimestre);
+            this.groupBox1.Controls.Add(this.comboBoxAño);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.comboBoxTops);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.btnConsulta);
+            this.groupBox1.Location = new System.Drawing.Point(12, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(590, 163);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Estadísticas";
+            // 
+            // Trimestre
+            // 
+            this.Trimestre.Location = new System.Drawing.Point(11, 126);
+            this.Trimestre.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.Trimestre.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Trimestre.Name = "Trimestre";
+            this.Trimestre.Size = new System.Drawing.Size(120, 20);
+            this.Trimestre.TabIndex = 7;
+            this.Trimestre.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // comboBoxAño
+            // 
+            this.comboBoxAño.FormattingEnabled = true;
+            this.comboBoxAño.Location = new System.Drawing.Point(10, 86);
+            this.comboBoxAño.Name = "comboBoxAño";
+            this.comboBoxAño.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxAño.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 110);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(50, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Trimestre";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 70);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(26, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Año";
+            // 
+            // comboBoxTops
+            // 
+            this.comboBoxTops.FormattingEnabled = true;
+            this.comboBoxTops.Location = new System.Drawing.Point(10, 45);
+            this.comboBoxTops.Name = "comboBoxTops";
+            this.comboBoxTops.Size = new System.Drawing.Size(382, 21);
+            this.comboBoxTops.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(225, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Seleccione la estadística que desea consultar";
+            // 
+            // btnConsulta
+            // 
+            this.btnConsulta.Location = new System.Drawing.Point(413, 41);
+            this.btnConsulta.Name = "btnConsulta";
+            this.btnConsulta.Size = new System.Drawing.Size(75, 26);
+            this.btnConsulta.TabIndex = 1;
+            this.btnConsulta.Text = "Consultar";
+            this.btnConsulta.UseVisualStyleBackColor = true;
+            this.btnConsulta.Click += new System.EventHandler(this.btnConsulta_Click);
+            // 
+            // frmListadoEstadistico
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(614, 321);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.dataGridResultados);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Name = "frmListadoEstadistico";
+            this.Text = "Listado Estadístico";
+            this.Load += new System.EventHandler(this.frmListadoEstadistico_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridResultados)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Trimestre)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridResultados;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox comboBoxTops;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnConsulta;
+        private System.Windows.Forms.NumericUpDown Trimestre;
+        private System.Windows.Forms.ComboBox comboBoxAño;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }

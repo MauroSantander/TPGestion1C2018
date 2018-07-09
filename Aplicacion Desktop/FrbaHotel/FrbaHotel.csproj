@@ -214,6 +214,9 @@
     <EmbeddedResource Include="AbmUsuario\Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ListadoEstadistico\frmListadoEstadistico.resx">
+      <DependentUpon>frmListadoEstadistico.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\frmElegirRol.resx">
       <DependentUpon>frmElegirRol.cs</DependentUpon>
     </EmbeddedResource>
