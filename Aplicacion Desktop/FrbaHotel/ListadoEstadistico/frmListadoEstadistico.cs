@@ -88,7 +88,7 @@ namespace FrbaHotel.ListadoEstadistico
             dataGridResultados.Columns.Clear();
             dataGridResultados.Rows.Clear();
             dataGridResultados.DataSource = dt;
-            dataGridResultados.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridResultados.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
         }
 

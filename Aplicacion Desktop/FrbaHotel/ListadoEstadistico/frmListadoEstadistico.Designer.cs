@@ -45,9 +45,9 @@
             // dataGridResultados
             // 
             this.dataGridResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridResultados.Location = new System.Drawing.Point(12, 172);
+            this.dataGridResultados.Location = new System.Drawing.Point(12, 91);
             this.dataGridResultados.Name = "dataGridResultados";
-            this.dataGridResultados.Size = new System.Drawing.Size(590, 155);
+            this.dataGridResultados.Size = new System.Drawing.Size(815, 155);
             this.dataGridResultados.TabIndex = 0;
             // 
             // groupBox1
@@ -61,14 +61,14 @@
             this.groupBox1.Controls.Add(this.btnConsulta);
             this.groupBox1.Location = new System.Drawing.Point(12, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(590, 163);
+            this.groupBox1.Size = new System.Drawing.Size(815, 82);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Estadísticas";
             // 
             // Trimestre
             // 
-            this.Trimestre.Location = new System.Drawing.Point(11, 126);
+            this.Trimestre.Location = new System.Drawing.Point(542, 45);
             this.Trimestre.Maximum = new decimal(new int[] {
             4,
             0,
@@ -91,7 +91,7 @@
             // comboBoxAño
             // 
             this.comboBoxAño.FormattingEnabled = true;
-            this.comboBoxAño.Location = new System.Drawing.Point(10, 86);
+            this.comboBoxAño.Location = new System.Drawing.Point(407, 45);
             this.comboBoxAño.Name = "comboBoxAño";
             this.comboBoxAño.Size = new System.Drawing.Size(121, 21);
             this.comboBoxAño.TabIndex = 6;
@@ -99,7 +99,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 110);
+            this.label3.Location = new System.Drawing.Point(539, 19);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 13);
             this.label3.TabIndex = 5;
@@ -108,7 +108,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 70);
+            this.label2.Location = new System.Drawing.Point(404, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 4;
@@ -133,7 +133,7 @@
             // 
             // btnConsulta
             // 
-            this.btnConsulta.Location = new System.Drawing.Point(413, 41);
+            this.btnConsulta.Location = new System.Drawing.Point(701, 39);
             this.btnConsulta.Name = "btnConsulta";
             this.btnConsulta.Size = new System.Drawing.Size(75, 26);
             this.btnConsulta.TabIndex = 1;
@@ -145,7 +145,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 339);
+            this.ClientSize = new System.Drawing.Size(839, 258);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridResultados);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
