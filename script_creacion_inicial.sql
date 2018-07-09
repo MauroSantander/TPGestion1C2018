@@ -2642,7 +2642,7 @@ AS
 GO
 
 /*Dado un id de cliente devuelve su nacionalidad*/
-CREATE FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente(@idCliente INT)
+CREATE FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente (@idCliente INT)
 RETURNS VARCHAR(255)
 AS
 BEGIN
