@@ -121,7 +121,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacion', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].hotelCumple', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].hotelCumple;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].habitacionQueCumple', N'NF') IS NOT NULL
+IF OBJECT_ID(N'[PISOS_PICADOS].habitacionQueCumple', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].habitacionQueCumple;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerHotelDeHabitacion', N'FN') IS NOT NULL
@@ -2447,6 +2447,12 @@ RETURNS TABLE
 AS
 	RETURN(SELECT TOP 5 ho.idHotel AS idHotel
 		,count(*) AS cantidad
+		,ho.nombre AS NombreHotel
+		,(Select p.nombrePais From [PISOS_PICADOS].Pais AS p Where p.idPais = ho.pais) AS NombrePais
+		,ho.ciudad AS Ciudad
+		,ho.calle AS Calle
+		,ho.nroCalle AS NroCalle
+		,ho.estrellas
 	FROM [PISOS_PICADOS].HabitacionxReserva AS hr
 	INNER JOIN [PISOS_PICADOS].Habitacion AS ha ON hr.idHabitacion = ha.idHabitacion
 	INNER JOIN [PISOS_PICADOS].Hotel AS ho ON ho.idHotel = ha.idHotel
@@ -2454,10 +2460,11 @@ AS
 	INNER JOIN [PISOS_PICADOS].Estado AS es ON re.estado = es.idEstado
 	INNER JOIN [PISOS_PICADOS].Modificacion AS mo ON es.idEstado = mo.estadoReserva
 	WHERE re.codigoReserva = hr.codigoReserva
-		AND es.descripcion = 'Cancelada'
+		AND (es.descripcion = 'Reserva cancelada por recepción' OR es.descripcion = 'Reserva cancelada por cliente'
+		OR es.descripcion='Reserva cancelada por No-Show')
 		AND DATEPART(QUARTER, mo.fecha) = @trimestre
 		AND DATEPART(YEAR, mo.fecha) = @anio
-	GROUP BY ho.idHotel
+	GROUP BY ho.idHotel,ho.nombre,ho.ciudad,ho.calle,ho.nroCalle,ho.estrellas
 	ORDER BY cantidad DESC)
 GO
 
