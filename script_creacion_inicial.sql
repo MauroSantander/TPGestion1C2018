@@ -3029,15 +3029,16 @@ GO
 
 CREATE PROCEDURE [PISOS_PICADOS].quitarRegimen @idHotel INT
 	,@idRegimen INT
+	,@fecha DATE
 AS
 BEGIN
 	IF NOT EXISTS (
 			SELECT codigoReserva
-			FROM [PISOS_PICADOS].Reservas
-			WHERE Reservas.codigoRegimen = @idRegimen
+			FROM [PISOS_PICADOS].Reserva
+			WHERE codigoRegimen = @idRegimen
 				AND (
-					fechaInicio > GetDate()
-					OR GetDate() BETWEEN fechaInicio
+					fechaInicio > @fecha
+					OR @fecha BETWEEN fechaInicio
 						AND fechaFin
 					)
 			)
@@ -3252,6 +3253,7 @@ GO
 
 CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasDiasDeBaja @anio INT
 	,@trimestre INT
+	,@fechaActual DATE
 AS
 BEGIN
 	SELECT TOP 5 bh.idHotel
@@ -3260,10 +3262,10 @@ BEGIN
 					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
 				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
 					AND DATEPART(QUARTER, fechaInicio) < @trimestre
-					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()), 0), fechaFin)
+					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaFin)
 				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
 					AND DATEPART(QUARTER, fechaFin) > @trimestre
-					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()) + 1, 0)))
+					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
 				END) AS diasbaja
 	FROM [PISOS_PICADOS].BajaHotel AS bh
 	WHERE (
@@ -3442,6 +3444,7 @@ GO
 
 CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias @anio INT
 	,@trimestre INT
+	,@fechaActual DATE
 AS
 BEGIN
 	SELECT TOP 5 ha.idHotel
@@ -3451,10 +3454,10 @@ BEGIN
 					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
 				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
 					AND DATEPART(QUARTER, fechaInicio) < @trimestre
-					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()), 0), fechaFin)
+					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaFin)
 				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
 					AND DATEPART(QUARTER, fechaFin) > @trimestre
-					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()) + 1, 0)))
+					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
 				END) AS dias
 	FROM [PISOS_PICADOS].Habitacion AS ha
 	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.idHabitacion = ha.idHabitacion
@@ -3478,6 +3481,7 @@ GO
 
 CREATE PROCEDURE [PISOS_PICADOS].topClientesPorPuntos @anio INT
 	,@trimestre INT
+	,@fechaActual DATE
 AS
 BEGIN
 	SELECT TOP 5 fact.cliente
@@ -3487,10 +3491,10 @@ BEGIN
 							THEN (DATEDIFF(DAY, es.fechaCheckIn, es.fechaCheckOut)) * [PISOS_PICADOS].precioRegimen(re.codigoRegimen) / 20
 						WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
 							AND DATEPART(QUARTER, fechaCheckIn) < @trimestre
-							THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()), 0), fechaCheckOut)
+							THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaCheckOut)
 						WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
 							AND DATEPART(QUARTER, fechaCheckOut) > @trimestre
-							THEN DATEDIFF(DAY, fechaCheckIn, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, GETDATE()) + 1, 0)))
+							THEN DATEDIFF(DAY, fechaCheckIn, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
 						END)
 				) AS BIGINT) AS puntos
 	FROM [PISOS_PICADOS].Factura AS fact
