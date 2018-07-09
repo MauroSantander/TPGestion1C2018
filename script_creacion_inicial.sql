@@ -88,6 +88,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDHotel', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDPais', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerIDPais;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerNombrePais', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerNombrePais;
+
 IF OBJECT_ID(N'[PISOS_PICADOS].esAdmin', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].esAdmin;
 
@@ -2056,6 +2059,19 @@ BEGIN
 			SELECT idPais
 			FROM [PISOS_PICADOS].Pais
 			WHERE nombrePais = @nombre
+			)
+END
+GO
+
+/* Dado un id de país informa su nombre Correspondiente*/
+CREATE FUNCTION [PISOS_PICADOS].obtenerNombrePais (@idPais INT)
+RETURNS VARCHAR(255)
+AS
+BEGIN
+	RETURN (
+			SELECT nombrePais
+			FROM [PISOS_PICADOS].Pais
+			WHERE idPais = @idPais
 			)
 END
 GO
