@@ -2288,12 +2288,12 @@ RETURNS INT
 AS
 BEGIN
 	RETURN (
-			SELECT TOP 1 idHabitacion
+			SELECT TOP (1) idHabitacion
 			FROM [PISOS_PICADOS].Habitacion
 			WHERE tipo = @tipo
 				AND idHotel = @idHotel
 				AND habilitada = 1
-				AND idHabitacion NOT IN (
+				AND idHabitacion  IN (
 					SELECT p.idHabitacion
 					FROM [PISOS_PICADOS].Reserva AS q
 					INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
