@@ -86,6 +86,15 @@ namespace FrbaHotel.Login
 
             if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 1 && respuestaVerificacionUsuarioDeshabilitado == 0)
             {
+                //guardo id usuario en Globals
+                SqlCommand getId = new SqlCommand("select idUsuario from [PISOS_PICADOS].Empleado where usuario = @username", Globals.conexionGlobal);
+                getId.Parameters.Add("@username", SqlDbType.VarChar);
+                getId.Parameters["@username"].Value = textBoxUsuario.Text;
+                int idUsr = (int)getId.ExecuteScalar();
+                Globals.setUsuarioSesion(idUsr);
+                
+                //continua 
+                
                 SqlCommand resetearIntentos = new SqlCommand("[PISOS_PICADOS].resetearIntentos", Globals.conexionGlobal);
                 resetearIntentos.CommandType = CommandType.StoredProcedure;
                 resetearIntentos.Parameters.Add("@usuarioEmpleado",SqlDbType.VarChar);
