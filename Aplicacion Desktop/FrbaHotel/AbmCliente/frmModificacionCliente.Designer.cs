@@ -135,6 +135,7 @@
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(200, 20);
             this.dtpFechaNacimiento.TabIndex = 56;
             this.dtpFechaNacimiento.Value = new System.DateTime(2018, 6, 28, 0, 0, 0, 0);
+            this.dtpFechaNacimiento.ValueChanged += new System.EventHandler(this.dtpFechaNacimiento_ValueChanged);
             // 
             // txtCalle
             // 
@@ -318,21 +319,9 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cbPaises;
         private System.Windows.Forms.Label labelPais;
-        private System.Windows.Forms.TextBox txtLocalidad;
         private System.Windows.Forms.Label labelLocalidad;
-        private System.Windows.Forms.TextBox txtNroCalle;
         private System.Windows.Forms.Label labelNumeroCalle;
-        private System.Windows.Forms.ComboBox cbTipoId;
-        private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
-        private System.Windows.Forms.TextBox txtCalle;
-        private System.Windows.Forms.TextBox txtTelefono;
-        private System.Windows.Forms.TextBox txtNacionalidad;
-        private System.Windows.Forms.TextBox txtMail;
-        private System.Windows.Forms.TextBox txtNroId;
-        private System.Windows.Forms.TextBox txtApellido;
-        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label labelFechaNac;
         private System.Windows.Forms.Label labelNacionalidad;
         private System.Windows.Forms.Label labelCalle;
@@ -343,5 +332,17 @@
         private System.Windows.Forms.Label labelNombre;
         private System.Windows.Forms.Button btnAceptarModif2;
         private System.Windows.Forms.Button btnCancelarModif2;
+        public System.Windows.Forms.ComboBox cbPaises;
+        public System.Windows.Forms.TextBox txtLocalidad;
+        public System.Windows.Forms.TextBox txtNroCalle;
+        public System.Windows.Forms.ComboBox cbTipoId;
+        public System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
+        public System.Windows.Forms.TextBox txtCalle;
+        public System.Windows.Forms.TextBox txtTelefono;
+        public System.Windows.Forms.TextBox txtNacionalidad;
+        public System.Windows.Forms.TextBox txtMail;
+        public System.Windows.Forms.TextBox txtNroId;
+        public System.Windows.Forms.TextBox txtApellido;
+        public System.Windows.Forms.TextBox txtNombre;
     }
 }

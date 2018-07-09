@@ -193,6 +193,28 @@ IF OBJECT_ID(N'[PISOS_PICADOS].obtenerRol', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDUsuario', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerIDUsuario;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasCancelaciones', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelesConMasCancelaciones;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasConsumiblesFacturados', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelesConMasConsumiblesFacturados;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasDiasDeBaja', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelesConMasDiasDeBaja;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasVeces', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasVeces;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasDias', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasDias;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topClientesPorPuntos', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].topClientesPorPuntos;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerNacionalidadCliente', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente;
+
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -272,26 +294,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].agregarConsumible', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].quitarConsumible', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].quitarConsumible;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasCancelaciones', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasConsumiblesFacturados', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasDiasDeBaja', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasDiasDeBaja;
-
 IF OBJECT_ID(N'[PISOS_PICADOS].registrarReserva', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].registrarReserva;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasVeces', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasDias', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].topClientesPorPuntos', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].topClientesPorPuntos;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].EliminarReservasNoEfectivizada', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada;
@@ -2056,7 +2060,6 @@ BEGIN
 END
 GO
 
-/*Funciones Hotel */
 /* Dada una ciudad calle y nroCalle devuelve el id de hotel correspondiente */
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDHotel (
 	@ciudad VARCHAR(255)
@@ -2098,7 +2101,8 @@ BEGIN
 END
 GO
 
-/*Devuelvo 1 si un hotel tiene una reserva para el el periodo de inicio y fin dados por parametro*/
+/*Devuelvo 1 si un hotel tiene una reserva para el periodo de inicio y fin dados por parametro. utilizado para saber si
+se puede dar de baja el hotel en tal fecha*/
 CREATE FUNCTION [PISOS_PICADOS].hotelTieneReservas (
 	@idHotel INT
 	,@fechaInicio DATE
@@ -2134,7 +2138,8 @@ BEGIN
 	RETURN 0;
 END
 GO
-
+/*Permite saber si un id de hotel se encuentra dado de baja(devuelve 1) en una determinada fecha 
+para saber si le se puede asignar o no una reserva  */
 CREATE FUNCTION [PISOS_PICADOS].habilitadoHotel (
 	@idHotel INT
 	,@fechaReserva DATE
@@ -2156,20 +2161,22 @@ BEGIN
 END
 GO
 
+/*Dado un id de reserva permite conocer su regimen */
 CREATE FUNCTION [PISOS_PICADOS].consultarRegimen (@idReserva INT)
 RETURNS VARCHAR(255)
 AS
 BEGIN
 	RETURN (
 			SELECT descripcion
-			FROM [PISOS_PICADOS].Regimen
-				,[PISOS_PICADOS].Reserva
-			WHERE codigoReserva = @idReserva
-				AND Regimen.codigoRegimen = Reserva.codigoRegimen
+			FROM [PISOS_PICADOS].Regimen AS r
+			JOIN [PISOS_PICADOS].Reserva AS re ON
+			r.codigoRegimen = re.codigoRegimen
+			WHERE re.codigoReserva = @idReserva
 			)
 END
 GO
 
+/*Dado una estadia devuelve el valor total para todos los consumibles*/
 CREATE FUNCTION [PISOS_PICADOS].netearConsumibles (@idEstadia INT)
 RETURNS NUMERIC(9, 2)
 AS
@@ -2184,6 +2191,7 @@ BEGIN
 END
 GO
 
+/*Dado un id de habitacion devuelve el id del hotel al que pertenece*/
 CREATE FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion (@idHabitacion INT)
 RETURNS INT
 AS
@@ -2196,6 +2204,7 @@ BEGIN
 END
 GO
 
+/*Dado un id de hotel devuelve el incremento por las estrellas del mismo*/
 CREATE FUNCTION [PISOS_PICADOS].incrementoHotel (@idHotelActual INT)
 RETURNS INT
 AS
@@ -2210,6 +2219,7 @@ BEGIN
 END
 GO
 
+/*Dado un codigo de régimen devuelve su precio*/
 CREATE FUNCTION [PISOS_PICADOS].precioRegimen (@codigoRegimen INT)
 RETURNS INT
 AS
@@ -2222,6 +2232,7 @@ BEGIN
 END
 GO
 
+/*Dado un tipo de habitacion, el regimen elegido y el id del hotel devuelve el total por dia de la habitacio */
 CREATE FUNCTION [PISOS_PICADOS].precioHabitacion (
 	@idTipo INT
 	,@idRegimen INT
@@ -2234,6 +2245,8 @@ BEGIN
 END
 GO
 
+/*Dada una fecha un hotel y una determinada cant de habitaciones de un tipo verifica si el hotel 
+puede cumplir la demanda en la fecha dada*/
 CREATE FUNCTION [PISOS_PICADOS].hotelCumple (
 	@cantHabitaciones INT
 	,@tipo INT
@@ -2254,17 +2267,18 @@ BEGIN
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
 						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-						WHERE @fechaReserva NOT BETWEEN fechaInicio
+						WHERE @fechaReserva  BETWEEN fechaInicio
 								AND fechaFin
 						)
 				)
 			)
 		RETURN 1;
-
 	RETURN 0;
 END
 GO
 
+/*Dado un hotel un tipo de habitacion y una fecha de reserva devuelve el id de la primera habiatcion 
+disponible del hotel con esas caracteristicas */
 CREATE FUNCTION [PISOS_PICADOS].habitacionQueCumple (
 	@tipo INT
 	,@idHotel INT
@@ -2274,12 +2288,12 @@ RETURNS INT
 AS
 BEGIN
 	RETURN (
-			SELECT idHabitacion
+			SELECT TOP (1) idHabitacion
 			FROM [PISOS_PICADOS].Habitacion
 			WHERE tipo = @tipo
 				AND idHotel = @idHotel
 				AND habilitada = 1
-				AND idHabitacion NOT IN (
+				AND idHabitacion  IN (
 					SELECT p.idHabitacion
 					FROM [PISOS_PICADOS].Reserva AS q
 					INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
@@ -2425,6 +2439,178 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].Hotel AS ht ON hb.idHotel = ht.idHotel
 		)
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].hotelesConMasCancelaciones (@anio INT
+	,@trimestre INT)
+RETURNS TABLE
+AS
+	RETURN(SELECT TOP 5 ho.idHotel
+		,count(*) AS cantidad
+	FROM [PISOS_PICADOS].HabitacionxReserva AS hr
+	INNER JOIN [PISOS_PICADOS].Habitacion AS ha ON hr.idHabitacion = ha.idHabitacion
+	INNER JOIN [PISOS_PICADOS].Hotel AS ho ON ho.idHotel = ha.idHotel
+		,[PISOS_PICADOS].Reserva AS re
+	INNER JOIN [PISOS_PICADOS].Estado AS es ON re.estado = es.idEstado
+	INNER JOIN [PISOS_PICADOS].Modificacion AS mo ON es.idEstado = mo.estadoReserva
+	WHERE re.codigoReserva = hr.codigoReserva
+		AND es.descripcion = 'Cancelada'
+		AND DATEPART(QUARTER, mo.fecha) = @trimestre
+		AND DATEPART(YEAR, mo.fecha) = @anio
+	GROUP BY ho.idHotel
+	ORDER BY cantidad DESC)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].hotelesConMasConsumiblesFacturados (@anio INT
+	,@trimestre INT)
+RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 hab.idHotel
+		,SUM(re.cantidad) AS consumibles
+	FROM [PISOS_PICADOS].RenglonFactura AS re
+	INNER JOIN [PISOS_PICADOS].Factura AS fa ON fa.numeroFactura = re.numeroFactura
+	INNER JOIN [PISOS_PICADOS].Estadia AS es ON fa.idEstadia = es.idEstadia
+	INNER JOIN [PISOS_PICADOS].Reserva AS res ON es.codigoReserva = res.codigoReserva
+		,[PISOS_PICADOS].HabitacionxReserva AS hr
+	INNER JOIN [PISOS_PICADOS].Habitacion AS hab ON hr.idHabitacion = hab.idHabitacion
+	WHERE res.codigoReserva = hr.codigoReserva
+		AND DATEPART(QUARTER, fa.fecha) = @trimestre
+		AND DATEPART(YEAR, fa.fecha) = @anio
+	GROUP BY hab.idHotel
+	ORDER BY consumibles DESC)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].hotelesConMasDiasDeBaja (@anio INT
+	,@trimestre INT
+	,@fechaActual DATE)
+	RETURNS TABLE
+AS
+	RETURN(SELECT TOP 5 bh.idHotel
+		,SUM(CASE 
+				WHEN DATEPART(QUARTER, fechaInicio) = DATEPART(QUARTER, fechaFin)
+					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
+				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
+					AND DATEPART(QUARTER, fechaInicio) < @trimestre
+					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaFin)
+				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
+					AND DATEPART(QUARTER, fechaFin) > @trimestre
+					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
+				END) AS diasbaja
+	FROM [PISOS_PICADOS].BajaHotel AS bh
+	WHERE (
+			DATEPART(QUARTER, bh.fechaInicio) = @trimestre
+			AND DATEPART(YEAR, bh.fechaInicio) = @anio
+			)
+		OR (
+			DATEPART(QUARTER, bh.fechaFin) = @trimestre
+			AND DATEPART(YEAR, bh.fechaFin) = @anio
+			)
+	GROUP BY bh.idHotel
+	ORDER BY diasbaja DESC)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasVeces (@anio INT
+	,@trimestre INT)
+	RETURNS TABLE
+AS
+	RETURN(SELECT TOP 5 ha.idHotel
+		,ha.idHabitacion
+		,count(*) AS veces
+	FROM [PISOS_PICADOS].Habitacion AS ha
+	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.idHabitacion = ha.idHabitacion
+		,[PISOS_PICADOS].Reserva AS re
+	WHERE re.codigoReserva = hr.codigoReserva
+		AND (
+			(
+				DATEPART(YEAR, re.fechaInicio) = @anio
+				AND (DATEPART(QUARTER, re.fechaInicio) = @trimestre)
+				OR (
+					DATEPART(YEAR, re.fechaFin) = @anio
+					AND DATEPART(QUARTER, re.fechaFin) = @trimestre
+					)
+				)
+			)
+	GROUP BY ha.idHotel
+		,ha.idHabitacion
+	ORDER BY veces DESC)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasDias (@anio INT
+	,@trimestre INT
+	,@fechaActual DATE)
+	RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 ha.idHotel
+		,ha.idHabitacion
+		,SUM(CASE 
+				WHEN DATEPART(QUARTER, fechaInicio) = DATEPART(QUARTER, fechaFin)
+					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
+				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
+					AND DATEPART(QUARTER, fechaInicio) < @trimestre
+					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaFin)
+				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
+					AND DATEPART(QUARTER, fechaFin) > @trimestre
+					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
+				END) AS dias
+	FROM [PISOS_PICADOS].Habitacion AS ha
+	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.idHabitacion = ha.idHabitacion
+		,[PISOS_PICADOS].Reserva AS re
+	WHERE re.codigoReserva = hr.codigoReserva
+		AND (
+			(
+				DATEPART(YEAR, re.fechaInicio) = @anio
+				AND (DATEPART(QUARTER, re.fechaInicio) = @trimestre)
+				OR (
+					DATEPART(YEAR, re.fechaFin) = @anio
+					AND DATEPART(QUARTER, re.fechaFin) = @trimestre
+					)
+				)
+			)
+	GROUP BY ha.idHotel
+		,ha.idHabitacion
+	ORDER BY dias DESC)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].topClientesPorPuntos (@anio INT
+	,@trimestre INT
+	,@fechaActual DATE)
+	RETURNS TABLE
+AS
+	RETURN (SELECT TOP 5 fact.cliente
+		,CAST((
+				SUM(reng.total) / 10 + SUM(CASE 
+						WHEN DATEPART(QUARTER, fechaCheckIn) = DATEPART(QUARTER, fechaCheckOut)
+							THEN (DATEDIFF(DAY, es.fechaCheckIn, es.fechaCheckOut)) * [PISOS_PICADOS].precioRegimen(re.codigoRegimen) / 20
+						WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
+							AND DATEPART(QUARTER, fechaCheckIn) < @trimestre
+							THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaCheckOut)
+						WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
+							AND DATEPART(QUARTER, fechaCheckOut) > @trimestre
+							THEN DATEDIFF(DAY, fechaCheckIn, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
+						END)
+				) AS BIGINT) AS puntos
+	FROM [PISOS_PICADOS].Factura AS fact
+	INNER JOIN [PISOS_PICADOS].RenglonFactura AS reng ON fact.numeroFactura = reng.numeroFactura
+		,[PISOS_PICADOS].Estadia AS es
+		,[PISOS_PICADOS].Reserva AS re
+	WHERE re.codigoReserva = es.codigoReserva
+		AND re.idCliente = fact.cliente
+		AND (
+			DATEPART(YEAR, fact.fecha) = @anio
+			AND DATEPART(QUARTER, fact.fecha) = @trimestre
+			)
+	GROUP BY fact.cliente
+	ORDER BY puntos DESC)
+GO
+
+/*Dado un id de cliente devuelve su nacionalidad*/
+CREATE FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente(@idCliente INT)
+RETURNS VARCHAR(255)
+AS
+BEGIN
+RETURN (SELECT c.nacionalidad FROM [PISOS_PICADOS].Cliente AS c WHERE c.idUsuario = @idCliente )
+END
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
@@ -3210,77 +3396,6 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones @anio INT
-	,@trimestre INT
-AS
-BEGIN
-	SELECT TOP 5 ho.idHotel
-		,count(*) AS cantidad
-	FROM [PISOS_PICADOS].HabitacionxReserva AS hr
-	INNER JOIN [PISOS_PICADOS].Habitacion AS ha ON hr.idHabitacion = ha.idHabitacion
-	INNER JOIN [PISOS_PICADOS].Hotel AS ho ON ho.idHotel = ha.idHotel
-		,[PISOS_PICADOS].Reserva AS re
-	INNER JOIN [PISOS_PICADOS].Estado AS es ON re.estado = es.idEstado
-	INNER JOIN [PISOS_PICADOS].Modificacion AS mo ON es.idEstado = mo.estadoReserva
-	WHERE re.codigoReserva = hr.codigoReserva
-		AND es.descripcion = 'Cancelada'
-		AND DATEPART(QUARTER, mo.fecha) = @trimestre
-		AND DATEPART(YEAR, mo.fecha) = @anio
-	GROUP BY ho.idHotel
-	ORDER BY cantidad DESC
-END
-GO
-
-CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados @anio INT
-	,@trimestre INT
-AS
-BEGIN
-	SELECT TOP 5 hab.idHotel
-		,SUM(re.cantidad) AS consumibles
-	FROM [PISOS_PICADOS].RenglonFactura AS re
-	INNER JOIN [PISOS_PICADOS].Factura AS fa ON fa.numeroFactura = re.numeroFactura
-	INNER JOIN [PISOS_PICADOS].Estadia AS es ON fa.idEstadia = es.idEstadia
-	INNER JOIN [PISOS_PICADOS].Reserva AS res ON es.codigoReserva = res.codigoReserva
-		,[PISOS_PICADOS].HabitacionxReserva AS hr
-	INNER JOIN [PISOS_PICADOS].Habitacion AS hab ON hr.idHabitacion = hab.idHabitacion
-	WHERE res.codigoReserva = hr.codigoReserva
-		AND DATEPART(QUARTER, fa.fecha) = @trimestre
-		AND DATEPART(YEAR, fa.fecha) = @anio
-	GROUP BY hab.idHotel
-	ORDER BY consumibles DESC
-END
-GO
-
-CREATE PROCEDURE [PISOS_PICADOS].hotelesConMasDiasDeBaja @anio INT
-	,@trimestre INT
-	,@fechaActual DATE
-AS
-BEGIN
-	SELECT TOP 5 bh.idHotel
-		,SUM(CASE 
-				WHEN DATEPART(QUARTER, fechaInicio) = DATEPART(QUARTER, fechaFin)
-					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
-				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
-					AND DATEPART(QUARTER, fechaInicio) < @trimestre
-					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaFin)
-				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
-					AND DATEPART(QUARTER, fechaFin) > @trimestre
-					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
-				END) AS diasbaja
-	FROM [PISOS_PICADOS].BajaHotel AS bh
-	WHERE (
-			DATEPART(QUARTER, bh.fechaInicio) = @trimestre
-			AND DATEPART(YEAR, bh.fechaInicio) = @anio
-			)
-		OR (
-			DATEPART(QUARTER, bh.fechaFin) = @trimestre
-			AND DATEPART(YEAR, bh.fechaFin) = @anio
-			)
-	GROUP BY bh.idHotel
-	ORDER BY diasbaja DESC
-END
-GO
-
 CREATE PROCEDURE [PISOS_PICADOS].registrarReserva @fechaReserva DATE
 	,@fechaInicio DATE
 	,@fechaFin DATE
@@ -3413,103 +3528,6 @@ BEGIN
 		SET @cont = @cont + 1
 	END
 END;
-GO
-
-CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces @anio INT
-	,@trimestre INT
-AS
-BEGIN
-	SELECT TOP 5 ha.idHotel
-		,ha.idHabitacion
-		,count(*) AS veces
-	FROM [PISOS_PICADOS].Habitacion AS ha
-	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.idHabitacion = ha.idHabitacion
-		,[PISOS_PICADOS].Reserva AS re
-	WHERE re.codigoReserva = hr.codigoReserva
-		AND (
-			(
-				DATEPART(YEAR, re.fechaInicio) = @anio
-				AND (DATEPART(QUARTER, re.fechaInicio) = @trimestre)
-				OR (
-					DATEPART(YEAR, re.fechaFin) = @anio
-					AND DATEPART(QUARTER, re.fechaFin) = @trimestre
-					)
-				)
-			)
-	GROUP BY ha.idHotel
-		,ha.idHabitacion
-	ORDER BY veces DESC
-END
-GO
-
-CREATE PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias @anio INT
-	,@trimestre INT
-	,@fechaActual DATE
-AS
-BEGIN
-	SELECT TOP 5 ha.idHotel
-		,ha.idHabitacion
-		,SUM(CASE 
-				WHEN DATEPART(QUARTER, fechaInicio) = DATEPART(QUARTER, fechaFin)
-					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
-				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
-					AND DATEPART(QUARTER, fechaInicio) < @trimestre
-					THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaFin)
-				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
-					AND DATEPART(QUARTER, fechaFin) > @trimestre
-					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
-				END) AS dias
-	FROM [PISOS_PICADOS].Habitacion AS ha
-	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.idHabitacion = ha.idHabitacion
-		,[PISOS_PICADOS].Reserva AS re
-	WHERE re.codigoReserva = hr.codigoReserva
-		AND (
-			(
-				DATEPART(YEAR, re.fechaInicio) = @anio
-				AND (DATEPART(QUARTER, re.fechaInicio) = @trimestre)
-				OR (
-					DATEPART(YEAR, re.fechaFin) = @anio
-					AND DATEPART(QUARTER, re.fechaFin) = @trimestre
-					)
-				)
-			)
-	GROUP BY ha.idHotel
-		,ha.idHabitacion
-	ORDER BY dias DESC
-END
-GO
-
-CREATE PROCEDURE [PISOS_PICADOS].topClientesPorPuntos @anio INT
-	,@trimestre INT
-	,@fechaActual DATE
-AS
-BEGIN
-	SELECT TOP 5 fact.cliente
-		,CAST((
-				SUM(reng.total) / 10 + SUM(CASE 
-						WHEN DATEPART(QUARTER, fechaCheckIn) = DATEPART(QUARTER, fechaCheckOut)
-							THEN (DATEDIFF(DAY, es.fechaCheckIn, es.fechaCheckOut)) * [PISOS_PICADOS].precioRegimen(re.codigoRegimen) / 20
-						WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
-							AND DATEPART(QUARTER, fechaCheckIn) < @trimestre
-							THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaCheckOut)
-						WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
-							AND DATEPART(QUARTER, fechaCheckOut) > @trimestre
-							THEN DATEDIFF(DAY, fechaCheckIn, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
-						END)
-				) AS BIGINT) AS puntos
-	FROM [PISOS_PICADOS].Factura AS fact
-	INNER JOIN [PISOS_PICADOS].RenglonFactura AS reng ON fact.numeroFactura = reng.numeroFactura
-		,[PISOS_PICADOS].Estadia AS es
-		,[PISOS_PICADOS].Reserva AS re
-	WHERE re.codigoReserva = es.codigoReserva
-		AND re.idCliente = fact.cliente
-		AND (
-			DATEPART(YEAR, fact.fecha) = @anio
-			AND DATEPART(QUARTER, fact.fecha) = @trimestre
-			)
-	GROUP BY fact.cliente
-	ORDER BY puntos DESC
-END
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada @fechaActual DATE
