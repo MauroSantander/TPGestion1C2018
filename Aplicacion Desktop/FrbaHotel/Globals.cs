@@ -11,6 +11,10 @@ namespace FrbaHotel
 {
     public static class Globals
     {
+        public static Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        public static AppSettingsSection app = config.AppSettings;
+        public static DateTime FechaDelSistema = DateTime.Parse(app.Settings["FechaDelSistema"].Value);
+
         public static SqlConnection conexionGlobal = new SqlConnection();
         public static Login.frmLogIn frmLogInInstance;
 
