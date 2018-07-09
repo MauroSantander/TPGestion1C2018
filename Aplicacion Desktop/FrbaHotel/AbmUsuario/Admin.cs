@@ -335,7 +335,7 @@ namespace FrbaHotel.AbmUsuario
         {
             chequearSiHayCamposIncompletosUPD();
             if (!validarEmail(mailUPD.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-           
+            
                 
             String cadenaAltaUsuario = "PISOS_PICADOS.modificarEmpleado";
 
@@ -343,6 +343,7 @@ namespace FrbaHotel.AbmUsuario
             comandoAltaUsuario.CommandType = CommandType.StoredProcedure;
 
             //agregar parametros
+            comandoAltaUsuario.Parameters.Add("@idAutor", SqlDbType.Int);
             comandoAltaUsuario.Parameters.Add("@idUsuario", SqlDbType.Int);
             comandoAltaUsuario.Parameters.Add("@username", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@password", SqlDbType.VarChar);
@@ -360,6 +361,7 @@ namespace FrbaHotel.AbmUsuario
             comandoAltaUsuario.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
          
             //cargar valores
+            comandoAltaUsuario.Parameters["@idAutor"].Value = Globals.idUsuarioSesion;
             comandoAltaUsuario.Parameters["@idUsuario"].Value = idUsrModificar;
             comandoAltaUsuario.Parameters["@username"].Value = usernameUPD.Text;
             comandoAltaUsuario.Parameters["@password"].Value = passUPD.Text;
