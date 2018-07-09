@@ -15,7 +15,7 @@ namespace FrbaHotel.AbmCliente
     public partial class frmCliente : Form
     {
 
-
+        Utils utilizador = new Utils();
 
         public frmCliente()
         {
@@ -67,19 +67,6 @@ namespace FrbaHotel.AbmCliente
             }
         }
 
-        private void BotonModifVerClientes_Click(object sender, EventArgs e)
-        {
-           
-            Utils c = new Utils();
-
-            //c.mostrarClientes(dataGridView2);
-               
-        }
-
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void BotonBaja_Click(object sender, EventArgs e)
         {
@@ -131,9 +118,6 @@ namespace FrbaHotel.AbmCliente
 
                     comandoBajaUsuario.Parameters.Add("@idUsuario", SqlDbType.Int);
                     comandoBajaUsuario.Parameters["@idUsuario"].Value = idUsuario;
-
-                    //SqlDataReader dr = comandoBajaUsuario.ExecuteReader();
-                    //dr.Close();
 
                     comandoBajaUsuario.ExecuteNonQuery();
 
@@ -249,42 +233,10 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        public bool estaRepetidoMail(String mail) 
-        {
-
-            String cadenaRepMail = "SELECT [PISOS_PICADOS].estaRepetidoMail (@mail)";
-            SqlCommand verificarMail = new SqlCommand(cadenaRepMail,Globals.conexionGlobal);
-
-            verificarMail.Parameters.Add("@mail",SqlDbType.VarChar);
-            verificarMail.Parameters["@mail"].Value = mail;
-
-            int resultado = (int)verificarMail.ExecuteScalar();
-
-            if (resultado == 1) { return true; }
-            else { return false; }
-        }
-
-        public bool estaRepetidoIdentificacion(int nroPasaporte, String tipoIdentificacion)
-        {
-            String cadenaRepID = "SELECT [PISOS_PICADOS].estaRepetido (@tipo, @numero)";
-            SqlCommand verificarIdentificacion = new SqlCommand(cadenaRepID, Globals.conexionGlobal);
-
-
-            verificarIdentificacion.Parameters.Add("@numero", SqlDbType.Int);
-            verificarIdentificacion.Parameters["@numero"].Value = nroPasaporte;
-
-            verificarIdentificacion.Parameters.Add("@tipo", SqlDbType.VarChar);
-            verificarIdentificacion.Parameters["@tipo"].Value = tipoIdentificacion;
-
-            int resultado = (int)verificarIdentificacion.ExecuteScalar();
-
-            if (resultado == 1) { return true; }
-            else { return false; }
-        }
-
+        
         private void BotonCrear_Click(object sender, EventArgs e)
         {
-            Utils utilizador = new Utils();
+            
 
             String NombreCliente = Nombre.Text;
             String ApellidoCliente = Apellido.Text;
@@ -293,7 +245,7 @@ namespace FrbaHotel.AbmCliente
             if (string.IsNullOrEmpty(nroId.Text)) {MessageBox.Show("Completar numero de id cliente"); return;}
             
             int NroIdCliente = int.Parse(nroId.Text);
-            String MailCliente = Mail.Text; //usar la clase Mail para chequeos
+            String MailCliente = Mail.Text;
             String TelefonoCliente = Telefono.Text;
             String CalleCliente = Calle.Text;
 
@@ -313,14 +265,14 @@ namespace FrbaHotel.AbmCliente
             if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (!validarEmail(Mail.Text) || estaRepetidoMail(Mail.Text)) { MessageBox.Show("Error en el mail", "Error"); return; }
+            if (!validarEmail(Mail.Text) || utilizador.estaRepetidoMail(Mail.Text)) { MessageBox.Show("Error en el mail", "Error"); return; }
             if (CalleCliente == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (LocalidadCliente == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-                if (estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
+                if (utilizador.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
                 {
                     MessageBox.Show("Identificación Repetida");
                     return;
@@ -355,14 +307,10 @@ namespace FrbaHotel.AbmCliente
             comandoAltaCliente.Parameters["@calle"].Value = CalleCliente;
             comandoAltaCliente.Parameters["@numeroC"].Value = NroCalleCliente;
             comandoAltaCliente.Parameters["@localidad"].Value = LocalidadCliente;
-            
-         //   int idPais = utilizador.obtenerIdPais(cbPaises.Text);
-            
             comandoAltaCliente.Parameters["@pais"].Value = cbPaises.Text;
             comandoAltaCliente.Parameters["@nacionalidad"].Value = NacionalidadCliente;
             comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");
             
-            //comandoAltaCliente.ExecuteReader().Close();
             comandoAltaCliente.ExecuteNonQuery();
             MessageBox.Show("Alta realizada correctamente");
             

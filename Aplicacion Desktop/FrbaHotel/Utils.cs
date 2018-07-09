@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-
+using System.Net.Mail;
 
 namespace FrbaHotel
 {
@@ -126,5 +126,38 @@ namespace FrbaHotel
             return idPais;
         }
 
+
+        public bool estaRepetidoMail(String mail)
+        {
+
+            String cadenaRepMail = "SELECT [PISOS_PICADOS].estaRepetidoMail (@mail)";
+            SqlCommand verificarMail = new SqlCommand(cadenaRepMail, Globals.conexionGlobal);
+
+            verificarMail.Parameters.Add("@mail", SqlDbType.VarChar);
+            verificarMail.Parameters["@mail"].Value = mail;
+
+            int resultado = (int)verificarMail.ExecuteScalar();
+
+            if (resultado == 1) { return true; }
+            else { return false; }
+        }
+
+        public bool estaRepetidoIdentificacion(int nroPasaporte, String tipoIdentificacion)
+        {
+            String cadenaRepID = "SELECT [PISOS_PICADOS].estaRepetido (@tipo, @numero)";
+            SqlCommand verificarIdentificacion = new SqlCommand(cadenaRepID, Globals.conexionGlobal);
+
+
+            verificarIdentificacion.Parameters.Add("@numero", SqlDbType.Int);
+            verificarIdentificacion.Parameters["@numero"].Value = nroPasaporte;
+
+            verificarIdentificacion.Parameters.Add("@tipo", SqlDbType.VarChar);
+            verificarIdentificacion.Parameters["@tipo"].Value = tipoIdentificacion;
+
+            int resultado = (int)verificarIdentificacion.ExecuteScalar();
+
+            if (resultado == 1) { return true; }
+            else { return false; }
+        }
     }
 }
