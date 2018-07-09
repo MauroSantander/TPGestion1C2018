@@ -2485,10 +2485,9 @@ AS
 	INNER JOIN [PISOS_PICADOS].Factura AS fa ON fa.numeroFactura = re.numeroFactura
 	INNER JOIN [PISOS_PICADOS].Estadia AS es ON fa.idEstadia = es.idEstadia
 	INNER JOIN [PISOS_PICADOS].Reserva AS res ON es.codigoReserva = res.codigoReserva
-		,[PISOS_PICADOS].HabitacionxReserva AS hr
+	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.codigoReserva = res.codigoReserva
 	INNER JOIN [PISOS_PICADOS].Habitacion AS hab ON hr.idHabitacion = hab.idHabitacion
-	WHERE res.codigoReserva = hr.codigoReserva
-		AND DATEPART(QUARTER, fa.fecha) = @trimestre
+	WHERE DATEPART(QUARTER, fa.fecha) = @trimestre
 		AND DATEPART(YEAR, fa.fecha) = @anio
 	GROUP BY hab.idHotel
 	ORDER BY consumibles DESC)
