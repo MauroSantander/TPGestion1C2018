@@ -9,49 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using System.Net.Mail;
 
 
 namespace FrbaHotel.AbmCliente
 {
     public partial class frmModificacionCliente : Form
     {
+
+        Utils c = new Utils();
+
         public frmModificacionCliente()
         {
             InitializeComponent();
-        }
 
-
-        public bool estaRepetidoMail(String mail) 
-        {
-
-            String cadenaRepMail = "SELECT [PISOS_PICADOS].estaRepetidoMail (@mail)";
-            SqlCommand verificarMail = new SqlCommand(cadenaRepMail,Globals.conexionGlobal);
-
-            verificarMail.Parameters.Add("@mail",SqlDbType.VarChar);
-            verificarMail.Parameters["@mail"].Value = mail;
-
-            int resultado = (int)verificarMail.ExecuteScalar();
-
-            if (resultado == 1) { return true; }
-            else { return false; }
-        }
-
-        public bool estaRepetidoIdentificacion(int nroPasaporte, String tipoIdentificacion)
-        {
-            String cadenaRepID = "SELECT [PISOS_PICADOS].estaRepetido (@tipo, @numero)";
-            SqlCommand verificarIdentificacion = new SqlCommand(cadenaRepID, Globals.conexionGlobal);
-
-
-            verificarIdentificacion.Parameters.Add("@numero", SqlDbType.Int);
-            verificarIdentificacion.Parameters["@numero"].Value = nroPasaporte;
-
-            verificarIdentificacion.Parameters.Add("@tipo", SqlDbType.VarChar);
-            verificarIdentificacion.Parameters["@tipo"].Value = tipoIdentificacion;
-
-            int resultado = (int)verificarIdentificacion.ExecuteScalar();
-
-            if (resultado == 1) { return true; }
-            else { return false; }
         }
 
         static bool validarEmail(string email)
@@ -94,7 +65,11 @@ namespace FrbaHotel.AbmCliente
 
             string selectDateAsString = dtpFechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-            Utils c = new Utils();
+            string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
+
+            SqlCommand getId = new SqlCommand(fObtenerId, Globals.conexionGlobal);
+
+            int idUsuario = (int)getId.ExecuteScalar();
 
             //chequeos
 
@@ -103,23 +78,28 @@ namespace FrbaHotel.AbmCliente
             if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (!validarEmail(MailCliente) || estaRepetidoMail(MailCliente)) { MessageBox.Show("Error en el mail", "Error"); return; }
+            if (!validarEmail(MailCliente) || c.estaRepetidoMail(MailCliente)) { MessageBox.Show("Error en el mail", "Error"); return; }
             if (CalleCliente == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (LocalidadCliente == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-            if (estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
+            if (c.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
             {
                 MessageBox.Show("Identificación Repetida");
                 return;
             }
 
+            String cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
 
+            SqlCommand obtenerEstado = new SqlCommand(cadenaObtenerEstado,Globals.conexionGlobal);
 
+            obtenerEstado.Parameters.Add("@idUsuario", SqlDbType.Int);
+            obtenerEstado.Parameters["@idUsuario"].Value = idUsuario;
 
-            
+            int estadoCliente = (int)obtenerEstado.ExecuteScalar();
+
             String cadenaProcedureModif = "[PISOS_PICADOS].SPModificarCliente";
 
             SqlCommand cmd = new SqlCommand(cadenaProcedureModif,Globals.conexionGlobal);
@@ -138,11 +118,11 @@ namespace FrbaHotel.AbmCliente
             cmd.Parameters.Add("@pais", SqlDbType.VarChar);
             cmd.Parameters.Add("@nacionalidad", SqlDbType.VarChar);
             cmd.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
-            cmd.Parameters.Add("@estado", SqlDbType.Bit);
+            cmd.Parameters.Add("@estado", SqlDbType.Int);
 
 
             //valores de los parametros
-            ////////////cmd.Parameters["@idUsuario"].Value = ; ////////
+            cmd.Parameters["@idUsuario"].Value = idUsuario;
             cmd.Parameters["@nombre"].Value = NombreCliente;
             cmd.Parameters["@apellido"].Value = ApellidoCliente;
             cmd.Parameters["@tipo"].Value = TipoIdCliente;
@@ -153,9 +133,9 @@ namespace FrbaHotel.AbmCliente
             cmd.Parameters["@numeroC"].Value = int.Parse(txtCalle.Text);
             cmd.Parameters["@localidad"].Value = LocalidadCliente;
             cmd.Parameters["@pais"].Value = cbPaises.Text;
-            cmd.Parameters["@nacionalidad"].Value = NacionalidadCliente; 
-            cmd.Parameters["@fechaNacimiento"].Value = txtNombre.Text; //ver porque es DATE
-            cmd.Parameters["@estado"].Value = txtNombre.Text; //ver porque es BIT
+            cmd.Parameters["@nacionalidad"].Value = NacionalidadCliente;
+            cmd.Parameters["@fechaNacimiento"].Value = dtpFechaNacimiento.Value; //ver porque es DATE
+            cmd.Parameters["@estado"].Value = estadoCliente;
           
         }
 
@@ -165,6 +145,11 @@ namespace FrbaHotel.AbmCliente
         }
 
         private void txtNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtpFechaNacimiento_ValueChanged(object sender, EventArgs e)
         {
 
         }

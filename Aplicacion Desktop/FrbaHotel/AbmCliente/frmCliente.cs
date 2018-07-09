@@ -71,18 +71,6 @@ namespace FrbaHotel.AbmCliente
         private void BotonBaja_Click(object sender, EventArgs e)
         {
 
-            /*String NombreCliente = (String)dataGridViewClientes.CurrentRow.Cells["nombre"].Value;
-            String ApellidoCliente = (String)dataGridViewClientes.CurrentRow.Cells["apellido"].Value;
-            String TipoIdCliente = (String)dataGridViewClientes.CurrentRow.Cells["tipoIdentificacion"].Value;
-            int NroIdCliente = (int)dataGridViewClientes.CurrentRow.Cells["numeroIdentificacion"].Value;
-            String MailCliente = (String)dataGridViewClientes.CurrentRow.Cells["mail"].Value; ;
-            String TelefonoCliente = (String)dataGridViewClientes.CurrentRow.Cells["telefono"].Value;
-            String CalleCliente = (String)dataGridViewClientes.CurrentRow.Cells["calle"].Value;
-            int NroCalleCliente = (int)dataGridViewClientes.CurrentRow.Cells["nroCalle"].Value; ;
-            String LocalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["localidad"].Value;
-            String PaisCliente = (String)dataGridViewClientes.CurrentRow.Cells["pais"].Value;
-            String NacionalidadCliente = (String)dataGridViewClientes.CurrentRow.Cells["nacionalidad"].Value;
-            */
             if (dataGridViewClientes.CurrentRow == null) return;
 
             int id = Convert.ToInt32(dataGridViewClientes.CurrentRow.Cells["numeroIdentificacion"].Value);
@@ -591,7 +579,36 @@ namespace FrbaHotel.AbmCliente
         private void btnSeleccionar_Click(object sender, EventArgs e)
         {
 
-            frmModificacionCliente modificacion = new frmModificacionCliente(); //fijarme si paso por parametro el formulario que lo invoca para los datos necesarios
+            frmModificacionCliente modificacion = new frmModificacionCliente();
+            //fijarme si paso por parametro el formulario que lo invoca para los datos necesarios
+
+            String NombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nombre"].Value;
+            String ApellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
+            String TipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["tipoIdentificacion"].Value;
+           // String NroIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
+            String MailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["mail"].Value; ;
+            String TelefonoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["telefono"].Value;
+            String CalleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["calle"].Value;
+          //  String NroCalleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nroCalle"].Value; ;//modificado a string para poder usar el contenido
+            String LocalidadClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["localidad"].Value;
+            String PaisClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["pais"].Value;
+            String NacionalidadClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nacionalidad"].Value;
+            String FechaNacimientoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["fechaNacimiento"].Value;
+
+
+
+           modificacion.txtNombre.Text = NombreClienteFila;
+           modificacion.txtApellido.Text = ApellidoClienteFila;
+           modificacion.cbTipoId.Text = TipoIdClienteFila;
+           //modificacion.txtNroId.Text = NroIdClienteFila;
+           modificacion.txtMail.Text = MailClienteFila;
+           modificacion.txtTelefono.Text = TelefonoClienteFila;
+           modificacion.txtCalle.Text = CalleClienteFila;
+           //modificacion.txtNroCalle.Text = NroCalleClienteFila;
+           modificacion.txtLocalidad.Text = LocalidadClienteFila;
+           modificacion.txtNacionalidad.Text = NacionalidadClienteFila;
+           modificacion.dtpFechaNacimiento.Value = DateTime.Parse(FechaNacimientoClienteFila);
+            
             modificacion.Show();
 
         }
