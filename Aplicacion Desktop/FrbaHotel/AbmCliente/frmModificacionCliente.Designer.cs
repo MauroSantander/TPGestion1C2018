@@ -59,11 +59,13 @@
             // 
             this.cbPaises.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbPaises.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbPaises.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPaises.FormattingEnabled = true;
             this.cbPaises.Location = new System.Drawing.Point(176, 355);
             this.cbPaises.Name = "cbPaises";
             this.cbPaises.Size = new System.Drawing.Size(101, 21);
             this.cbPaises.TabIndex = 54;
+            this.cbPaises.SelectedIndexChanged += new System.EventHandler(this.cbPaises_SelectedIndexChanged);
             // 
             // labelPais
             // 
@@ -113,8 +115,8 @@
             "L.E",
             "Carnet Ext.",
             "Pasaporte"});
-            this.cbTipoId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbTipoId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.cbTipoId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoId.FormattingEnabled = true;
             this.cbTipoId.Items.AddRange(new object[] {
             "L. E/DNI",
@@ -124,7 +126,6 @@
             this.cbTipoId.Name = "cbTipoId";
             this.cbTipoId.Size = new System.Drawing.Size(100, 21);
             this.cbTipoId.TabIndex = 47;
-            this.cbTipoId.Text = "Tipo";
             // 
             // dtpFechaNacimiento
             // 
@@ -312,6 +313,7 @@
             this.Controls.Add(this.labelNombre);
             this.Name = "frmModificacionCliente";
             this.Text = "frmModificacionCliente";
+            this.Load += new System.EventHandler(this.frmModificacionCliente_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
