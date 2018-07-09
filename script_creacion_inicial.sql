@@ -121,7 +121,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacion', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].hotelCumple', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].hotelCumple;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].habitacionQueCumple', N'FN') IS NOT NULL
+IF OBJECT_ID(N'[PISOS_PICADOS].habitacionQueCumple', N'NF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].habitacionQueCumple;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerHotelDeHabitacion', N'FN') IS NOT NULL
@@ -2303,7 +2303,8 @@ BEGIN
 			);
 END
 GO
-
+/* infroma si un cliente dado su nombre apellido y numero de identificacion esta habilitado
+devuelve(1) */
 CREATE FUNCTION [PISOS_PICADOS].habilitadoCLiente (
 	@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -2444,7 +2445,7 @@ CREATE FUNCTION [PISOS_PICADOS].hotelesConMasCancelaciones (@anio INT
 	,@trimestre INT)
 RETURNS TABLE
 AS
-	RETURN(SELECT TOP 5 ho.idHotel
+	RETURN(SELECT TOP 5 ho.idHotel AS idHotel
 		,count(*) AS cantidad
 	FROM [PISOS_PICADOS].HabitacionxReserva AS hr
 	INNER JOIN [PISOS_PICADOS].Habitacion AS ha ON hr.idHabitacion = ha.idHabitacion
@@ -2464,7 +2465,7 @@ CREATE FUNCTION [PISOS_PICADOS].hotelesConMasConsumiblesFacturados (@anio INT
 	,@trimestre INT)
 RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 hab.idHotel
+	RETURN (SELECT TOP 5 hab.idHotel AS IdHotel
 		,SUM(re.cantidad) AS consumibles
 	FROM [PISOS_PICADOS].RenglonFactura AS re
 	INNER JOIN [PISOS_PICADOS].Factura AS fa ON fa.numeroFactura = re.numeroFactura
@@ -2472,6 +2473,7 @@ AS
 	INNER JOIN [PISOS_PICADOS].Reserva AS res ON es.codigoReserva = res.codigoReserva
 		,[PISOS_PICADOS].HabitacionxReserva AS hr
 	INNER JOIN [PISOS_PICADOS].Habitacion AS hab ON hr.idHabitacion = hab.idHabitacion
+	INNER JOIN [PISOS_PICADOS].Hotel AS hote ON hab.idHotel = hote.idHotel
 	WHERE res.codigoReserva = hr.codigoReserva
 		AND DATEPART(QUARTER, fa.fecha) = @trimestre
 		AND DATEPART(YEAR, fa.fecha) = @anio
@@ -2484,7 +2486,7 @@ CREATE FUNCTION [PISOS_PICADOS].hotelesConMasDiasDeBaja (@anio INT
 	,@fechaActual DATE)
 	RETURNS TABLE
 AS
-	RETURN(SELECT TOP 5 bh.idHotel
+	RETURN(SELECT TOP 5 bh.idHotel AS IdHotel
 		,SUM(CASE 
 				WHEN DATEPART(QUARTER, fechaInicio) = DATEPART(QUARTER, fechaFin)
 					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
@@ -2496,6 +2498,7 @@ AS
 					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
 				END) AS diasbaja
 	FROM [PISOS_PICADOS].BajaHotel AS bh
+	INNER JOIN [PISOS_PICADOS].Hotel AS h ON bh.idHotel = h.idHotel
 	WHERE (
 			DATEPART(QUARTER, bh.fechaInicio) = @trimestre
 			AND DATEPART(YEAR, bh.fechaInicio) = @anio
@@ -2512,12 +2515,13 @@ CREATE FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasVeces (@anio INT
 	,@trimestre INT)
 	RETURNS TABLE
 AS
-	RETURN(SELECT TOP 5 ha.idHotel
-		,ha.idHabitacion
+	RETURN(SELECT TOP 5 ha.idHotel AS IdHotel
+		,ha.idHabitacion AS idHabitacion
 		,count(*) AS veces
 	FROM [PISOS_PICADOS].Habitacion AS ha
 	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.idHabitacion = ha.idHabitacion
-		,[PISOS_PICADOS].Reserva AS re
+	INNER JOIN [PISOS_PICADOS].Hotel AS h ON ha.idHotel = h.idHotel
+	,[PISOS_PICADOS].Reserva AS re
 	WHERE re.codigoReserva = hr.codigoReserva
 		AND (
 			(
