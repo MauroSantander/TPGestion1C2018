@@ -193,6 +193,24 @@ IF OBJECT_ID(N'[PISOS_PICADOS].obtenerRol', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDUsuario', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerIDUsuario;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasCancelaciones', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelesConMasCancelaciones;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasConsumiblesFacturados', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelesConMasConsumiblesFacturados;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasDiasDeBaja', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelesConMasDiasDeBaja;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasVeces', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasVeces;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasDias', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasDias;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].topClientesPorPuntos', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].topClientesPorPuntos;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -271,24 +289,6 @@ IF OBJECT_ID(N'[PISOS_PICADOS].agregarConsumible', N'P') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].quitarConsumible', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].quitarConsumible;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasCancelaciones', N'IF') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasCancelaciones;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasConsumiblesFacturados', N'IF') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasConsumiblesFacturados;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].hotelesConMasDiasDeBaja', N'IF') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].hotelesConMasDiasDeBaja;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasVeces', N'IF') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasVeces;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].topHabitacionesOcupadasDias', N'IF') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].topHabitacionesOcupadasDias;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].topClientesPorPuntos', N'IF') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].topClientesPorPuntos;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].registrarReserva', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].registrarReserva;
