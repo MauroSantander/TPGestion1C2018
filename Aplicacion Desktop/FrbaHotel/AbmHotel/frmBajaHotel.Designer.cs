@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBoxNombre = new System.Windows.Forms.TextBox();
+            this.textBoxId = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dateTimeDesde = new System.Windows.Forms.DateTimePicker();
             this.dateTimeHasta = new System.Windows.Forms.DateTimePicker();
             this.buttonBaja = new System.Windows.Forms.Button();
+            this.razon = new System.Windows.Forms.RichTextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -42,18 +44,19 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(124, 41);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 13);
+            this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre Hotel";
+            this.label1.Text = "ID Hotel";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBoxNombre
+            // textBoxId
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(61, 63);
-            this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.ReadOnly = true;
-            this.textBoxNombre.Size = new System.Drawing.Size(200, 20);
-            this.textBoxNombre.TabIndex = 1;
-            this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
+            this.textBoxId.Location = new System.Drawing.Point(61, 63);
+            this.textBoxId.Name = "textBoxId";
+            this.textBoxId.ReadOnly = true;
+            this.textBoxId.Size = new System.Drawing.Size(200, 20);
+            this.textBoxId.TabIndex = 1;
+            this.textBoxId.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
             // label2
             // 
@@ -91,7 +94,7 @@
             // 
             // buttonBaja
             // 
-            this.buttonBaja.Location = new System.Drawing.Point(112, 211);
+            this.buttonBaja.Location = new System.Drawing.Point(113, 312);
             this.buttonBaja.Name = "buttonBaja";
             this.buttonBaja.Size = new System.Drawing.Size(102, 38);
             this.buttonBaja.TabIndex = 6;
@@ -99,21 +102,42 @@
             this.buttonBaja.UseVisualStyleBackColor = true;
             this.buttonBaja.Click += new System.EventHandler(this.buttonBaja_Click);
             // 
+            // razon
+            // 
+            this.razon.Location = new System.Drawing.Point(90, 201);
+            this.razon.Name = "razon";
+            this.razon.Size = new System.Drawing.Size(214, 82);
+            this.razon.TabIndex = 8;
+            this.razon.Text = "";
+            this.razon.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 204);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Motivo:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
             // BajaHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(327, 261);
+            this.ClientSize = new System.Drawing.Size(327, 387);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.razon);
             this.Controls.Add(this.buttonBaja);
             this.Controls.Add(this.dateTimeHasta);
             this.Controls.Add(this.dateTimeDesde);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBoxNombre);
+            this.Controls.Add(this.textBoxId);
             this.Controls.Add(this.label1);
             this.Name = "BajaHotel";
             this.Text = "BajaHotel";
-            this.Load += new System.EventHandler(this.BajaHotel_Load);
+            this.Load += new System.EventHandler(this.frmBajaHotel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,11 +146,13 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxNombre;
+        private System.Windows.Forms.TextBox textBoxId;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimeDesde;
         private System.Windows.Forms.DateTimePicker dateTimeHasta;
         private System.Windows.Forms.Button buttonBaja;
+        private System.Windows.Forms.RichTextBox razon;
+        private System.Windows.Forms.Label label4;
     }
 }
