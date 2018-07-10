@@ -119,9 +119,10 @@
             this.cbTipoId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoId.FormattingEnabled = true;
             this.cbTipoId.Items.AddRange(new object[] {
-            "L. E/DNI",
-            "CARNET EXT.",
-            "PASAPORTE"});
+            "DNI",
+            "L.E",
+            "Carnet Ext.",
+            "Pasaporte"});
             this.cbTipoId.Location = new System.Drawing.Point(179, 115);
             this.cbTipoId.Name = "cbTipoId";
             this.cbTipoId.Size = new System.Drawing.Size(100, 21);

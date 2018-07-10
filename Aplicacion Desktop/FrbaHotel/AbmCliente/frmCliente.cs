@@ -631,10 +631,10 @@ namespace FrbaHotel.AbmCliente
            modificacion.txtMail.Text = MailClienteFila;
            modificacion.txtTelefono.Text = TelefonoClienteFila;
            modificacion.txtCalle.Text = CalleClienteFila;
-           //modificacion.txtNroCalle.Text = NroCalleClienteFila;
+           modificacion.txtNroCalle.Text = NroCalleClienteFila.ToString();
            modificacion.txtLocalidad.Text = LocalidadClienteFila;
            modificacion.txtNacionalidad.Text = NacionalidadClienteFila;
-//           modificacion.dtpFechaNacimiento.Value = DateTime.Parse(FechaNacimientoClienteFila);
+           //modificacion.dtpFechaNacimiento.Value = FechaNacimientoClienteFila.ToString();
             
             modificacion.Show();
 
