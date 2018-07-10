@@ -3437,13 +3437,13 @@ CREATE PROCEDURE [PISOS_PICADOS].cancelarReserva @codigoReserva INT
 AS
 BEGIN
 
-	IF 1 IN ([PISOS_PICADOS].obtenerRol(@idUsuario))  
+	IF 1 IN (select * FROM [PISOS_PICADOS].obtenerRol(@idUsuario))  
 	BEGIN
 	UPDATE [PISOS_PICADOS].Reserva
 	SET estado = 4
 	WHERE codigoReserva = @codigoReserva;
 	END 
-	IF 2 IN ([PISOS_PICADOS].obtenerRol(@idUsuario))
+	IF 2 IN (SELECT * FROM [PISOS_PICADOS].obtenerRol(@idUsuario))
 	BEGIN
 	UPDATE [PISOS_PICADOS].Reserva
 	SET estado = 3
