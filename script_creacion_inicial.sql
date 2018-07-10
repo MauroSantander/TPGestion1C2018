@@ -3451,11 +3451,15 @@ BEGIN
 	END 
 	
 	DELETE
-	FROM HabitacionxReserva
+	FROM [PISOS_PICADOS].HabitacionxReserva
 	WHERE codigoReserva = @codigoReserva
 
+	DELETE exc
+	FROM [PISOS_PICADOS].EstadiaxConsumible AS exc INNER JOIN Estadia AS e ON exc.idEstadia = e.idEstadia
+	WHERE e.codigoReserva = @codigoReserva
+
 	DELETE
-	FROM Estadia
+	FROM [PISOS_PICADOS].Estadia
 	WHERE codigoReserva = @codigoReserva
 
 END
