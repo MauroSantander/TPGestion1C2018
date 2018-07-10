@@ -154,6 +154,7 @@
             this.buttonNew.TabIndex = 83;
             this.buttonNew.Text = "Nuevo Hotel";
             this.buttonNew.UseVisualStyleBackColor = true;
+            this.buttonNew.Click += new System.EventHandler(this.buttonNew_Click);
             // 
             // buttonUpd
             // 
@@ -194,7 +195,7 @@
             this.label4.TabIndex = 87;
             this.label4.Text = "Seleccione un Hotel  para Baja/Modificación:";
             // 
-            // Hoteles
+            // frmHoteles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -214,7 +215,7 @@
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Hoteles";
+            this.Name = "frmHoteles";
             this.Text = "Hoteles";
             this.Load += new System.EventHandler(this.frmHoteles_Load);
             this.groupBox2.ResumeLayout(false);

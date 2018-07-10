@@ -46,8 +46,7 @@ namespace FrbaHotel
 
         private void btnABMUsuario_Click(object sender, EventArgs e)
         {
-            //(new FrbaHotel.AbmUsuario.Admin()).ShowDialog();
-            MessageBox.Show("falta corregir");
+            (new FrbaHotel.AbmUsuario.Admin()).ShowDialog();
         }
 
         private void btnABMHabitacion_Click(object sender, EventArgs e)

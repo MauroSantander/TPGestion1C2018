@@ -127,7 +127,7 @@ namespace FrbaHotel.AbmHotel
 
             while (reader2.Read())
             {
-                checkedListBoxRegimenesAgregar.Items.Add((reader["descripcion"]).ToString());
+                checkedListBoxRegimenesAgregar.Items.Add((reader2["descripcion"]).ToString());
             }
 
             reader2.Close();
