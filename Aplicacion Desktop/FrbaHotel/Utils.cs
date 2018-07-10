@@ -11,7 +11,7 @@ using System.Net.Mail;
 
 namespace FrbaHotel
 {
-   class Utils
+    class Utils
     {
         SqlCommand comando;
         SqlDataReader lector;
@@ -34,8 +34,8 @@ namespace FrbaHotel
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
         }
-      
-      public void mostrarUsuarios(DataGridView dgv)
+
+        public void mostrarUsuarios(DataGridView dgv)
         {
             try
             {
@@ -67,13 +67,13 @@ namespace FrbaHotel
             }
 
         }
-      
-       public void llenarDataGridView(DataGridView dgv, String tabla)
+
+        public void llenarDataGridView(DataGridView dgv, String tabla)
         {
             try
             {
 
-                adapter = new SqlDataAdapter("SELECT * FROM [PISOS_PICADOS]."+tabla, Globals.conexionGlobal);
+                adapter = new SqlDataAdapter("SELECT * FROM [PISOS_PICADOS]." + tabla, Globals.conexionGlobal);
                 dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 dgv.DataSource = dataTable;
@@ -84,11 +84,11 @@ namespace FrbaHotel
             }
         }
 
-       /* public void mostrarFuncionalidadesPara(Rol unRol, DataGridView dgv) 
-        { 
+        /* public void mostrarFuncionalidadesPara(Rol unRol, DataGridView dgv) 
+         { 
         
         
-        }*/
+         }*/
 
 
         public int verificarUsuario(String usuario, String contrasena)
@@ -102,14 +102,14 @@ namespace FrbaHotel
             SqlCommand verificar = new SqlCommand(stringVerificar, Globals.conexionGlobal);
             verificar.Parameters.Add("@usuario", SqlDbType.VarChar).Value = usuario;
             verificar.Parameters.Add("@contraseña", SqlDbType.VarChar).Value = contrasena;
-          
 
 
-               int result = verificar.ExecuteNonQuery(); 
+
+            int result = verificar.ExecuteNonQuery();
             //int result = Convert.ToInt32(verificar.ExecuteScalar());
-               Globals.conexionGlobal.Close();
+            Globals.conexionGlobal.Close();
 
-                return result;
+            return result;
 
         }
 
@@ -117,11 +117,11 @@ namespace FrbaHotel
         public int obtenerIdPais(String unPais)
         {
             SqlCommand queryIdPais = new SqlCommand("SELECT [PISOS_PICADOS].obtenerIDPais (@nombre)", Globals.conexionGlobal);
-            
+
             queryIdPais.Parameters.Add("@nombre", SqlDbType.VarChar);
             queryIdPais.Parameters["@nombre"].Value = unPais;
 
-            int idPais = (int) queryIdPais.ExecuteScalar();
+            int idPais = (int)queryIdPais.ExecuteScalar();
 
             return idPais;
         }
@@ -158,6 +158,39 @@ namespace FrbaHotel
 
             if (resultado == 1) { return true; }
             else { return false; }
+        }
+
+        public int obtenerIdUsuario(String nombre, String apellido, int nroIdentificacion)
+        {
+
+            string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
+            SqlCommand obtenerId = new SqlCommand(fObtenerId, Globals.conexionGlobal);
+            obtenerId.Parameters.Add("@nombre", SqlDbType.VarChar);
+            obtenerId.Parameters.Add("@apellido", SqlDbType.VarChar);
+            obtenerId.Parameters.Add("@numeroIdentificacion", SqlDbType.Int);
+
+            obtenerId.Parameters["@nombre"].Value = nombre;
+            obtenerId.Parameters["@apellido"].Value = apellido;
+            obtenerId.Parameters["@numeroIdentificacion"].Value = nroIdentificacion;
+
+            int idCliente = (int)obtenerId.ExecuteScalar();  //aca es donde falla porque viene con Null
+
+            return idCliente;
+        }
+
+        public int obtenerEstadoCliente(int idCliente)
+        {
+            String cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
+
+            SqlCommand obtenerEstado = new SqlCommand(cadenaObtenerEstado, Globals.conexionGlobal);
+
+            obtenerEstado.Parameters.Add("@idUsuario", SqlDbType.Int);
+            obtenerEstado.Parameters["@idUsuario"].Value = idCliente;
+
+            int estadoCliente = (int)obtenerEstado.ExecuteScalar();
+
+            return estadoCliente;
+
         }
     }
 }

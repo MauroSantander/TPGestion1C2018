@@ -184,7 +184,6 @@
             this.Localidad.Size = new System.Drawing.Size(100, 20);
             this.Localidad.TabIndex = 9;
             this.Localidad.TextChanged += new System.EventHandler(this.Localidad_TextChanged);
-            this.Localidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Localidad_KeyPress);
             // 
             // labelLocalidad
             // 
@@ -203,7 +202,7 @@
             this.NroCalle.Size = new System.Drawing.Size(100, 20);
             this.NroCalle.TabIndex = 8;
             this.NroCalle.TextChanged += new System.EventHandler(this.NroCalle_TextChanged);
-            this.NroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NroCalle_KeyPress);
+            this.NroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nroId_KeyPress);
             // 
             // labelNumeroCalle
             // 
@@ -242,7 +241,7 @@
             this.FechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.FechaNacimiento.Location = new System.Drawing.Point(158, 460);
             this.FechaNacimiento.Name = "FechaNacimiento";
-            this.FechaNacimiento.Size = new System.Drawing.Size(200, 20);
+            this.FechaNacimiento.Size = new System.Drawing.Size(100, 20);
             this.FechaNacimiento.TabIndex = 12;
             this.FechaNacimiento.Value = new System.DateTime(2018, 7, 10, 0, 0, 0, 0);
             this.FechaNacimiento.ValueChanged += new System.EventHandler(this.FechaNacimiento_ValueChanged);
@@ -254,7 +253,6 @@
             this.Calle.Size = new System.Drawing.Size(100, 20);
             this.Calle.TabIndex = 7;
             this.Calle.TextChanged += new System.EventHandler(this.Calle_TextChanged);
-            this.Calle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Calle_KeyPress);
             // 
             // Telefono
             // 
@@ -263,7 +261,7 @@
             this.Telefono.Size = new System.Drawing.Size(100, 20);
             this.Telefono.TabIndex = 6;
             this.Telefono.TextChanged += new System.EventHandler(this.Telefono_TextChanged);
-            this.Telefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Telefono_KeyPress);
+            this.Telefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nroId_KeyPress);
             // 
             // Nacionalidad
             // 
@@ -272,7 +270,7 @@
             this.Nacionalidad.Size = new System.Drawing.Size(100, 20);
             this.Nacionalidad.TabIndex = 11;
             this.Nacionalidad.TextChanged += new System.EventHandler(this.Nacionalidad_TextChanged);
-            this.Nacionalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nacionalidad_KeyPress);
+            this.Nacionalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
             // 
             // Mail
             // 
@@ -307,7 +305,7 @@
             this.Nombre.Size = new System.Drawing.Size(100, 20);
             this.Nombre.TabIndex = 1;
             this.Nombre.TextChanged += new System.EventHandler(this.Nombre_TextChanged);
-            this.Nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nombre_KeyPress);
+            this.Nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
             // 
             // BotonCancelar
             // 
@@ -481,27 +479,27 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(408, 73);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(26, 13);
+            this.label4.Size = new System.Drawing.Size(29, 13);
             this.label4.TabIndex = 61;
-            this.label4.Text = "Mail";
+            this.label4.Text = "Mail:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 104);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 13);
+            this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 60;
-            this.label3.Text = "Apellido";
+            this.label3.Text = "Apellido:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(13, 73);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 59;
-            this.label2.Text = "Nombre";
+            this.label2.Text = "Nombre:";
             // 
             // txtMailModif
             // 
@@ -525,7 +523,7 @@
             this.txtNombreModif.Size = new System.Drawing.Size(100, 20);
             this.txtNombreModif.TabIndex = 56;
             this.txtNombreModif.TextChanged += new System.EventHandler(this.txtNombreModif_TextChanged);
-            this.txtNombreModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nombre_KeyPress);
+            this.txtNombreModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
             // 
             // btnSeleccionar
             // 
@@ -566,18 +564,18 @@
             this.label31.AutoSize = true;
             this.label31.Location = new System.Drawing.Point(204, 104);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(100, 13);
+            this.label31.Size = new System.Drawing.Size(103, 13);
             this.label31.TabIndex = 51;
-            this.label31.Text = "N° de Identificación";
+            this.label31.Text = "N° de Identificación:";
             // 
             // label30
             // 
             this.label30.AutoSize = true;
             this.label30.Location = new System.Drawing.Point(204, 73);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(28, 13);
+            this.label30.Size = new System.Drawing.Size(45, 13);
             this.label30.TabIndex = 50;
-            this.label30.Text = "Tipo";
+            this.label30.Text = "Tipo ID:";
             // 
             // lblBuscarPor
             // 
@@ -616,9 +614,9 @@
             // 
             // btnCancelarBaja
             // 
-            this.btnCancelarBaja.Location = new System.Drawing.Point(440, 537);
+            this.btnCancelarBaja.Location = new System.Drawing.Point(469, 542);
             this.btnCancelarBaja.Name = "btnCancelarBaja";
-            this.btnCancelarBaja.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelarBaja.Size = new System.Drawing.Size(94, 33);
             this.btnCancelarBaja.TabIndex = 74;
             this.btnCancelarBaja.Text = "Cancelar";
             this.btnCancelarBaja.UseVisualStyleBackColor = true;
@@ -675,7 +673,7 @@
             this.textBoxNombre.Size = new System.Drawing.Size(100, 20);
             this.textBoxNombre.TabIndex = 68;
             this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
-            this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nombre_KeyPress);
+            this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
             // 
             // button2
             // 
