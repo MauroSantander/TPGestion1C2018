@@ -312,6 +312,7 @@
             this.Controls.Add(this.labelNroId);
             this.Controls.Add(this.labelApellido);
             this.Controls.Add(this.labelNombre);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmModificacionCliente";
             this.Text = "frmModificacionCliente";
             this.Load += new System.EventHandler(this.frmModificacionCliente_Load);

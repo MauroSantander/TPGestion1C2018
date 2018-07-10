@@ -23,6 +23,7 @@ namespace FrbaHotel.AbmCliente
         {
             InitializeComponent();
 
+            //Cargar paises en el comboBox cbPaises
             SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
 
             SqlDataReader reader = cmdBuscarPaises.ExecuteReader();
@@ -34,6 +35,11 @@ namespace FrbaHotel.AbmCliente
 
             reader.Close();
 
+        }
+
+        private void frmModificacionCliente_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen(); //centra el Formulario
         }
 
 
@@ -54,42 +60,32 @@ namespace FrbaHotel.AbmCliente
 
         private void btnAceptarModif(object sender, EventArgs e)
         {
-
-            String NombreCliente = txtNombre.Text;
-            String ApellidoCliente = txtApellido.Text;
             String TipoIdCliente = cbTipoId.Text;
-
             if (string.IsNullOrEmpty(txtNroId.Text)) { MessageBox.Show("Completar numero de id cliente"); return; }
-
             int NroIdCliente = int.Parse(txtNroId.Text);
-            String MailCliente = txtMail.Text; //usar la clase Mail para chequeos
             String TelefonoCliente = txtTelefono.Text;
             String CalleCliente = txtCalle.Text;
 
             if (string.IsNullOrEmpty(txtNroCalle.Text)) { MessageBox.Show("Completar numero de calle"); return; }
 
             int NroCalleCliente = int.Parse(txtNroCalle.Text);
-            String LocalidadCliente = txtLocalidad.Text;
-
-            String NacionalidadCliente = txtNacionalidad.Text;
-
+            
             DateTime FechaNacimientoCliente = dtpFechaNacimiento.Value;
-
+            
             string selectDateAsString = dtpFechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-            //chequeos
-
-            if (NombreCliente == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (ApellidoCliente == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            //Validaciones
+            if (txtNombre.Text == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (txtApellido.Text == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             //if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            //if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (!validarEmail(MailCliente) || c.estaRepetidoMail(MailCliente)) { MessageBox.Show("Error en el mail", "Error"); return; }
-            if (CalleCliente == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            //if (txtMail.Text == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (!validarEmail(txtMail.Text) || c.estaRepetidoMail(txtMail.Text)) { MessageBox.Show("Error en el mail", "Error"); return; }
+            if (txtCalle.Text == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (LocalidadCliente == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (txtLocalidad.Text == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (txtNacionalidad.Text == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
             /*
             if (c.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
@@ -99,21 +95,21 @@ namespace FrbaHotel.AbmCliente
             }
             */
 
-
+            //En esta secccion se busca obtener el estado del cliente
+            //Primero obtenemos su id con el objeto de usarlo para buscar en la BD
             string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
-
             SqlCommand obtenerId = new SqlCommand(fObtenerId, Globals.conexionGlobal);
-
             obtenerId.Parameters.Add("@nombre", SqlDbType.VarChar);
             obtenerId.Parameters.Add("@apellido", SqlDbType.VarChar);
             obtenerId.Parameters.Add("@numeroIdentificacion", SqlDbType.Int);
 
-            obtenerId.Parameters["@nombre"].Value = NombreCliente;
-            obtenerId.Parameters["@apellido"].Value = ApellidoCliente;
-            obtenerId.Parameters["@numeroIdentificacion"].Value = NroIdCliente;
+            obtenerId.Parameters["@nombre"].Value = txtNombre.Text;
+            obtenerId.Parameters["@apellido"].Value = txtApellido.Text;
+            obtenerId.Parameters["@numeroIdentificacion"].Value = int.Parse(txtNroId.Text);
 
-            int idUsuario = Convert.ToInt32 (obtenerId.ExecuteScalar());  //aca es donde falla porque viene con Null
-
+            int idUsuario = (int) obtenerId.ExecuteScalar();  //aca es donde falla porque viene con Null
+            //Luego de obtener su id, lo usamos como parámetro del sp que devuelve el estado de un cliente a partir
+            //de su id
 
             String cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
 
@@ -123,13 +119,15 @@ namespace FrbaHotel.AbmCliente
             obtenerEstado.Parameters["@idUsuario"].Value = idUsuario;
 
             int estadoCliente = (int) obtenerEstado.ExecuteScalar();
+            //fin seccion para obtener el estado del cliente
 
+            //comienza la seccion que utiliza el sp de modificar un usuario en la BD
             String cadenaProcedureModif = "[PISOS_PICADOS].SPModificarCliente";
 
             SqlCommand cmd = new SqlCommand(cadenaProcedureModif,Globals.conexionGlobal);
 
             //parametros
-            cmd.Parameters.Add("@idUsuario", SqlDbType.VarChar);
+            cmd.Parameters.Add("@idUsuario", SqlDbType.Int);
             cmd.Parameters.Add("@nombre",SqlDbType.VarChar);
             cmd.Parameters.Add("@apellido", SqlDbType.VarChar);
             cmd.Parameters.Add("@tipo", SqlDbType.VarChar);
@@ -147,20 +145,24 @@ namespace FrbaHotel.AbmCliente
 
             //valores de los parametros
             cmd.Parameters["@idUsuario"].Value = idUsuario;
-            cmd.Parameters["@nombre"].Value = NombreCliente;
-            cmd.Parameters["@apellido"].Value = ApellidoCliente;
+            cmd.Parameters["@nombre"].Value = txtNombre.Text;
+            cmd.Parameters["@apellido"].Value = txtApellido.Text;
             cmd.Parameters["@tipo"].Value = TipoIdCliente;
             cmd.Parameters["@numeroI"].Value = NroIdCliente;
-            cmd.Parameters["@mail"].Value = MailCliente;
+            cmd.Parameters["@mail"].Value = txtMail.Text;
             cmd.Parameters["@telefono"].Value = TelefonoCliente;
             cmd.Parameters["@calle"].Value = CalleCliente;
-            cmd.Parameters["@numeroC"].Value = int.Parse(txtCalle.Text);
-            cmd.Parameters["@localidad"].Value = LocalidadCliente;
+            cmd.Parameters["@numeroC"].Value = NroCalleCliente;
+            cmd.Parameters["@localidad"].Value = txtLocalidad.Text;
             cmd.Parameters["@pais"].Value = cbPaises.Text;
-            cmd.Parameters["@nacionalidad"].Value = NacionalidadCliente;
+            cmd.Parameters["@nacionalidad"].Value = txtNacionalidad.Text;
             cmd.Parameters["@fechaNacimiento"].Value = dtpFechaNacimiento.Value; //ver porque es DATE
             cmd.Parameters["@estado"].Value = estadoCliente;
-          
+
+            cmd.ExecuteNonQuery();
+
+            MessageBox.Show("Modificación realizada","Aceptar",MessageBoxButtons.OK);
+
         }
 
         private void btnCancelarModif2_Click(object sender, EventArgs e)
@@ -183,9 +185,6 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void frmModificacionCliente_Load(object sender, EventArgs e)
-        {
-            this.CenterToScreen();
-        }
+
     }
 }

@@ -244,7 +244,7 @@
             this.FechaNacimiento.Name = "FechaNacimiento";
             this.FechaNacimiento.Size = new System.Drawing.Size(200, 20);
             this.FechaNacimiento.TabIndex = 12;
-            this.FechaNacimiento.Value = new System.DateTime(2018, 6, 28, 0, 0, 0, 0);
+            this.FechaNacimiento.Value = new System.DateTime(2018, 7, 10, 0, 0, 0, 0);
             this.FechaNacimiento.ValueChanged += new System.EventHandler(this.FechaNacimiento_ValueChanged);
             // 
             // Calle
@@ -777,6 +777,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(585, 621);
             this.Controls.Add(this.tabCliente);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmCliente";
             this.Text = "ABM Cliente";
             this.Load += new System.EventHandler(this.Form1_Load);
