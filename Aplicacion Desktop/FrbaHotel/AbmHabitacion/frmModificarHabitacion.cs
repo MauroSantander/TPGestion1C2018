@@ -118,7 +118,7 @@ namespace FrbaHotel.AbmHabitacion
 
             //doy valor a los parámetros
             modificarHab.Parameters["@idHabitacion"].Value = habitacionAModificar;
-            modificarHab.Parameters["@numeroH"].Value = Int32.Parse(textBoxNumero.Text);
+            modificarHab.Parameters["@numeroH"].Value = Int64.Parse(textBoxNumero.Text);
             if (comboBoxUbicacion.Text == "Frente")
             {
                 modificarHab.Parameters["@frente"].Value = 'S';
@@ -128,7 +128,7 @@ namespace FrbaHotel.AbmHabitacion
                 modificarHab.Parameters["@frente"].Value = 'N';
             }
             modificarHab.Parameters["@descripcion"].Value = textBoxDescripcion.Text;
-            modificarHab.Parameters["@piso"].Value = Int32.Parse(textBoxPiso.Text);
+            modificarHab.Parameters["@piso"].Value = Int64.Parse(textBoxPiso.Text);
             if (checkBoxEstado.Checked)
             {
                 modificarHab.Parameters["@habilitado"].Value = 1;
@@ -143,11 +143,11 @@ namespace FrbaHotel.AbmHabitacion
             cmdExisteHab.Parameters.Add("@idHotel", SqlDbType.VarChar);
             cmdExisteHab.Parameters["@idHotel"].Value = hotelDeHabitacion;
             cmdExisteHab.Parameters.Add("@numero", SqlDbType.VarChar);
-            cmdExisteHab.Parameters["@numero"].Value = Int32.Parse(textBoxNumero.Text);
+            cmdExisteHab.Parameters["@numero"].Value = Int64.Parse(textBoxNumero.Text);
             int existeHab = (int)cmdExisteHab.ExecuteScalar();
 
             //me fijo si el num de habitación que pasa es el mismo de antes. En ese caso si dejo modificar. Si no, y la hab ya existe, no lo dejo
-            if (numeroHab != Int32.Parse(textBoxNumero.Text))
+            if (numeroHab != Int64.Parse(textBoxNumero.Text))
             {
                 if (existeHab == 0)
                 {

@@ -130,7 +130,7 @@ namespace FrbaHotel.AbmHabitacion
 
             }
             crearHabitacion.Parameters["@descripcion"].Value = txtDescripcion.Text;
-            crearHabitacion.Parameters["@piso"].Value = Int32.Parse(txtPiso.Text);
+            crearHabitacion.Parameters["@piso"].Value = Int64.Parse(txtPiso.Text);
             if (checkBoxEstado.Checked)
             {
                 crearHabitacion.Parameters["@habilitado"].Value = 1;
@@ -159,7 +159,7 @@ namespace FrbaHotel.AbmHabitacion
             cmdExisteHab.Parameters.Add("@idHotel", SqlDbType.VarChar);
             cmdExisteHab.Parameters["@idHotel"].Value = idHotel;
             cmdExisteHab.Parameters.Add("@numero", SqlDbType.VarChar);
-            cmdExisteHab.Parameters["@numero"].Value = Int32.Parse(txtNumero.Text);
+            cmdExisteHab.Parameters["@numero"].Value = Int64.Parse(txtNumero.Text);
             //ejecuto y recibo valor
             int existeHab = (int)cmdExisteHab.ExecuteScalar();
 

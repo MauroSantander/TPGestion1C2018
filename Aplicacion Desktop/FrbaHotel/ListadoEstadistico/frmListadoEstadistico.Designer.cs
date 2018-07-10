@@ -44,6 +44,10 @@
             // 
             // dataGridResultados
             // 
+            this.dataGridResultados.AllowUserToAddRows = false;
+            this.dataGridResultados.AllowUserToDeleteRows = false;
+            this.dataGridResultados.AllowUserToOrderColumns = true;
+            this.dataGridResultados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridResultados.Location = new System.Drawing.Point(12, 91);
             this.dataGridResultados.Name = "dataGridResultados";

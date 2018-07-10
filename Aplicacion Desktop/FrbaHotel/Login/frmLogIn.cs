@@ -76,7 +76,7 @@ namespace FrbaHotel.Login
 
                 if (unRol == 1)
                 {
-                    SqlCommand rol = new SqlCommand("SELECT [PISOS_PICADOS].obtenerRol(@usuario)", Globals.conexionGlobal);
+                    SqlCommand rol = new SqlCommand("SELECT [PISOS_PICADOS].obtenerUnicoRol(@usuario)", Globals.conexionGlobal);
                     rol.Parameters.Add("@usuario", SqlDbType.VarChar);
                     rol.Parameters["@Usuario"].Value = textBoxUsuario.Text;
                     int idRol = (int)rol.ExecuteScalar();
