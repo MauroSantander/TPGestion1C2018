@@ -244,5 +244,25 @@ namespace FrbaHotel.AbmHabitacion
             recargarHabitaciones(filtros);
         }
 
+        private void textBoxPiso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //Textbox solo acepta números
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void textBoxNumero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //Textbox solo acepta números
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

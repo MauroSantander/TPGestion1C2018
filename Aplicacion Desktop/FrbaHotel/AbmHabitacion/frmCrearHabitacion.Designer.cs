@@ -88,6 +88,7 @@
             // txtDescripcion
             // 
             this.txtDescripcion.Location = new System.Drawing.Point(6, 19);
+            this.txtDescripcion.MaxLength = 255;
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(188, 241);
@@ -142,9 +143,11 @@
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(6, 19);
+            this.txtNumero.MaxLength = 5;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(188, 20);
             this.txtNumero.TabIndex = 0;
+            this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumero_KeyPress);
             // 
             // groupBox4
             // 
@@ -177,9 +180,11 @@
             // txtPiso
             // 
             this.txtPiso.Location = new System.Drawing.Point(6, 19);
+            this.txtPiso.MaxLength = 5;
             this.txtPiso.Name = "txtPiso";
             this.txtPiso.Size = new System.Drawing.Size(188, 20);
             this.txtPiso.TabIndex = 0;
+            this.txtPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPiso_KeyPress);
             // 
             // btnSalir
             // 

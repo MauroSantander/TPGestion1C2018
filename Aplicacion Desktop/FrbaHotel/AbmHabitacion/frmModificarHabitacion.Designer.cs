@@ -60,9 +60,11 @@
             // textBoxNumero
             // 
             this.textBoxNumero.Location = new System.Drawing.Point(6, 19);
+            this.textBoxNumero.MaxLength = 5;
             this.textBoxNumero.Name = "textBoxNumero";
             this.textBoxNumero.Size = new System.Drawing.Size(121, 20);
             this.textBoxNumero.TabIndex = 0;
+            this.textBoxNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNumero_KeyPress);
             // 
             // groupBox2
             // 
@@ -77,9 +79,11 @@
             // textBoxPiso
             // 
             this.textBoxPiso.Location = new System.Drawing.Point(6, 19);
+            this.textBoxPiso.MaxLength = 5;
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(121, 20);
             this.textBoxPiso.TabIndex = 0;
+            this.textBoxPiso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPiso_KeyPress);
             // 
             // groupBox3
             // 
@@ -112,6 +116,7 @@
             // textBoxDescripcion
             // 
             this.textBoxDescripcion.Location = new System.Drawing.Point(7, 19);
+            this.textBoxDescripcion.MaxLength = 255;
             this.textBoxDescripcion.Multiline = true;
             this.textBoxDescripcion.Name = "textBoxDescripcion";
             this.textBoxDescripcion.Size = new System.Drawing.Size(247, 168);
