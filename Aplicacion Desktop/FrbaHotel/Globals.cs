@@ -18,7 +18,7 @@ namespace FrbaHotel
         public static SqlConnection conexionGlobal = new SqlConnection();
         public static Login.frmLogIn frmLogInInstance;
         
-        public static int idUsuarioSesion;
+        public static int idUsuarioSesion = 0;
 
         public static void setUsuarioSesion(int id) 
         {

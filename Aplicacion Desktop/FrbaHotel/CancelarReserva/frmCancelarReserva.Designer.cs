@@ -54,7 +54,7 @@
             this.txtCodigo.MaxLength = 60;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(100, 20);
-            this.txtCodigo.TabIndex = 2;
+            this.txtCodigo.TabIndex = 0;
             this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigo_KeyPress);
             // 
             // groupBox2
@@ -108,6 +108,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmCancelarReserva";
             this.Text = "Cancelar reserva";
+            this.Load += new System.EventHandler(this.frmCancelarReserva_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

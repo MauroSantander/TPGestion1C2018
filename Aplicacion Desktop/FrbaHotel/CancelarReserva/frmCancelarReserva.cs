@@ -35,19 +35,39 @@ namespace FrbaHotel.CancelarReserva
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            //chequeos
+            int verificacion = 1;
+
+            if (txtCodigo.Text == "")
+            {
+                MessageBox.Show("Debe insertar un código de reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+            if (txtMotivo.Text == "")
+            {
+                MessageBox.Show("Debe insertar un motivo de cancelación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (verificacion == 0)
+            {
+                return;
+            }
+            //fin chequeos
+
             //Verifico que la reserva exista y esté activa con la siguiente función:
-            SqlCommand verificacionReserva = new SqlCommand("SELECT [PISOS_PICADOS].ObtenerEstadoReserva(@codigoReserva, @fechaActual)");
+            SqlCommand verificacionReserva = new SqlCommand("SELECT [PISOS_PICADOS].ObtenerEstadoReserva(@codigoReserva, @fechaActual)", Globals.conexionGlobal);
             //Agrego parámetros a la función
             verificacionReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
             verificacionReserva.Parameters.Add("@fechaActual", SqlDbType.Date);
             //Doy valores a los parámetors
-            verificacionReserva.Parameters["@codigoReserva"].Value = Int32.Parse(txtCodigo.Text);
+            verificacionReserva.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigo.Text);
             verificacionReserva.Parameters["@fechaActual"].Value = Globals.FechaDelSistema.ToString("yyyy-MM-dd");
             //Recibo resultado
-            int estadoReserva = (int)verificacionReserva.ExecuteScalar(); 
+            int estadoReserva = (int)verificacionReserva.ExecuteScalar();
 
             //Según el resultado, respondo
-            if (estadoReserva == 0) 
+            if (estadoReserva == 0)
             {
                 MessageBox.Show("La reserva no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -63,10 +83,10 @@ namespace FrbaHotel.CancelarReserva
                 cmd.Parameters.Add("@fecha", SqlDbType.Date);
                 cmd.Parameters.Add("@idUsuario", SqlDbType.Int);
                 //Doy valor a los parámetros
-                cmd.Parameters["@codigoReserva"].Value = Int32.Parse(txtCodigo.Text);
+                cmd.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigo.Text);
                 cmd.Parameters["@motivo"].Value = txtMotivo.Text;
-                cmd.Parameters["@fecha"].Value = Globals.FechaDelSistema;
-                cmd.Parameters["@idUsuario"].Value = Globals.idUsuarioSesion.ToString("yyyy-MM-dd");
+                cmd.Parameters["@fecha"].Value = Globals.FechaDelSistema.ToString("yyyy-MM-dd");
+                cmd.Parameters["@idUsuario"].Value = Globals.idUsuarioSesion;
                 //Ejecuto SP para cancelar reservas
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Reserva cancelada con éxito");
@@ -87,6 +107,11 @@ namespace FrbaHotel.CancelarReserva
                 MessageBox.Show("No puede cancelar la reserva el mismo día.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void frmCancelarReserva_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
         }
     }
 }

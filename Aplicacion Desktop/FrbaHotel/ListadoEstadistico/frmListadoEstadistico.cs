@@ -77,8 +77,8 @@ namespace FrbaHotel.ListadoEstadistico
             cmd.Parameters.Add("@año", SqlDbType.Int);
             cmd.Parameters.Add("@trimestre", SqlDbType.Int);
             //Doy valor a los parámetros de la función
-            cmd.Parameters["@año"].Value = Int32.Parse(comboBoxAño.Text);
-            cmd.Parameters["@trimestre"].Value = Int32.Parse(Trimestre.Text);
+            cmd.Parameters["@año"].Value = Int64.Parse(comboBoxAño.Text);
+            cmd.Parameters["@trimestre"].Value = Int64.Parse(Trimestre.Text);
 
             //Si son las consultas que necesitan la fecha actual del sistema, se las agrego como parámetro
             if (consulta == 2 || consulta == 3 || consulta == 5)
@@ -86,8 +86,8 @@ namespace FrbaHotel.ListadoEstadistico
                 cmd.Parameters.Add("@fechaActual", SqlDbType.Date);
                 cmd.Parameters["@fechaActual"].Value = Globals.FechaDelSistema.ToString("yyyy-MM-dd");
             }
-            cmd.Parameters["@año"].Value = Int32.Parse(comboBoxAño.Text);
-            cmd.Parameters["@trimestre"].Value = Int32.Parse(Trimestre.Text);
+            cmd.Parameters["@año"].Value = Int64.Parse(comboBoxAño.Text);
+            cmd.Parameters["@trimestre"].Value = Int64.Parse(Trimestre.Text);
 
             //Lleno el dataGridView con los resultados
             DataTable dt = new DataTable();
@@ -97,7 +97,7 @@ namespace FrbaHotel.ListadoEstadistico
             dataGridResultados.Columns.Clear();
             dataGridResultados.Rows.Clear();
             dataGridResultados.DataSource = dt;
-            //dataGridResultados.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            reader.Close();
 
         }
 

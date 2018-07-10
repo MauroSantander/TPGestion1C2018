@@ -37,6 +37,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void frmModificarHabitacion_Load(object sender, EventArgs e)
         {
+            //inicializo objetos con datos para modificar
             this.CenterToScreen();
             comboBoxUbicacion.Items.Add("Frente");
             comboBoxUbicacion.Items.Add("Interno");
@@ -103,9 +104,11 @@ namespace FrbaHotel.AbmHabitacion
 
             //fin chequeos
 
+            //creo el comando para ejecutar el SP
             string spModificarHabitacion = "[PISOS_PICADOS].SPModificarHabitacion";
             SqlCommand modificarHab = new SqlCommand(spModificarHabitacion, Globals.conexionGlobal);
             modificarHab.CommandType = CommandType.StoredProcedure;
+            //agrego parámetros
             modificarHab.Parameters.Add("@idHabitacion", SqlDbType.Int);
             modificarHab.Parameters.Add("@numeroH", SqlDbType.Int);
             modificarHab.Parameters.Add("@frente",SqlDbType.Char);
@@ -113,8 +116,9 @@ namespace FrbaHotel.AbmHabitacion
             modificarHab.Parameters.Add("@piso",SqlDbType.Int);
             modificarHab.Parameters.Add("@habilitado",SqlDbType.Bit);
 
+            //doy valor a los parámetros
             modificarHab.Parameters["@idHabitacion"].Value = habitacionAModificar;
-            modificarHab.Parameters["@numeroH"].Value = Int32.Parse(textBoxNumero.Text);
+            modificarHab.Parameters["@numeroH"].Value = Int64.Parse(textBoxNumero.Text);
             if (comboBoxUbicacion.Text == "Frente")
             {
                 modificarHab.Parameters["@frente"].Value = 'S';
@@ -124,7 +128,7 @@ namespace FrbaHotel.AbmHabitacion
                 modificarHab.Parameters["@frente"].Value = 'N';
             }
             modificarHab.Parameters["@descripcion"].Value = textBoxDescripcion.Text;
-            modificarHab.Parameters["@piso"].Value = Int32.Parse(textBoxPiso.Text);
+            modificarHab.Parameters["@piso"].Value = Int64.Parse(textBoxPiso.Text);
             if (checkBoxEstado.Checked)
             {
                 modificarHab.Parameters["@habilitado"].Value = 1;
@@ -134,14 +138,16 @@ namespace FrbaHotel.AbmHabitacion
                 modificarHab.Parameters["@habilitado"].Value = 0;
             }
 
+            //chequeo si existe la habitación
             SqlCommand cmdExisteHab = new SqlCommand("SELECT [PISOS_PICADOS].existeNumEnHotel(@idHotel, @numero)", Globals.conexionGlobal);
             cmdExisteHab.Parameters.Add("@idHotel", SqlDbType.VarChar);
             cmdExisteHab.Parameters["@idHotel"].Value = hotelDeHabitacion;
             cmdExisteHab.Parameters.Add("@numero", SqlDbType.VarChar);
-            cmdExisteHab.Parameters["@numero"].Value = Int32.Parse(textBoxNumero.Text);
+            cmdExisteHab.Parameters["@numero"].Value = Int64.Parse(textBoxNumero.Text);
             int existeHab = (int)cmdExisteHab.ExecuteScalar();
 
-            if (numeroHab != Int32.Parse(textBoxNumero.Text))
+            //me fijo si el num de habitación que pasa es el mismo de antes. En ese caso si dejo modificar. Si no, y la hab ya existe, no lo dejo
+            if (numeroHab != Int64.Parse(textBoxNumero.Text))
             {
                 if (existeHab == 0)
                 {

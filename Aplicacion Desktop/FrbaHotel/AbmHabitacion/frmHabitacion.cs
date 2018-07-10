@@ -20,6 +20,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void frmHabitacion_Load(object sender, EventArgs e)
         {
+            //Inicializo formulario con valores de combos, dataGridView con todas las habitaciones y valores iniciales
             this.CenterToScreen();
             dataGridViewHabitaciones.DataSource = cargarHabitaciones(null);
             dataGridViewHabitaciones.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -41,6 +42,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void cargarTipos()
         {
+            //traigo los tipos para cargar en el filtro
             comboBoxTipo.Items.Add("Vacío");
             SqlCommand cmdBuscarTipos = new SqlCommand("SELECT tipoCamas FROM [PISOS_PICADOS].Tipo", Globals.conexionGlobal);
             SqlDataReader reader = cmdBuscarTipos.ExecuteReader();
@@ -57,6 +59,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void cargarHoteles()
         {
+            //traigo los hoteles para cargar el filtro
             comboBoxHotel.Items.Add("Vacío");
             SqlCommand cmdBuscarHoteles = new SqlCommand("SELECT nombre, calle, nroCalle, ciudad FROM [PISOS_PICADOS].Hotel", Globals.conexionGlobal);
             SqlDataReader reader = cmdBuscarHoteles.ExecuteReader();
@@ -69,6 +72,7 @@ namespace FrbaHotel.AbmHabitacion
                 }
                 else
                 {
+                    //si el hotel no tiene nombre, pongo ciudad calle y numero
                     string item;
                     item = reader["ciudad"].ToString().Trim() + "-" + reader["calle"].ToString().Trim() + "-" + reader["nroCalle"].ToString().Trim();
                     comboBoxHotel.Items.Add(item);
@@ -82,6 +86,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void ajustarColumnas()
         {
+            //le doy otro tamaño a las columnas para que quede mejor visualmente
             DataGridViewColumn column = dataGridViewHabitaciones.Columns[0];
             column.Width = 55;
             column = dataGridViewHabitaciones.Columns[1];
@@ -109,6 +114,7 @@ namespace FrbaHotel.AbmHabitacion
 
             string query;
 
+            //implemento los filtros sumandole a la cadena de la query condiciones en el WHERE
             if (filtros != null)
             {
                 string cadenaFiltros = "";
@@ -153,20 +159,24 @@ namespace FrbaHotel.AbmHabitacion
 
                 if (cadenaFiltros != "")
                 {
+                    //si tiene filtros los agrego
                     query = "SELECT * FROM [PISOS_PICADOS].listadoHabitaciones() WHERE 1=1" + cadenaFiltros;
                 }
                 else
                 {
+                    //si el usuario no uso filtro llamo a la función sin condiciones
                     query = "SELECT * FROM [PISOS_PICADOS].listadoHabitaciones()";
                 }
 
             }
             else
             {
+                //si llamé a la funcion sin enviar filtros, llamo sin condiciones. Sirve por ej. para cuando recien abro el formulario
                 query = "SELECT * FROM [PISOS_PICADOS].listadoHabitaciones()";
             }
 
 
+            //ejecuto comando y retorno datatable para llenar el dataGridView
             SqlCommand buscarHabitaciones = new SqlCommand(query, Globals.conexionGlobal);
             SqlDataReader reader = buscarHabitaciones.ExecuteReader();
             dtHabitaciones.Load(reader);
@@ -176,6 +186,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void cargarBotonModificacion() 
         {
+            //Agrego la columna con el botón "modificar" 
             DataGridViewButtonColumn btnModificar = new DataGridViewButtonColumn();
             btnModificar.HeaderText = "Modificar";
             btnModificar.Text = "Modificar";
@@ -191,6 +202,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void dataGridViewHabitaciones_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            //Si apreto el botón modificar, abro el formulario de modificación con los datos de la habitación a modificar
             if (e.ColumnIndex == 9) 
             {
                 int idHabitacion = (int)(dataGridViewHabitaciones.Rows[e.RowIndex].Cells[0].Value);
@@ -224,6 +236,7 @@ namespace FrbaHotel.AbmHabitacion
 
         public void recargarHabitaciones(List<string> filtros)
         {
+            //recargo el dataGridView
             dataGridViewHabitaciones.DataSource = null;
             dataGridViewHabitaciones.Columns.Clear();
             dataGridViewHabitaciones.DataSource = cargarHabitaciones(filtros);
@@ -234,6 +247,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
+            //Agrego filtros a lista y llamo al a función de recarga con dichos filtros
             List<string> filtros = new List<string>();
             filtros.Add(comboBoxHotel.Text.ToString());
             filtros.Add(comboBoxTipo.Text.ToString());
@@ -262,6 +276,18 @@ namespace FrbaHotel.AbmHabitacion
                 e.Handled = true;
                 MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            //Dejo todos los campos vacíos
+            comboBoxEstado.SelectedIndex = 0;
+            comboBoxHotel.SelectedIndex = 0;
+            comboBoxTipo.SelectedIndex = 0;
+            comboBoxUbicacion.SelectedIndex = 0;
+            textBoxNumero.Text = "";
+            textBoxPiso.Text = "";
+            return;
         }
 
     }

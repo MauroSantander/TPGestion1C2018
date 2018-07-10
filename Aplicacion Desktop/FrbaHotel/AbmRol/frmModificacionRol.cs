@@ -61,7 +61,7 @@ namespace FrbaHotel.AbmRol
             cmdEstadoRol.Parameters.Add("@Rol", SqlDbType.VarChar);
             cmdEstadoRol.Parameters["@Rol"].Value = Rol;
 
-            int respuesta = Convert.ToInt32(cmdEstadoRol.ExecuteScalar());
+            long respuesta = Convert.ToInt64(cmdEstadoRol.ExecuteScalar());
 
             if (respuesta == 1)
             {

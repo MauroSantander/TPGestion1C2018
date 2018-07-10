@@ -78,6 +78,7 @@
             // textBoxUsuario
             // 
             this.textBoxUsuario.Location = new System.Drawing.Point(12, 25);
+            this.textBoxUsuario.MaxLength = 255;
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(128, 20);
             this.textBoxUsuario.TabIndex = 0;
@@ -86,6 +87,7 @@
             // textBoxContrasena
             // 
             this.textBoxContrasena.Location = new System.Drawing.Point(162, 25);
+            this.textBoxContrasena.MaxLength = 255;
             this.textBoxContrasena.Name = "textBoxContrasena";
             this.textBoxContrasena.PasswordChar = '*';
             this.textBoxContrasena.Size = new System.Drawing.Size(128, 20);
