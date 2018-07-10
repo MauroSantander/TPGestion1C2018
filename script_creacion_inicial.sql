@@ -193,6 +193,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].tieneUnSoloRol', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerRol', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerRol;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerUnicoRol', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerUnicoRol;
+
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDUsuario', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerIDUsuario;
 
@@ -1905,7 +1908,27 @@ BEGIN
 END
 GO
 
-/* Dado un el usuario de un empleado devuelve su rol */
+CREATE FUNCTION [PISOS_PICADOS].obtenerUnicoRol (@usuario VARCHAR(255))
+RETURNS INT
+AS
+BEGIN
+	RETURN (
+			(
+				SELECT rxu.idRol
+				FROM [PISOS_PICADOS].Empleado AS e
+				INNER JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+				INNER JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario = rxu.idUsuario
+				WHERE e.usuario = @usuario
+				)
+			)
+
+	RETURN 0
+
+	RETURN 1
+END
+GO
+
+/* Dado un el usuario de un empleado devuelve sus roles */
 
 CREATE FUNCTION [PISOS_PICADOS].obtenerRol (@idUsaurio INT)
 RETURNS TABLE 
@@ -2485,7 +2508,7 @@ CREATE FUNCTION [PISOS_PICADOS].hotelesConMasConsumiblesFacturados (@anio INT
 RETURNS TABLE
 AS
 	RETURN (SELECT TOP 5 hote.idHotel AS IdHotel
-		,SUM(re.cantidad) AS [consumibles Facturados]
+		,SUM(re.cantidad) AS [Consumibles Facturados]
 		,hote.nombre AS Nombre
 		,hote.ciudad AS Ciudad
 		,hote.calle AS Calle
@@ -2545,7 +2568,7 @@ CREATE FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasVeces (@anio INT
 AS
 	RETURN(SELECT TOP 5 ha.idHotel AS IdHotel
 		,ha.idHabitacion AS idHabitacion
-		,count(*) AS [Cantidad de Veces Ocupadas]
+		,count(*) AS [Cantidad de Veces]
 		,(SELECT hote.nombre FROM [PISOS_PICADOS].Hotel AS hote WHERE hote.idHotel = ha.idHotel) AS NombreHotel
 		,(SELECT p.nombrePais FROM [PISOS_PICADOS].Hotel AS hote 
 		  JOIN [PISOS_PICADOS].Pais AS p ON hote.pais =p.idPais WHERE hote.idHotel = ha.idHotel) AS Pais
@@ -2569,7 +2592,7 @@ AS
 			)
 	GROUP BY ha.idHotel
 		,ha.idHabitacion
-	ORDER BY [Cantidad de Veces Ocupadas] DESC)
+	ORDER BY [Cantidad de Veces] DESC)
 GO
 
 CREATE FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasDias (@anio INT
@@ -2588,7 +2611,7 @@ AS
 				WHEN DATEPART(QUARTER, fechaInicio) < DATEPART(QUARTER, fechaFin)
 					AND DATEPART(QUARTER, fechaFin) > @trimestre
 					THEN DATEDIFF(DAY, fechaInicio, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
-				END) AS dias
+				END) AS [Dias Ocupados]
 		,(SELECT hote.nombre FROM [PISOS_PICADOS].Hotel AS hote WHERE hote.idHotel = ha.idHotel) AS NombreHotel
 		,(SELECT p.nombrePais FROM [PISOS_PICADOS].Hotel AS hote 
 		  JOIN [PISOS_PICADOS].Pais AS p ON hote.pais =p.idPais WHERE hote.idHotel = ha.idHotel) AS Pais
@@ -2612,7 +2635,7 @@ AS
 			)
 	GROUP BY ha.idHotel
 		,ha.idHabitacion
-	ORDER BY dias DESC)
+	ORDER BY [Dias Ocupados] DESC)
 GO
 
 CREATE FUNCTION [PISOS_PICADOS].topClientesPorPuntos (@anio INT
@@ -2620,7 +2643,7 @@ CREATE FUNCTION [PISOS_PICADOS].topClientesPorPuntos (@anio INT
 	,@fechaActual DATE)
 	RETURNS TABLE
 AS
-	RETURN (SELECT TOP 5 fact.cliente AS idCliente
+	RETURN (SELECT TOP 5 u.idUsuario AS idCliente
 		,CAST((
 				SUM(reng.total) / 10 + SUM(CASE 
 						WHEN DATEPART(QUARTER, fechaCheckIn) = DATEPART(QUARTER, fechaCheckOut)
@@ -2633,21 +2656,21 @@ AS
 							THEN DATEDIFF(DAY, fechaCheckIn, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
 						END)
 				) AS BIGINT) AS [Puntos del Cliente]
-		, (SELECT u.nombre FROM [PISOS_PICADOS].Usuario AS u WHERE u.idUsuario = fact.cliente) AS Nombre
-		, (SELECT u.apellido FROM [PISOS_PICADOS].Usuario AS u WHERE u.idUsuario = fact.cliente) AS Apellido
-		, (SELECT u.tipoIdentificacion FROM [PISOS_PICADOS].Usuario AS u WHERE u.idUsuario = fact.cliente) AS [Tipo de Identificacion]
-		, (SELECT u.numeroIdentificacion FROM [PISOS_PICADOS].Usuario AS u WHERE u.idUsuario = fact.cliente) AS [Numero de Identificacion]
+		, u.nombre AS Nombre
+		, u.apellido AS Apellido
+		, u.tipoIdentificacion AS [Tipo de Identificacion]
+		, u.numeroIdentificacion AS [Numero de Identificacion]
 	FROM [PISOS_PICADOS].Factura AS fact
 	INNER JOIN [PISOS_PICADOS].RenglonFactura AS reng ON fact.numeroFactura = reng.numeroFactura
-		,[PISOS_PICADOS].Estadia AS es
-		,[PISOS_PICADOS].Reserva AS re
-	WHERE re.codigoReserva = es.codigoReserva
-		AND re.idCliente = fact.cliente
-		AND (
+	INNER JOIN [PISOS_PICADOS].Reserva AS re ON re.idCliente = fact.cliente	
+	INNER JOIN [PISOS_PICADOS].Estadia AS es ON re.codigoReserva = es.codigoReserva
+	INNER JOIN [PISOS_PICADOS].Usuario AS u ON u.idUsuario = fact.cliente
+	WHERE
+		  (
 			DATEPART(YEAR, fact.fecha) = @anio
 			AND DATEPART(QUARTER, fact.fecha) = @trimestre
 			)
-	GROUP BY fact.cliente
+	GROUP BY u.idUsuario,u.nombre,u.apellido,u.tipoIdentificacion,u.numeroIdentificacion
 	ORDER BY [Puntos del Cliente] DESC)
 GO
 
