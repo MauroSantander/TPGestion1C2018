@@ -347,6 +347,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].darNombreAHoteles', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].quitarHotelAUsuario', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].quitarHotelAUsuario;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].establecerEstadoReserva', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].establecerEstadoReserva;
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -4158,6 +4161,36 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [PISOS_PICADOS].establecerEstadoReserva
+AS 
+BEGIN
+UPDATE [PISOS_PICADOS].Reserva 
+	SET estado = 6
+	WHERE codigoReserva IN (
+			SELECT es.codigoReserva FROM [PISOS_PICADOS].Estadia AS es
+			WHERE es.codigoReserva = codigoReserva  
+			)
+UPDATE [PISOS_PICADOS].Reserva 
+	SET estado = 5
+	WHERE codigoReserva NOT IN (
+			SELECT es.codigoReserva FROM [PISOS_PICADOS].Estadia AS es
+			WHERE es.codigoReserva = codigoReserva  
+			)
+		AND fechaInicio <= '20180713'
+
+UPDATE [PISOS_PICADOS].Reserva 
+	SET estado = 1
+	WHERE codigoReserva NOT IN (
+			SELECT es.codigoReserva FROM [PISOS_PICADOS].Estadia AS es
+			WHERE es.codigoReserva = codigoReserva  
+			)
+		AND fechaInicio > '20180713'
+
+END 
+GO
+
 EXEC [PISOS_PICADOS].CorregirUsuarios
 
 EXEC [PISOS_PICADOS].darNombreAHoteles
+
+EXEC [PISOS_PICADOS].establecerEstadoReserva
