@@ -190,7 +190,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].empleadoDeshabilitado', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].tieneUnSoloRol', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].tieneUnSoloRol;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].obtenerRol', N'FN') IS NOT NULL
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerRol', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerRol;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDUsuario', N'FN') IS NOT NULL
@@ -1906,24 +1906,15 @@ END
 GO
 
 /* Dado un el usuario de un empleado devuelve su rol */
-CREATE FUNCTION [PISOS_PICADOS].obtenerRol (@usuario VARCHAR(255))
-RETURNS INT
+
+CREATE FUNCTION [PISOS_PICADOS].obtenerRol (@idUsaurio INT)
+RETURNS TABLE 
 AS
-BEGIN
 	RETURN (
-			(
 				SELECT rxu.idRol
-				FROM [PISOS_PICADOS].Empleado AS e
-				INNER JOIN [PISOS_PICADOS].Usuario AS u ON e.idUsuario = u.idUsuario
+				FROM Usuario AS u 
 				INNER JOIN [PISOS_PICADOS].RolxUsuario AS rxu ON u.idUsuario = rxu.idUsuario
-				WHERE e.usuario = @usuario
-				)
 			)
-
-	RETURN 0
-
-	RETURN 1
-END
 GO
 
 /* Dada el usuario y contraseña correspondiete, se devuelve el id de usuario al cual pertenece */
@@ -3422,32 +3413,28 @@ CREATE PROCEDURE [PISOS_PICADOS].cancelarReserva @codigoReserva INT
 	,@idUsuario INT
 AS
 BEGIN
-	IF @fecha < (
-			SELECT fechaInicio
-			FROM [PISOS_PICADOS].Reserva
-			WHERE codigoReserva = @codigoReserva
-			)
-		INSERT INTO [PISOS_PICADOS].Estado
-		VALUES ('Cancelada')
 
-	DECLARE @idEstado INT = SCOPE_IDENTITY();
-
+	IF 1 IN ([PISOS_PICADOS].obtenerRol(@idUsuario))  
+	BEGIN
 	UPDATE [PISOS_PICADOS].Reserva
-	SET estado = @idEstado
+	SET estado = 4
 	WHERE codigoReserva = @codigoReserva;
+	END 
+	IF 2 IN ([PISOS_PICADOS].obtenerRol(@idUsuario))
+	BEGIN
+	UPDATE [PISOS_PICADOS].Reserva
+	SET estado = 3
+	WHERE codigoReserva = @codigoReserva;
+	END 
+	
+	DELETE
+	FROM HabitacionxReserva
+	WHERE codigoReserva = @codigoReserva
 
-	INSERT INTO [PISOS_PICADOS].Modificacion (
-		estadoReserva
-		,descripcion
-		,usuario
-		,fecha
-		)
-	VALUES (
-		@idEstado
-		,@motivo
-		,@idUsuario
-		,@fecha
-		)
+	DELETE
+	FROM Estadia
+	WHERE codigoReserva = @codigoReserva
+
 END
 GO
 
