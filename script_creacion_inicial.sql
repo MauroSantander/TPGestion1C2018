@@ -226,6 +226,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].estadoDeReserva', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoReserva', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerEstadoReserva;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].yaSeRegistrarionConsumibles', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].yaSeRegistrarionConsumibles;
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -1444,11 +1446,12 @@ SET pais = 13
 WHERE pais IS NULL;
 
 INSERT INTO [PISOS_PICADOS].Cliente
-SELECT DISTINCT Usuario.idUsuario
+SELECT DISTINCT u.idUsuario
 	,Cliente_Nacionalidad
-FROM [gd_esquema].Maestra
-	,[PISOS_PICADOS].Usuario
-WHERE Usuario.numeroIdentificacion = Cliente_Pasaporte_Nro;
+FROM [gd_esquema].Maestra AS m
+	JOIN [PISOS_PICADOS].Usuario AS u ON m.Cliente_Pasaporte_Nro = u.numeroIdentificacion
+group by u.idUsuario, m.Cliente_Nacionalidad
+
 
 INSERT INTO [PISOS_PICADOS].Hotel (
 	calle
@@ -1473,16 +1476,15 @@ INSERT INTO [PISOS_PICADOS].Habitacion (
 	,tipo
 	,piso
 	)
-SELECT DISTINCT Habitacion_Numero
-	,[PISOS_PICADOS].Hotel.idHotel
-	,Habitacion_Frente
-	,idTipo
-	,Habitacion_Piso
-FROM [gd_esquema].Maestra
-	,[PISOS_PICADOS].Hotel
-	,[PISOS_PICADOS].Tipo
-WHERE ciudad + calle = Hotel_Ciudad + Hotel_Calle
-	AND Habitacion_Tipo_Descripcion = tipoCamas;
+SELECT Habitacion_Numero
+	,h.idHotel
+	,m.Habitacion_Frente
+	,t.idTipo
+	,m.Habitacion_Piso
+FROM [gd_esquema].Maestra AS m
+	JOIN [PISOS_PICADOS].Hotel AS h ON m.Hotel_Ciudad + m.Hotel_Calle = h.ciudad + h.calle
+	JOIN [PISOS_PICADOS].Tipo AS t ON m.Habitacion_Tipo_Descripcion = t.tipoCamas
+	GROUP BY m.Habitacion_Numero,h.idHotel,m.Habitacion_Frente,t.idTipo,m.Habitacion_Piso 
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Reserva ON
 
@@ -1514,7 +1516,7 @@ INSERT INTO [PISOS_PICADOS].Estado (descripcion)
 VALUES ('Reserva modificada');
 
 INSERT INTO [PISOS_PICADOS].Estado (descripcion)
-VALUES ('Reserva cancelada por recepción');
+VALUES ('Reserva cancelada por hotel');
 
 INSERT INTO [PISOS_PICADOS].Estado (descripcion)
 VALUES ('Reserva cancelada por cliente');
@@ -1525,6 +1527,7 @@ VALUES ('Reserva cancelada por No-Show');
 INSERT INTO [PISOS_PICADOS].Estado (descripcion)
 VALUES ('Reserva efectivizada');
 
+/* PARA MI ESTA MALLLLLLLLLL */
 INSERT INTO [PISOS_PICADOS].EmpleadoxHotel (
 	idUsuario
 	,idHotel
@@ -1540,11 +1543,9 @@ INSERT INTO [PISOS_PICADOS].RegimenxHotel (
 	)
 SELECT DISTINCT codigoRegimen
 	,idHotel
-FROM [gd_esquema].Maestra
-	,[PISOS_PICADOS].Hotel
+FROM [PISOS_PICADOS].Hotel
 	,[PISOS_PICADOS].Regimen
-WHERE descripcion = Regimen_Descripcion
-	AND Hotel_Calle + Hotel_Ciudad = calle + ciudad
+
 
 INSERT INTO [PISOS_PICADOS].RolxFuncionalidad
 SELECT idRol
@@ -1599,45 +1600,36 @@ INSERT INTO [PISOS_PICADOS].RolxUsuario (
 	idRol
 	,idUsuario
 	)
-SELECT DISTINCT 3
+SELECT DISTINCT idrol
 	,idUsuario
 FROM [PISOS_PICADOS].Usuario
 	,[PISOS_PICADOS].Rol
-WHERE usuario.nombre <> 'admin'
-	AND usuario.apellido <> 'admin'
+WHERE idUsuario <> 96945
+	AND nombreRol = 'Guest'
 
 INSERT INTO [PISOS_PICADOS].RolxUsuario (
 	idRol
 	,idUsuario
 	)
-SELECT DISTINCT 1
+SELECT DISTINCT idRol
 	,idUsuario
 FROM [PISOS_PICADOS].Usuario
 	,[PISOS_PICADOS].Rol
-WHERE usuario.nombre = 'admin'
-	AND usuario.apellido = 'admin'
+WHERE nombre = 'admin'
+	AND apellido = 'admin'
+	AND nombreRol = 'Administrador'
 
 INSERT INTO [PISOS_PICADOS].HabitacionxReserva (
 	idHabitacion
 	,codigoReserva
 	)
-SELECT DISTINCT idHabitacion
-	,Reserva.codigoReserva
-FROM [gd_esquema].Maestra
-	,[PISOS_PICADOS].Habitacion
-	,[PISOS_PICADOS].Reserva
-WHERE Reserva.codigoReserva = Reserva_Codigo
-	AND idHabitacion = (
-		SELECT DISTINCT a.idHabitacion
-		FROM [PISOS_PICADOS].Habitacion AS a
-		WHERE a.numero = Habitacion_Numero
-			AND a.idHotel = (
-				SELECT b.idHotel
-				FROM [PISOS_PICADOS].Hotel AS b
-				WHERE b.ciudad = Hotel_Ciudad
-					AND b.calle = Hotel_Calle
-				)
-		)
+SELECT  hab.idHabitacion,r.codigoReserva
+FROM [gd_esquema].Maestra AS m 
+JOIN [PISOS_PICADOS].Hotel AS h ON h.ciudad + h.calle = m.Hotel_Ciudad + m.Hotel_Calle
+JOIN [PISOS_PICADOS].Reserva AS r ON m.Reserva_Codigo = r.codigoReserva 
+JOIN [PISOS_PICADOS].Habitacion AS hab ON  h.idHotel = hab.idHotel
+WHERE m.Habitacion_Numero = hab.numero 
+GROUP BY idHabitacion,r.codigoReserva
 
 INSERT INTO [PISOS_PICADOS].Estadia (
 	codigoReserva
@@ -2504,7 +2496,7 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].Modificacion AS mo ON es.idEstado = mo.estadoReserva
 		WHERE re.codigoReserva = hr.codigoReserva
 			AND (
-				es.descripcion = 'Reserva cancelada por recepción'
+				es.descripcion = 'Reserva cancelada por hotel'
 				OR es.descripcion = 'Reserva cancelada por cliente'
 				OR es.descripcion = 'Reserva cancelada por No-Show'
 				)
@@ -2843,6 +2835,17 @@ BEGIN
 	RETURN 1
 END
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].yaSeRegistrarionConsumibles (@idEstadia INT)
+RETURNS INT 
+AS
+BEGIN
+IF (SELECT COUNT(*) FROM [PISOS_PICADOS].EstadiaxConsumible AS exc WHERE exc.idEstadia = @idEstadia ) > 0
+RETURN 1
+RETURN 0
+END
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
@@ -3564,14 +3567,18 @@ END
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].cancelarReserva @codigoReserva INT
+	,@motivo VARCHAR(255)
+	,@fecha DATE
 	,@idUsuario INT
 AS
 BEGIN
+	DECLARE @estado INT
 	IF 3 IN (
 			SELECT *
 			FROM [PISOS_PICADOS].obtenerRol(@idUsuario)
 			)
 	BEGIN
+		SET @estado = 4
 		UPDATE [PISOS_PICADOS].Reserva
 		SET estado = 4
 		WHERE codigoReserva = @codigoReserva;
@@ -3582,10 +3589,25 @@ BEGIN
 			FROM [PISOS_PICADOS].obtenerRol(@idUsuario)
 			)
 	BEGIN
+		SET @estado = 3
 		UPDATE [PISOS_PICADOS].Reserva
 		SET estado = 3
 		WHERE codigoReserva = @codigoReserva;
 	END
+
+	IF 1 IN (
+			SELECT *
+			FROM [PISOS_PICADOS].obtenerRol(@idUsuario)
+			)
+	BEGIN
+		SET @estado = 3
+		UPDATE [PISOS_PICADOS].Reserva
+		SET estado = 3
+		WHERE codigoReserva = @codigoReserva;
+	END
+
+	INSERT INTO Modificacion (estadoReserva,descripcion,usuario,fecha)
+	VALUES(@estado,@motivo,@idUsuario,@fecha)
 
 	DELETE
 	FROM [PISOS_PICADOS].HabitacionxReserva
