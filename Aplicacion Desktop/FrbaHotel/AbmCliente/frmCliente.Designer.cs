@@ -57,6 +57,7 @@
             this.labelApellido = new System.Windows.Forms.Label();
             this.labelNombre = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
             this.dataGridViewModificarCliente = new System.Windows.Forms.DataGridView();
             this.btnCancelarModif = new System.Windows.Forms.Button();
             this.btnBuscar = new System.Windows.Forms.Button();
@@ -89,7 +90,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.BotonBaja = new System.Windows.Forms.Button();
             this.dataGridViewClientes = new System.Windows.Forms.DataGridView();
-            this.label10 = new System.Windows.Forms.Label();
             this.tabCliente.SuspendLayout();
             this.Alta.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -160,6 +160,7 @@
             // 
             this.cbPaises.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbPaises.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbPaises.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPaises.FormattingEnabled = true;
             this.cbPaises.Location = new System.Drawing.Point(155, 380);
             this.cbPaises.Name = "cbPaises";
@@ -220,8 +221,8 @@
             "L.E",
             "Carnet Ext.",
             "Pasaporte"});
-            this.TipoId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.TipoId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.TipoId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TipoId.FormattingEnabled = true;
             this.TipoId.Items.AddRange(new object[] {
             "DNI",
@@ -232,7 +233,6 @@
             this.TipoId.Name = "TipoId";
             this.TipoId.Size = new System.Drawing.Size(100, 21);
             this.TipoId.TabIndex = 3;
-            this.TipoId.Text = "Tipo";
             this.TipoId.SelectedIndexChanged += new System.EventHandler(this.TipoId_SelectedIndexChanged);
             this.TipoId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TipoId_KeyPress);
             // 
@@ -437,6 +437,15 @@
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 47);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(53, 13);
+            this.label10.TabIndex = 77;
+            this.label10.Text = "Filtrar por:";
+            // 
             // dataGridViewModificarCliente
             // 
             this.dataGridViewModificarCliente.AllowUserToOrderColumns = true;
@@ -523,7 +532,7 @@
             this.btnSeleccionar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnSeleccionar.Location = new System.Drawing.Point(207, 509);
             this.btnSeleccionar.Name = "btnSeleccionar";
-            this.btnSeleccionar.Size = new System.Drawing.Size(93, 23);
+            this.btnSeleccionar.Size = new System.Drawing.Size(127, 51);
             this.btnSeleccionar.TabIndex = 55;
             this.btnSeleccionar.Text = "Seleccionar";
             this.btnSeleccionar.UseVisualStyleBackColor = true;
@@ -539,6 +548,7 @@
             // 
             // cmbTipoIdModif
             // 
+            this.cmbTipoIdModif.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoIdModif.FormattingEnabled = true;
             this.cmbTipoIdModif.Items.AddRange(new object[] {
             "DNI",
@@ -688,6 +698,7 @@
             // 
             // cbTipoId
             // 
+            this.cbTipoId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoId.FormattingEnabled = true;
             this.cbTipoId.Items.AddRange(new object[] {
             "DNI",
@@ -759,15 +770,6 @@
             this.dataGridViewClientes.Size = new System.Drawing.Size(552, 294);
             this.dataGridViewClientes.TabIndex = 4;
             this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 47);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 13);
-            this.label10.TabIndex = 77;
-            this.label10.Text = "Filtrar por:";
             // 
             // frmCliente
             // 

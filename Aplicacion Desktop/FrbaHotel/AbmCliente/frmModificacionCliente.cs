@@ -23,7 +23,19 @@ namespace FrbaHotel.AbmCliente
         {
             InitializeComponent();
 
+            SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
+
+            SqlDataReader reader = cmdBuscarPaises.ExecuteReader();
+
+            while (reader.Read())
+            {
+                cbPaises.Items.Add((reader["nombrePais"]).ToString());
+            }
+
+            reader.Close();
+
         }
+
 
         static bool validarEmail(string email)
         {
@@ -68,6 +80,14 @@ namespace FrbaHotel.AbmCliente
             string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
 
             SqlCommand getId = new SqlCommand(fObtenerId, Globals.conexionGlobal);
+
+            getId.Parameters.Add("@nombre", SqlDbType.VarChar);
+            getId.Parameters.Add("@apellido", SqlDbType.VarChar);
+            getId.Parameters.Add("@numeroIdentificacion",SqlDbType.Int);
+
+            getId.Parameters["@nombre"].Value = NombreCliente;
+            getId.Parameters["@apellido"].Value = ApellidoCliente;
+            getId.Parameters["@numeroIdentificacion"].Value = NroIdCliente;
 
             int idUsuario = (int)getId.ExecuteScalar();
 
@@ -152,6 +172,16 @@ namespace FrbaHotel.AbmCliente
         private void dtpFechaNacimiento_ValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbPaises_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmModificacionCliente_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
         }
     }
 }

@@ -88,6 +88,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDHotel', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerIDPais', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerIDPais;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerNombrePais', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerNombrePais;
+
 IF OBJECT_ID(N'[PISOS_PICADOS].esAdmin', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].esAdmin;
 
@@ -2060,6 +2063,19 @@ BEGIN
 END
 GO
 
+/* Dado un id de país informa su nombre Correspondiente*/
+CREATE FUNCTION [PISOS_PICADOS].obtenerNombrePais (@idPais INT)
+RETURNS VARCHAR(255)
+AS
+BEGIN
+	RETURN (
+			SELECT nombrePais
+			FROM [PISOS_PICADOS].Pais
+			WHERE idPais = @idPais
+			)
+END
+GO
+
 /* Dada una ciudad calle y nroCalle devuelve el id de hotel correspondiente */
 CREATE FUNCTION [PISOS_PICADOS].obtenerIDHotel (
 	@ciudad VARCHAR(255)
@@ -2464,7 +2480,7 @@ AS
 		OR es.descripcion='Reserva cancelada por No-Show')
 		AND DATEPART(QUARTER, mo.fecha) = @trimestre
 		AND DATEPART(YEAR, mo.fecha) = @anio
-	GROUP BY ho.idHotel,ho.nombre,ho.ciudad,ho.calle,ho.nroCalle,ho.estrellas
+	GROUP BY ho.idHotel,ho.nombre,ho.ciudad,ho.calle,ho.nroCalle,ho.estrellas,ho.pais
 	ORDER BY cantidad DESC)
 GO
 
@@ -2485,10 +2501,9 @@ AS
 	INNER JOIN [PISOS_PICADOS].Factura AS fa ON fa.numeroFactura = re.numeroFactura
 	INNER JOIN [PISOS_PICADOS].Estadia AS es ON fa.idEstadia = es.idEstadia
 	INNER JOIN [PISOS_PICADOS].Reserva AS res ON es.codigoReserva = res.codigoReserva
-		,[PISOS_PICADOS].HabitacionxReserva AS hr
+	INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hr ON hr.codigoReserva = res.codigoReserva
 	INNER JOIN [PISOS_PICADOS].Habitacion AS hab ON hr.idHabitacion = hab.idHabitacion
-	WHERE res.codigoReserva = hr.codigoReserva
-		AND DATEPART(QUARTER, fa.fecha) = @trimestre
+	WHERE DATEPART(QUARTER, fa.fecha) = @trimestre
 		AND DATEPART(YEAR, fa.fecha) = @anio
 	GROUP BY hab.idHotel
 	ORDER BY consumibles DESC)
@@ -2499,7 +2514,7 @@ CREATE FUNCTION [PISOS_PICADOS].hotelesConMasDiasDeBaja (@anio INT
 	,@fechaActual DATE)
 	RETURNS TABLE
 AS
-	RETURN(SELECT TOP 5 bh.idHotel AS IdHotel
+	RETURN(SELECT TOP 5 h.idHotel AS IdHotel
 		,SUM(CASE 
 				WHEN DATEPART(QUARTER, fechaInicio) = DATEPART(QUARTER, fechaFin)
 					THEN DATEDIFF(DAY, fechaInicio, fechaFin)
@@ -2526,7 +2541,7 @@ AS
 			DATEPART(QUARTER, bh.fechaFin) = @trimestre
 			AND DATEPART(YEAR, bh.fechaFin) = @anio
 			)
-	GROUP BY h.idHotel
+	GROUP BY h.idHotel,h.calle,h.ciudad,h.pais,h.estrellas,h.nombre,h.nroCalle
 	ORDER BY diasbaja DESC)
 GO
 
@@ -2643,7 +2658,7 @@ AS
 GO
 
 /*Dado un id de cliente devuelve su nacionalidad*/
-CREATE FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente(@idCliente INT)
+CREATE FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente (@idCliente INT)
 RETURNS VARCHAR(255)
 AS
 BEGIN

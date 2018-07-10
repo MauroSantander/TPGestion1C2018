@@ -113,7 +113,7 @@ namespace FrbaHotel.AbmCliente
                 }
             }
 
-            dataGridViewClientes.Rows.Remove(dataGridViewClientes.CurrentRow);
+            //dataGridViewClientes.Rows.Remove(dataGridViewClientes.CurrentRow);
 
 
         }
@@ -580,34 +580,61 @@ namespace FrbaHotel.AbmCliente
         {
 
             frmModificacionCliente modificacion = new frmModificacionCliente();
-            //fijarme si paso por parametro el formulario que lo invoca para los datos necesarios
+
+
+
 
             String NombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nombre"].Value;
             String ApellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
             String TipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["tipoIdentificacion"].Value;
-           // String NroIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
+            int NroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
+            
+           /////////****** antes de seguir obtengo id de usuario para relacionarlo con su nacionalidad que está en la tabla cliente******///////// 
+            string a = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
+
+            SqlCommand getId = new SqlCommand(a, Globals.conexionGlobal);
+
+            getId.Parameters.Add("@nombre", SqlDbType.VarChar);
+            getId.Parameters["@nombre"].Value = NombreClienteFila;
+
+            getId.Parameters.Add("@apellido", SqlDbType.VarChar);
+            getId.Parameters["@apellido"].Value = ApellidoClienteFila;
+
+            getId.Parameters.Add("@numeroIdentificacion", SqlDbType.Int);
+            getId.Parameters["@numeroIdentificacion"].Value = NroIdClienteFila;
+
+
+            int idUsuario = (int)getId.ExecuteScalar();
+
+            string b = "SELECT [PISOS_PICADOS].obtenerNacionalidadCliente (@idCliente)";
+
+            SqlCommand getNacionalidad = new SqlCommand(b,Globals.conexionGlobal);
+
+            getNacionalidad.Parameters.Add("@idCliente",SqlDbType.Int);
+            getNacionalidad.Parameters["@idCliente"].Value = idUsuario;
+
+            String nacionalidadCliente = (String) getNacionalidad.ExecuteScalar();
+
             String MailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["mail"].Value; ;
             String TelefonoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["telefono"].Value;
             String CalleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["calle"].Value;
-          //  String NroCalleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nroCalle"].Value; ;//modificado a string para poder usar el contenido
+            int NroCalleClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["nroCalle"].Value; ;//modificado a string para poder usar el contenido
             String LocalidadClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["localidad"].Value;
-            String PaisClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["pais"].Value;
-            String NacionalidadClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nacionalidad"].Value;
-            String FechaNacimientoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["fechaNacimiento"].Value;
-
-
+            int PaisClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["pais"].Value;
+            String NacionalidadClienteFila = nacionalidadCliente;
+            DateTime FechaNacimientoClienteFila = (DateTime)dataGridViewModificarCliente.CurrentRow.Cells["fechaNacimiento"].Value;
 
            modificacion.txtNombre.Text = NombreClienteFila;
            modificacion.txtApellido.Text = ApellidoClienteFila;
            modificacion.cbTipoId.Text = TipoIdClienteFila;
-           //modificacion.txtNroId.Text = NroIdClienteFila;
+           modificacion.txtNroId.Text = NroIdClienteFila.ToString();
            modificacion.txtMail.Text = MailClienteFila;
            modificacion.txtTelefono.Text = TelefonoClienteFila;
            modificacion.txtCalle.Text = CalleClienteFila;
            //modificacion.txtNroCalle.Text = NroCalleClienteFila;
            modificacion.txtLocalidad.Text = LocalidadClienteFila;
            modificacion.txtNacionalidad.Text = NacionalidadClienteFila;
-           modificacion.dtpFechaNacimiento.Value = DateTime.Parse(FechaNacimientoClienteFila);
+//           modificacion.dtpFechaNacimiento.Value = DateTime.Parse(FechaNacimientoClienteFila);
             
             modificacion.Show();
 
