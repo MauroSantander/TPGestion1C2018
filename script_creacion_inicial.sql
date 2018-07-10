@@ -222,6 +222,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].estadoDeReserva', N'FN') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoDeReserva', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerEstadoDeReserva;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2696,8 +2697,6 @@ RETURN 4
 RETURN 1
 END 
 GO
-
-
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
