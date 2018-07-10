@@ -88,3 +88,4 @@ C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.ListadoEstadistico.frmListadoEstadistico.resources
 C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.AbmRegimen.frmRegimen.resources
 C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.ListadoEstadistico.frmListadoEstadistico.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.CancelarReserva.frmCancelarReserva.resources

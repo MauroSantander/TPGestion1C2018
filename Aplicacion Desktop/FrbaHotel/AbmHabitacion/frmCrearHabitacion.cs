@@ -22,6 +22,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void frmCrearHabitacion_Load(object sender, EventArgs e)
         {
+            //inicializo formulario
             this.CenterToScreen();
             comboBoxUbicacion.Items.Add("Frente");
             comboBoxUbicacion.Items.Add("Interno");
@@ -31,6 +32,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void cargarHoteles()
         {
+            //cargo los hoteles
             SqlCommand cmdBuscarHoteles = new SqlCommand("SELECT nombre, calle, nroCalle, ciudad FROM [PISOS_PICADOS].Hotel", Globals.conexionGlobal);
             SqlDataReader reader = cmdBuscarHoteles.ExecuteReader();
 
@@ -42,6 +44,7 @@ namespace FrbaHotel.AbmHabitacion
                 }
                 else
                 {
+                    //si no tiene nombre le pongo ciudad, calle y número
                     string item;
                     item = reader["ciudad"].ToString().Trim() + "-" + reader["calle"].ToString().Trim() + "-" + reader["nroCalle"].ToString().Trim();
                     comboBoxHotel.Items.Add(item);
@@ -98,9 +101,9 @@ namespace FrbaHotel.AbmHabitacion
             {
                 return;
             }
-
             //fin chequeos
 
+            //creo comando para ejecutar el SP
             string spAltaHabitacion = "[PISOS_PICADOS].SPAltaHabitacion";
 
             SqlCommand crearHabitacion = new SqlCommand(spAltaHabitacion, Globals.conexionGlobal);
@@ -135,28 +138,32 @@ namespace FrbaHotel.AbmHabitacion
             else
             {
                 crearHabitacion.Parameters["@habilitado"].Value = 0;
-
             }
 
+            //busco el id del hotel seleccionado
             SqlCommand cmdBuscarIdHotel = new SqlCommand("SELECT idHotel FROM [PISOS_PICADOS].Hotel as h WHERE h.nombre = @nombre or LTRIM(RTRIM(ciudad)) + ' - ' + LTRIM(RTRIM(calle)) + ' - ' + LTRIM(RTRIM(nroCalle)) = @nombre", Globals.conexionGlobal);
             cmdBuscarIdHotel.Parameters.Add("@nombre", SqlDbType.VarChar);
             cmdBuscarIdHotel.Parameters["@nombre"].Value = comboBoxHotel.Text;
             int idHotel = (int)cmdBuscarIdHotel.ExecuteScalar();
             crearHabitacion.Parameters["@IDhotel"].Value = idHotel;
 
+            //busco el id del tipo de habitación seleccionado
             SqlCommand cmdBuscarIdTipo = new SqlCommand("SELECT idTipo FROM [PISOS_PICADOS].Tipo as t WHERE t.tipoCamas = @tipo", Globals.conexionGlobal);
             cmdBuscarIdTipo.Parameters.Add("@tipo", SqlDbType.VarChar);
             cmdBuscarIdTipo.Parameters["@tipo"].Value = comboBoxTipo.Text;
             int idTipo = (int)cmdBuscarIdTipo.ExecuteScalar();
             crearHabitacion.Parameters["@tipo"].Value = idTipo;
 
+            //comando para chequear si la habitación ya existe
             SqlCommand cmdExisteHab = new SqlCommand("SELECT [PISOS_PICADOS].existeNumEnHotel(@idHotel, @numero)", Globals.conexionGlobal);
             cmdExisteHab.Parameters.Add("@idHotel", SqlDbType.VarChar);
             cmdExisteHab.Parameters["@idHotel"].Value = idHotel;
             cmdExisteHab.Parameters.Add("@numero", SqlDbType.VarChar);
             cmdExisteHab.Parameters["@numero"].Value = Int32.Parse(txtNumero.Text);
+            //ejecuto y recibo valor
             int existeHab = (int)cmdExisteHab.ExecuteScalar();
 
+            //chequeo si ya existe la habitación. Si ya existe no lo dejo crear
             if (existeHab == 0)
             {
                 crearHabitacion.ExecuteNonQuery();
@@ -174,6 +181,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void cargarTipos()
         {
+            //traigo los tipos de habitación
             SqlCommand cmdBuscarTipos = new SqlCommand("SELECT tipoCamas FROM [PISOS_PICADOS].Tipo", Globals.conexionGlobal);
             SqlDataReader reader = cmdBuscarTipos.ExecuteReader();
 
