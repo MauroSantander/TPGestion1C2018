@@ -228,6 +228,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoReserva', N'FN') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].yaSeRegistraronConsumibles', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].yaSeRegistraronConsumibles;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
