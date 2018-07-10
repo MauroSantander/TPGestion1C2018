@@ -35,55 +35,6 @@ namespace FrbaHotel.AbmHotel
             dataGridViewHoteles.Rows.Remove(dataGridViewHoteles.Rows[filaSeleccionada]);
         }
 
-        private void textBoxCiudad_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxPais_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridViewHoteles_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void checkEst5_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkEst4_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkEst2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkEst1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkEst3_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonNew_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void buttonUpd_Click(object sender, EventArgs e)
         {
@@ -94,11 +45,23 @@ namespace FrbaHotel.AbmHotel
             String mail = dataGridViewHoteles.CurrentRow.Cells["mail"].Value.ToString();
             String telefono = dataGridViewHoteles.CurrentRow.Cells["telefono"].Value.ToString();
             String calle = dataGridViewHoteles.CurrentRow.Cells["calle"].Value.ToString();
-            int nroCalle = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["nroCalle"].Value);
+            String nroCalle = dataGridViewHoteles.CurrentRow.Cells["nroCalle"].Value.ToString();
             String ciudad = dataGridViewHoteles.CurrentRow.Cells["ciudad"].Value.ToString();
             String pais = dataGridViewHoteles.CurrentRow.Cells["pais"].Value.ToString();
             String fechaCreacion = dataGridViewHoteles.CurrentRow.Cells["fechaCreacion"].Value.ToString();
             int estrellas = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["estrellas"].Value);
+
+            int idPais = int.Parse(pais);
+
+            SqlCommand cmdBuscarNombrePais = new SqlCommand("Select nombrePais from [PISOS_PICADOS].Pais where idPais = @idPais", Globals.conexionGlobal);
+            cmdBuscarNombrePais.Parameters.AddWithValue("@idPais", idPais);
+            SqlDataReader reader = cmdBuscarNombrePais.ExecuteReader();
+
+            while (reader.Read())
+            {
+                pais = (reader["nombrePais"]).ToString();
+            }
+            
 
             (new FrbaHotel.AbmHotel.frmModificarHotel()).cargarDatos(id, nombre, mail, telefono, calle, nroCalle, ciudad, pais, fechaCreacion, estrellas, this);
 

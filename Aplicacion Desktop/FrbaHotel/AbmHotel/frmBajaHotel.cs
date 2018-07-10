@@ -33,20 +33,7 @@ namespace FrbaHotel.AbmHotel
             textBoxId.Text = idHotel.ToString();
         }
 
-        private void textBoxNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dateTimeDesde_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dateTimeHasta_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void buttonBaja_Click(object sender, EventArgs e)
         {
@@ -79,19 +66,6 @@ namespace FrbaHotel.AbmHotel
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }

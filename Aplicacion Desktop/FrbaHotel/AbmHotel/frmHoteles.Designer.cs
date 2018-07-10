@@ -95,7 +95,6 @@
             this.textBoxCiudad.Name = "textBoxCiudad";
             this.textBoxCiudad.Size = new System.Drawing.Size(178, 20);
             this.textBoxCiudad.TabIndex = 80;
-            this.textBoxCiudad.TextChanged += new System.EventHandler(this.textBoxCiudad_TextChanged);
             // 
             // label3
             // 
@@ -112,7 +111,6 @@
             this.textBoxPais.Name = "textBoxPais";
             this.textBoxPais.Size = new System.Drawing.Size(178, 20);
             this.textBoxPais.TabIndex = 78;
-            this.textBoxPais.TextChanged += new System.EventHandler(this.textBoxPais_TextChanged);
             // 
             // label2
             // 
@@ -129,7 +127,6 @@
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(178, 20);
             this.textBoxNombre.TabIndex = 76;
-            this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
             // label24
             // 
@@ -148,7 +145,6 @@
             this.dataGridViewHoteles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewHoteles.Size = new System.Drawing.Size(582, 257);
             this.dataGridViewHoteles.TabIndex = 82;
-            this.dataGridViewHoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewHoteles_CellContentClick);
             // 
             // buttonNew
             // 
@@ -158,7 +154,6 @@
             this.buttonNew.TabIndex = 83;
             this.buttonNew.Text = "Nuevo Hotel";
             this.buttonNew.UseVisualStyleBackColor = true;
-            this.buttonNew.Click += new System.EventHandler(this.buttonNew_Click);
             // 
             // buttonUpd
             // 

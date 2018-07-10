@@ -78,7 +78,7 @@
             this.groupBox2.TabIndex = 91;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Estrellas";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            
             // 
             // cBestrellas
             // 
@@ -88,8 +88,8 @@
             "3",
             "4",
             "5"});
-            this.cBestrellas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cBestrellas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.cBestrellas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cBestrellas.FormattingEnabled = true;
             this.cBestrellas.Items.AddRange(new object[] {
             "1",
@@ -109,7 +109,7 @@
             this.textBoxCIU.Name = "textBoxCIU";
             this.textBoxCIU.Size = new System.Drawing.Size(178, 20);
             this.textBoxCIU.TabIndex = 89;
-            this.textBoxCIU.TextChanged += new System.EventHandler(this.textBoxCIU_TextChanged);
+            
             this.textBoxCIU.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
             // label3
@@ -120,7 +120,7 @@
             this.label3.Size = new System.Drawing.Size(43, 13);
             this.label3.TabIndex = 88;
             this.label3.Text = "Ciudad:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            
             // 
             // label2
             // 
@@ -130,7 +130,7 @@
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 86;
             this.label2.Text = "País:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            
             // 
             // dateTimePickerCreacion
             // 
@@ -138,7 +138,7 @@
             this.dateTimePickerCreacion.Name = "dateTimePickerCreacion";
             this.dateTimePickerCreacion.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerCreacion.TabIndex = 85;
-            this.dateTimePickerCreacion.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
+            
             // 
             // textBoxCalle
             // 
@@ -146,7 +146,7 @@
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(178, 20);
             this.textBoxCalle.TabIndex = 84;
-            this.textBoxCalle.TextChanged += new System.EventHandler(this.textBoxDIR_TextChanged);
+            
             this.textBoxCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
             // textBoxMail
@@ -155,7 +155,7 @@
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(178, 20);
             this.textBoxMail.TabIndex = 83;
-            this.textBoxMail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
+            
             // 
             // textBoxTE
             // 
@@ -163,7 +163,7 @@
             this.textBoxTE.Name = "textBoxTE";
             this.textBoxTE.Size = new System.Drawing.Size(178, 20);
             this.textBoxTE.TabIndex = 82;
-            this.textBoxTE.TextChanged += new System.EventHandler(this.textBoxTE_TextChanged);
+            
             this.textBoxTE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // textBoxName
@@ -172,7 +172,7 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(178, 20);
             this.textBoxName.TabIndex = 81;
-            this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
+
             this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
             // label18
@@ -183,7 +183,7 @@
             this.label18.Size = new System.Drawing.Size(99, 13);
             this.label18.TabIndex = 80;
             this.label18.Text = "Fecha de creación:";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
+           
             // 
             // label19
             // 
@@ -193,7 +193,7 @@
             this.label19.Size = new System.Drawing.Size(33, 13);
             this.label19.TabIndex = 79;
             this.label19.Text = "Calle:";
-            this.label19.Click += new System.EventHandler(this.label19_Click);
+            
             // 
             // label20
             // 
@@ -203,7 +203,7 @@
             this.label20.Size = new System.Drawing.Size(29, 13);
             this.label20.TabIndex = 78;
             this.label20.Text = "Mail:";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
+            
             // 
             // label21
             // 
@@ -213,7 +213,6 @@
             this.label21.Size = new System.Drawing.Size(52, 13);
             this.label21.TabIndex = 77;
             this.label21.Text = "Teléfono:";
-            this.label21.Click += new System.EventHandler(this.label21_Click);
             // 
             // label24
             // 
@@ -223,7 +222,6 @@
             this.label24.Size = new System.Drawing.Size(47, 13);
             this.label24.TabIndex = 76;
             this.label24.Text = "Nombre:";
-            this.label24.Click += new System.EventHandler(this.label24_Click);
             // 
             // groupBox1
             // 
@@ -235,7 +233,6 @@
             this.groupBox1.TabIndex = 90;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Regímenes Actuales del Hotel";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label4
             // 
@@ -245,7 +242,6 @@
             this.label4.Size = new System.Drawing.Size(186, 13);
             this.label4.TabIndex = 95;
             this.label4.Text = "Marque Regímenes que quiera quitar:";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // checkedListBoxRegimenes
             // 
@@ -254,7 +250,7 @@
             this.checkedListBoxRegimenes.Name = "checkedListBoxRegimenes";
             this.checkedListBoxRegimenes.Size = new System.Drawing.Size(240, 79);
             this.checkedListBoxRegimenes.TabIndex = 0;
-            this.checkedListBoxRegimenes.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxRegimenes_SelectedIndexChanged);
+           
             // 
             // textBoxNroCalle
             // 
@@ -262,7 +258,6 @@
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(98, 20);
             this.textBoxNroCalle.TabIndex = 93;
-            this.textBoxNroCalle.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // label1
@@ -273,7 +268,6 @@
             this.label1.Size = new System.Drawing.Size(27, 13);
             this.label1.TabIndex = 94;
             this.label1.Text = "Nro:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // groupBox3
             // 
@@ -302,7 +296,6 @@
             this.checkedListBoxRegimenesAgregar.Name = "checkedListBoxRegimenesAgregar";
             this.checkedListBoxRegimenesAgregar.Size = new System.Drawing.Size(240, 79);
             this.checkedListBoxRegimenesAgregar.TabIndex = 0;
-            this.checkedListBoxRegimenesAgregar.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxRegimenesAgregar_SelectedIndexChanged);
             // 
             // buttonCerrar
             // 
@@ -511,8 +504,8 @@
             "Yibuti",
             "Zambia",
             "Zimbabue"});
-            this.comboBoxPAIS.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBoxPAIS.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.comboBoxPAIS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPAIS.FormattingEnabled = true;
             this.comboBoxPAIS.Items.AddRange(new object[] {
             "Afganistán",
@@ -713,9 +706,9 @@
             this.comboBoxPAIS.Name = "comboBoxPAIS";
             this.comboBoxPAIS.Size = new System.Drawing.Size(197, 21);
             this.comboBoxPAIS.TabIndex = 98;
-            this.comboBoxPAIS.SelectedIndexChanged += new System.EventHandler(this.comboBoxPAIS_SelectedIndexChanged);
+            
             // 
-            // ModificarHotel
+            // frmModificarHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -741,7 +734,7 @@
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.groupBox1);
-            this.Name = "ModificarHotel";
+            this.Name = "frmModificarHotel";
             this.Text = "Modificar Hotel";
             this.Load += new System.EventHandler(this.ModificarHotel_Load);
             this.groupBox2.ResumeLayout(false);

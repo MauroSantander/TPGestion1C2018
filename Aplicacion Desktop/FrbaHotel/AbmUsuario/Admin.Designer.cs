@@ -235,7 +235,6 @@
             this.pass.Name = "pass";
             this.pass.Size = new System.Drawing.Size(137, 20);
             this.pass.TabIndex = 29;
-            this.pass.TextChanged += new System.EventHandler(this.pass_TextChanged);
             this.pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pass_KeyPress);
             // 
             // groupBox2
@@ -270,7 +269,6 @@
             this.groupBox2.TabIndex = 26;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos personales";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // checkedListHoteles
             // 
@@ -279,7 +277,6 @@
             this.checkedListHoteles.Name = "checkedListHoteles";
             this.checkedListHoteles.Size = new System.Drawing.Size(345, 109);
             this.checkedListHoteles.TabIndex = 34;
-            this.checkedListHoteles.SelectedIndexChanged += new System.EventHandler(this.checkedListHoteles_SelectedIndexChanged);
             // 
             // comboBoxPais
             // 
@@ -680,8 +677,7 @@
             this.comboBoxPais.Name = "comboBoxPais";
             this.comboBoxPais.Size = new System.Drawing.Size(180, 21);
             this.comboBoxPais.TabIndex = 33;
-            this.comboBoxPais.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
-            // 
+             // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -690,7 +686,6 @@
             this.label10.Size = new System.Drawing.Size(32, 13);
             this.label10.TabIndex = 32;
             this.label10.Text = "País:";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // localidad
             // 
@@ -698,7 +693,6 @@
             this.localidad.Name = "localidad";
             this.localidad.Size = new System.Drawing.Size(191, 20);
             this.localidad.TabIndex = 31;
-            this.localidad.TextChanged += new System.EventHandler(this.textBox13_TextChanged);
             this.localidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxLoc_KeyPress);
             // 
             // label38
@@ -709,7 +703,6 @@
             this.label38.Size = new System.Drawing.Size(56, 13);
             this.label38.TabIndex = 30;
             this.label38.Text = "Localidad:";
-            this.label38.Click += new System.EventHandler(this.label38_Click);
             // 
             // nroCalle
             // 
@@ -717,8 +710,7 @@
             this.nroCalle.Name = "nroCalle";
             this.nroCalle.Size = new System.Drawing.Size(68, 20);
             this.nroCalle.TabIndex = 29;
-            this.nroCalle.TextChanged += new System.EventHandler(this.textBox14_TextChanged);
-            this.nroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textNroCalle_KeyPress);
+           this.nroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textNroCalle_KeyPress);
             // 
             // label39
             // 
@@ -728,7 +720,6 @@
             this.label39.Size = new System.Drawing.Size(27, 13);
             this.label39.TabIndex = 28;
             this.label39.Text = "Nro:";
-            this.label39.Click += new System.EventHandler(this.label39_Click);
             // 
             // calle
             // 
@@ -736,7 +727,6 @@
             this.calle.Name = "calle";
             this.calle.Size = new System.Drawing.Size(191, 20);
             this.calle.TabIndex = 27;
-            this.calle.TextChanged += new System.EventHandler(this.textBox15_TextChanged);
             this.calle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxCalle_KeyPress);
             // 
             // label40
@@ -747,7 +737,7 @@
             this.label40.Size = new System.Drawing.Size(33, 13);
             this.label40.TabIndex = 26;
             this.label40.Text = "Calle:";
-            this.label40.Click += new System.EventHandler(this.label40_Click);
+            
             // 
             // dateTimePicker1
             // 
@@ -759,7 +749,7 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 18;
             this.dateTimePicker1.Value = new System.DateTime(2018, 6, 28, 0, 0, 0, 0);
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+          
             // 
             // mail
             // 
@@ -767,7 +757,6 @@
             this.mail.Name = "mail";
             this.mail.Size = new System.Drawing.Size(137, 20);
             this.mail.TabIndex = 16;
-            this.mail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
             // 
             // tel
             // 
@@ -775,7 +764,6 @@
             this.tel.Name = "tel";
             this.tel.Size = new System.Drawing.Size(137, 20);
             this.tel.TabIndex = 15;
-            this.tel.TextChanged += new System.EventHandler(this.textBoxTel_TextChanged);
             this.tel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxTel_KeyPress);
             // 
             // numDoc
@@ -784,7 +772,6 @@
             this.numDoc.Name = "numDoc";
             this.numDoc.Size = new System.Drawing.Size(137, 20);
             this.numDoc.TabIndex = 14;
-            this.numDoc.TextChanged += new System.EventHandler(this.numDoc_TextChanged);
             this.numDoc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numDoc_KeyPress);
             // 
             // comboBoxTipo
@@ -807,7 +794,6 @@
             this.comboBoxTipo.Size = new System.Drawing.Size(59, 21);
             this.comboBoxTipo.TabIndex = 13;
             this.comboBoxTipo.Text = "Tipo";
-            this.comboBoxTipo.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // nombre
             // 
@@ -815,7 +801,6 @@
             this.nombre.Name = "nombre";
             this.nombre.Size = new System.Drawing.Size(137, 20);
             this.nombre.TabIndex = 12;
-            this.nombre.TextChanged += new System.EventHandler(this.nombreBox_TextChanged);
             this.nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombreBox_KeyPress);
             // 
             // apellido
@@ -824,7 +809,6 @@
             this.apellido.Name = "apellido";
             this.apellido.Size = new System.Drawing.Size(137, 20);
             this.apellido.TabIndex = 11;
-            this.apellido.TextChanged += new System.EventHandler(this.apellido_TextChanged);
             this.apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellido_KeyPress);
             // 
             // label12
@@ -835,7 +819,6 @@
             this.label12.Size = new System.Drawing.Size(35, 13);
             this.label12.TabIndex = 9;
             this.label12.Text = "Hotel:";
-            this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // label11
             // 
@@ -845,7 +828,7 @@
             this.label11.Size = new System.Drawing.Size(109, 13);
             this.label11.TabIndex = 8;
             this.label11.Text = "Fecha de nacimiento:";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
+            
             // 
             // label9
             // 
@@ -854,7 +837,6 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(0, 13);
             this.label9.TabIndex = 6;
-            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label8
             // 
@@ -864,7 +846,6 @@
             this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 5;
             this.label8.Text = "Mail:";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label7
             // 
@@ -874,7 +855,6 @@
             this.label7.Size = new System.Drawing.Size(52, 13);
             this.label7.TabIndex = 4;
             this.label7.Text = "Teléfono:";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label6
             // 
@@ -884,7 +864,6 @@
             this.label6.Size = new System.Drawing.Size(132, 13);
             this.label6.TabIndex = 3;
             this.label6.Text = "Tipo y n° de identificación:";
-            this.label6.Click += new System.EventHandler(this.label6_Click_1);
             // 
             // label2
             // 
@@ -894,7 +873,6 @@
             this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Nombre:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -904,7 +882,6 @@
             this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Apellido:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label5
             // 
@@ -939,7 +916,6 @@
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(137, 20);
             this.username.TabIndex = 28;
-            this.username.TextChanged += new System.EventHandler(this.username_TextChanged);
             this.username.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.usernameText_KeyPress);
             // 
             // tabBajaUsr
@@ -1067,7 +1043,6 @@
             this.textBoxUsrNameBorrar.Name = "textBoxUsrNameBorrar";
             this.textBoxUsrNameBorrar.Size = new System.Drawing.Size(137, 20);
             this.textBoxUsrNameBorrar.TabIndex = 49;
-            this.textBoxUsrNameBorrar.TextChanged += new System.EventHandler(this.textBoxUsrNameBorrar_TextChanged);
             // 
             // button2
             // 
@@ -1090,7 +1065,6 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(382, 150);
             this.dataGridView1.TabIndex = 29;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label15
             // 
@@ -1153,7 +1127,6 @@
             this.tipoYNum.TabIndex = 44;
             this.tipoYNum.Text = "Buscar";
             this.tipoYNum.UseVisualStyleBackColor = true;
-            this.tipoYNum.Click += new System.EventHandler(this.tipoYNum_Click);
             // 
             // BuscarUyPass
             // 
@@ -1216,7 +1189,6 @@
             this.checkedListBoxRolesUPDNo.Name = "checkedListBoxRolesUPDNo";
             this.checkedListBoxRolesUPDNo.Size = new System.Drawing.Size(193, 79);
             this.checkedListBoxRolesUPDNo.TabIndex = 28;
-            this.checkedListBoxRolesUPDNo.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxRolesUPDNo_SelectedIndexChanged);
             // 
             // groupBox6
             // 
@@ -1237,7 +1209,6 @@
             this.passUPD.Name = "passUPD";
             this.passUPD.Size = new System.Drawing.Size(137, 20);
             this.passUPD.TabIndex = 43;
-            this.passUPD.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
             this.passUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.passUPD_KeyPress);
             // 
             // label33
@@ -1264,7 +1235,6 @@
             this.usernameUPD.Name = "usernameUPD";
             this.usernameUPD.Size = new System.Drawing.Size(137, 20);
             this.usernameUPD.TabIndex = 43;
-            this.usernameUPD.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
             this.usernameUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.usernameUPD_KeyPress);
             // 
             // groupBox4
@@ -1319,7 +1289,6 @@
             this.checkedListBoxHotelesUPDNo.Name = "checkedListBoxHotelesUPDNo";
             this.checkedListBoxHotelesUPDNo.Size = new System.Drawing.Size(195, 94);
             this.checkedListBoxHotelesUPDNo.TabIndex = 27;
-            this.checkedListBoxHotelesUPDNo.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxHotelesUPDNo_SelectedIndexChanged);
             // 
             // label45
             // 
@@ -1358,7 +1327,6 @@
             this.checkedListBoxHotelesUPD.Name = "checkedListBoxHotelesUPD";
             this.checkedListBoxHotelesUPD.Size = new System.Drawing.Size(187, 94);
             this.checkedListBoxHotelesUPD.TabIndex = 26;
-            this.checkedListBoxHotelesUPD.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxHotelesUPD_SelectedIndexChanged);
             // 
             // label48
             // 
@@ -1793,7 +1761,6 @@
             this.localidadUPD.Name = "localidadUPD";
             this.localidadUPD.Size = new System.Drawing.Size(191, 20);
             this.localidadUPD.TabIndex = 23;
-            this.localidadUPD.TextChanged += new System.EventHandler(this.textBox9_TextChanged_1);
             this.localidadUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.localidadUPD_KeyPress);
             // 
             // label36
@@ -1804,7 +1771,6 @@
             this.label36.Size = new System.Drawing.Size(56, 13);
             this.label36.TabIndex = 22;
             this.label36.Text = "Localidad:";
-            this.label36.Click += new System.EventHandler(this.label36_Click);
             // 
             // nroUPD
             // 
@@ -1812,7 +1778,6 @@
             this.nroUPD.Name = "nroUPD";
             this.nroUPD.Size = new System.Drawing.Size(68, 20);
             this.nroUPD.TabIndex = 21;
-            this.nroUPD.TextChanged += new System.EventHandler(this.textBox8_TextChanged_1);
             this.nroUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nroUPD_KeyPress);
             // 
             // label28
@@ -1823,7 +1788,6 @@
             this.label28.Size = new System.Drawing.Size(27, 13);
             this.label28.TabIndex = 20;
             this.label28.Text = "Nro:";
-            this.label28.Click += new System.EventHandler(this.label28_Click_1);
             // 
             // dateTimePickerUPD
             // 
@@ -1831,7 +1795,6 @@
             this.dateTimePickerUPD.Name = "dateTimePickerUPD";
             this.dateTimePickerUPD.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerUPD.TabIndex = 18;
-            this.dateTimePickerUPD.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // calleUPD
             // 
@@ -1839,7 +1802,6 @@
             this.calleUPD.Name = "calleUPD";
             this.calleUPD.Size = new System.Drawing.Size(191, 20);
             this.calleUPD.TabIndex = 17;
-            this.calleUPD.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             this.calleUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.calleUPD_KeyPress);
             // 
             // mailUPD
@@ -1848,7 +1810,6 @@
             this.mailUPD.Name = "mailUPD";
             this.mailUPD.Size = new System.Drawing.Size(255, 20);
             this.mailUPD.TabIndex = 16;
-            this.mailUPD.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // telUPD
             // 
@@ -1856,7 +1817,6 @@
             this.telUPD.Name = "telUPD";
             this.telUPD.Size = new System.Drawing.Size(255, 20);
             this.telUPD.TabIndex = 15;
-            this.telUPD.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             this.telUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.telUPD_KeyPress);
             // 
             // numIdUPD
@@ -1865,7 +1825,6 @@
             this.numIdUPD.Name = "numIdUPD";
             this.numIdUPD.Size = new System.Drawing.Size(164, 20);
             this.numIdUPD.TabIndex = 14;
-            this.numIdUPD.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             this.numIdUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numIdUPD_KeyPress);
             // 
             // comboBoxTipoUPD
@@ -1888,7 +1847,6 @@
             this.comboBoxTipoUPD.Size = new System.Drawing.Size(59, 21);
             this.comboBoxTipoUPD.TabIndex = 13;
             this.comboBoxTipoUPD.Text = "Tipo";
-            this.comboBoxTipoUPD.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // nombreUPD
             // 
@@ -1896,7 +1854,6 @@
             this.nombreUPD.Name = "nombreUPD";
             this.nombreUPD.Size = new System.Drawing.Size(255, 20);
             this.nombreUPD.TabIndex = 12;
-            this.nombreUPD.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             this.nombreUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombreUPD_KeyPress);
             // 
             // apellidoUPD
@@ -1905,7 +1862,6 @@
             this.apellidoUPD.Name = "apellidoUPD";
             this.apellidoUPD.Size = new System.Drawing.Size(255, 20);
             this.apellidoUPD.TabIndex = 11;
-            this.apellidoUPD.TextChanged += new System.EventHandler(this.textBox7_TextChanged);
             this.apellidoUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellidoUPD_KeyPress);
             // 
             // label18
@@ -1916,7 +1872,6 @@
             this.label18.Size = new System.Drawing.Size(109, 13);
             this.label18.TabIndex = 8;
             this.label18.Text = "Fecha de nacimiento:";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // label19
             // 
@@ -1926,7 +1881,6 @@
             this.label19.Size = new System.Drawing.Size(33, 13);
             this.label19.TabIndex = 7;
             this.label19.Text = "Calle:";
-            this.label19.Click += new System.EventHandler(this.label19_Click);
             // 
             // label23
             // 
@@ -1944,7 +1898,6 @@
             this.label20.Size = new System.Drawing.Size(29, 13);
             this.label20.TabIndex = 5;
             this.label20.Text = "Mail:";
-            this.label20.Click += new System.EventHandler(this.label20_Click);
             // 
             // label21
             // 
@@ -1954,7 +1907,6 @@
             this.label21.Size = new System.Drawing.Size(52, 13);
             this.label21.TabIndex = 4;
             this.label21.Text = "Teléfono:";
-            this.label21.Click += new System.EventHandler(this.label21_Click);
             // 
             // label22
             // 
@@ -2030,7 +1982,6 @@
             this.checkedListBoxRolesUPD.Name = "checkedListBoxRolesUPD";
             this.checkedListBoxRolesUPD.Size = new System.Drawing.Size(189, 79);
             this.checkedListBoxRolesUPD.TabIndex = 27;
-            this.checkedListBoxRolesUPD.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxRolesUPD_SelectedIndexChanged);
             // 
             // textBox10
             // 
@@ -2038,7 +1989,6 @@
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(137, 20);
             this.textBox10.TabIndex = 20;
-            this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
             this.textBox10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numDoc_KeyPress);
             // 
             // comboBox5
@@ -2048,7 +1998,6 @@
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(59, 21);
             this.comboBox5.TabIndex = 20;
-            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // label31
             // 
@@ -2058,7 +2007,6 @@
             this.label31.Size = new System.Drawing.Size(100, 13);
             this.label31.TabIndex = 40;
             this.label31.Text = "N° de Identificación";
-            this.label31.Click += new System.EventHandler(this.label31_Click);
             // 
             // label30
             // 
@@ -2068,7 +2016,6 @@
             this.label30.Size = new System.Drawing.Size(28, 13);
             this.label30.TabIndex = 39;
             this.label30.Text = "Tipo";
-            this.label30.Click += new System.EventHandler(this.label30_Click);
             // 
             // label29
             // 
@@ -2078,7 +2025,6 @@
             this.label29.Size = new System.Drawing.Size(13, 13);
             this.label29.TabIndex = 38;
             this.label29.Text = "ó";
-            this.label29.Click += new System.EventHandler(this.label29_Click);
             // 
             // button3
             // 
@@ -2100,7 +2046,6 @@
             this.label26.Size = new System.Drawing.Size(80, 15);
             this.label26.TabIndex = 30;
             this.label26.Text = "Buscar por:";
-            this.label26.Click += new System.EventHandler(this.label26_Click);
             // 
             // label27
             // 
@@ -2110,7 +2055,6 @@
             this.label27.Size = new System.Drawing.Size(58, 13);
             this.label27.TabIndex = 31;
             this.label27.Text = "Username:";
-            this.label27.Click += new System.EventHandler(this.label27_Click);
             // 
             // textBoxUsrAct
             // 
@@ -2118,7 +2062,6 @@
             this.textBoxUsrAct.Name = "textBoxUsrAct";
             this.textBoxUsrAct.Size = new System.Drawing.Size(137, 20);
             this.textBoxUsrAct.TabIndex = 36;
-            this.textBoxUsrAct.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
             this.textBoxUsrAct.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.usernameText_KeyPress);
             // 
             // Admin
