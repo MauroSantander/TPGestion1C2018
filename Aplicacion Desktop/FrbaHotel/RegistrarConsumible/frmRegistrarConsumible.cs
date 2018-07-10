@@ -26,6 +26,7 @@ namespace FrbaHotel.RegistrarConsumible
             labelTotal.Text = total.ToString();
             //traigo consumibles
             cargarConsumibles();
+            precioConsumible.Text = "0";
         }
 
         private void cargarConsumibles()
@@ -186,6 +187,7 @@ namespace FrbaHotel.RegistrarConsumible
                 cmd.ExecuteNonQuery();
             }
             MessageBox.Show("Registro de consumibles realizado con éxito.");
+            this.Close();
         }
 
         private void txtCodigoReserva_KeyPress(object sender, KeyPressEventArgs e)
