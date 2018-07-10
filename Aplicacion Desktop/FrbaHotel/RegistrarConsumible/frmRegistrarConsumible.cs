@@ -76,25 +76,28 @@ namespace FrbaHotel.RegistrarConsumible
             {
                 return;
             }
+            //traigo el precio
+            SqlCommand cmd = new SqlCommand("SELECT precio FROM [PISOS_PICADOS].Consumible WHERE descripcion = @descripcion", Globals.conexionGlobal);
+            cmd.Parameters.Add("@descripcion", SqlDbType.VarChar);
+            cmd.Parameters["@descripcion"].Value = listConsumibles.SelectedItem.ToString();
             //si ya agregó el consumible le sumo la cantidad
-            if (listAFacturar.Items.Contains(listConsumibles.SelectedItem)) 
+            if (listAFacturar.Items.Contains(listConsumibles.SelectedItem))
             {
                 //busco la posición del item
                 int posicionItem = listAFacturar.Items.IndexOf(listConsumibles.SelectedItem);
                 //sumo la cantidad
                 listBoxCantidad.Items[posicionItem] = Int32.Parse(listBoxCantidad.Items[posicionItem].ToString()) + cantidad.Value;
+                //actualizo total cuando agrego
+                total = total + float.Parse(cmd.ExecuteScalar().ToString()) * float.Parse(cantidad.Value.ToString());
+                labelTotal.Text = total.ToString();
                 return;
             }
-            listAFacturar.Items.Add(listConsumibles.SelectedItem);
-            //traigo el precio
-            SqlCommand cmd = new SqlCommand("SELECT precio FROM [PISOS_PICADOS].Consumible WHERE descripcion = @descripcion", Globals.conexionGlobal);
-            cmd.Parameters.Add("@descripcion", SqlDbType.VarChar);
-            cmd.Parameters["@descripcion"].Value = listConsumibles.SelectedItem.ToString();
             //actualizo total cuando agrego
             total = total + float.Parse(cmd.ExecuteScalar().ToString()) * float.Parse(cantidad.Value.ToString());
             labelTotal.Text = total.ToString();
             //agrego también la cantidad
             listBoxCantidad.Items.Add(cantidad.Value.ToString());
+            listAFacturar.Items.Add(listConsumibles.SelectedItem);
         }
 
         private void listConsumibles_SelectedValueChanged(object sender, EventArgs e)
