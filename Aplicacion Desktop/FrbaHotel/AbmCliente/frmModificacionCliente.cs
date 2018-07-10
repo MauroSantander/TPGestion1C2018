@@ -77,27 +77,13 @@ namespace FrbaHotel.AbmCliente
 
             string selectDateAsString = dtpFechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-            string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
-
-            SqlCommand getId = new SqlCommand(fObtenerId, Globals.conexionGlobal);
-
-            getId.Parameters.Add("@nombre", SqlDbType.VarChar);
-            getId.Parameters.Add("@apellido", SqlDbType.VarChar);
-            getId.Parameters.Add("@numeroIdentificacion",SqlDbType.Int);
-
-            getId.Parameters["@nombre"].Value = NombreCliente;
-            getId.Parameters["@apellido"].Value = ApellidoCliente;
-            getId.Parameters["@numeroIdentificacion"].Value = NroIdCliente;
-
-            int idUsuario = (int)getId.ExecuteScalar();
-
             //chequeos
 
             if (NombreCliente == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (ApellidoCliente == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            //if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            //if (MailCliente == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (!validarEmail(MailCliente) || c.estaRepetidoMail(MailCliente)) { MessageBox.Show("Error en el mail", "Error"); return; }
             if (CalleCliente == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
@@ -105,11 +91,29 @@ namespace FrbaHotel.AbmCliente
             if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NacionalidadCliente == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
+            /*
             if (c.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
             {
                 MessageBox.Show("Identificación Repetida");
                 return;
             }
+            */
+
+
+            string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
+
+            SqlCommand obtenerId = new SqlCommand(fObtenerId, Globals.conexionGlobal);
+
+            obtenerId.Parameters.Add("@nombre", SqlDbType.VarChar);
+            obtenerId.Parameters.Add("@apellido", SqlDbType.VarChar);
+            obtenerId.Parameters.Add("@numeroIdentificacion", SqlDbType.Int);
+
+            obtenerId.Parameters["@nombre"].Value = NombreCliente;
+            obtenerId.Parameters["@apellido"].Value = ApellidoCliente;
+            obtenerId.Parameters["@numeroIdentificacion"].Value = NroIdCliente;
+
+            int idUsuario = Convert.ToInt32 (obtenerId.ExecuteScalar());  //aca es donde falla porque viene con Null
+
 
             String cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
 
@@ -118,7 +122,7 @@ namespace FrbaHotel.AbmCliente
             obtenerEstado.Parameters.Add("@idUsuario", SqlDbType.Int);
             obtenerEstado.Parameters["@idUsuario"].Value = idUsuario;
 
-            int estadoCliente = (int)obtenerEstado.ExecuteScalar();
+            int estadoCliente = (int) obtenerEstado.ExecuteScalar();
 
             String cadenaProcedureModif = "[PISOS_PICADOS].SPModificarCliente";
 
