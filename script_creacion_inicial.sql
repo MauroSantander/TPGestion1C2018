@@ -226,7 +226,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].estadoDeReserva', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoReserva', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerEstadoReserva;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].yaSeRegistrarionConsumibles', N'FN') IS NOT NULL
+IF OBJECT_ID(N'[PISOS_PICADOS].yaSeRegistraronConsumibles', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].yaSeRegistrarionConsumibles;
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -2836,7 +2836,7 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].yaSeRegistrarionConsumibles (@idEstadia INT)
+CREATE FUNCTION [PISOS_PICADOS].yaSeRegistraronConsumibles (@idEstadia INT)
 RETURNS INT 
 AS
 BEGIN

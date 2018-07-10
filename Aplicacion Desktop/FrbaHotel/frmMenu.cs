@@ -62,7 +62,7 @@ namespace FrbaHotel
 
         private void btnRegistrarConsumibles_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.RegistrarConsumible.Form1()).ShowDialog();
+            (new FrbaHotel.RegistrarConsumible.frmRegistrarConsumible()).ShowDialog();
         }
 
         private void btnABMCliente_Click(object sender, EventArgs e)
