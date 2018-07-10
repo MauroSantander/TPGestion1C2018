@@ -20,6 +20,7 @@ namespace FrbaHotel.ListadoEstadistico
 
         private void frmListadoEstadistico_Load(object sender, EventArgs e)
         {
+            //Inicializo el formulario. Agrego las opciones del listado estadístico
             this.CenterToScreen();
             comboBoxTops.Items.Add("Hoteles con mayor cantidad de reservas canceladas");
             comboBoxTops.Items.Add("Hoteles con mayor cantidad de consumibles facturados");
@@ -29,11 +30,12 @@ namespace FrbaHotel.ListadoEstadistico
             comboBoxTops.Items.Add("Cliente con mayor cantidad de puntos");
             comboBoxTops.SelectedIndex = 0;
 
+            //Agrego los años al combobox del año
             for (int i = Globals.FechaDelSistema.Year; i > 1998; i--)
             {
                 comboBoxAño.Items.Add(i);
             }
-            comboBoxAño.Text = Globals.FechaDelSistema.Year.ToString();
+            comboBoxAño.SelectedIndex = 0;
 
         }
 
@@ -43,6 +45,7 @@ namespace FrbaHotel.ListadoEstadistico
             SqlCommand cmd;
             int consulta = comboBoxTops.SelectedIndex;
 
+            //Dependiendo la consulta seleccionada, por el index del comboBox, agrego la query correspondiente
             if (consulta == 0) 
             {
                 query = "SELECT * FROM [PISOS_PICADOS].hotelesConMasCancelaciones (@año, @trimestre)";
@@ -68,11 +71,16 @@ namespace FrbaHotel.ListadoEstadistico
                 query = "SELECT * FROM [PISOS_PICADOS].topClientesPorPuntos (@año, @trimestre, @fechaActual)";
             }
 
+            //Creo el objeto para ejecutar la query
             cmd = new SqlCommand(query, Globals.conexionGlobal);
+            //Agrego parámetros a función
             cmd.Parameters.Add("@año", SqlDbType.Int);
             cmd.Parameters.Add("@trimestre", SqlDbType.Int);
+            //Doy valor a los parámetros de la función
             cmd.Parameters["@año"].Value = Int32.Parse(comboBoxAño.Text);
             cmd.Parameters["@trimestre"].Value = Int32.Parse(Trimestre.Text);
+
+            //Si son las consultas que necesitan la fecha actual del sistema, se las agrego como parámetro
             if (consulta == 2 || consulta == 3 || consulta == 5)
             {
                 cmd.Parameters.Add("@fechaActual", SqlDbType.Date);
@@ -81,6 +89,7 @@ namespace FrbaHotel.ListadoEstadistico
             cmd.Parameters["@año"].Value = Int32.Parse(comboBoxAño.Text);
             cmd.Parameters["@trimestre"].Value = Int32.Parse(Trimestre.Text);
 
+            //Lleno el dataGridView con los resultados
             DataTable dt = new DataTable();
             SqlDataReader reader = cmd.ExecuteReader();
             dt.Load(reader);

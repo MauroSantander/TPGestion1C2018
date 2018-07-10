@@ -20,46 +20,10 @@ namespace FrbaHotel.Login
             Globals.frmLogInInstance = this;
         }
 
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxUsuario_TextChanged_1(object sender, EventArgs e)
-        {
-            //box de usuario
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-            //box de password
-        }
-
-
-         private void textBox2_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonIniciarSesion_Click(object sender, EventArgs e)
         {            
-
+            //Usamos tres funciones de verificación. Una para ver si existe usuario, otra si la contraseña es correcta, y otra si el usuario esta habilitado o no
+            //En base a estas verificaciones, se logueará o se avisará al usuario lo ocurrido
             SqlCommand verificarUsuario = new SqlCommand("SELECT [PISOS_PICADOS].usuarioValido(@usuario)", Globals.conexionGlobal);
             SqlCommand verificarContraseña = new SqlCommand("SELECT [PISOS_PICADOS].contrasenaValida(@usuario, @contrasena)", Globals.conexionGlobal);
             SqlCommand verificarUsuarioDeshabilitado = new SqlCommand("SELECT [PISOS_PICADOS].empleadoDeshabilitado(@usuario)", Globals.conexionGlobal);
@@ -84,6 +48,7 @@ namespace FrbaHotel.Login
                 MessageBox.Show("El usuario no existe.", "Error");
             }
 
+            //Verificamos. Si todos los datos están bien y si el usuario está habilitado loguea
             if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 1 && respuestaVerificacionUsuarioDeshabilitado == 0)
             {
                 //guardo id usuario en Globals
@@ -95,12 +60,15 @@ namespace FrbaHotel.Login
                 
                 //continua 
                 
+                //Si loguea bien, reseteamos intentos disponibles del usuario con el siguiente SP
                 SqlCommand resetearIntentos = new SqlCommand("[PISOS_PICADOS].resetearIntentos", Globals.conexionGlobal);
                 resetearIntentos.CommandType = CommandType.StoredProcedure;
                 resetearIntentos.Parameters.Add("@usuarioEmpleado",SqlDbType.VarChar);
                 resetearIntentos.Parameters["@usuarioEmpleado"].Value = textBoxUsuario.Text;
                 resetearIntentos.ExecuteNonQuery();
 
+                //Si el usuario tiene un solo rol, lo mandamos directamente al menu con el mismo, sin llevarlo a la pantalla de elección.
+                //Lo verificamos con la siguiente función:
                 SqlCommand tieneUnSoloRol = new SqlCommand("SELECT [PISOS_PICADOS].tieneUnSoloRol(@usuario)", Globals.conexionGlobal);
                 tieneUnSoloRol.Parameters.Add("@usuario", SqlDbType.VarChar);
                 tieneUnSoloRol.Parameters["@usuario"].Value = textBoxUsuario.Text;
@@ -124,11 +92,15 @@ namespace FrbaHotel.Login
                     frmElegirRol.ShowDialog();
                 }
             }
+
+            //Verificamos si el usuario está deshabilitado, en caso de estarlo avisamos y no dejamos loguear
             if (respuestaVerificacionUsuario == 1 && respuestaVerificacionUsuarioDeshabilitado == 1)
             {
                 MessageBox.Show("Usuario deshabilitado.", "Error");
                 return;
             }
+
+            //Si el usuario existe pero la contraseña está mal, le restamos un intento
             if (respuestaVerificacionUsuario == 1 && respuestaVerificacionContraseña == 0 && respuestaVerificacionUsuarioDeshabilitado == 0)
             {
                 SqlCommand sumarIntento = new SqlCommand("[PISOS_PICADOS].sumarIntento", Globals.conexionGlobal);
@@ -143,6 +115,7 @@ namespace FrbaHotel.Login
 
                 int intentosFallidos = (int)cantidadIntentosFallidos.ExecuteScalar();
 
+                //Si llego a 3 intentos fallidos, se deshabilita el usuario
                 if (intentosFallidos >= 3) 
                 {
                     MessageBox.Show("Ha llegado a la cantidad máxima de intentos fallidos. Su usuario será deshabilitado.","Error");
@@ -167,6 +140,7 @@ namespace FrbaHotel.Login
 
         private void ingresarInvitado_Click(object sender, EventArgs e)
         {
+            //Si es invitado se lo manda al menu con rol n° 3, que es el de invitado
             frmMenu frmMenuInstance = new frmMenu();
             frmMenuInstance.asignarRol(3);
             frmMenuInstance.Show();

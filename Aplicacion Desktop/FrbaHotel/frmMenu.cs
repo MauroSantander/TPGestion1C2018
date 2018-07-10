@@ -77,7 +77,7 @@ namespace FrbaHotel
 
         private void btnCancelarReserva_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.CancelarReserva.Form1()).ShowDialog();
+            (new FrbaHotel.CancelarReserva.frmCancelarReserva()).ShowDialog();
         }
 
         private void btnFacturarEstadia_Click(object sender, EventArgs e)

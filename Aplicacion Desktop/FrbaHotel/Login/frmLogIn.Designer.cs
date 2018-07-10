@@ -65,7 +65,6 @@
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Usuario:";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // label2
             // 
@@ -75,7 +74,6 @@
             this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Contraseña:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // textBoxUsuario
             // 
@@ -84,7 +82,6 @@
             this.textBoxUsuario.Size = new System.Drawing.Size(128, 20);
             this.textBoxUsuario.TabIndex = 0;
             this.textBoxUsuario.Text = "admin";
-            this.textBoxUsuario.TextChanged += new System.EventHandler(this.textBoxUsuario_TextChanged_1);
             // 
             // textBoxContrasena
             // 
@@ -94,7 +91,6 @@
             this.textBoxContrasena.Size = new System.Drawing.Size(128, 20);
             this.textBoxContrasena.TabIndex = 1;
             this.textBoxContrasena.Text = "w23e";
-            this.textBoxContrasena.TextChanged += new System.EventHandler(this.textBox2_TextChanged_1);
             // 
             // ingresarInvitado
             // 
