@@ -217,7 +217,11 @@ IF OBJECT_ID(N'[PISOS_PICADOS].topClientesPorPuntos', N'IF') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerNacionalidadCliente', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerNacionalidadCliente;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].estadoDeReserva', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].estadoDeReserva;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoDeReserva', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerEstadoDeReserva;
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2666,6 +2670,34 @@ RETURN (SELECT c.nacionalidad FROM [PISOS_PICADOS].Cliente AS c WHERE c.idUsuari
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].estadoDeReserva(@codReserva INT)
+RETURNS INT
+AS 
+BEGIN
+RETURN (SELECT estado FROM [PISOS_PICADOS].Reserva WHERE codigoReserva = @codReserva) 
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].ObtenerEstadoReserva(@codReserva INT, @fechaActual DATE )
+RETURNS INT
+AS 
+BEGIN
+DECLARE @estado INT
+Set @estado = [PISOS_PICADOS].estadoDeReserva(@codReserva)
+IF (@codReserva NOT IN(SELECT codigoReserva FROM [PISOS_PICADOS].Reserva))
+RETURN 0
+IF (@estado = 3 OR @estado = 4 OR @estado = 5)
+RETURN 2
+IF (@estado = 6)
+RETURN 3
+IF (@estado = 1 AND (DATEDIFF(DAY, (Select r.fechaInicio from [PISOS_PICADOS].Reserva AS r WHERE 
+r.codigoReserva = @codReserva) , @fechaActual)) =0)
+RETURN 4
+RETURN 1
+END 
+GO
+
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
@@ -3615,6 +3647,9 @@ BEGIN
 	UPDATE PISOS_PICADOS.Estadia
 	SET encargadoCheckIn = @idEncargado
 		,fechaCheckIn = @fechaIngreso
+	WHERE codigoReserva = @codReserva
+	UPDATE PISOS_PICADOS.Reserva
+	SET estado = 6
 	WHERE codigoReserva = @codReserva
 END
 GO
