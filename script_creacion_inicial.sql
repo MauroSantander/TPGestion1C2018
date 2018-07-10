@@ -1632,6 +1632,7 @@ JOIN [PISOS_PICADOS].Habitacion AS hab ON  h.idHotel = hab.idHotel
 WHERE m.Habitacion_Numero = hab.numero 
 GROUP BY idHabitacion,r.codigoReserva
 
+/* CAMBIAR*/
 INSERT INTO [PISOS_PICADOS].Estadia (
 	codigoReserva
 	,fechaCheckIn
@@ -3470,7 +3471,8 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].modificarHotel @nombre VARCHAR(255)
+CREATE PROCEDURE [PISOS_PICADOS].modificarHotel @idHotel INT
+	,@nombre VARCHAR(255)
 	,@mail VARCHAR(255)
 	,@telefono VARCHAR(255)
 	,@calle VARCHAR(255)
@@ -3484,38 +3486,47 @@ BEGIN
 	IF @nombre IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET nombre = @nombre
+		WHERE idHotel = @idHotel
 
 	IF @mail IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET mail = @mail
+		WHERE idHotel = @idHotel
 
 	IF @telefono IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET telefono = @telefono
+		WHERE idHotel = @idHotel
 
 	IF @calle IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET calle = @calle
+		WHERE idHotel = @idHotel
 
 	IF @nroCalle IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET nroCalle = @nroCalle
+		WHERE idHotel = @idHotel
 
 	IF @estrellas IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET estrellas = @estrellas
+		WHERE idHotel = @idHotel
 
 	IF @ciudad IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET ciudad = @ciudad
+		WHERE idHotel = @idHotel
 
 	IF @idPais IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET pais = @idPais
+		WHERE idHotel = @idHotel
 
 	IF @fechaCreacion IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET fechaCreacion = @fechaCreacion
+		WHERE idHotel = @idHotel
 END
 GO
 
