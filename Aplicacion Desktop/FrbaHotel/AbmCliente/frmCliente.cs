@@ -559,13 +559,15 @@ namespace FrbaHotel.AbmCliente
             //en el DataGridView y conocer sus valores que aparecerán por defecto en un formulario especial para la 
             //modificacion de un cliente
 
-            frmModificacionCliente modificacion = new frmModificacionCliente();
+            
 
             String NombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nombre"].Value;
             String ApellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
             String TipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["tipoIdentificacion"].Value;
             int NroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
-            
+            //una vez obtenido lo necesario para el form de modificación, lo construyo
+            frmModificacionCliente modificacion = new frmModificacionCliente(NombreClienteFila,ApellidoClienteFila,NroIdClienteFila);
+
            /////////****** antes de seguir obtengo id de usuario para relacionarlo con su nacionalidad que está en la tabla cliente******///////// 
             //busco el id del cliente porque lo necesitaré al buscar su nacionalidad, la cual está en la tabla Cliente 
             string a = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";

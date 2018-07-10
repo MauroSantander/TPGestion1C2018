@@ -19,7 +19,14 @@ namespace FrbaHotel.AbmCliente
 
         Utils c = new Utils();
 
-        public frmModificacionCliente()
+        //son los valores que voy a necesitar en la funcion de obtener idUsuario
+        static String nombreOriginalGlobal;
+        static String apellidoOriginalGlobal;
+        static int nroIdOriginalGlobal;
+
+
+
+        public frmModificacionCliente(String nombreOriginal, String apellidoOriginal, int nroIdOriginal)
         {
             InitializeComponent();
 
@@ -34,6 +41,14 @@ namespace FrbaHotel.AbmCliente
             }
 
             reader.Close();
+
+            txtNombre.Text = nombreOriginal;
+            txtApellido.Text = apellidoOriginal;
+            txtNroId.Text = nroIdOriginal.ToString();
+
+            nombreOriginalGlobal = nombreOriginal;
+            apellidoOriginalGlobal = apellidoOriginal;
+            nroIdOriginalGlobal = nroIdOriginal;
 
         }
 
@@ -60,6 +75,7 @@ namespace FrbaHotel.AbmCliente
 
         private void btnAceptarModif(object sender, EventArgs e)
         {
+
             String TipoIdCliente = cbTipoId.Text;
             if (string.IsNullOrEmpty(txtNroId.Text)) { MessageBox.Show("Completar numero de id cliente"); return; }
             int NroIdCliente = int.Parse(txtNroId.Text);
@@ -103,11 +119,11 @@ namespace FrbaHotel.AbmCliente
             obtenerId.Parameters.Add("@apellido", SqlDbType.VarChar);
             obtenerId.Parameters.Add("@numeroIdentificacion", SqlDbType.Int);
 
-            obtenerId.Parameters["@nombre"].Value = txtNombre.Text;
-            obtenerId.Parameters["@apellido"].Value = txtApellido.Text;
-            obtenerId.Parameters["@numeroIdentificacion"].Value = int.Parse(txtNroId.Text);
+            obtenerId.Parameters["@nombre"].Value = nombreOriginalGlobal;
+            obtenerId.Parameters["@apellido"].Value = apellidoOriginalGlobal;
+            obtenerId.Parameters["@numeroIdentificacion"].Value = txtNroId.Text;
 
-            int idUsuario = (int) obtenerId.ExecuteScalar();  //aca es donde falla porque viene con Null
+            int idCliente = (int) obtenerId.ExecuteScalar();  //aca es donde falla porque viene con Null
             //Luego de obtener su id, lo usamos como parámetro del sp que devuelve el estado de un cliente a partir
             //de su id
 
@@ -116,7 +132,7 @@ namespace FrbaHotel.AbmCliente
             SqlCommand obtenerEstado = new SqlCommand(cadenaObtenerEstado,Globals.conexionGlobal);
 
             obtenerEstado.Parameters.Add("@idUsuario", SqlDbType.Int);
-            obtenerEstado.Parameters["@idUsuario"].Value = idUsuario;
+            obtenerEstado.Parameters["@idUsuario"].Value = idCliente;
 
             int estadoCliente = (int) obtenerEstado.ExecuteScalar();
             //fin seccion para obtener el estado del cliente
@@ -124,42 +140,45 @@ namespace FrbaHotel.AbmCliente
             //comienza la seccion que utiliza el sp de modificar un usuario en la BD
             String cadenaProcedureModif = "[PISOS_PICADOS].SPModificarCliente";
 
-            SqlCommand cmd = new SqlCommand(cadenaProcedureModif,Globals.conexionGlobal);
+
+            SqlCommand cmdModificacion = new SqlCommand(cadenaProcedureModif,Globals.conexionGlobal);
+
+            cmdModificacion.CommandType = CommandType.StoredProcedure;
 
             //parametros
-            cmd.Parameters.Add("@idUsuario", SqlDbType.Int);
-            cmd.Parameters.Add("@nombre",SqlDbType.VarChar);
-            cmd.Parameters.Add("@apellido", SqlDbType.VarChar);
-            cmd.Parameters.Add("@tipo", SqlDbType.VarChar);
-            cmd.Parameters.Add("@numeroI", SqlDbType.Int);
-            cmd.Parameters.Add("@mail", SqlDbType.VarChar);
-            cmd.Parameters.Add("@telefono", SqlDbType.VarChar);
-            cmd.Parameters.Add("@calle", SqlDbType.VarChar);
-            cmd.Parameters.Add("@numeroC", SqlDbType.Int);
-            cmd.Parameters.Add("@localidad", SqlDbType.VarChar);
-            cmd.Parameters.Add("@pais", SqlDbType.VarChar);
-            cmd.Parameters.Add("@nacionalidad", SqlDbType.VarChar);
-            cmd.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
-            cmd.Parameters.Add("@estado", SqlDbType.Int);
+            cmdModificacion.Parameters.Add("@idUsuario", SqlDbType.Int);
+            cmdModificacion.Parameters.Add("@nombre",SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@apellido", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@tipo", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@numeroI", SqlDbType.Int);
+            cmdModificacion.Parameters.Add("@mail", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@telefono", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@calle", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@numeroC", SqlDbType.Int);
+            cmdModificacion.Parameters.Add("@localidad", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@pais", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@nacionalidad", SqlDbType.VarChar);
+            cmdModificacion.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
+            cmdModificacion.Parameters.Add("@estado", SqlDbType.Int);
 
 
             //valores de los parametros
-            cmd.Parameters["@idUsuario"].Value = idUsuario;
-            cmd.Parameters["@nombre"].Value = txtNombre.Text;
-            cmd.Parameters["@apellido"].Value = txtApellido.Text;
-            cmd.Parameters["@tipo"].Value = TipoIdCliente;
-            cmd.Parameters["@numeroI"].Value = NroIdCliente;
-            cmd.Parameters["@mail"].Value = txtMail.Text;
-            cmd.Parameters["@telefono"].Value = TelefonoCliente;
-            cmd.Parameters["@calle"].Value = CalleCliente;
-            cmd.Parameters["@numeroC"].Value = NroCalleCliente;
-            cmd.Parameters["@localidad"].Value = txtLocalidad.Text;
-            cmd.Parameters["@pais"].Value = cbPaises.Text;
-            cmd.Parameters["@nacionalidad"].Value = txtNacionalidad.Text;
-            cmd.Parameters["@fechaNacimiento"].Value = dtpFechaNacimiento.Value; //ver porque es DATE
-            cmd.Parameters["@estado"].Value = estadoCliente;
+            cmdModificacion.Parameters["@idUsuario"].Value = idCliente;
+            cmdModificacion.Parameters["@nombre"].Value = txtNombre.Text;
+            cmdModificacion.Parameters["@apellido"].Value = txtApellido.Text;
+            cmdModificacion.Parameters["@tipo"].Value = TipoIdCliente;
+            cmdModificacion.Parameters["@numeroI"].Value = NroIdCliente;
+            cmdModificacion.Parameters["@mail"].Value = txtMail.Text;
+            cmdModificacion.Parameters["@telefono"].Value = TelefonoCliente;
+            cmdModificacion.Parameters["@calle"].Value = CalleCliente;
+            cmdModificacion.Parameters["@numeroC"].Value = NroCalleCliente;
+            cmdModificacion.Parameters["@localidad"].Value = txtLocalidad.Text;
+            cmdModificacion.Parameters["@pais"].Value = cbPaises.Text;
+            cmdModificacion.Parameters["@nacionalidad"].Value = txtNacionalidad.Text;
+            cmdModificacion.Parameters["@fechaNacimiento"].Value = dtpFechaNacimiento.Value; //ver porque es DATE
+            cmdModificacion.Parameters["@estado"].Value = estadoCliente;
 
-            cmd.ExecuteNonQuery();
+            cmdModificacion.ExecuteNonQuery();
 
             MessageBox.Show("Modificación realizada","Aceptar",MessageBoxButtons.OK);
 
