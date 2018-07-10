@@ -30,6 +30,10 @@ namespace FrbaHotel.AbmHotel
             utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
         }
 
+        public void actualizarDataGrid() {
+            utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
+        }
+
         public void eliminarRowHotel()
         {
             dataGridViewHoteles.Rows.Remove(dataGridViewHoteles.Rows[filaSeleccionada]);
