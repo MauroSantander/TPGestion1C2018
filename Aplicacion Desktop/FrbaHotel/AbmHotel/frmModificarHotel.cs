@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -76,113 +77,37 @@ namespace FrbaHotel.AbmHotel
             }
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxCIU_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxPAIS_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxDIR_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxMail_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxTE_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label18_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label19_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label20_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label21_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label24_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void ModificarHotel_Load(object sender, EventArgs e)
         {
 
         }
        
-        public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, int nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, frmHoteles pantallaHoteles)
+        public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, String nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, frmHoteles pantallaHoteles)
         {
             textBoxName.Text = nombre;
             textBoxMail.Text = mail;
             textBoxTE.Text = telefono;
             textBoxCalle.Text = calle;
             textBoxNroCalle.Text = nroCalle.ToString();
-            comboBoxPAIS.SelectedText = pais;
+            comboBoxPAIS.Text = pais;
             textBoxCIU.Text = ciudad;
-            cBestrellas.SelectedText = estrellas.ToString();
-            dateTimePickerCreacion.Value = DateTime.Parse(fechaCreacion);
-
+            cBestrellas.Text = estrellas.ToString();
+            if (fechaCreacion != "")
+            {
+                dateTimePickerCreacion.Value = DateTime.ParseExact(fechaCreacion, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
 
             
-            SqlCommand cmdBuscarRegimenesHotel = new SqlCommand("SELECT R.descripcion FROM [PISOS_PICADOS].Regimen R join [PISOS_PICADOS].RegimenxHotel H on (R.codigoRegimen = H.codigoRegimen) WHERE idHotel = @id", Globals.conexionGlobal);
+            SqlCommand cmdBuscarRegimenesHotel = new SqlCommand("SELECT R.descripcion 'Desc' FROM [PISOS_PICADOS].Regimen R join [PISOS_PICADOS].RegimenxHotel H on (R.codigoRegimen = H.codigoRegimen) WHERE idHotel = @id", Globals.conexionGlobal);
     
             cmdBuscarRegimenesHotel.Parameters.AddWithValue("@id", id);
             SqlDataReader reader = cmdBuscarRegimenesHotel.ExecuteReader();
 
             while (reader.Read())
             {
-                checkedListBoxRegimenes.Items.Add((reader["R.descripcion"]).ToString());
+                checkedListBoxRegimenes.Items.Add((reader["Desc"]).ToString());
             }
 
             reader.Close();
@@ -201,30 +126,7 @@ namespace FrbaHotel.AbmHotel
             this.ShowDialog();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkedListBoxRegimenes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkedListBoxRegimenesAgregar_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void buttonCerrar_Click(object sender, EventArgs e)
         {
@@ -276,9 +178,6 @@ namespace FrbaHotel.AbmHotel
             }
         }
 
-        private void comboBoxPAIS_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        
-        }
+       
     }
 }

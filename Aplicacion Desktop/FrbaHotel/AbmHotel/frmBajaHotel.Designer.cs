@@ -47,7 +47,6 @@
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "ID Hotel";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // textBoxId
             // 
@@ -56,7 +55,6 @@
             this.textBoxId.ReadOnly = true;
             this.textBoxId.Size = new System.Drawing.Size(200, 20);
             this.textBoxId.TabIndex = 1;
-            this.textBoxId.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
             // label2
             // 
@@ -82,7 +80,6 @@
             this.dateTimeDesde.Name = "dateTimeDesde";
             this.dateTimeDesde.Size = new System.Drawing.Size(200, 20);
             this.dateTimeDesde.TabIndex = 4;
-            this.dateTimeDesde.ValueChanged += new System.EventHandler(this.dateTimeDesde_ValueChanged);
             // 
             // dateTimeHasta
             // 
@@ -90,7 +87,6 @@
             this.dateTimeHasta.Name = "dateTimeHasta";
             this.dateTimeHasta.Size = new System.Drawing.Size(200, 20);
             this.dateTimeHasta.TabIndex = 5;
-            this.dateTimeHasta.ValueChanged += new System.EventHandler(this.dateTimeHasta_ValueChanged);
             // 
             // buttonBaja
             // 
@@ -109,7 +105,6 @@
             this.razon.Size = new System.Drawing.Size(214, 82);
             this.razon.TabIndex = 8;
             this.razon.Text = "";
-            this.razon.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // label4
             // 
@@ -119,7 +114,6 @@
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "Motivo:";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // BajaHotel
             // 
