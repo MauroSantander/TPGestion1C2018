@@ -98,6 +98,7 @@
             this.txtNroCalle.Name = "txtNroCalle";
             this.txtNroCalle.Size = new System.Drawing.Size(100, 20);
             this.txtNroCalle.TabIndex = 52;
+            this.txtNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros_KeyPress);
             // 
             // labelNumeroCalle
             // 
@@ -134,9 +135,9 @@
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFechaNacimiento.Location = new System.Drawing.Point(179, 435);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
-            this.dtpFechaNacimiento.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaNacimiento.Size = new System.Drawing.Size(100, 20);
             this.dtpFechaNacimiento.TabIndex = 56;
-            this.dtpFechaNacimiento.Value = new System.DateTime(2018, 6, 28, 0, 0, 0, 0);
+            this.dtpFechaNacimiento.Value = new System.DateTime(2018, 7, 10, 0, 0, 0, 0);
             this.dtpFechaNacimiento.ValueChanged += new System.EventHandler(this.dtpFechaNacimiento_ValueChanged);
             // 
             // txtCalle
@@ -152,6 +153,7 @@
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(100, 20);
             this.txtTelefono.TabIndex = 50;
+            this.txtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros_KeyPress);
             // 
             // txtNacionalidad
             // 
@@ -159,6 +161,7 @@
             this.txtNacionalidad.Name = "txtNacionalidad";
             this.txtNacionalidad.Size = new System.Drawing.Size(100, 20);
             this.txtNacionalidad.TabIndex = 55;
+            this.txtNacionalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
             // 
             // txtMail
             // 
@@ -173,6 +176,7 @@
             this.txtNroId.Name = "txtNroId";
             this.txtNroId.Size = new System.Drawing.Size(100, 20);
             this.txtNroId.TabIndex = 48;
+            this.txtNroId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros_KeyPress);
             // 
             // txtApellido
             // 
@@ -180,6 +184,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(100, 20);
             this.txtApellido.TabIndex = 46;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
             // 
             // txtNombre
             // 
@@ -188,6 +193,7 @@
             this.txtNombre.Size = new System.Drawing.Size(100, 20);
             this.txtNombre.TabIndex = 45;
             this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
             // 
             // labelFechaNac
             // 

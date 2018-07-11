@@ -15,6 +15,9 @@ namespace FrbaHotel.AbmHotel
 {
     public partial class frmModificarHotel : Form
     {
+        int idHotel;
+        frmHoteles pantallaHoteles;
+
         public frmModificarHotel()
         {
             InitializeComponent();
@@ -32,7 +35,7 @@ namespace FrbaHotel.AbmHotel
             try
             {
                 SqlCommand cmdpais = new SqlCommand("select idPais from [PISOS_PICADOS].Pais where nombrePais = @paisSelect", Globals.conexionGlobal);
-                cmdpais.Parameters.AddWithValue("@paisSelect",comboBoxPAIS.SelectedText);
+                cmdpais.Parameters.AddWithValue("@paisSelect",comboBoxPAIS.Text);
                 idPAIS = (int)cmdpais.ExecuteScalar();
             }
             catch (Exception ex)
@@ -45,6 +48,7 @@ namespace FrbaHotel.AbmHotel
             comandoMod.CommandType = CommandType.StoredProcedure;
 
             //agregar parametros
+            comandoMod.Parameters.Add("@idHotel", SqlDbType.Int);
             comandoMod.Parameters.Add("@nombre", SqlDbType.VarChar);
             comandoMod.Parameters.Add("@mail", SqlDbType.VarChar);
             comandoMod.Parameters.Add("@telefono", SqlDbType.VarChar);
@@ -55,12 +59,13 @@ namespace FrbaHotel.AbmHotel
             comandoMod.Parameters.Add("@idPais", SqlDbType.Int);
             comandoMod.Parameters.Add("@fechaCreacion", SqlDbType.Date);
 
+            comandoMod.Parameters["@idHotel"].Value = idHotel;
             comandoMod.Parameters["@nombre"].Value = textBoxName.Text;
             comandoMod.Parameters["@mail"].Value = textBoxMail.Text;
             comandoMod.Parameters["@telefono"].Value = textBoxTE.Text;
             comandoMod.Parameters["@calle"].Value = textBoxCalle.Text;
-            comandoMod.Parameters["@numeroCalle"].Value = textBoxNroCalle.Text;
-            comandoMod.Parameters["@estrellas"].Value = int.Parse(cBestrellas.SelectedText);
+            comandoMod.Parameters["@nroCalle"].Value = textBoxNroCalle.Text;
+            comandoMod.Parameters["@estrellas"].Value = int.Parse(cBestrellas.Text);
             comandoMod.Parameters["@ciudad"].Value = textBoxCIU.Text;
             comandoMod.Parameters["@idPais"].Value = idPAIS;
             comandoMod.Parameters["@fechaCreacion"].Value = dateTimePickerCreacion.Value.ToString("yyyy-MM-dd") ;
@@ -68,7 +73,9 @@ namespace FrbaHotel.AbmHotel
             try
             {
                 comandoMod.ExecuteReader();
+                pantallaHoteles.actualizarDataGrid();
                 MessageBox.Show("Modificación correcta");
+              
 
             }
             catch (Exception ex)
@@ -84,8 +91,9 @@ namespace FrbaHotel.AbmHotel
 
         }
        
-        public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, String nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, frmHoteles pantallaHoteles)
+        public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, String nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, frmHoteles pantHoteles)
         {
+            idHotel = id;
             textBoxName.Text = nombre;
             textBoxMail.Text = mail;
             textBoxTE.Text = telefono;
@@ -94,6 +102,7 @@ namespace FrbaHotel.AbmHotel
             comboBoxPAIS.Text = pais;
             textBoxCIU.Text = ciudad;
             cBestrellas.Text = estrellas.ToString();
+            pantallaHoteles = pantHoteles;
             if (fechaCreacion != "")
             {
                 dateTimePickerCreacion.Value = DateTime.ParseExact(fechaCreacion, "yyyy-MM-dd", CultureInfo.InvariantCulture);
@@ -118,7 +127,7 @@ namespace FrbaHotel.AbmHotel
 
             while (reader2.Read())
             {
-                checkedListBoxRegimenesAgregar.Items.Add((reader["descripcion"]).ToString());
+                checkedListBoxRegimenesAgregar.Items.Add((reader2["descripcion"]).ToString());
             }
 
             reader2.Close();
@@ -130,15 +139,21 @@ namespace FrbaHotel.AbmHotel
 
         private void buttonCerrar_Click(object sender, EventArgs e)
         {
+            
             this.Close();
         }
 
         static bool validarEmail(string email)
         {
+           
             try
             {
-                new MailAddress(email);
-                return true;
+                if (email == null) { return false; }
+                else
+                {
+                    new MailAddress(email);
+                    return true;
+                }
             }
             catch (FormatException)
             {
@@ -160,20 +175,22 @@ namespace FrbaHotel.AbmHotel
             }
         }
     
+     
+
         private void chequearSiHayCamposIncompletos()
         {
-            if (String.IsNullOrEmpty(textBoxName.Text)
-               || String.IsNullOrEmpty(textBoxMail.Text)
-               || String.IsNullOrEmpty(textBoxTE.Text)
-               || String.IsNullOrEmpty(textBoxCalle.Text)
-               || String.IsNullOrEmpty(textBoxNroCalle.Text)
-               || String.IsNullOrEmpty(comboBoxPAIS.SelectedText)
-               || String.IsNullOrEmpty(textBoxCIU.Text)
-               || String.IsNullOrEmpty(cBestrellas.SelectedText)
+            if (textBoxName.Text==""
+               || textBoxMail.Text==""
+               || textBoxTE.Text==""
+               || textBoxCalle.Text==""
+               || textBoxNroCalle.Text==""
+               || comboBoxPAIS.Text==""
+               || textBoxCIU.Text==""
+               || cBestrellas.Text==""
                || ((dateTimePickerCreacion.Checked) == false)
                 )
             {
-                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return;
 
             }
         }

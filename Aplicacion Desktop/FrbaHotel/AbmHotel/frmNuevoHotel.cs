@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,94 +14,140 @@ namespace FrbaHotel.AbmHotel
 {
     public partial class frmNuevoHotel : Form
     {
+        frmHoteles pantallaHoteles;
         public frmNuevoHotel()
         {
             InitializeComponent();
+        
         }
-
-        private void textBoxCIU_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxPAIS_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxDIR_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxMail_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxTE_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxALLIN_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxPC_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxDES_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBoxMP_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioBut5_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioBut4_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioBut3_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioBut2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioBut1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
-        {
-
+        
+        public void abrirPantalla(frmHoteles pantHotel){
+            pantallaHoteles = pantHotel;
+            this.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+                chequearSiHayCamposIncompletos();
+                if (textBoxMail != null)
+                {
+                    if (!validarEmail(textBoxMail.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                }
+
+            int idPAIS;
+
+
+            try
+            {
+                SqlCommand cmdpais = new SqlCommand("select idPais from [PISOS_PICADOS].Pais where nombrePais = @paisSelect", Globals.conexionGlobal);
+                cmdpais.Parameters.AddWithValue("@paisSelect", comboBoxPAIS.Text);
+                idPAIS = (int)cmdpais.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            String cadenaMod = "PISOS_PICADOS.crearHotel";
+
+            SqlCommand comandoMod= new SqlCommand(cadenaMod, Globals.conexionGlobal);
+            comandoMod.CommandType = CommandType.StoredProcedure;
+
+            //agregar parametros
+            comandoMod.Parameters.Add("@nombre", SqlDbType.VarChar);
+            comandoMod.Parameters.Add("@mail", SqlDbType.VarChar);
+            comandoMod.Parameters.Add("@telefono", SqlDbType.VarChar);
+            comandoMod.Parameters.Add("@calle", SqlDbType.VarChar);
+            comandoMod.Parameters.Add("@nroCalle", SqlDbType.VarChar);
+            comandoMod.Parameters.Add("@estrellas", SqlDbType.Int);
+            comandoMod.Parameters.Add("@ciudad", SqlDbType.VarChar);
+            comandoMod.Parameters.Add("@idPais", SqlDbType.Int);
+            comandoMod.Parameters.Add("@fechaCreacion", SqlDbType.Date);
+            comandoMod.Parameters.Add("@autorId", SqlDbType.Int);
+
+            comandoMod.Parameters["@nombre"].Value = textBoxName.Text;
+            comandoMod.Parameters["@mail"].Value = textBoxMail.Text;
+            comandoMod.Parameters["@telefono"].Value = textBoxTE.Text;
+            comandoMod.Parameters["@calle"].Value = textBoxCalle.Text;
+            comandoMod.Parameters["@nroCalle"].Value = textBoxNroCalle.Text;
+            comandoMod.Parameters["@estrellas"].Value = int.Parse(cBestrellas.Text);
+            comandoMod.Parameters["@ciudad"].Value = textBoxCIU.Text;
+            comandoMod.Parameters["@idPais"].Value = idPAIS;
+            comandoMod.Parameters["@fechaCreacion"].Value = dateTimePickerCreacion.Value.ToString("yyyy-MM-dd") ;
+            comandoMod.Parameters["@autorId"].Value = Globals.idUsuarioSesion;
+
+            try
+            {
+                comandoMod.ExecuteReader();
+                pantallaHoteles.actualizarDataGrid();
+                MessageBox.Show("Creación correcta");
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+             static bool validarEmail(string email)
+        {
+            try
+            {
+                new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+        private void texto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+        private void nro_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+    
+        private void chequearSiHayCamposIncompletos()
+        {
+            if (String.IsNullOrEmpty(textBoxName.Text)
+               || String.IsNullOrEmpty(textBoxMail.Text)
+               || String.IsNullOrEmpty(textBoxTE.Text)
+               || String.IsNullOrEmpty(textBoxCalle.Text)
+               || String.IsNullOrEmpty(textBoxNroCalle.Text)
+               || String.IsNullOrEmpty(comboBoxPAIS.Text)
+               || String.IsNullOrEmpty(textBoxCIU.Text)
+               || String.IsNullOrEmpty(cBestrellas.Text)
+               || ((dateTimePickerCreacion.Checked) == false)
+                )
+            {
+                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void NuevoHotel_Load(object sender, EventArgs e)
+        {
+            SqlCommand cmdBuscarRegimenes = new SqlCommand("select descripcion from [PISOS_PICADOS].Regimen", Globals.conexionGlobal);
+            SqlDataReader reader2 = cmdBuscarRegimenes.ExecuteReader();
+
+            while (reader2.Read())
+            {
+                checkedListRegimenes.Items.Add((reader2["descripcion"]).ToString());
+            }
+
+            reader2.Close();
+        }
+
+       
 
         }
     }
-}

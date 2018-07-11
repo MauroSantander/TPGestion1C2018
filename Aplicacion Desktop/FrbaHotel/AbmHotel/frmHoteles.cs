@@ -30,6 +30,10 @@ namespace FrbaHotel.AbmHotel
             utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
         }
 
+        public void actualizarDataGrid() {
+            utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
+        }
+
         public void eliminarRowHotel()
         {
             dataGridViewHoteles.Rows.Remove(dataGridViewHoteles.Rows[filaSeleccionada]);
@@ -134,6 +138,11 @@ namespace FrbaHotel.AbmHotel
 
             }
 
+        }
+
+        private void buttonNew_Click(object sender, EventArgs e)
+        {
+            (new FrbaHotel.AbmHotel.frmNuevoHotel()).abrirPantalla(this);
         }
     }
 }

@@ -75,30 +75,29 @@ namespace FrbaHotel.AbmCliente
 
         private void btnAceptarModif(object sender, EventArgs e)
         {
-
+            //Comienzo de la modificación en sí
+            
+            //Validaciones
             String TipoIdCliente = cbTipoId.Text;
             if (string.IsNullOrEmpty(txtNroId.Text)) { MessageBox.Show("Completar numero de id cliente"); return; }
             int NroIdCliente = int.Parse(txtNroId.Text);
             String TelefonoCliente = txtTelefono.Text;
             String CalleCliente = txtCalle.Text;
-
             if (string.IsNullOrEmpty(txtNroCalle.Text)) { MessageBox.Show("Completar numero de calle"); return; }
-
             int NroCalleCliente = int.Parse(txtNroCalle.Text);
-            
-            DateTime FechaNacimientoCliente = dtpFechaNacimiento.Value;
-            
+            DateTime FechaNacimientoCliente = dtpFechaNacimiento.Value;            
             string selectDateAsString = dtpFechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-            //Validaciones
+            
             if (txtNombre.Text == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (txtApellido.Text == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            //if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            //if (txtMail.Text == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (!validarEmail(txtMail.Text) || c.estaRepetidoMail(txtMail.Text)) { MessageBox.Show("Error en el mail", "Error"); return; }
+            if (NroIdCliente < 0) { MessageBox.Show("Complete nroID correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (txtMail.Text == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            //if (!validarEmail(txtMail.Text) || c.estaRepetidoMail(txtMail.Text)) { MessageBox.Show("Error en el mail", "Error"); return; }
+            if (!validarEmail(txtMail.Text)) { MessageBox.Show("Mail inválido", "Error"); return; }
             if (txtCalle.Text == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (txtLocalidad.Text == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (txtNacionalidad.Text == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
@@ -112,34 +111,16 @@ namespace FrbaHotel.AbmCliente
             */
 
             //En esta secccion se busca obtener el estado del cliente
-            //Primero obtenemos su id con el objeto de usarlo para buscar en la BD
-            string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
-            SqlCommand obtenerId = new SqlCommand(fObtenerId, Globals.conexionGlobal);
-            obtenerId.Parameters.Add("@nombre", SqlDbType.VarChar);
-            obtenerId.Parameters.Add("@apellido", SqlDbType.VarChar);
-            obtenerId.Parameters.Add("@numeroIdentificacion", SqlDbType.Int);
-
-            obtenerId.Parameters["@nombre"].Value = nombreOriginalGlobal;
-            obtenerId.Parameters["@apellido"].Value = apellidoOriginalGlobal;
-            obtenerId.Parameters["@numeroIdentificacion"].Value = txtNroId.Text;
-
-            int idCliente = (int) obtenerId.ExecuteScalar();  //aca es donde falla porque viene con Null
+            //Primero obtenemos su id con el objetivo de usarlo para buscar en la BD
+            
+            int idCliente = c.obtenerIdUsuario(nombreOriginalGlobal, apellidoOriginalGlobal, Convert.ToInt32(txtNroId.Text));
             //Luego de obtener su id, lo usamos como parámetro del sp que devuelve el estado de un cliente a partir
             //de su id
 
-            String cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
-
-            SqlCommand obtenerEstado = new SqlCommand(cadenaObtenerEstado,Globals.conexionGlobal);
-
-            obtenerEstado.Parameters.Add("@idUsuario", SqlDbType.Int);
-            obtenerEstado.Parameters["@idUsuario"].Value = idCliente;
-
-            int estadoCliente = (int) obtenerEstado.ExecuteScalar();
-            //fin seccion para obtener el estado del cliente
-
+            int estadoCliente = c.obtenerEstadoCliente(idCliente);
+            
             //comienza la seccion que utiliza el sp de modificar un usuario en la BD
             String cadenaProcedureModif = "[PISOS_PICADOS].SPModificarCliente";
-
 
             SqlCommand cmdModificacion = new SqlCommand(cadenaProcedureModif,Globals.conexionGlobal);
 
@@ -160,7 +141,6 @@ namespace FrbaHotel.AbmCliente
             cmdModificacion.Parameters.Add("@nacionalidad", SqlDbType.VarChar);
             cmdModificacion.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
             cmdModificacion.Parameters.Add("@estado", SqlDbType.Int);
-
 
             //valores de los parametros
             cmdModificacion.Parameters["@idUsuario"].Value = idCliente;
@@ -203,6 +183,34 @@ namespace FrbaHotel.AbmCliente
         {
 
         }
+
+
+        //Ambos KeyPress a continuación corroboran en tiempo real que el usuario no ingrese caracteres incorrectos
+        private void soloTexto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else
+                {
+                    e.Handled = true;
+                    MessageBox.Show("Este campo sólo acepta letras", "Error", MessageBoxButtons.OK);
+                }
+            }
+        }
+
+        private void soloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else
+                {
+                    e.Handled = true;
+                    MessageBox.Show("Este campo solo admite números", "Error", MessageBoxButtons.OK);
+                }
+            }
+        }
+
+
 
 
     }

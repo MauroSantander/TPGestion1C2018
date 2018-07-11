@@ -350,6 +350,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].darNombreAHoteles', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].quitarHotelAUsuario', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].quitarHotelAUsuario;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].establecerEstadoReserva', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].establecerEstadoReserva;
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -1635,31 +1638,44 @@ JOIN [PISOS_PICADOS].Habitacion AS hab ON  h.idHotel = hab.idHotel
 WHERE m.Habitacion_Numero = hab.numero 
 GROUP BY idHabitacion,r.codigoReserva
 
+/*EN ESTRATEGIA PONER QUE NO CONSIDERAMOS VALIDA NINGUNA ESTADIA CON FECHA DE INICIO POSTERIOR A LA DE LA ENTREGA
+Y QUE SI LA FECHA DE CHECK OUT ES POSTERIOR A LA FECHA SE PONE NULL*/
 INSERT INTO [PISOS_PICADOS].Estadia (
 	codigoReserva
 	,fechaCheckIn
 	,fechaCheckOut
+	,diasReserva
+	,diasEstadia
 	)
-SELECT codigoReserva
-	,fechaInicio
-	,fechaFin
-FROM [PISOS_PICADOS].Reserva
-INNER JOIN [gd_esquema].Maestra ON codigoReserva = Reserva_Codigo
-WHERE Factura_Nro IS NOT NULL
-GROUP BY Factura_Nro
-	,codigoReserva
-	,fechaInicio
-	,fechaFin
+SELECT r.codigoReserva, m.Estadia_Fecha_Inicio, 
+(CASE
+WHEN (DATEADD(DAY,cast(m.Estadia_Fecha_Inicio as Int),m.Estadia_Cant_Noches)) <= '20180713'
+THEN DATEADD(DAY,cast(m.Estadia_Fecha_Inicio as Int),m.Estadia_Cant_Noches)
+ELSE NULL
+END
+)
+,m.Reserva_Cant_Noches
+,(CASE
+WHEN (DATEADD(DAY,cast(m.Estadia_Fecha_Inicio as Int),m.Estadia_Cant_Noches)) <= '20180713'
+THEN m.Estadia_Cant_Noches
+ELSE NULL
+END
+)
+FROM [gd_esquema].Maestra AS m 
+JOIN [PISOS_PICADOS].Reserva AS r ON m.Reserva_Codigo = r.codigoReserva
+WHERE m.Estadia_Fecha_Inicio <= '20180713'
+GROUP BY r.codigoReserva,m.Estadia_Fecha_Inicio,m.Reserva_Cant_Noches,M.Estadia_Cant_Noches
 
 INSERT INTO [PISOS_PICADOS].EstadiaxConsumible
-SELECT idEstadia
-	,Consumible_Codigo
+SELECT e.idEstadia
+	,c.idConsumible
 	,count(*)
-FROM [PISOS_PICADOS].Estadia
-INNER JOIN [gd_esquema].Maestra ON codigoReserva = Reserva_Codigo
-WHERE Consumible_Codigo IS NOT NULL
-GROUP BY idEstadia
-	,Consumible_Codigo
+FROM  [gd_esquema].Maestra AS m 
+INNER JOIN [PISOS_PICADOS].Estadia AS e  ON m.Reserva_Codigo = e.codigoReserva
+INNER JOIN [PISOS_PICADOS].Consumible AS c ON m.Consumible_Codigo = c.idConsumible
+GROUP BY e.idEstadia, c.idConsumible
+
+/*ACA NO CONSIDERAMOS LAS FACTURAS CON FECHA NULL O CON FECHA POSTERIOR A ENTREGA*/
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Factura ON
 
@@ -1670,23 +1686,23 @@ INSERT INTO [PISOS_PICADOS].Factura (
 	,idEstadia
 	,fecha
 	)
-SELECT Factura_Nro
-	,idUsuario
-	,Factura_Total
-	,idEstadia
-	,Factura_Fecha
-FROM [PISOS_PICADOS].Usuario
-	,[gd_esquema].Maestra
-	,[PISOS_PICADOS].Estadia AS es
-WHERE Cliente_Apellido + Cliente_Nombre = apellido + nombre
-	AND Cliente_Pasaporte_Nro = numeroIdentificacion
-	AND Factura_Total IS NOT NULL
-	AND es.codigoReserva = Reserva_Codigo
-GROUP BY Factura_Nro
-	,idUsuario
-	,Factura_Total
-	,idEstadia
-	,Factura_Fecha
+SELECT 
+m.Factura_Nro
+,u.idUsuario
+,m.Factura_Total
+,es.idEstadia
+,m.Factura_Fecha
+FROM [gd_esquema].Maestra AS m 
+JOIN [PISOS_PICADOS].Usuario AS u ON (m.Cliente_Nombre+ m.Cliente_Apellido = u.nombre+u.apellido 
+AND m.Cliente_Pasaporte_Nro =u.numeroIdentificacion )
+JOIN [PISOS_PICADOS].Estadia AS es ON m.Reserva_Codigo = es.codigoReserva
+WHERE   Factura_Total IS NOT NULL and Factura_Fecha <='20180713'
+GROUP BY m.Factura_Nro
+	,u.idUsuario
+	,m.Factura_Total
+	,es.idEstadia
+	,m.Factura_Fecha
+order by idEstadia
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Factura OFF
 
@@ -1700,23 +1716,25 @@ INSERT INTO [PISOS_PICADOS].RenglonFactura (
 	,estadia
 	)
 SELECT ROW_NUMBER() OVER (
-		PARTITION BY Factura_Nro ORDER BY Consumible_Codigo
+		PARTITION BY f.numeroFactura ORDER BY c.idConsumible
 		)
-	,Factura_Nro
-	,Consumible_Codigo
+	,f.numeroFactura
+	,c.idConsumible
 	,count(*)
-	,Consumible_Precio
-	,count(*) * Consumible_Precio
-	,idEstadia
-FROM [PISOS_PICADOS].Estadia
-INNER JOIN [gd_esquema].Maestra ON codigoReserva = Reserva_Codigo
-WHERE Factura_Nro IS NOT NULL
-	AND Consumible_Codigo IS NOT NULL
-GROUP BY Factura_Nro
-	,Consumible_Codigo
-	,Consumible_Precio
-	,idEstadia
+	,c.precio
+	,count(*) * c.precio
+	,e.idEstadia
+FROM [gd_esquema].Maestra AS m 
+INNER JOIN [PISOS_PICADOS].Estadia AS e ON m.Reserva_Codigo = e.codigoReserva
+INNER JOIN [PISOS_PICADOS].Factura AS f ON m.Factura_Nro = f.numeroFactura 
+INNER JOIN [PISOS_PICADOS].Consumible AS c ON m.Consumible_Codigo = c.idConsumible
+GROUP BY f.numeroFactura
+	,c.idConsumible
+	,c.precio
+	,e.idEstadia
 GO
+
+
 
 /*Migracion FIN-------------------------------------------------------------------*/
 /* FUNCIONES ---------------------------------------------------------------------*/
@@ -3405,7 +3423,6 @@ CREATE PROCEDURE [PISOS_PICADOS].crearHotel @nombre VARCHAR(255)
 	,@telefono VARCHAR(255)
 	,@calle VARCHAR(255)
 	,@nroCalle VARCHAR(255)
-	,@direccion VARCHAR(255)
 	,@estrellas INT
 	,@ciudad VARCHAR(255)
 	,@pais INT
@@ -3436,13 +3453,15 @@ BEGIN
 		,@estrellas
 		)
 
+	DECLARE @idHotel INT = SCOPE_IDENTITY();
+
 	INSERT INTO [PISOS_PICADOS].EmpleadoxHotel (
 		idUsuario
 		,idHotel
 		)
 	VALUES (
 		@autorId
-		,[PISOS_PICADOS].obtenerIDHotel(@ciudad, @calle, @nroCalle)
+		,@idhotel
 		)
 END
 GO
@@ -3484,7 +3503,8 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].modificarHotel @nombre VARCHAR(255)
+CREATE PROCEDURE [PISOS_PICADOS].modificarHotel @idHotel INT
+	,@nombre VARCHAR(255)
 	,@mail VARCHAR(255)
 	,@telefono VARCHAR(255)
 	,@calle VARCHAR(255)
@@ -3498,38 +3518,47 @@ BEGIN
 	IF @nombre IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET nombre = @nombre
+		WHERE idHotel = @idHotel
 
 	IF @mail IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET mail = @mail
+		WHERE idHotel = @idHotel
 
 	IF @telefono IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET telefono = @telefono
+		WHERE idHotel = @idHotel
 
 	IF @calle IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET calle = @calle
+		WHERE idHotel = @idHotel
 
 	IF @nroCalle IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET nroCalle = @nroCalle
+		WHERE idHotel = @idHotel
 
 	IF @estrellas IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET estrellas = @estrellas
+		WHERE idHotel = @idHotel
 
 	IF @ciudad IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET ciudad = @ciudad
+		WHERE idHotel = @idHotel
 
 	IF @idPais IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET pais = @idPais
+		WHERE idHotel = @idHotel
 
 	IF @fechaCreacion IS NOT NULL
 		UPDATE [PISOS_PICADOS].Hotel
 		SET fechaCreacion = @fechaCreacion
+		WHERE idHotel = @idHotel
 END
 GO
 
@@ -4146,6 +4175,36 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [PISOS_PICADOS].establecerEstadoReserva
+AS 
+BEGIN
+UPDATE [PISOS_PICADOS].Reserva 
+	SET estado = 6
+	WHERE codigoReserva IN (
+			SELECT es.codigoReserva FROM [PISOS_PICADOS].Estadia AS es
+			WHERE es.codigoReserva = codigoReserva  
+			)
+UPDATE [PISOS_PICADOS].Reserva 
+	SET estado = 5
+	WHERE codigoReserva NOT IN (
+			SELECT es.codigoReserva FROM [PISOS_PICADOS].Estadia AS es
+			WHERE es.codigoReserva = codigoReserva  
+			)
+		AND fechaInicio <= '20180713'
+
+UPDATE [PISOS_PICADOS].Reserva 
+	SET estado = 1
+	WHERE codigoReserva NOT IN (
+			SELECT es.codigoReserva FROM [PISOS_PICADOS].Estadia AS es
+			WHERE es.codigoReserva = codigoReserva  
+			)
+		AND fechaInicio > '20180713'
+
+END 
+GO
+
 EXEC [PISOS_PICADOS].CorregirUsuarios
 
 EXEC [PISOS_PICADOS].darNombreAHoteles
+
+EXEC [PISOS_PICADOS].establecerEstadoReserva

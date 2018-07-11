@@ -30,6 +30,7 @@ namespace FrbaHotel.AbmUsuario
             this.cargarHoteles();
             this.cargarRoles();
 
+
         }
 
         public void cargarHoteles()
@@ -101,7 +102,7 @@ namespace FrbaHotel.AbmUsuario
                 int countMail = Convert.ToInt32(cmdMail.ExecuteScalar());
 
                 SqlCommand verificarId = new SqlCommand("SELECT [PISOS_PICADOS].estaRepetido(@tipo,@numero)", Globals.conexionGlobal);
-                verificarId.Parameters.AddWithValue("@tipo", comboBoxTipo.SelectedText);
+                verificarId.Parameters.AddWithValue("@tipo", comboBoxTipo.Text);
                 verificarId.Parameters.AddWithValue("@numero", numDoc.Text);
                 if ((bool)verificarId.ExecuteScalar()) { MessageBox.Show("Tipo y Nro de Identificación existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (countNombreUsr > 0) { MessageBox.Show("Nombre de Usuario existente, escriba otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
@@ -145,8 +146,8 @@ namespace FrbaHotel.AbmUsuario
                     comandoAltaUsuario.Parameters["@calle"].Value = calle.Text;
                     comandoAltaUsuario.Parameters["@numeroCalle"].Value = nroCalle.Text;
                     comandoAltaUsuario.Parameters["@localidad"].Value = localidad.Text;
-                    comandoAltaUsuario.Parameters["@pais"].Value = comboBoxPais.SelectedText;
-                    comandoAltaUsuario.Parameters["@tipoDocumento"].Value = comboBoxTipo.SelectedText;
+                    comandoAltaUsuario.Parameters["@pais"].Value = comboBoxPais.Text;
+                    comandoAltaUsuario.Parameters["@tipoDocumento"].Value = comboBoxTipo.Text;
                     comandoAltaUsuario.Parameters["@numeroDocumento"].Value = numDoc.Text;
                     comandoAltaUsuario.Parameters["@fechaNacimiento"].Value = dateTimePicker1.Value.ToString("yyyy-MM-dd"); ;
                     comandoAltaUsuario.Parameters["@estado"].Value = 1;
@@ -232,7 +233,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-            utils.mostrarUsuarios(dataGridView1);
+            utils.llenarDataGridView(dataGridView1,"Empleado");
 
         }
 
@@ -240,7 +241,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void button5_Click(object sender, EventArgs e)
         {
-            utils.mostrarUsuarios(dataGridView1);
+            utils.llenarDataGridView(dataGridView1, "Empleado");
             DataView DV = new DataView(dataTable);
             if (!String.IsNullOrEmpty(textBoxUsrNameBorrar.Text))
             {
@@ -254,7 +255,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void button4_Click(object sender, EventArgs e)
         {
-            utils.mostrarUsuarios(dataGridView1);
+            utils.llenarDataGridView(dataGridView1, "Empleado");
             DataView DV = new DataView(dataTable);         
             if (String.IsNullOrEmpty(textBox1.Text)){ MessageBox.Show("Completar Número Identificación"); return;}
             if(String.IsNullOrEmpty(comboBox2.SelectedText)){MessageBox.Show("Seleccionar Tipo"); return;}
@@ -478,8 +479,8 @@ namespace FrbaHotel.AbmUsuario
 
                      //Trae id por nombre de usuario
 
-                     SqlCommand traerUsr = new SqlCommand("SELECT idUsuario FROM [PISOS_PICADOS].Empleado WHERE nombre=@nombre", conexion);
-                     traerUsr.Parameters.Add("@nombre", SqlDbType.VarChar).Value = usuarioNombre;
+                     SqlCommand traerUsr = new SqlCommand("SELECT idUsuario FROM [PISOS_PICADOS].Empleado WHERE usuario=@nombre", conexion);
+                     traerUsr.Parameters.AddWithValue("@nombre", usuarioNombre);
                      SqlDataReader dr = traerUsr.ExecuteReader();
                      
 

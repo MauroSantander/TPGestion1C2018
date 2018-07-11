@@ -30,38 +30,33 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cBestrellas = new System.Windows.Forms.ComboBox();
             this.textBoxCIU = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBoxPAIS = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.textBoxDIR = new System.Windows.Forms.TextBox();
+            this.dateTimePickerCreacion = new System.Windows.Forms.DateTimePicker();
             this.textBoxMail = new System.Windows.Forms.TextBox();
             this.textBoxTE = new System.Windows.Forms.TextBox();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBoxDES = new System.Windows.Forms.CheckBox();
-            this.checkBoxMP = new System.Windows.Forms.CheckBox();
-            this.checkBoxPC = new System.Windows.Forms.CheckBox();
-            this.checkBoxALLIN = new System.Windows.Forms.CheckBox();
-            this.radioBut1 = new System.Windows.Forms.RadioButton();
-            this.radioBut5 = new System.Windows.Forms.RadioButton();
-            this.radioBut4 = new System.Windows.Forms.RadioButton();
-            this.radioBut3 = new System.Windows.Forms.RadioButton();
-            this.radioBut2 = new System.Windows.Forms.RadioButton();
+            this.checkedListRegimenes = new System.Windows.Forms.CheckedListBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxNroCalle = new System.Windows.Forms.TextBox();
+            this.textBoxCalle = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.comboBoxPAIS = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(395, 484);
+            this.button1.Location = new System.Drawing.Point(411, 574);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 29);
             this.button1.TabIndex = 75;
@@ -71,17 +66,29 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.radioBut2);
-            this.groupBox2.Controls.Add(this.radioBut3);
-            this.groupBox2.Controls.Add(this.radioBut4);
-            this.groupBox2.Controls.Add(this.radioBut5);
-            this.groupBox2.Controls.Add(this.radioBut1);
-            this.groupBox2.Location = new System.Drawing.Point(52, 382);
+            this.groupBox2.Controls.Add(this.cBestrellas);
+            this.groupBox2.Location = new System.Drawing.Point(58, 473);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(397, 41);
             this.groupBox2.TabIndex = 74;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Estrellas";
+            // 
+            // cBestrellas
+            // 
+            this.cBestrellas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBestrellas.FormattingEnabled = true;
+            this.cBestrellas.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.cBestrellas.Location = new System.Drawing.Point(78, 13);
+            this.cBestrellas.Name = "cBestrellas";
+            this.cBestrellas.Size = new System.Drawing.Size(88, 21);
+            this.cBestrellas.TabIndex = 6;
+            this.cBestrellas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // textBoxCIU
             // 
@@ -89,7 +96,7 @@
             this.textBoxCIU.Name = "textBoxCIU";
             this.textBoxCIU.Size = new System.Drawing.Size(178, 20);
             this.textBoxCIU.TabIndex = 72;
-            this.textBoxCIU.TextChanged += new System.EventHandler(this.textBoxCIU_TextChanged);
+            this.textBoxCIU.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
             // label3
             // 
@@ -100,14 +107,6 @@
             this.label3.TabIndex = 71;
             this.label3.Text = "Ciudad:";
             // 
-            // textBoxPAIS
-            // 
-            this.textBoxPAIS.Location = new System.Drawing.Point(130, 233);
-            this.textBoxPAIS.Name = "textBoxPAIS";
-            this.textBoxPAIS.Size = new System.Drawing.Size(178, 20);
-            this.textBoxPAIS.TabIndex = 70;
-            this.textBoxPAIS.TextChanged += new System.EventHandler(this.textBoxPAIS_TextChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -117,21 +116,12 @@
             this.label2.TabIndex = 69;
             this.label2.Text = "País:";
             // 
-            // dateTimePicker2
+            // dateTimePickerCreacion
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(160, 439);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 68;
-            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
-            // 
-            // textBoxDIR
-            // 
-            this.textBoxDIR.Location = new System.Drawing.Point(130, 192);
-            this.textBoxDIR.Name = "textBoxDIR";
-            this.textBoxDIR.Size = new System.Drawing.Size(255, 20);
-            this.textBoxDIR.TabIndex = 67;
-            this.textBoxDIR.TextChanged += new System.EventHandler(this.textBoxDIR_TextChanged);
+            this.dateTimePickerCreacion.Location = new System.Drawing.Point(160, 530);
+            this.dateTimePickerCreacion.Name = "dateTimePickerCreacion";
+            this.dateTimePickerCreacion.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerCreacion.TabIndex = 68;
             // 
             // textBoxMail
             // 
@@ -139,7 +129,6 @@
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(178, 20);
             this.textBoxMail.TabIndex = 66;
-            this.textBoxMail.TextChanged += new System.EventHandler(this.textBoxMail_TextChanged);
             // 
             // textBoxTE
             // 
@@ -147,7 +136,7 @@
             this.textBoxTE.Name = "textBoxTE";
             this.textBoxTE.Size = new System.Drawing.Size(178, 20);
             this.textBoxTE.TabIndex = 65;
-            this.textBoxTE.TextChanged += new System.EventHandler(this.textBoxTE_TextChanged);
+            this.textBoxTE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // textBoxName
             // 
@@ -155,25 +144,16 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(178, 20);
             this.textBoxName.TabIndex = 64;
-            this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
+            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(55, 443);
+            this.label18.Location = new System.Drawing.Point(55, 532);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(99, 13);
             this.label18.TabIndex = 63;
             this.label18.Text = "Fecha de creación:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(55, 199);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(55, 13);
-            this.label19.TabIndex = 62;
-            this.label19.Text = "Dirección:";
             // 
             // label20
             // 
@@ -206,7 +186,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(196, 20);
+            this.label1.Location = new System.Drawing.Point(268, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(164, 15);
             this.label1.TabIndex = 58;
@@ -214,139 +194,477 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkBoxDES);
-            this.groupBox1.Controls.Add(this.checkBoxMP);
-            this.groupBox1.Controls.Add(this.checkBoxPC);
-            this.groupBox1.Controls.Add(this.checkBoxALLIN);
-            this.groupBox1.Location = new System.Drawing.Point(48, 298);
+            this.groupBox1.Controls.Add(this.checkedListRegimenes);
+            this.groupBox1.Location = new System.Drawing.Point(58, 298);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(402, 71);
+            this.groupBox1.Size = new System.Drawing.Size(402, 169);
             this.groupBox1.TabIndex = 73;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Regímenes";
             // 
-            // checkBoxDES
+            // checkedListRegimenes
             // 
-            this.checkBoxDES.AutoSize = true;
-            this.checkBoxDES.Location = new System.Drawing.Point(213, 45);
-            this.checkBoxDES.Name = "checkBoxDES";
-            this.checkBoxDES.Size = new System.Drawing.Size(96, 17);
-            this.checkBoxDES.TabIndex = 37;
-            this.checkBoxDES.Text = "Sólo desayuno";
-            this.checkBoxDES.UseVisualStyleBackColor = true;
-            this.checkBoxDES.CheckedChanged += new System.EventHandler(this.checkBoxDES_CheckedChanged);
+            this.checkedListRegimenes.FormattingEnabled = true;
+            this.checkedListRegimenes.Location = new System.Drawing.Point(44, 26);
+            this.checkedListRegimenes.Name = "checkedListRegimenes";
+            this.checkedListRegimenes.Size = new System.Drawing.Size(329, 124);
+            this.checkedListRegimenes.TabIndex = 0;
             // 
-            // checkBoxMP
+            // label4
             // 
-            this.checkBoxMP.AutoSize = true;
-            this.checkBoxMP.Location = new System.Drawing.Point(90, 45);
-            this.checkBoxMP.Name = "checkBoxMP";
-            this.checkBoxMP.Size = new System.Drawing.Size(99, 17);
-            this.checkBoxMP.TabIndex = 36;
-            this.checkBoxMP.Text = "Media Pensión ";
-            this.checkBoxMP.UseVisualStyleBackColor = true;
-            this.checkBoxMP.CheckedChanged += new System.EventHandler(this.checkBoxMP_CheckedChanged);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(334, 191);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 13);
+            this.label4.TabIndex = 98;
+            this.label4.Text = "Nro:";
             // 
-            // checkBoxPC
+            // textBoxNroCalle
             // 
-            this.checkBoxPC.AutoSize = true;
-            this.checkBoxPC.Location = new System.Drawing.Point(213, 17);
-            this.checkBoxPC.Name = "checkBoxPC";
-            this.checkBoxPC.Size = new System.Drawing.Size(111, 17);
-            this.checkBoxPC.TabIndex = 35;
-            this.checkBoxPC.Text = "Pensión Completa";
-            this.checkBoxPC.UseVisualStyleBackColor = true;
-            this.checkBoxPC.CheckedChanged += new System.EventHandler(this.checkBoxPC_CheckedChanged);
+            this.textBoxNroCalle.Location = new System.Drawing.Point(395, 189);
+            this.textBoxNroCalle.Name = "textBoxNroCalle";
+            this.textBoxNroCalle.Size = new System.Drawing.Size(98, 20);
+            this.textBoxNroCalle.TabIndex = 97;
+            this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
-            // checkBoxALLIN
+            // textBoxCalle
             // 
-            this.checkBoxALLIN.AutoSize = true;
-            this.checkBoxALLIN.Location = new System.Drawing.Point(91, 16);
-            this.checkBoxALLIN.Name = "checkBoxALLIN";
-            this.checkBoxALLIN.Size = new System.Drawing.Size(81, 17);
-            this.checkBoxALLIN.TabIndex = 33;
-            this.checkBoxALLIN.Text = "All inclusive";
-            this.checkBoxALLIN.UseVisualStyleBackColor = true;
-            this.checkBoxALLIN.CheckedChanged += new System.EventHandler(this.checkBoxALLIN_CheckedChanged);
+            this.textBoxCalle.Location = new System.Drawing.Point(130, 189);
+            this.textBoxCalle.Name = "textBoxCalle";
+            this.textBoxCalle.Size = new System.Drawing.Size(178, 20);
+            this.textBoxCalle.TabIndex = 96;
+            this.textBoxCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
-            // radioBut1
+            // label19
             // 
-            this.radioBut1.AutoSize = true;
-            this.radioBut1.Location = new System.Drawing.Point(60, 16);
-            this.radioBut1.Name = "radioBut1";
-            this.radioBut1.Size = new System.Drawing.Size(31, 17);
-            this.radioBut1.TabIndex = 0;
-            this.radioBut1.TabStop = true;
-            this.radioBut1.Text = "1";
-            this.radioBut1.UseVisualStyleBackColor = true;
-            this.radioBut1.CheckedChanged += new System.EventHandler(this.radioBut1_CheckedChanged);
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(55, 196);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(33, 13);
+            this.label19.TabIndex = 95;
+            this.label19.Text = "Calle:";
             // 
-            // radioBut5
+            // comboBoxPAIS
             // 
-            this.radioBut5.AutoSize = true;
-            this.radioBut5.Location = new System.Drawing.Point(256, 16);
-            this.radioBut5.Name = "radioBut5";
-            this.radioBut5.Size = new System.Drawing.Size(31, 17);
-            this.radioBut5.TabIndex = 1;
-            this.radioBut5.TabStop = true;
-            this.radioBut5.Text = "5";
-            this.radioBut5.UseVisualStyleBackColor = true;
-            this.radioBut5.CheckedChanged += new System.EventHandler(this.radioBut5_CheckedChanged);
-            // 
-            // radioBut4
-            // 
-            this.radioBut4.AutoSize = true;
-            this.radioBut4.Location = new System.Drawing.Point(204, 16);
-            this.radioBut4.Name = "radioBut4";
-            this.radioBut4.Size = new System.Drawing.Size(31, 17);
-            this.radioBut4.TabIndex = 2;
-            this.radioBut4.TabStop = true;
-            this.radioBut4.Text = "4";
-            this.radioBut4.UseVisualStyleBackColor = true;
-            this.radioBut4.CheckedChanged += new System.EventHandler(this.radioBut4_CheckedChanged);
-            // 
-            // radioBut3
-            // 
-            this.radioBut3.AutoSize = true;
-            this.radioBut3.Location = new System.Drawing.Point(156, 16);
-            this.radioBut3.Name = "radioBut3";
-            this.radioBut3.Size = new System.Drawing.Size(31, 17);
-            this.radioBut3.TabIndex = 3;
-            this.radioBut3.TabStop = true;
-            this.radioBut3.Text = "3";
-            this.radioBut3.UseVisualStyleBackColor = true;
-            this.radioBut3.CheckedChanged += new System.EventHandler(this.radioBut3_CheckedChanged);
-            // 
-            // radioBut2
-            // 
-            this.radioBut2.AutoSize = true;
-            this.radioBut2.Location = new System.Drawing.Point(108, 16);
-            this.radioBut2.Name = "radioBut2";
-            this.radioBut2.Size = new System.Drawing.Size(31, 17);
-            this.radioBut2.TabIndex = 4;
-            this.radioBut2.TabStop = true;
-            this.radioBut2.Text = "2";
-            this.radioBut2.UseVisualStyleBackColor = true;
-            this.radioBut2.CheckedChanged += new System.EventHandler(this.radioBut2_CheckedChanged);
+            this.comboBoxPAIS.AutoCompleteCustomSource.AddRange(new string[] {
+            "Afganistán",
+            "Albania",
+            "Alemania",
+            "Andorra",
+            "Angola",
+            "Antigua y Barbuda",
+            "Arabia Saudita",
+            "Argelia",
+            "Argentina",
+            "Armenia",
+            "Australia",
+            "Austria",
+            "Azerbaiyán",
+            "Bahamas",
+            "Bangladés",
+            "Barbados",
+            "Baréin",
+            "Bélgica",
+            "Belice",
+            "Benín",
+            "Bielorrusia",
+            "Birmania",
+            "Bolivia",
+            "Bosnia y Herzegovina",
+            "Botsuana",
+            "Brasil",
+            "Brunéi",
+            "Bulgaria",
+            "Burkina Faso",
+            "Burundi",
+            "Bután",
+            "Cabo Verde",
+            "Camboya",
+            "Camerún",
+            "Canadá",
+            "Catar",
+            "Chad",
+            "Chile",
+            "China",
+            "Chipre",
+            "Ciudad del Vaticano",
+            "Colombia",
+            "Comoras",
+            "Corea del Norte",
+            "Corea del Sur",
+            "Costa de Marfil",
+            "Costa Rica",
+            "Croacia",
+            "Cuba",
+            "Dinamarca",
+            "Dominica",
+            "Ecuador",
+            "Egipto",
+            "El Salvador",
+            "Emiratos Árabes Unidos",
+            "Eritrea",
+            "Eslovaquia",
+            "Eslovenia",
+            "España",
+            "Estados Unidos",
+            "Estonia",
+            "Etiopía",
+            "Filipinas",
+            "Finlandia",
+            "Fiyi",
+            "Francia",
+            "Gabón",
+            "Gambia",
+            "Georgia",
+            "Ghana",
+            "Granada",
+            "Grecia",
+            "Guatemala",
+            "Guyana",
+            "Guinea",
+            "Guinea ecuatorial",
+            "Guinea-Bisáu",
+            "Haití",
+            "Honduras",
+            "Hungría",
+            "India",
+            "Indonesia",
+            "Irak",
+            "Irán",
+            "Irlanda",
+            "Islandia",
+            "Islas Marshall",
+            "Islas Salomón",
+            "Israel",
+            "Italia",
+            "Jamaica",
+            "Japón",
+            "Jordania",
+            "Kazajistán",
+            "Kenia",
+            "Kirguistán",
+            "Kiribati",
+            "Kuwait",
+            "Laos",
+            "Lesoto",
+            "Letonia",
+            "Líbano",
+            "Liberia",
+            "Libia",
+            "Liechtenstein",
+            "Lituania",
+            "Luxemburgo",
+            "Madagascar",
+            "Malasia",
+            "Malaui",
+            "Maldivas",
+            "Malí",
+            "Malta",
+            "Marruecos",
+            "Mauricio",
+            "Mauritania",
+            "México",
+            "Micronesia",
+            "Moldavia",
+            "Mónaco",
+            "Mongolia",
+            "Montenegro",
+            "Mozambique",
+            "Namibia",
+            "Nauru",
+            "Nepal",
+            "Nicaragua",
+            "Níger",
+            "Nigeria",
+            "Noruega",
+            "Nueva Zelanda",
+            "Omán",
+            "Países Bajos",
+            "Pakistán",
+            "Palaos",
+            "Panamá",
+            "Papúa Nueva Guinea",
+            "Paraguay",
+            "Perú",
+            "Polonia",
+            "Portugal",
+            "Reino Unido",
+            "República Centroafricana",
+            "República Checa",
+            "República de Macedonia",
+            "República del Congo",
+            "República Democrática del Congo",
+            "República Dominicana",
+            "República Sudafricana",
+            "Ruanda",
+            "Rumanía",
+            "Rusia",
+            "Samoa",
+            "San Cristóbal y Nieves",
+            "San Marino",
+            "San Vicente y las Granadinas",
+            "Santa Lucía",
+            "Santo Tomé y Príncipe",
+            "Senegal",
+            "Serbia",
+            "Seychelles",
+            "Sierra Leona",
+            "Singapur",
+            "Siria",
+            "Somalia",
+            "Sri Lanka",
+            "Suazilandia",
+            "Sudán",
+            "Sudán del Sur",
+            "Suecia",
+            "Suiza",
+            "Surinam",
+            "Tailandia",
+            "Tanzania",
+            "Tayikistán",
+            "Timor Oriental",
+            "Togo",
+            "Tonga",
+            "Trinidad y Tobago",
+            "Túnez",
+            "Turkmenistán",
+            "Turquía",
+            "Tuvalu",
+            "Ucrania",
+            "Uganda",
+            "Uruguay",
+            "Uzbekistán",
+            "Vanuatu",
+            "Venezuela",
+            "Vietnam",
+            "Yemen",
+            "Yibuti",
+            "Zambia",
+            "Zimbabue"});
+            this.comboBoxPAIS.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.comboBoxPAIS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPAIS.FormattingEnabled = true;
+            this.comboBoxPAIS.Items.AddRange(new object[] {
+            "Afganistán",
+            "Albania",
+            "Alemania",
+            "Andorra",
+            "Angola",
+            "Antigua y Barbuda",
+            "Arabia Saudita",
+            "Argelia",
+            "Argentina",
+            "Armenia",
+            "Australia",
+            "Austria",
+            "Azerbaiyán",
+            "Bahamas",
+            "Bangladés",
+            "Barbados",
+            "Baréin",
+            "Bélgica",
+            "Belice",
+            "Benín",
+            "Bielorrusia",
+            "Birmania",
+            "Bolivia",
+            "Bosnia y Herzegovina",
+            "Botsuana",
+            "Brasil",
+            "Brunéi",
+            "Bulgaria",
+            "Burkina Faso",
+            "Burundi",
+            "Bután",
+            "Cabo Verde",
+            "Camboya",
+            "Camerún",
+            "Canadá",
+            "Catar",
+            "Chad",
+            "Chile",
+            "China",
+            "Chipre",
+            "Ciudad del Vaticano",
+            "Colombia",
+            "Comoras",
+            "Corea del Norte",
+            "Corea del Sur",
+            "Costa de Marfil",
+            "Costa Rica",
+            "Croacia",
+            "Cuba",
+            "Dinamarca",
+            "Dominica",
+            "Ecuador",
+            "Egipto",
+            "El Salvador",
+            "Emiratos Árabes Unidos",
+            "Eritrea",
+            "Eslovaquia",
+            "Eslovenia",
+            "España",
+            "Estados Unidos",
+            "Estonia",
+            "Etiopía",
+            "Filipinas",
+            "Finlandia",
+            "Fiyi",
+            "Francia",
+            "Gabón",
+            "Gambia",
+            "Georgia",
+            "Ghana",
+            "Granada",
+            "Grecia",
+            "Guatemala",
+            "Guyana",
+            "Guinea",
+            "Guinea ecuatorial",
+            "Guinea-Bisáu",
+            "Haití",
+            "Honduras",
+            "Hungría",
+            "India",
+            "Indonesia",
+            "Irak",
+            "Irán",
+            "Irlanda",
+            "Islandia",
+            "Islas Marshall",
+            "Islas Salomón",
+            "Israel",
+            "Italia",
+            "Jamaica",
+            "Japón",
+            "Jordania",
+            "Kazajistán",
+            "Kenia",
+            "Kirguistán",
+            "Kiribati",
+            "Kuwait",
+            "Laos",
+            "Lesoto",
+            "Letonia",
+            "Líbano",
+            "Liberia",
+            "Libia",
+            "Liechtenstein",
+            "Lituania",
+            "Luxemburgo",
+            "Madagascar",
+            "Malasia",
+            "Malaui",
+            "Maldivas",
+            "Malí",
+            "Malta",
+            "Marruecos",
+            "Mauricio",
+            "Mauritania",
+            "México",
+            "Micronesia",
+            "Moldavia",
+            "Mónaco",
+            "Mongolia",
+            "Montenegro",
+            "Mozambique",
+            "Namibia",
+            "Nauru",
+            "Nepal",
+            "Nicaragua",
+            "Níger",
+            "Nigeria",
+            "Noruega",
+            "Nueva Zelanda",
+            "Omán",
+            "Países Bajos",
+            "Pakistán",
+            "Palaos",
+            "Panamá",
+            "Papúa Nueva Guinea",
+            "Paraguay",
+            "Perú",
+            "Polonia",
+            "Portugal",
+            "Reino Unido",
+            "República Centroafricana",
+            "República Checa",
+            "República de Macedonia",
+            "República del Congo",
+            "República Democrática del Congo",
+            "República Dominicana",
+            "República Sudafricana",
+            "Ruanda",
+            "Rumanía",
+            "Rusia",
+            "Samoa",
+            "San Cristóbal y Nieves",
+            "San Marino",
+            "San Vicente y las Granadinas",
+            "Santa Lucía",
+            "Santo Tomé y Príncipe",
+            "Senegal",
+            "Serbia",
+            "Seychelles",
+            "Sierra Leona",
+            "Singapur",
+            "Siria",
+            "Somalia",
+            "Sri Lanka",
+            "Suazilandia",
+            "Sudán",
+            "Sudán del Sur",
+            "Suecia",
+            "Suiza",
+            "Surinam",
+            "Tailandia",
+            "Tanzania",
+            "Tayikistán",
+            "Timor Oriental",
+            "Togo",
+            "Tonga",
+            "Trinidad y Tobago",
+            "Túnez",
+            "Turkmenistán",
+            "Turquía",
+            "Tuvalu",
+            "Ucrania",
+            "Uganda",
+            "Uruguay",
+            "Uzbekistán",
+            "Vanuatu",
+            "Venezuela",
+            "Vietnam",
+            "Yemen",
+            "Yibuti",
+            "Zambia",
+            "Zimbabue"});
+            this.comboBoxPAIS.Location = new System.Drawing.Point(130, 233);
+            this.comboBoxPAIS.Name = "comboBoxPAIS";
+            this.comboBoxPAIS.Size = new System.Drawing.Size(197, 21);
+            this.comboBoxPAIS.TabIndex = 99;
+            this.comboBoxPAIS.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
             // NuevoHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(542, 532);
+            this.ClientSize = new System.Drawing.Size(703, 624);
+            this.Controls.Add(this.comboBoxPAIS);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBoxNroCalle);
+            this.Controls.Add(this.textBoxCalle);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.textBoxCIU);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxPAIS);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.textBoxDIR);
+            this.Controls.Add(this.dateTimePickerCreacion);
             this.Controls.Add(this.textBoxMail);
             this.Controls.Add(this.textBoxTE);
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.label18);
-            this.Controls.Add(this.label19);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label24);
@@ -354,10 +672,9 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "NuevoHotel";
             this.Text = "Nuevo Hotel";
+            this.Load += new System.EventHandler(this.NuevoHotel_Load);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -369,29 +686,24 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBoxCIU;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxPAIS;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.TextBox textBoxDIR;
+        private System.Windows.Forms.DateTimePicker dateTimePickerCreacion;
         private System.Windows.Forms.TextBox textBoxMail;
         private System.Windows.Forms.TextBox textBoxTE;
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox checkBoxDES;
-        private System.Windows.Forms.CheckBox checkBoxMP;
-        private System.Windows.Forms.CheckBox checkBoxPC;
-        private System.Windows.Forms.CheckBox checkBoxALLIN;
-        private System.Windows.Forms.RadioButton radioBut2;
-        private System.Windows.Forms.RadioButton radioBut3;
-        private System.Windows.Forms.RadioButton radioBut4;
-        private System.Windows.Forms.RadioButton radioBut5;
-        private System.Windows.Forms.RadioButton radioBut1;
+        private System.Windows.Forms.ComboBox cBestrellas;
+        private System.Windows.Forms.CheckedListBox checkedListRegimenes;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxNroCalle;
+        private System.Windows.Forms.TextBox textBoxCalle;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox comboBoxPAIS;
 
     }
 }

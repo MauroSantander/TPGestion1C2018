@@ -47,7 +47,7 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void Nombre_KeyPress(object sender, KeyPressEventArgs e)
+        private void soloTexto_KeyPress(object sender, KeyPressEventArgs e)
         {
             {
                 if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
@@ -157,7 +157,9 @@ namespace FrbaHotel.AbmCliente
         {
             {
                 if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
+                else { e.Handled = true;
+                MessageBox.Show("Este campo solo admite números","Error",MessageBoxButtons.OK);
+                }
             }
         }
 
@@ -230,40 +232,33 @@ namespace FrbaHotel.AbmCliente
         
         private void BotonCrear_Click(object sender, EventArgs e)
         {
-             
+            //Validaciones
             String TipoIdCliente = TipoId.Text;
             if (string.IsNullOrEmpty(nroId.Text)) {MessageBox.Show("Completar numero de id cliente"); return;}
             int NroIdCliente = int.Parse(nroId.Text);
-
             if (string.IsNullOrEmpty(NroCalle.Text)) {MessageBox.Show("Completar numero de calle");return;}
-
             int NroCalleCliente = int.Parse(NroCalle.Text);
-            
             DateTime FechaNacimientoCliente = FechaNacimiento.Value;
-        
-            string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");
-
-
-            //Validaciones
+            string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");            
+            
             if (Nombre.Text == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Apellido.Text == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Mail.Text == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (!validarEmail(Mail.Text) || utilizador.estaRepetidoMail(Mail.Text)) { MessageBox.Show("Error en el mail", "Error"); return; }
+            if (!validarEmail(Mail.Text) || utilizador.estaRepetidoMail(Mail.Text)) { MessageBox.Show("mail inválido", "Error"); return; }
             if (Calle.Text == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Localidad.Text == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Nacionalidad.Text == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-
-                if (utilizador.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
+            if (utilizador.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
                 {
                     MessageBox.Show("Identificación Repetida");
                     return;
                 }
 
-
+            //comienzo del proceso de dar de alta en sí
             String cadenaAltaCliente = "PISOS_PICADOS.SPAltaCliente";
             
             SqlCommand comandoAltaCliente = new SqlCommand(cadenaAltaCliente, Globals.conexionGlobal);
@@ -561,12 +556,12 @@ namespace FrbaHotel.AbmCliente
 
             
 
-            String NombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nombre"].Value;
-            String ApellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
-            String TipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["tipoIdentificacion"].Value;
-            int NroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
+            String nombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nombre"].Value;
+            String apellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
+            String tipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["tipoIdentificacion"].Value;
+            int nroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
             //una vez obtenido lo necesario para el form de modificación, lo construyo
-            frmModificacionCliente modificacion = new frmModificacionCliente(NombreClienteFila,ApellidoClienteFila,NroIdClienteFila);
+            frmModificacionCliente modificacion = new frmModificacionCliente(nombreClienteFila,apellidoClienteFila,nroIdClienteFila);
 
            /////////****** antes de seguir obtengo id de usuario para relacionarlo con su nacionalidad que está en la tabla cliente******///////// 
             //busco el id del cliente porque lo necesitaré al buscar su nacionalidad, la cual está en la tabla Cliente 
@@ -575,13 +570,13 @@ namespace FrbaHotel.AbmCliente
             SqlCommand getId = new SqlCommand(a, Globals.conexionGlobal);
 
             getId.Parameters.Add("@nombre", SqlDbType.VarChar);
-            getId.Parameters["@nombre"].Value = NombreClienteFila;
+            getId.Parameters["@nombre"].Value = nombreClienteFila;
 
             getId.Parameters.Add("@apellido", SqlDbType.VarChar);
-            getId.Parameters["@apellido"].Value = ApellidoClienteFila;
+            getId.Parameters["@apellido"].Value = apellidoClienteFila;
 
             getId.Parameters.Add("@numeroIdentificacion", SqlDbType.Int);
-            getId.Parameters["@numeroIdentificacion"].Value = NroIdClienteFila;
+            getId.Parameters["@numeroIdentificacion"].Value = nroIdClienteFila;
 
 
             int idUsuario = (int)getId.ExecuteScalar(); //este es el id del cliente que buscabamos
@@ -599,7 +594,7 @@ namespace FrbaHotel.AbmCliente
             String nacionalidadCliente = (String) getNacionalidad.ExecuteScalar(); //aqui es donde obtenemos la
                                                                                   //nacionalidad buscada
 
-            String MailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["mail"].Value; ;
+            String mailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["mail"].Value; ;
             
             String TelefonoClienteFila;
             if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["telefono"].FormattedValue.ToString())) {
@@ -607,13 +602,13 @@ namespace FrbaHotel.AbmCliente
                 modificacion.txtTelefono.Text = TelefonoClienteFila;
             }
             
-            String CalleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["calle"].Value;
+            String calleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["calle"].Value;
             
             int NroCalleClienteFila;
             if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["nroCalle"].FormattedValue.ToString()))
             {
                 NroCalleClienteFila = Convert.ToInt32(dataGridViewModificarCliente.CurrentRow.Cells["nroCalle"].Value);
-                modificacion.txtTelefono.Text = NroCalleClienteFila.ToString();
+                modificacion.txtNroCalle.Text = NroCalleClienteFila.ToString();
             }
 
             String LocalidadClienteFila;
@@ -624,22 +619,36 @@ namespace FrbaHotel.AbmCliente
             }
             
             
-            int PaisClienteFila = Convert.ToInt32(dataGridViewModificarCliente.CurrentRow.Cells["pais"].Value);
-            String NacionalidadClienteFila = nacionalidadCliente;
-            DateTime FechaNacimientoClienteFila = (DateTime)dataGridViewModificarCliente.CurrentRow.Cells["fechaNacimiento"].Value;
+            int nroPaisClienteFila = Convert.ToInt32(dataGridViewModificarCliente.CurrentRow.Cells["pais"].Value);
 
+            String cadenaObtenerNombrePais = "SELECT [PISOS_PICADOS].obtenerNombrePais (@idPais)";
+
+            SqlCommand cmdObtenerNombrePais = new SqlCommand(cadenaObtenerNombrePais,Globals.conexionGlobal);
+
+            cmdObtenerNombrePais.Parameters.Add("@idPais", SqlDbType.Int);
+            cmdObtenerNombrePais.Parameters["@idPais"].Value = nroPaisClienteFila;
+
+            String nombrePais = (String) cmdObtenerNombrePais.ExecuteScalar();
+
+            String nacionalidadClienteFila = nacionalidadCliente;
+            //DateTime FechaNacimientoClienteFila = (DateTime)dataGridViewModificarCliente.CurrentRow.Cells["fechaNacimiento"].Value;
+            DateTime FechaNacimientoClienteFila = (DateTime) dataGridViewModificarCliente.CurrentRow.Cells["fechaNacimiento"].Value;
            //el form de  modificacion se abrira con los valores del usuario cargados
-           modificacion.txtNombre.Text = NombreClienteFila;
-           modificacion.txtApellido.Text = ApellidoClienteFila;
-           modificacion.cbTipoId.Text = TipoIdClienteFila;
-           modificacion.txtNroId.Text = NroIdClienteFila.ToString();
-           modificacion.txtMail.Text = MailClienteFila;
-           
-           modificacion.txtCalle.Text = CalleClienteFila;
+           modificacion.txtNombre.Text = nombreClienteFila;
+           modificacion.txtApellido.Text = apellidoClienteFila;
+           modificacion.cbTipoId.Text = tipoIdClienteFila;
+           modificacion.txtNroId.Text = nroIdClienteFila.ToString();
+           modificacion.txtMail.Text = mailClienteFila;
+           modificacion.cbPaises.Text = nombrePais;
+
+
+
+           modificacion.txtCalle.Text = calleClienteFila;
            //modificacion.txtNroCalle.Text = NroCalleClienteFila.ToString();
            //modificacion.txtLocalidad.Text = LocalidadClienteFila;
-           modificacion.txtNacionalidad.Text = NacionalidadClienteFila;
+           modificacion.txtNacionalidad.Text = nacionalidadClienteFila;
            //modificacion.dtpFechaNacimiento.Value = FechaNacimientoClienteFila.ToString();
+           modificacion.dtpFechaNacimiento.Value = FechaNacimientoClienteFila;
             
             modificacion.Show();
 
