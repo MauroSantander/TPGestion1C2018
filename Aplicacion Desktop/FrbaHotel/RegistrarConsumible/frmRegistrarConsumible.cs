@@ -118,7 +118,7 @@ namespace FrbaHotel.RegistrarConsumible
         {
             //chequeos
 
-            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeEstadia (@codigoReserva)", Globals.conexionGlobal);
+            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
             cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
             cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigoReserva.Text);
             int hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
