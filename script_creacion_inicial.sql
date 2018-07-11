@@ -563,7 +563,6 @@ CREATE TABLE [PISOS_PICADOS].EstadiaxConsumible (
 CREATE TABLE [PISOS_PICADOS].FormaDePago (
 	idFormaDePago INT PRIMARY KEY IDENTITY
 	,descripcion VARCHAR(255)
-	,numeroTarjeta INT
 	)
 
 CREATE TABLE [PISOS_PICADOS].Factura (
@@ -1316,6 +1315,16 @@ VALUES ('Zambia');
 
 INSERT INTO [PISOS_PICADOS].Pais
 VALUES ('Zimbabue');
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Efectivo')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Tarjeta de Credito')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Tarjeta de Debito')
+
 
 INSERT INTO [PISOS_PICADOS].Rol
 VALUES (
