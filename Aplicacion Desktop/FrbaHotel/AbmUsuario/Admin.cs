@@ -522,7 +522,7 @@ namespace FrbaHotel.AbmUsuario
                     
               
             }}
-            catch (Exception exc)
+            catch
             {
                 MessageBox.Show("No se encontró Usuario");
             }

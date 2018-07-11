@@ -79,11 +79,6 @@ namespace FrbaHotel
             (new FrbaHotel.CancelarReserva.frmCancelarReserva()).ShowDialog();
         }
 
-        private void btnFacturarEstadia_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("No implementado");
-        }
-
         private void btnListadoEstadistico_Click(object sender, EventArgs e)
         {
             (new FrbaHotel.ListadoEstadistico.frmListadoEstadistico()).ShowDialog();
@@ -196,6 +191,12 @@ namespace FrbaHotel
         {
             RegistrarEstadia.frmRegistrarEstadia instanciaRegEstadia = new RegistrarEstadia.frmRegistrarEstadia();
             instanciaRegEstadia.ShowDialog();
+        }
+
+        private void btnFacturarEstadia_Click(object sender, EventArgs e)
+        {
+            FacturarEstadia.frmFacturar instanciaFacturacion = new FacturarEstadia.frmFacturar();
+            instanciaFacturacion.ShowDialog();
         }
     }
 

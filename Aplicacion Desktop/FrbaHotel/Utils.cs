@@ -27,7 +27,7 @@ namespace FrbaHotel
                 adapter.Fill(dataTable);
                 dgv.DataSource = dataTable;
             }
-            catch (Exception exc)
+            catch
             {
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
@@ -43,7 +43,7 @@ namespace FrbaHotel
                 adapter.Fill(dataTable);
                 dgv.DataSource = dataTable;
             }
-            catch (Exception exc)
+            catch
             {
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
@@ -59,7 +59,7 @@ namespace FrbaHotel
                 adapter.Fill(dataTable);
                 dgv.DataSource = dataTable;
             }
-            catch (Exception exc)
+            catch
             {
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
@@ -76,7 +76,7 @@ namespace FrbaHotel
                 adapter.Fill(dataTable);
                 dgv.DataSource = dataTable;
             }
-            catch (Exception exc)
+            catch
             {
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
