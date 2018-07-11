@@ -359,6 +359,10 @@ IF OBJECT_ID(N'[PISOS_PICADOS].quitarHotelAUsuario', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].establecerEstadoReserva', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].establecerEstadoReserva;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].registrarEstadia', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].registrarEstadia;
+
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -3786,15 +3790,6 @@ BEGIN
 
 	SET @cont = 0
 
-	INSERT INTO [PISOS_PICADOS].Estadia (
-		codigoReserva
-		,diasReserva
-		)
-	VALUES (
-		@idReserva
-		,DATEDIFF(DAY, @fechaFin, @fechaFin)
-		);
-
 	WHILE (@cont < @cantSimple)
 	BEGIN
 		INSERT INTO [PISOS_PICADOS].HabitacionxReserva
@@ -3901,6 +3896,21 @@ BEGIN
 	WHERE re.estado = 5
 END
 GO
+/*ACA*/
+CREATE PROCEDURE [PISOS_PICADOS].registrarEstadia @codReserva INT 
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].Estadia (
+		codigoReserva
+		,diasReserva
+		)
+	VALUES (
+		@codReserva
+		,(SELECT DATEDIFF(DAY,r.fechaInicio,r.fechaFin) FROM [PISOS_PICADOS].Reserva AS r WHERE r.codigoReserva=@codReserva)
+		);
+END 
+GO
+
 
 CREATE PROCEDURE [PISOS_PICADOS].registrarCheckIn @fechaIngreso DATE
 	,@idEncargado INT
