@@ -3125,7 +3125,6 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado @idAutor INT
 	,@idUsuario INT
 	,@username VARCHAR(255)
-	,@password VARCHAR(255)
 	,@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
 	,@mail VARCHAR(255)
@@ -3139,12 +3138,7 @@ CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado @idAutor INT
 	,@fechaNacimiento DATE
 AS
 BEGIN
-	IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
-		IF @password IS NOT NULL
-			UPDATE [PISOS_PICADOS].Empleado
-			SET contrasena = @password
-			WHERE @idUsuario = idUsuario
-
+	
 	IF @nombre IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET nombre = @nombre
