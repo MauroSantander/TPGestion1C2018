@@ -244,6 +244,12 @@ IF OBJECT_ID(N'[PISOS_PICADOS].checkInYaRealizado', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].checkOutYaRealizado', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].checkOutYaRealizado;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].MostrarTablaRegimen', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].MostrarTablaRegimen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].RegistradoCliente', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].RegistradoCliente;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2940,6 +2946,25 @@ RETURN 1
 RETURN 0
 END
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].MostrarTablaRegimen(@idHotel INT )
+RETURNS TABLE
+AS
+RETURN (SELECT r.codigoRegimen,r.descripcion,r.precioBase FROM [PISOS_PICADOS].RegimenxHotel AS rxh 
+JOIN [PISOS_PICADOS].Regimen AS r ON rxh.codigoRegimen = r.codigoRegimen
+WHERE r.estado = 1 AND rxh.idHotel = @idHotel )
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].RegistradoCliente(@idUsuario INT)
+RETURNS INT
+AS 
+BEGIN
+IF EXISTS (SELECT c.idUsuario FROM [PISOS_PICADOS].Cliente AS c WHERE c.idUsuario = @idUsuario)
+RETURN 1 
+RETURN 0 
+END 
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
