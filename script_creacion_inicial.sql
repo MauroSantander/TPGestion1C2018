@@ -244,6 +244,12 @@ IF OBJECT_ID(N'[PISOS_PICADOS].checkInYaRealizado', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].checkOutYaRealizado', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].checkOutYaRealizado;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].MostrarTablaRegimen', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].MostrarTablaRegimen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].RegistradoCliente', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].RegistradoCliente;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -557,7 +563,6 @@ CREATE TABLE [PISOS_PICADOS].EstadiaxConsumible (
 CREATE TABLE [PISOS_PICADOS].FormaDePago (
 	idFormaDePago INT PRIMARY KEY IDENTITY
 	,descripcion VARCHAR(255)
-	,numeroTarjeta INT
 	)
 
 CREATE TABLE [PISOS_PICADOS].Factura (
@@ -1310,6 +1315,16 @@ VALUES ('Zambia');
 
 INSERT INTO [PISOS_PICADOS].Pais
 VALUES ('Zimbabue');
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Efectivo')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Tarjeta de Credito')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Tarjeta de Debito')
+
 
 INSERT INTO [PISOS_PICADOS].Rol
 VALUES (
@@ -2941,6 +2956,25 @@ RETURN 0
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].MostrarTablaRegimen(@idHotel INT )
+RETURNS TABLE
+AS
+RETURN (SELECT r.codigoRegimen,r.descripcion,r.precioBase FROM [PISOS_PICADOS].RegimenxHotel AS rxh 
+JOIN [PISOS_PICADOS].Regimen AS r ON rxh.codigoRegimen = r.codigoRegimen
+WHERE r.estado = 1 AND rxh.idHotel = @idHotel )
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].RegistradoCliente(@idUsuario INT)
+RETURNS INT
+AS 
+BEGIN
+IF EXISTS (SELECT c.idUsuario FROM [PISOS_PICADOS].Cliente AS c WHERE c.idUsuario = @idUsuario)
+RETURN 1 
+RETURN 0 
+END 
+GO
+
+
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
@@ -3091,7 +3125,6 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado @idAutor INT
 	,@idUsuario INT
 	,@username VARCHAR(255)
-	,@password VARCHAR(255)
 	,@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
 	,@mail VARCHAR(255)
@@ -3105,12 +3138,7 @@ CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado @idAutor INT
 	,@fechaNacimiento DATE
 AS
 BEGIN
-	IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
-		IF @password IS NOT NULL
-			UPDATE [PISOS_PICADOS].Empleado
-			SET contrasena = @password
-			WHERE @idUsuario = idUsuario
-
+	
 	IF @nombre IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET nombre = @nombre
