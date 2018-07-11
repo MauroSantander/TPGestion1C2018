@@ -208,6 +208,34 @@ namespace FrbaHotel.RegistrarEstadia
                 return;
             }
 
+            //chequeo estado de la reserva
+            SqlCommand cmdEstadoReserva = new SqlCommand("SELECT [PISOS_PICADOS].obtenerEstadoReserva(@codigoReserva, @fecha)", Globals.conexionGlobal);
+            cmdEstadoReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdEstadoReserva.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+            cmdEstadoReserva.Parameters.Add("@fecha", SqlDbType.Date);
+            cmdEstadoReserva.Parameters["@fecha"].Value = Globals.FechaDelSistema.ToString("yyyy-MM-dd");
+            //ejecuto y recibo estado de la reserva
+            int estadoReserva = (int)cmdEstadoReserva.ExecuteScalar();
+
+            if (estadoReserva == 3)
+            {
+                MessageBox.Show("La reserva ya fue efectivizada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            //reservas canceladas
+            if (estadoReserva == 2 || estadoReserva == 4)
+            {
+                MessageBox.Show("La reserva se encuentra cancelada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //reservas inexistentes
+            if (estadoReserva == 0)
+            {
+                MessageBox.Show("La reserva no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             //verifico si se hizo check-in previamente
             SqlCommand cmdCheckInYaRealizado = new SqlCommand("SELECT [PISOS_PICADOS].checkInYaRealizado(@codigoReserva)", Globals.conexionGlobal);
             cmdCheckInYaRealizado.Parameters.Add("@codigoReserva", SqlDbType.Int);
@@ -218,6 +246,19 @@ namespace FrbaHotel.RegistrarEstadia
             if (yaSeRealizoCheckIn == 0)
             {
                 MessageBox.Show("El check-in nunca fué realizado para esta reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //chequeo que check-out ya no se haya realizado
+            SqlCommand cmdCheckOutYaRealizado = new SqlCommand("SELECT [PISOS_PICADOS].checkOutYaRealizado(@codigoReserva)", Globals.conexionGlobal);
+            cmdCheckOutYaRealizado.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdCheckOutYaRealizado.Parameters["@codigoReserva"].Value = textBoxCodigoReserva.Text;
+            //ejecuto y recibo resultado
+            int yaSeRealizoCheckOut = (int)cmdCheckOutYaRealizado.ExecuteScalar();
+
+            if (yaSeRealizoCheckOut == 1)
+            {
+                MessageBox.Show("El check-out ya fue realizado sobre esta reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
