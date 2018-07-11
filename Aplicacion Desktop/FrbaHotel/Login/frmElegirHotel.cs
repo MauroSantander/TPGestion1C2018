@@ -40,6 +40,8 @@ namespace FrbaHotel.Login
 
             reader.Close();
 
+            comboBoxHotel.SelectedIndex = 0;
+
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -49,6 +51,14 @@ namespace FrbaHotel.Login
                 MessageBox.Show("Elija un hotel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            //busco id del hotel
+            SqlCommand cmd = new SqlCommand("SELECT idHotel FROM [PISOS_PICADOS].Hotel WHERE nombre = @nombre", Globals.conexionGlobal);
+            cmd.Parameters.Add("@nombre", SqlDbType.VarChar);
+            cmd.Parameters["@nombre"].Value = comboBoxHotel.SelectedItem.ToString();
+            Globals.idHotelUsuario = (int)cmd.ExecuteScalar();
+
+            MessageBox.Show(Globals.idHotelUsuario.ToString());
 
             frmMenuInstancia.Show();
         }
