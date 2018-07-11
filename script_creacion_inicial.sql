@@ -3894,6 +3894,11 @@ BEGIN
 	FROM [PISOS_PICADOS].HabitacionxReserva AS hr
 	INNER JOIN [PISOS_PICADOS].Reserva AS re ON hr.codigoReserva = re.codigoReserva
 	WHERE re.estado = 5
+
+	DELETE es
+	FROM [PISOS_PICADOS].Estadia AS es
+	WHERE es.estado = 0
+
 END
 GO
 /*ACA*/
