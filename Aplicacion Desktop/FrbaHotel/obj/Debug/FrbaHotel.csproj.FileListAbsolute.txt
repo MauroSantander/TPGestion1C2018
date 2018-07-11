@@ -90,3 +90,4 @@ C:\Users\Lenovo\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\ob
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.CancelarReserva.frmCancelarReserva.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.RegistrarConsumible.frmRegistrarConsumible.resources
 C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.Login.frmElegirHotel.resources
+C:\Users\Benja\Documents\GitHub\TPGestion1C2018\Aplicacion Desktop\FrbaHotel\obj\Debug\FrbaHotel.RegistrarEstadia.frmRegistrarEstadia.resources

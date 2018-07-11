@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FrbaHotel.RegistrarEstadia
+namespace FrbaHotel.GenerarModificacionReserva
 {
-    public partial class Form1 : Form
+    public partial class frmModificarReserva : Form
     {
-        public Form1()
+        public frmModificarReserva()
         {
             InitializeComponent();
+        }
+
+        private void frmModificarReserva_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
         }
     }
 }

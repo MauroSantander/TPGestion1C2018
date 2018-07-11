@@ -68,8 +68,9 @@
             this.Controls.Add(this.cbRol);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmElegirRol";
-            this.Text = "ElegirRol";
+            this.Text = "Elegir Rol";
             this.Load += new System.EventHandler(this.ElegirRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
