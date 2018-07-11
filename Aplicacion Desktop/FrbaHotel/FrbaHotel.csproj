@@ -129,6 +129,12 @@
     <Compile Include="CancelarReserva\frmCancelarReserva.Designer.cs">
       <DependentUpon>frmCancelarReserva.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login\frmElegirHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\frmElegirHotel.Designer.cs">
+      <DependentUpon>frmElegirHotel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Login\frmElegirRol.cs">
@@ -219,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\frmListadoEstadistico.resx">
       <DependentUpon>frmListadoEstadistico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\frmElegirHotel.resx">
+      <DependentUpon>frmElegirHotel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\frmElegirRol.resx">
       <DependentUpon>frmElegirRol.cs</DependentUpon>

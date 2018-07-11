@@ -229,6 +229,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoReserva', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].yaSeRegistraronConsumibles', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].yaSeRegistraronConsumibles;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].tieneUnSoloHotel', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].tieneUnSoloHotel;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2842,6 +2845,17 @@ RETURNS INT
 AS
 BEGIN
 IF (SELECT COUNT(*) FROM [PISOS_PICADOS].EstadiaxConsumible AS exc WHERE exc.idEstadia = @idEstadia ) > 0
+RETURN 1
+RETURN 0
+END
+GO
+
+/*Dado un usuario retorna 1 si solo tiene un hotel*/
+CREATE FUNCTION [PISOS_PICADOS].tieneUnSoloHotel (@idUsuario INT)
+RETURNS INT
+AS
+BEGIN
+IF (SELECT COUNT(*) FROM [PISOS_PICADOS].EmpleadoxHotel AS e WHERE e.idUsuario = @idUsuario ) = 1
 RETURN 1
 RETURN 0
 END

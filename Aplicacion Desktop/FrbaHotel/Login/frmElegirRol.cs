@@ -52,7 +52,24 @@ namespace FrbaHotel.Login
 
             frmMenu frmMenuInstance = new frmMenu();
             frmMenuInstance.asignarRol(idRol);
-            frmMenuInstance.Show();
+
+
+            //verificamos si el usuario tiene un solo hotel. Si solo tiene uno, luego no lo mandamos a elegir
+            SqlCommand tieneUnSoloHotel = new SqlCommand("SELECT [PISOS_PICADOS].tieneUnSoloHotel(@idUsuario)", Globals.conexionGlobal);
+            tieneUnSoloHotel.Parameters.Add("@idUsuario", SqlDbType.Int);
+            tieneUnSoloHotel.Parameters["@idUsuario"].Value = Globals.idUsuarioSesion;
+            int unHotel = (int)tieneUnSoloHotel.ExecuteScalar();
+
+            if (unHotel == 1)
+            {
+                frmMenuInstance.Show();
+            }
+            else
+            {
+                frmElegirHotel instanciafrmElegirHotel = new frmElegirHotel(Globals.idUsuarioSesion, frmMenuInstance);
+                instanciafrmElegirHotel.Show();
+            }
+
             this.Close();
             Globals.getLogin().Hide();
             return;

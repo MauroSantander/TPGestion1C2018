@@ -67,6 +67,12 @@ namespace FrbaHotel.Login
                 resetearIntentos.Parameters["@usuarioEmpleado"].Value = textBoxUsuario.Text;
                 resetearIntentos.ExecuteNonQuery();
 
+                //verificamos si el usuario tiene un solo hotel. Si solo tiene uno, luego no lo mandamos a elegir
+                SqlCommand tieneUnSoloHotel = new SqlCommand("SELECT [PISOS_PICADOS].tieneUnSoloHotel(@idUsuario)", Globals.conexionGlobal);
+                tieneUnSoloHotel.Parameters.Add("@idUsuario", SqlDbType.Int);
+                tieneUnSoloHotel.Parameters["@idUsuario"].Value = idUsr;
+                int unHotel = (int)tieneUnSoloHotel.ExecuteScalar();
+
                 //Si el usuario tiene un solo rol, lo mandamos directamente al menu con el mismo, sin llevarlo a la pantalla de elección.
                 //Lo verificamos con la siguiente función:
                 SqlCommand tieneUnSoloRol = new SqlCommand("SELECT [PISOS_PICADOS].tieneUnSoloRol(@usuario)", Globals.conexionGlobal);
@@ -82,7 +88,15 @@ namespace FrbaHotel.Login
                     int idRol = (int)rol.ExecuteScalar();
                     frmMenu frmMenuInstance = new frmMenu();
                     frmMenuInstance.asignarRol(idRol);
-                    frmMenuInstance.Show();
+                    if (unHotel == 1)
+                    {
+                        frmMenuInstance.Show();
+                    }
+                    else
+                    {
+                        frmElegirHotel instanciafrmElegirHotel = new frmElegirHotel(idUsr, frmMenuInstance);
+                        instanciafrmElegirHotel.Show();
+                    }
                     Globals.getLogin().Hide();
                     return;
                 }
