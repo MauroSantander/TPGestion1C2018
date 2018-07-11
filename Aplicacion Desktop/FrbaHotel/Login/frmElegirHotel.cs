@@ -46,6 +46,7 @@ namespace FrbaHotel.Login
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            //chequeos
             if (comboBoxHotel.SelectedItem == null)
             {
                 MessageBox.Show("Elija un hotel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -58,9 +59,8 @@ namespace FrbaHotel.Login
             cmd.Parameters["@nombre"].Value = comboBoxHotel.SelectedItem.ToString();
             Globals.idHotelUsuario = (int)cmd.ExecuteScalar();
 
-            MessageBox.Show(Globals.idHotelUsuario.ToString());
-
             frmMenuInstancia.Show();
+            this.Close();
         }
     }
 }

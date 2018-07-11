@@ -51,7 +51,7 @@
             // txtCodigo
             // 
             this.txtCodigo.Location = new System.Drawing.Point(9, 19);
-            this.txtCodigo.MaxLength = 60;
+            this.txtCodigo.MaxLength = 8;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(100, 20);
             this.txtCodigo.TabIndex = 0;

@@ -41,6 +41,8 @@ namespace FrbaHotel.Login
         {
             SqlCommand cmdBuscarIdRol = new SqlCommand("SELECT idRol FROM [PISOS_PICADOS].Rol WHERE nombreRol = @nombreRol", Globals.conexionGlobal);
             cmdBuscarIdRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
+
+            //chequeos
             if (cbRol.SelectedItem == null)
             {
                 MessageBox.Show("Elija un rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

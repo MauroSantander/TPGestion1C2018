@@ -37,10 +37,21 @@ namespace FrbaHotel.CancelarReserva
         {
             //chequeos
 
-            SqlCommand cmdBuscarHotelDeReserva = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
-            cmdBuscarHotelDeReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
-            cmdBuscarHotelDeReserva.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigo.Text);
-            int hotelDeLaEstadia = (int)cmdBuscarHotelDeReserva.ExecuteScalar();
+            //verifico si el usuario tiene permiso para tocar esta estadía
+            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigo.Text);
+            int hotelDeLaEstadia;
+            try
+            {
+                hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+            }
+            catch
+            {
+                //si rompe es porque no existe la estadia
+                MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             int verificacion = 1;
 

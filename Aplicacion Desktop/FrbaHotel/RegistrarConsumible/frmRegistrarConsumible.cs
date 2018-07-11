@@ -118,10 +118,21 @@ namespace FrbaHotel.RegistrarConsumible
         {
             //chequeos
 
+            //verifico si el usuario tiene permiso para tocar esta estadía
             SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
             cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
             cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigoReserva.Text);
-            int hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+            int hotelDeLaEstadia;
+            try
+            {
+                hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+            }
+            catch
+            {
+                //si rompe es porque no existe la estadia
+                MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             int verificacion = 1;
 

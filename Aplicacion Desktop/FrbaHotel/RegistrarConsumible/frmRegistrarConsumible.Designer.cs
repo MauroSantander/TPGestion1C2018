@@ -39,8 +39,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cantidad = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.labelTotal = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.labelTotal = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.precioConsumible = new System.Windows.Forms.Label();
@@ -121,6 +121,7 @@
             // txtCodigoReserva
             // 
             this.txtCodigoReserva.Location = new System.Drawing.Point(6, 19);
+            this.txtCodigoReserva.MaxLength = 8;
             this.txtCodigoReserva.Name = "txtCodigoReserva";
             this.txtCodigoReserva.Size = new System.Drawing.Size(129, 20);
             this.txtCodigoReserva.TabIndex = 0;
@@ -168,15 +169,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Total";
             // 
-            // labelTotal
-            // 
-            this.labelTotal.AutoSize = true;
-            this.labelTotal.Location = new System.Drawing.Point(16, 20);
-            this.labelTotal.Name = "labelTotal";
-            this.labelTotal.Size = new System.Drawing.Size(40, 13);
-            this.labelTotal.TabIndex = 0;
-            this.labelTotal.Text = "999.99";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -185,6 +177,15 @@
             this.label2.Size = new System.Drawing.Size(13, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "$";
+            // 
+            // labelTotal
+            // 
+            this.labelTotal.AutoSize = true;
+            this.labelTotal.Location = new System.Drawing.Point(16, 20);
+            this.labelTotal.Name = "labelTotal";
+            this.labelTotal.Size = new System.Drawing.Size(40, 13);
+            this.labelTotal.TabIndex = 0;
+            this.labelTotal.Text = "999.99";
             // 
             // groupBox3
             // 
