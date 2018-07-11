@@ -235,6 +235,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].tieneUnSoloHotel', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].hotelDeReserva', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].hotelDeReserva;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].esElDiaDeInicio', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].esElDiaDeInicio;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -2894,6 +2896,26 @@ RETURN 1
 RETURN 0
 END
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].esElDiaDeInicio (@fecha DATE, @codReserva INT)
+RETURNS INT
+AS
+BEGIN
+DECLARE @fechaBuscada DATE
+SELECT @fechaBuscada =r.fechaInicio FROM [PISOS_PICADOS].Reserva AS r WHERE r.codigoReserva = @codReserva 
+IF @fechaBuscada = @fecha
+RETURN 1
+IF @fechaBuscada < @fecha
+RETURN 2
+RETURN 0
+
+
+RETURN 1
+RETURN 0
+END
+GO
+
+
 
 
 /* STORED PROCEDURES ------------------------------------------------------*/
