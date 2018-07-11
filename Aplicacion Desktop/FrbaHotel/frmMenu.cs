@@ -36,12 +36,12 @@ namespace FrbaHotel
 
         private void btnGenerarReserva_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.GenerarModificacionReserva.frmGenerarReserva()).ShowDialog();
+            (new FrbaHotel.GenerarModificacionReserva.Form1()).ShowDialog();
         }
 
         private void btnRegistarEstadia_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.RegistrarEstadia.frmRegistrarEstadia()).ShowDialog();
+            (new FrbaHotel.RegistrarEstadia.Form1()).ShowDialog();
         }
 
         private void btnABMUsuario_Click(object sender, EventArgs e)
@@ -56,7 +56,7 @@ namespace FrbaHotel
 
         private void btnModificarReserva_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.GenerarModificacionReserva.frmGenerarReserva()/*.tabControl(1)*/).ShowDialog();
+            (new FrbaHotel.GenerarModificacionReserva.Form1()/*.tabControl(1)*/).ShowDialog();
         }
 
         private void btnRegistrarConsumibles_Click(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace FrbaHotel
 
         private void btnABMRegimenEstadia_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.RegistrarEstadia.frmRegistrarEstadia()).ShowDialog();
+            (new FrbaHotel.RegistrarEstadia.Form1()).ShowDialog();
         }
 
         private void btnCancelarReserva_Click(object sender, EventArgs e)
@@ -194,8 +194,7 @@ namespace FrbaHotel
 
         private void btnRegistrarEstadia_Click(object sender, EventArgs e)
         {
-            RegistrarEstadia.frmRegistrarEstadia instanciaRegEstadia = new RegistrarEstadia.frmRegistrarEstadia();
-            instanciaRegEstadia.ShowDialog();
+
         }
     }
 

@@ -26,8 +26,34 @@ namespace FrbaHotel.AbmHabitacion
             this.CenterToScreen();
             comboBoxUbicacion.Items.Add("Frente");
             comboBoxUbicacion.Items.Add("Interno");
-            Utils.cargarTiposDeCamas(comboBoxTipo);
-            Utils.cargarHoteles(comboBoxHotel);
+            cargarTipos();
+            cargarHoteles();
+        }
+
+        private void cargarHoteles()
+        {
+            //cargo los hoteles
+            SqlCommand cmdBuscarHoteles = new SqlCommand("SELECT nombre, calle, nroCalle, ciudad FROM [PISOS_PICADOS].Hotel", Globals.conexionGlobal);
+            SqlDataReader reader = cmdBuscarHoteles.ExecuteReader();
+
+            while (reader.Read())
+            {
+                if ((reader["nombre"]).ToString() != "")
+                {
+                    comboBoxHotel.Items.Add((reader["nombre"]).ToString());
+                }
+                else
+                {
+                    //si no tiene nombre le pongo ciudad, calle y número
+                    string item;
+                    item = reader["ciudad"].ToString().Trim() + "-" + reader["calle"].ToString().Trim() + "-" + reader["nroCalle"].ToString().Trim();
+                    comboBoxHotel.Items.Add(item);
+                }
+            }
+
+            reader.Close();
+
+            return;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -152,6 +178,23 @@ namespace FrbaHotel.AbmHabitacion
 
         }
 
+
+        private void cargarTipos()
+        {
+            //traigo los tipos de habitación
+            SqlCommand cmdBuscarTipos = new SqlCommand("SELECT tipoCamas FROM [PISOS_PICADOS].Tipo", Globals.conexionGlobal);
+            SqlDataReader reader = cmdBuscarTipos.ExecuteReader();
+
+            while (reader.Read())
+            {
+                comboBoxTipo.Items.Add((reader["tipoCamas"]).ToString());
+            }
+
+            reader.Close();
+
+            return;
+        }
+
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -159,12 +202,22 @@ namespace FrbaHotel.AbmHabitacion
 
         private void txtPiso_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Utils.txtSoloAceptaNumeros(txtPiso, sender, e);
+            //Textbox solo acepta números
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Utils.txtSoloAceptaNumeros(txtNumero, sender, e);
+            //Textbox solo acepta números
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

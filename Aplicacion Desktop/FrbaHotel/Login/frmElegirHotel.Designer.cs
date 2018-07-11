@@ -68,7 +68,7 @@
             this.Controls.Add(this.comboBoxHotel);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmElegirHotel";
             this.Text = "Seleccionar hotel";
             this.Load += new System.EventHandler(this.frmElegirHotel_Load);
