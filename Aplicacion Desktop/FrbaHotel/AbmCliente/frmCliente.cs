@@ -21,6 +21,14 @@ namespace FrbaHotel.AbmCliente
         {
             InitializeComponent();
 
+        }
+
+     
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //centra el formulario
+            this.CenterToScreen();
+
             //carga los paises en el combo box cbPaises, extrayendolos de la tabla Pais hecha en sql;
             SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
 
@@ -33,13 +41,9 @@ namespace FrbaHotel.AbmCliente
 
             reader.Close();
 
-        }
+            utilizador.llenarDataGridView(dataGridViewClientes, "Usuario");
+            utilizador.llenarDataGridView(dataGridViewModificarCliente, "Usuario");
 
-     
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //centra el formulario
-            this.CenterToScreen();
         }
 
         private void Nombre_TextChanged(object sender, EventArgs e)
@@ -118,8 +122,6 @@ namespace FrbaHotel.AbmCliente
                     MessageBox.Show("Usuario eliminado correctamente");
                 }
             }
-
-            //dataGridViewClientes.Rows.Remove(dataGridViewClientes.CurrentRow);
 
 
         }
@@ -379,14 +381,6 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        private void Localidad_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-
         private void cbPaises_SelectedIndexChanged(object sender, EventArgs e)
         {
                 
@@ -560,8 +554,9 @@ namespace FrbaHotel.AbmCliente
             String apellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
             String tipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["tipoIdentificacion"].Value;
             int nroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
+            String mailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["mail"].Value;
             //una vez obtenido lo necesario para el form de modificación, lo construyo
-            frmModificacionCliente modificacion = new frmModificacionCliente(nombreClienteFila,apellidoClienteFila,nroIdClienteFila);
+            frmModificacionCliente modificacion = new frmModificacionCliente(nombreClienteFila,apellidoClienteFila,nroIdClienteFila, mailClienteFila);
 
            /////////****** antes de seguir obtengo id de usuario para relacionarlo con su nacionalidad que está en la tabla cliente******///////// 
             //busco el id del cliente porque lo necesitaré al buscar su nacionalidad, la cual está en la tabla Cliente 
@@ -593,8 +588,6 @@ namespace FrbaHotel.AbmCliente
 
             String nacionalidadCliente = (String) getNacionalidad.ExecuteScalar(); //aqui es donde obtenemos la
                                                                                   //nacionalidad buscada
-
-            String mailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["mail"].Value; ;
             
             String TelefonoClienteFila;
             if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["telefono"].FormattedValue.ToString())) {
@@ -673,6 +666,42 @@ namespace FrbaHotel.AbmCliente
                 MessageBox.Show("Este campo sólo acepta números", "Error",MessageBoxButtons.OK);
                 }
             }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {   
+            //limpiar los campos del tab altaCliente
+            Nombre.ResetText();
+            Apellido.ResetText();
+            TipoId.ResetText();
+            nroId.ResetText();
+            Mail.ResetText();
+            Telefono.ResetText();
+            Calle.ResetText();
+            NroCalle.ResetText();
+            Localidad.ResetText();
+            Nacionalidad.ResetText();
+            FechaNacimiento.ResetText();
+        }
+
+        private void btnLimpiarModif_Click(object sender, EventArgs e)
+        {
+            //limpiar los campos del tab modificarCliente
+            txtNombreModif.ResetText();
+            txtApellidoModif.ResetText();
+            cbTipoId.SelectedItem = "Vacío";
+            txtNroIdModif.ResetText();
+            txtMailModif.ResetText();
+        }
+
+        private void btnLimpiartab3_Click(object sender, EventArgs e)
+        {
+            //limpiar los campos del tab bajaCliente
+            txtNombreModif.ResetText();
+            txtApellidoModif.ResetText();
+            cbTipoId.SelectedItem = "Vacío";
+            txtNroIdModif.ResetText();
+            txtMailModif.ResetText();
         }
 
 
