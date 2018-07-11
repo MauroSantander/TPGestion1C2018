@@ -117,6 +117,12 @@ namespace FrbaHotel.RegistrarConsumible
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             //chequeos
+
+            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeEstadia (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigoReserva.Text);
+            int hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+
             int verificacion = 1;
 
             if (listAFacturar.Items.Count < 1)
@@ -128,6 +134,12 @@ namespace FrbaHotel.RegistrarConsumible
             if (txtCodigoReserva.Text == "")
             {
                 MessageBox.Show("Inserte un código de reserva que se corresponda a una estadía.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (hotelDeLaEstadia != Globals.idHotelUsuario)
+            {
+                MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 verificacion = 0;
             }
 

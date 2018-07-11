@@ -36,6 +36,12 @@ namespace FrbaHotel.CancelarReserva
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             //chequeos
+
+            SqlCommand cmdBuscarHotelDeReserva = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeEstadia (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHotelDeReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHotelDeReserva.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigo.Text);
+            int hotelDeLaEstadia = (int)cmdBuscarHotelDeReserva.ExecuteScalar();
+
             int verificacion = 1;
 
             if (txtCodigo.Text == "")
@@ -46,6 +52,12 @@ namespace FrbaHotel.CancelarReserva
             if (txtMotivo.Text == "")
             {
                 MessageBox.Show("Debe insertar un motivo de cancelación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (hotelDeLaEstadia != Globals.idHotelUsuario)
+            {
+                MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 verificacion = 0;
             }
 
