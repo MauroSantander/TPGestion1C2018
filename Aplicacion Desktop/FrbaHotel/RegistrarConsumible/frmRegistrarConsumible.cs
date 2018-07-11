@@ -25,25 +25,8 @@ namespace FrbaHotel.RegistrarConsumible
             this.CenterToScreen();
             labelTotal.Text = total.ToString();
             //traigo consumibles
-            cargarConsumibles();
+            Utils.cargarConsumibles(listConsumibles);
             precioConsumible.Text = "0";
-        }
-
-        private void cargarConsumibles()
-        {
-            //creo comando para traer consumibles
-            SqlCommand cmd = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Consumible" ,Globals.conexionGlobal);
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            listConsumibles.Items.Clear();
-
-            while (reader.Read())
-            {
-                listConsumibles.Items.Add((reader["descripcion"]).ToString().Trim());
-            }
-
-            reader.Close();
-            return;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -215,12 +198,7 @@ namespace FrbaHotel.RegistrarConsumible
 
         private void txtCodigoReserva_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Textbox solo acepta números
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Utils.txtSoloAceptaNumeros(txtCodigoReserva, sender, e);
         }
     }
 }

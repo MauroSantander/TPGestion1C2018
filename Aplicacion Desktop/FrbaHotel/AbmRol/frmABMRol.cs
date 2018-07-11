@@ -111,7 +111,7 @@ namespace FrbaHotel.AbmRol
                 agregarFuncionalidad.ExecuteNonQuery();
             }
 
-            cargarRoles();
+            Utils.cargarRoles(listRoles);
             MessageBox.Show("Alta realizada correctamente.");
         }
 
@@ -124,38 +124,13 @@ namespace FrbaHotel.AbmRol
         {
             this.CenterToScreen();
             listRoles.SelectedItem = 0;
-            cargarFuncionalidades();
-            cargarRoles();
+            Utils.cargarFuncionalidades(checkListFuncionalidades);
+            Utils.cargarRoles(listRoles);
         }
 
-        public void cargarRoles()
+        public void recargarRoles()
         {
-            SqlCommand cmdBuscarRoles = new SqlCommand("SELECT nombreRol FROM [PISOS_PICADOS].Rol", Globals.conexionGlobal);
-            SqlDataReader reader2 = cmdBuscarRoles.ExecuteReader();
-            listRoles.Items.Clear();
-
-            while (reader2.Read())
-            {
-                listRoles.Items.Add((reader2["nombreRol"]).ToString());
-            }
-
-            reader2.Close();
-            return;
-        }
-
-        public void cargarFuncionalidades()
-        {
-            SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
-            SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
-
-            while (reader.Read())
-            {
-                checkListFuncionalidades.Items.Add((reader["descripcion"]).ToString());
-            }
-
-            reader.Close();
-
-            return;
+            Utils.cargarRoles(listRoles);
         }
 
         private void listRoles_SelectedIndexChanged(object sender, EventArgs e)

@@ -26,8 +26,8 @@ namespace FrbaHotel.AbmHabitacion
             dataGridViewHabitaciones.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             ajustarColumnas();
             cargarBotonModificacion();
-            cargarHoteles();
-            cargarTipos();
+            Utils.cargarHoteles(comboBoxHotel);
+            Utils.cargarTiposDeCamas(comboBoxTipo);
             comboBoxEstado.Items.Add("Vacío");
             comboBoxEstado.Items.Add("Habilitada");
             comboBoxEstado.Items.Add("Deshabilitada");
@@ -38,50 +38,6 @@ namespace FrbaHotel.AbmHabitacion
             comboBoxHotel.SelectedIndex = 0;
             comboBoxUbicacion.SelectedIndex = 0;
             comboBoxTipo.SelectedIndex = 0;
-        }
-
-        private void cargarTipos()
-        {
-            //traigo los tipos para cargar en el filtro
-            comboBoxTipo.Items.Add("Vacío");
-            SqlCommand cmdBuscarTipos = new SqlCommand("SELECT tipoCamas FROM [PISOS_PICADOS].Tipo", Globals.conexionGlobal);
-            SqlDataReader reader = cmdBuscarTipos.ExecuteReader();
-
-            while (reader.Read())
-            {
-                comboBoxTipo.Items.Add((reader["tipoCamas"]).ToString());
-            }
-
-            reader.Close();
-
-            return;
-        }
-
-        private void cargarHoteles()
-        {
-            //traigo los hoteles para cargar el filtro
-            comboBoxHotel.Items.Add("Vacío");
-            SqlCommand cmdBuscarHoteles = new SqlCommand("SELECT nombre, calle, nroCalle, ciudad FROM [PISOS_PICADOS].Hotel", Globals.conexionGlobal);
-            SqlDataReader reader = cmdBuscarHoteles.ExecuteReader();
-
-            while (reader.Read())
-            {
-                if ((reader["nombre"]).ToString() != "")
-                {
-                    comboBoxHotel.Items.Add((reader["nombre"]).ToString());
-                }
-                else
-                {
-                    //si el hotel no tiene nombre, pongo ciudad calle y numero
-                    string item;
-                    item = reader["ciudad"].ToString().Trim() + "-" + reader["calle"].ToString().Trim() + "-" + reader["nroCalle"].ToString().Trim();
-                    comboBoxHotel.Items.Add(item);
-                }
-            }
-
-            reader.Close();
-
-            return;
         }
 
         private void ajustarColumnas()
@@ -260,22 +216,12 @@ namespace FrbaHotel.AbmHabitacion
 
         private void textBoxPiso_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Textbox solo acepta números
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Utils.txtSoloAceptaNumeros(textBoxPiso, sender, e);
         }
 
         private void textBoxNumero_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Textbox solo acepta números
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Utils.txtSoloAceptaNumeros(textBoxNumero, sender, e);
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)

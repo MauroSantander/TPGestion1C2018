@@ -77,7 +77,6 @@ namespace FrbaHotel.AbmRol
         private void frmModificacionRol_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
-
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -157,7 +156,7 @@ namespace FrbaHotel.AbmRol
 
             modificarRol.ExecuteNonQuery();
             MessageBox.Show("Modificación realizada correctamente");
-            instanciaABMRol.cargarRoles();
+            instanciaABMRol.recargarRoles();
             this.Close();
         }
 

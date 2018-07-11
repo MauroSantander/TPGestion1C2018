@@ -193,5 +193,125 @@ namespace FrbaHotel
             return estadoCliente;
 
         }
+
+        public static void cargarHoteles(ComboBox comboBoxHotel)
+        {
+            //cargo los hoteles
+            SqlCommand cmdBuscarHoteles = new SqlCommand("SELECT nombre, calle, nroCalle, ciudad FROM [PISOS_PICADOS].Hotel", Globals.conexionGlobal);
+            SqlDataReader reader = cmdBuscarHoteles.ExecuteReader();
+
+            while (reader.Read())
+            {
+                if ((reader["nombre"]).ToString() != "")
+                {
+                    comboBoxHotel.Items.Add((reader["nombre"]).ToString());
+                }
+                else
+                {
+                    //si no tiene nombre le pongo ciudad, calle y número
+                    string item;
+                    item = reader["ciudad"].ToString().Trim() + "-" + reader["calle"].ToString().Trim() + "-" + reader["nroCalle"].ToString().Trim();
+                    comboBoxHotel.Items.Add(item);
+                }
+            }
+
+            reader.Close();
+
+            return;
+        }
+
+        public static void cargarRegimenes(ComboBox comboBoxRegimen) 
+        {
+            //busco regímenes
+            SqlCommand cmdBuscarRegimenes = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Regimen", Globals.conexionGlobal);
+
+            SqlDataReader reader = cmdBuscarRegimenes.ExecuteReader();
+
+            while (reader.Read())
+            {
+                comboBoxRegimen.Items.Add((reader["descripcion"]).ToString());
+            }
+
+            reader.Close();
+        }
+
+        public static void cargarTiposDeCamas(ComboBox comboBoxTipo)
+        {
+            //traigo los tipos de habitación
+            SqlCommand cmdBuscarTipos = new SqlCommand("SELECT tipoCamas FROM [PISOS_PICADOS].Tipo", Globals.conexionGlobal);
+            SqlDataReader reader = cmdBuscarTipos.ExecuteReader();
+
+            while (reader.Read())
+            {
+                comboBoxTipo.Items.Add((reader["tipoCamas"]).ToString());
+            }
+
+            reader.Close();
+
+            return;
+        }
+
+        public static void txtSoloAceptaNumeros(TextBox textbox, object sender, KeyPressEventArgs e)
+        {
+            //Textbox solo acepta números
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static void cargarUbicacion(ComboBox comboBoxUbicacion)
+        {
+            comboBoxUbicacion.Items.Add("Frente");
+            comboBoxUbicacion.Items.Add("Interno");
+        }
+
+        public static void cargarRoles(ListBox listRoles)
+        {
+            SqlCommand cmdBuscarRoles = new SqlCommand("SELECT nombreRol FROM [PISOS_PICADOS].Rol", Globals.conexionGlobal);
+            SqlDataReader reader2 = cmdBuscarRoles.ExecuteReader();
+            listRoles.Items.Clear();
+
+            while (reader2.Read())
+            {
+                listRoles.Items.Add((reader2["nombreRol"]).ToString());
+            }
+
+            reader2.Close();
+            return;
+        }
+
+        public static void cargarFuncionalidades(CheckedListBox checkListFuncionalidades)
+        {
+            SqlCommand cmdBuscarFuncionalidades = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Funcionalidad", Globals.conexionGlobal);
+            SqlDataReader reader = cmdBuscarFuncionalidades.ExecuteReader();
+
+            while (reader.Read())
+            {
+                checkListFuncionalidades.Items.Add((reader["descripcion"]).ToString());
+            }
+
+            reader.Close();
+
+            return;
+        }
+
+        public static void cargarConsumibles(ListBox listConsumibles)
+        {
+            //creo comando para traer consumibles
+            SqlCommand cmd = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Consumible", Globals.conexionGlobal);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            listConsumibles.Items.Clear();
+
+            while (reader.Read())
+            {
+                listConsumibles.Items.Add((reader["descripcion"]).ToString().Trim());
+            }
+
+            reader.Close();
+            return;
+        }
     }
 }

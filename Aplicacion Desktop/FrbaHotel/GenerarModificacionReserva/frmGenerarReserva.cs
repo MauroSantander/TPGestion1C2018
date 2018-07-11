@@ -21,17 +21,16 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void frmGenerarReserva_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            //agrego item por si no sabe el régimen que quiere
+            comboBoxRegimen.Items.Add("Vacío");
+
             //busco regímenes
-            SqlCommand cmdBuscarRegimenes = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Regimen", Globals.conexionGlobal);
+            Utils.cargarRegimenes(comboBoxRegimen);
+            comboBoxRegimen.SelectedIndex = 0;
 
-            SqlDataReader reader = cmdBuscarRegimenes.ExecuteReader();
-
-            while (reader.Read())
-            {
-                comboBoxRegimen.Items.Add((reader["descripcion"]).ToString());
-            }
-
-            reader.Close();
+            //cargo hoteles
+            Utils.cargarHoteles(comboBoxHotel);
+            comboBoxHotel.SelectedIndex = 0;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)

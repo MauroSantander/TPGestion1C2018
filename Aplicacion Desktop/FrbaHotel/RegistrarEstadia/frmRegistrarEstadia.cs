@@ -25,12 +25,7 @@ namespace FrbaHotel.RegistrarEstadia
 
         private void textBoxCodigoReserva_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Textbox solo acepta números
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Utils.txtSoloAceptaNumeros(textBoxCodigoReserva, sender, e);
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
