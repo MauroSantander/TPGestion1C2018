@@ -232,8 +232,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].yaSeRegistraronConsumibles', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].tieneUnSoloHotel', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].tieneUnSoloHotel;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].hotelDeEstadia', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].hotelDeEstadia;
+IF OBJECT_ID(N'[PISOS_PICADOS].hotelDeReserva', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].hotelDeReserva;
 
 
 /* Procedures*/
@@ -2872,14 +2872,14 @@ RETURN 0
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].hotelDeEstadia (@codigoReserva INT)
+CREATE FUNCTION [PISOS_PICADOS].hotelDeReserva (@codigoReserva INT)
 RETURNS INT 
 AS
 BEGIN
-RETURN (SELECT h.idHotel FROM [PISOS_PICADOS].Estadia AS es 
-JOIN [PISOS_PICADOS].HabitacionxReserva AS hxr ON es.codigoReserva = hxr.codigoReserva
+RETURN (SELECT h.idHotel FROM [PISOS_PICADOS].Reserva AS re 
+JOIN [PISOS_PICADOS].HabitacionxReserva AS hxr ON re.codigoReserva = hxr.codigoReserva
 JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
-WHERE es.codigoReserva = @codigoReserva
+WHERE re.codigoReserva = @codigoReserva
 GROUP BY h.idHotel)
 END
 GO
