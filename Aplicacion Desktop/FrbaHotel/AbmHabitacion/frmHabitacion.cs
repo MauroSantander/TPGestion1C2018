@@ -26,6 +26,8 @@ namespace FrbaHotel.AbmHabitacion
             dataGridViewHabitaciones.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             ajustarColumnas();
             cargarBotonModificacion();
+            comboBoxHotel.Items.Add("Vacío");
+            comboBoxTipo.Items.Add("Vacío");
             Utils.cargarHoteles(comboBoxHotel);
             Utils.cargarTiposDeCamas(comboBoxTipo);
             comboBoxEstado.Items.Add("Vacío");
