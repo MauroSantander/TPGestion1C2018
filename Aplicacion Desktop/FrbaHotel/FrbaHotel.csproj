@@ -129,6 +129,12 @@
     <Compile Include="CancelarReserva\frmCancelarReserva.Designer.cs">
       <DependentUpon>frmCancelarReserva.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerarModificacionReserva\frmModificarReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerarModificacionReserva\frmModificarReserva.Designer.cs">
+      <DependentUpon>frmModificarReserva.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\frmElegirHotel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,11 +155,11 @@
     <Compile Include="frmMenu.Designer.cs">
       <DependentUpon>frmMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenerarModificacionReserva\Form1.cs">
+    <Compile Include="GenerarModificacionReserva\frmGenerarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GenerarModificacionReserva\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GenerarModificacionReserva\frmGenerarReserva.Designer.cs">
+      <DependentUpon>frmGenerarReserva.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\frmListadoEstadistico.cs">
       <SubType>Form</SubType>
@@ -223,6 +229,9 @@
     <EmbeddedResource Include="CancelarReserva\frmCancelarReserva.resx">
       <DependentUpon>frmCancelarReserva.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GenerarModificacionReserva\frmModificarReserva.resx">
+      <DependentUpon>frmModificarReserva.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\frmListadoEstadistico.resx">
       <DependentUpon>frmListadoEstadistico.cs</DependentUpon>
     </EmbeddedResource>
@@ -235,8 +244,8 @@
     <EmbeddedResource Include="frmMenu.resx">
       <DependentUpon>frmMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GenerarModificacionReserva\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="GenerarModificacionReserva\frmGenerarReserva.resx">
+      <DependentUpon>frmGenerarReserva.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\frmLogIn.resx">
       <DependentUpon>frmLogIn.cs</DependentUpon>

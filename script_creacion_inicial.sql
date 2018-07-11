@@ -2922,7 +2922,7 @@ CREATE FUNCTION [PISOS_PICADOS].checkInYaRealizado(@codReserva INT)
 RETURNS INT 
 AS 
 BEGIN
-IF EXISTS (SELECT e.fechaCheckIn FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva) 
+IF EXISTS (SELECT e.fechaCheckIn FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva and fechaCheckIn IS NOT NULL) 
 RETURN 1
 RETURN 0
 END
