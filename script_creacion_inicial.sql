@@ -250,6 +250,12 @@ IF OBJECT_ID(N'[PISOS_PICADOS].MostrarTablaRegimen', N'IF') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].RegistradoCliente', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].RegistradoCliente;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].mostrarConsumibles', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].mostrarConsumibles;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].mostrarHabitaciones', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].mostrarHabitaciones;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2972,6 +2978,39 @@ IF EXISTS (SELECT c.idUsuario FROM [PISOS_PICADOS].Cliente AS c WHERE c.idUsuari
 RETURN 1 
 RETURN 0 
 END 
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].mostrarConsumibles(@codigoReserva INT)
+RETURNS TABLE
+AS
+RETURN 
+( SELECT c.idConsumible AS idConsumible
+,c.descripcion AS Consumible 
+,c.precio AS Precio
+,SUM(exc.cantidad) AS Cantidad
+,c.precio * SUM(exc.cantidad) AS Total
+FROM [PISOS_PICADOS].EstadiaxConsumible AS exc
+JOIN [PISOS_PICADOS].Estadia AS e ON exc.idEstadia = e.idEstadia
+JOIN [PISOS_PICADOS].Consumible AS c ON exc.idConsumible = c.idConsumible
+WHERE e.codigoReserva = @codigoReserva 
+GROUP BY c.idConsumible,c.descripcion,c.precio
+)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].mostrarHabitaciones(@codigoReserva INT)
+RETURNS TABLE
+AS
+RETURN(
+SELECT h.idHabitacion AS IdHabitacion
+,h.numero AS [Numero de Habitacion]
+,t.tipoCamas AS [Tipo de Habitacion]
+,[PISOS_PICADOS].precioHabitacion(t.idTipo,r.codigoRegimen,h.idHotel) AS Precio
+FROM [PISOS_PICADOS].Reserva AS r 
+JOIN [PISOS_PICADOS].HabitacionxReserva AS hxr ON r.codigoReserva = hxr.codigoReserva
+JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
+JOIN [PISOS_PICADOS].Tipo AS t ON h.tipo = t.idTipo
+WHERE r.codigoRegimen = @codigoReserva
+)
 GO
 
 
