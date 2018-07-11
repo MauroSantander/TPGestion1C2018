@@ -10,14 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Mail;
+using System.Globalization;
 
 namespace FrbaHotel.AbmUsuario
 {
     public partial class Admin : Form
     {
-        DataTable dataTable;
+     
         Utils utils = new Utils();
         int idUsrModificar;
+        DataTable dataTable;
+
         public Admin()
         {
             InitializeComponent();
@@ -29,6 +32,7 @@ namespace FrbaHotel.AbmUsuario
 
             this.cargarHoteles();
             this.cargarRoles();
+            this.llenarDataGridView();
 
 
         }
@@ -83,20 +87,19 @@ namespace FrbaHotel.AbmUsuario
             chequearSiHayCamposIncompletos();
             if (!validarEmail(mail.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (checkedListBoxRoles.CheckedItems.Count < 1) { MessageBox.Show("Seleccione Rol/es", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                
+            if (checkedListHoteles.CheckedItems.Count < 1) { MessageBox.Show("Seleccione Hotel/es", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                  
             String user = username.Text;
-            using (SqlConnection cnn = Globals.conexionGlobal)
-            {
-
+            
                 string query = "Select COUNT(*) from [PISOS_PICADOS].Empleado where  usuario= @user";
 
-                SqlCommand cmd = new SqlCommand(query, cnn);
+                SqlCommand cmd = new SqlCommand(query, Globals.conexionGlobal);
 
                 cmd.Parameters.AddWithValue("@user", user);
                 int countNombreUsr = Convert.ToInt32(cmd.ExecuteScalar());
 
                 string queryMail = "Select COUNT(*) from [PISOS_PICADOS].Usuario where  mail= @mail";
-                SqlCommand cmdMail = new SqlCommand(queryMail, cnn);
+                SqlCommand cmdMail = new SqlCommand(queryMail, Globals.conexionGlobal);
 
                 cmdMail.Parameters.AddWithValue("@mail", mail.Text);
                 int countMail = Convert.ToInt32(cmdMail.ExecuteScalar());
@@ -104,7 +107,7 @@ namespace FrbaHotel.AbmUsuario
                 SqlCommand verificarId = new SqlCommand("SELECT [PISOS_PICADOS].estaRepetido(@tipo,@numero)", Globals.conexionGlobal);
                 verificarId.Parameters.AddWithValue("@tipo", comboBoxTipo.Text);
                 verificarId.Parameters.AddWithValue("@numero", numDoc.Text);
-                if ((bool)verificarId.ExecuteScalar()) { MessageBox.Show("Tipo y Nro de Identificación existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                //if (((int)verificarId.ExecuteScalar()) == 1) { MessageBox.Show("Tipo y Nro de Identificación existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (countNombreUsr > 0) { MessageBox.Show("Nombre de Usuario existente, escriba otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (countMail > 0) { MessageBox.Show("Mail existente, escriba otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 
@@ -135,10 +138,12 @@ namespace FrbaHotel.AbmUsuario
                     comandoAltaUsuario.Parameters.Add("@numeroDocumento", SqlDbType.Int);
                     comandoAltaUsuario.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
                     comandoAltaUsuario.Parameters.Add("@estado", SqlDbType.Bit);
+
+                    string unRol = checkedListBoxRoles.CheckedItems[0].ToString();
                     //cargar valores
                     comandoAltaUsuario.Parameters["@username"].Value = username.Text;
                     comandoAltaUsuario.Parameters["@password"].Value = pass.Text;
-                    
+                    comandoAltaUsuario.Parameters["@rol"].Value = unRol;
                     comandoAltaUsuario.Parameters["@nombre"].Value = nombre.Text;
                     comandoAltaUsuario.Parameters["@apellido"].Value = apellido.Text;
                     comandoAltaUsuario.Parameters["@mail"].Value = mail.Text;
@@ -153,55 +158,38 @@ namespace FrbaHotel.AbmUsuario
                     comandoAltaUsuario.Parameters["@estado"].Value = 1;
 
                     comandoAltaUsuario.ExecuteReader();
-                    SqlCommand obtenerIdNuevo = new SqlCommand("SELECT [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario,@contraseña)", Globals.conexionGlobal);
-                    obtenerIdNuevo.Parameters["@username"].Value = username.Text;
-                    obtenerIdNuevo.Parameters["@password"].Value = pass.Text;
-                    int idNuevoUsr=(int) obtenerIdNuevo.ExecuteScalar();
-                    
 
+                    SqlCommand obtenerIdNuevo = new SqlCommand("SELECT [PISOS_PICADOS].obtenerIDUsuarioEmpleado(@usuario,@contrasena)", Globals.conexionGlobal);
+                    obtenerIdNuevo.Parameters.AddWithValue("@usuario", username.Text);
+                    obtenerIdNuevo.Parameters.AddWithValue("@contrasena", pass.Text);
+                    int idNuevoUsr=(int) obtenerIdNuevo.ExecuteScalar();
 
                 // CARGA DE ROLES
 
-                    for (int i = 0; i <= checkedListBoxRoles.CheckedItems.Count- 1; i++)
-                    {
-                       string nombreRol= checkedListBoxRoles.CheckedItems[i].ToString();
-                       
-                    SqlCommand agregarRol = new SqlCommand("[PISOS_PICADOS].agregarRolAUsuario", Globals.conexionGlobal);
-                    agregarRol.CommandType = CommandType.StoredProcedure;
-                    agregarRol.Parameters.Add("@idUsuario", SqlDbType.Int);
-                    agregarRol.Parameters["@idUsuario"].Value = idNuevoUsr;
-                    agregarRol.Parameters.Add("@nombreRol", SqlDbType.Int);
-                    agregarRol.Parameters["@nombreRol"].Value = nombreRol;
-                    agregarRol.ExecuteNonQuery();
-                       
+                   
 
-                    }
-
-                    for (int i = 0; i <= checkedListBoxRoles.CheckedItems.Count - 1; i++)
+                    for (int i = 1; i < (int)checkedListBoxRoles.CheckedItems.Count ; i++)
                     {
                         string nombreRol = checkedListBoxRoles.CheckedItems[i].ToString();
 
                         SqlCommand agregarRol = new SqlCommand("[PISOS_PICADOS].agregarRolAUsuario", Globals.conexionGlobal);
                         agregarRol.CommandType = CommandType.StoredProcedure;
-                        agregarRol.Parameters.Add("@idUsuario", SqlDbType.Int);
-                        agregarRol.Parameters["@idUsuario"].Value = idNuevoUsr;
-                        agregarRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
-                        agregarRol.Parameters["@nombreRol"].Value = nombreRol;
+                        agregarRol.Parameters.AddWithValue("@idUsuario", idNuevoUsr);
+                        agregarRol.Parameters.AddWithValue("@nombreRol", checkedListBoxRoles.CheckedItems[i].ToString());
                         agregarRol.ExecuteNonQuery();
 
 
                     }
 
-                    for (int i = 0; i <= checkedListHoteles.CheckedItems.Count - 1; i++)
+                    for (int i = 0; i <(int)checkedListHoteles.CheckedItems.Count; i++)
                     {
-                        string nombreHotel = checkedListHoteles.CheckedItems[i].ToString();
 
                         SqlCommand agregarHotel = new SqlCommand("[PISOS_PICADOS].agregarHotelAUsuario", Globals.conexionGlobal);
                         agregarHotel.CommandType = CommandType.StoredProcedure;
                         agregarHotel.Parameters.Add("@idUsuario", SqlDbType.Int);
                         agregarHotel.Parameters["@idUsuario"].Value = idNuevoUsr;
                         agregarHotel.Parameters.Add("@nombreHotel", SqlDbType.VarChar);
-                        agregarHotel.Parameters["@nombreHotel"].Value = nombreHotel;
+                        agregarHotel.Parameters["@nombreHotel"].Value =checkedListHoteles.CheckedItems[i].ToString();;
                         agregarHotel.ExecuteNonQuery();
 
                     } 
@@ -223,8 +211,13 @@ namespace FrbaHotel.AbmUsuario
                     nroCalle.ResetText();
                     localidad.ResetText();
                     dateTimePicker1.ResetText();
+                    checkedListHoteles = new CheckedListBox();
+                    checkedListBoxRoles = new CheckedListBox();
+                    
+                    
 
-                }
+
+                
             }
             
 
@@ -233,36 +226,45 @@ namespace FrbaHotel.AbmUsuario
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-            utils.llenarDataGridView(dataGridView1,"Empleado");
 
+            this.llenarDataGridView();
+           
         }
 
-        //Filtro por Username
+        //Filtro
 
         private void button5_Click(object sender, EventArgs e)
         {
-            utils.llenarDataGridView(dataGridView1, "Empleado");
-            DataView DV = new DataView(dataTable);
-            if (!String.IsNullOrEmpty(textBoxUsrNameBorrar.Text))
-            {
-                DV.RowFilter = string.Format("nombre LIKE '%{0}%' ", textBoxUsrNameBorrar.Text);
-                dataGridView1.DataSource = DV;
-            }
-            else { MessageBox.Show("Completar Username"); return; }
-        }
-
-        //Filtro por tipo y nro id
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            utils.llenarDataGridView(dataGridView1, "Empleado");
-            DataView DV = new DataView(dataTable);         
-            if (String.IsNullOrEmpty(textBox1.Text)){ MessageBox.Show("Completar Número Identificación"); return;}
-            if(String.IsNullOrEmpty(comboBox2.SelectedText)){MessageBox.Show("Seleccionar Tipo"); return;}
             
-            DV.RowFilter = string.Format("tipoIdentificacion LIKE '%{0}%' ", comboBox2.SelectedText);
-                DV.RowFilter = string.Format("numeroIdentificacion LIKE %{0}% ", int.Parse(textBox1.Text));
-                dataGridView1.DataSource = DV;
+            this.llenarDataGridView();
+            string cadenaUsuario;
+            string cadenaTipoId;
+            string cadenaNroId;
+            if (textBoxUsrNameBorrar.Text == "") { cadenaUsuario = "e.usuario LIKE '%'"; }
+            else { cadenaUsuario = "e.usuario LIKE '" + textBoxUsrNameBorrar.Text + "'"; };
+
+            if (comboBox2.Text == "" || comboBox2.Text == "Vacío") { cadenaTipoId = "u.tipoIdentificacion LIKE '%'"; }
+            else { cadenaTipoId = "u.tipoIdentificacion LIKE '" + comboBox2.Text + "'"; };
+
+            if (textBox1.Text == "") { cadenaNroId = "u.numeroIdentificacion LIKE '%'"; }
+            else { cadenaNroId = "u.numeroIdentificacion LIKE '" + textBox1.Text + "'"; };
+
+
+
+            string compuesto = "select e.idUsuario 'Id',e.usuario 'Usuario', e.contrasena 'Contraseña', u.nombre 'Nombre', u.apellido 'Apellido',u.mail 'Mail',u.telefono 'Teléfono',u.calle 'Calle',u.nroCalle 'Nro Calle',u.localidad 'Localidad',u.pais 'Pais',u.tipoIdentificacion 'Tipo id',u.numeroIdentificacion 'Nro Identificación',u.fechaNacimiento 'Fecha Nacimiento' from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) WHERE u.estado = 1 AND  " + cadenaUsuario
+               + " AND " + cadenaTipoId + " AND " + cadenaNroId;
+
+
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+
+            SqlDataAdapter adapter = new SqlDataAdapter(compuesto, Globals.conexionGlobal);
+            adapter.Fill(dataTable);
+            dataGridView1.DataSource = dataTable;
+         
+           
+
+        
 
         }
 
@@ -295,7 +297,7 @@ namespace FrbaHotel.AbmUsuario
             {
                 if (dataGridView1.CurrentRow == null) return;
 
-                int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["idUsuario"].Value);
+                int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
 
                 using (SqlConnection cnn = Globals.conexionGlobal)
                 {
@@ -304,16 +306,22 @@ namespace FrbaHotel.AbmUsuario
                     SqlCommand comandoBajaUsuario = new SqlCommand(cadenaBajaUsuario, Globals.conexionGlobal);
                     comandoBajaUsuario.CommandType = CommandType.StoredProcedure;
 
-                    comandoBajaUsuario.Parameters.AddWithValue("@id", id);
-                    comandoBajaUsuario.ExecuteReader().Close();
-                    MessageBox.Show("Usuario eliminado correctamente");
+                    comandoBajaUsuario.Parameters.AddWithValue("@idUsuario", id);
+                    comandoBajaUsuario.ExecuteReader();
+                    MessageBox.Show("Usuario dado de baja correctamente");
                     
                 }
 
                 dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+                this.limpiarFiltros();
             }
         }
 
+        private void limpiarFiltros() {
+            textBoxUsrNameBorrar.Text = "";
+            textBox1.Text = "";
+            comboBox2.Text = "Vacío";
+        }
 
 //----------------------------------------------------------------------------------------------------
 //----------------TAB Actualizar----------------------------------------------------------------------
@@ -330,7 +338,7 @@ namespace FrbaHotel.AbmUsuario
         {
             chequearSiHayCamposIncompletosUPD();
             if (!validarEmail(mailUPD.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            
+               
                 
             String cadenaAltaUsuario = "PISOS_PICADOS.modificarEmpleado";
 
@@ -341,8 +349,6 @@ namespace FrbaHotel.AbmUsuario
             comandoAltaUsuario.Parameters.Add("@idAutor", SqlDbType.Int);
             comandoAltaUsuario.Parameters.Add("@idUsuario", SqlDbType.Int);
             comandoAltaUsuario.Parameters.Add("@username", SqlDbType.VarChar);
-            comandoAltaUsuario.Parameters.Add("@password", SqlDbType.VarChar);
-            comandoAltaUsuario.Parameters.Add("@rol", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@nombre", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@apellido", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@mail", SqlDbType.VarChar);
@@ -359,7 +365,6 @@ namespace FrbaHotel.AbmUsuario
             comandoAltaUsuario.Parameters["@idAutor"].Value = Globals.idUsuarioSesion;
             comandoAltaUsuario.Parameters["@idUsuario"].Value = idUsrModificar;
             comandoAltaUsuario.Parameters["@username"].Value = usernameUPD.Text;
-            comandoAltaUsuario.Parameters["@password"].Value = passUPD.Text;
             comandoAltaUsuario.Parameters["@nombre"].Value = nombreUPD.Text;
             comandoAltaUsuario.Parameters["@apellido"].Value = apellidoUPD.Text;
             comandoAltaUsuario.Parameters["@mail"].Value = mailUPD.Text;
@@ -367,14 +372,20 @@ namespace FrbaHotel.AbmUsuario
             comandoAltaUsuario.Parameters["@calle"].Value = calleUPD.Text;
             comandoAltaUsuario.Parameters["@numeroCalle"].Value = int.Parse(nroUPD.Text);
             comandoAltaUsuario.Parameters["@localidad"].Value = localidadUPD.Text;
-            comandoAltaUsuario.Parameters["@pais"].Value = comboBoxPaisUPD.SelectedText;
-            comandoAltaUsuario.Parameters["@tipoDocumento"].Value = comboBoxTipoUPD.SelectedText;
+            comandoAltaUsuario.Parameters["@pais"].Value = comboBoxPaisUPD.Text;
+            comandoAltaUsuario.Parameters["@tipoDocumento"].Value = comboBoxTipoUPD.Text;
             comandoAltaUsuario.Parameters["@numeroDocumento"].Value = int.Parse(numIdUPD.Text);
             comandoAltaUsuario.Parameters["@fechaNacimiento"].Value = dateTimePickerUPD.Value.ToString("yyyy-MM-dd") ;
 
-
-            comandoAltaUsuario.ExecuteReader();
-
+            try
+            {
+                comandoAltaUsuario.ExecuteReader();
+                this.llenarDataGridView();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("No se pudo modificar");
+            }
 
             /// AGREGAR  ROLES Y HOTELES QUE EL USUARIO NO TIENE
             /// 
@@ -446,7 +457,6 @@ namespace FrbaHotel.AbmUsuario
 
             //reinicio de los textbox
             usernameUPD.ResetText();
-            passUPD.ResetText();
             nombreUPD.ResetText();
             apellidoUPD.ResetText();
             comboBoxTipoUPD.ResetText();
@@ -469,59 +479,66 @@ namespace FrbaHotel.AbmUsuario
             try
             {
 
-                 if (!String.IsNullOrEmpty(textBoxUsrAct.Text))
-                 {
-                     SqlConnection conexion = Globals.conexionGlobal;
+                if (!String.IsNullOrEmpty(textBoxUsrAct.Text))
+                {
+                   
 
-                     String usuarioNombre = textBoxUsrAct.Text;
-                    
+                    String usuarioNombre = textBoxUsrAct.Text;
 
 
-                     //Trae id por nombre de usuario
 
-                     SqlCommand traerUsr = new SqlCommand("SELECT idUsuario FROM [PISOS_PICADOS].Empleado WHERE usuario=@nombre", conexion);
-                     traerUsr.Parameters.AddWithValue("@nombre", usuarioNombre);
-                     SqlDataReader dr = traerUsr.ExecuteReader();
-                     
+                    //Trae id por nombre de usuario
 
-                     if (dr.Read() == true)
-                     {
-                         //Completa usrName y Pass
+                    SqlCommand traerUsr = new SqlCommand("SELECT * FROM [PISOS_PICADOS].Empleado WHERE usuario=@nombre", Globals.conexionGlobal);
+                    traerUsr.Parameters.AddWithValue("@nombre", usuarioNombre);
+                    SqlDataReader dr = traerUsr.ExecuteReader();
 
-                         usernameUPD.Text = dr["usuario"].ToString();
-                         passUPD.Text=dr["contraseña"].ToString();
-                         //TRAE DATOS USUARIO CON ESE ID
-            
-                         String id = dr["idUsuario"].ToString();
-                         idUsrModificar = Convert.ToInt32(id);
-                         traerUsr = new SqlCommand("SELECT nombre,apellido,mail,telefono,calle,nroCalle,localidad,pais,tipoIdentificacion,numeroIdentificacion,fechaNacimiento FROM [PISOS_PICADOS].Usuario WHERE idUsuario=@id", conexion);
-                         traerUsr.Parameters.Add("@id", SqlDbType.Int).Value = Convert.ToInt32(id);
-                         SqlDataReader dr2 = traerUsr.ExecuteReader();
 
-                         if (dr2.Read() == true)
-                         {
-                           nombreUPD.Text=dr2["nombre"].ToString();
-                           apellidoUPD.Text=dr2["apellido"].ToString();
-                           mailUPD.Text = dr2["mail"].ToString();
-                           telUPD.Text = dr2["telefono"].ToString();
-                           calleUPD.Text = dr2["calle"].ToString();
-                           nroUPD.Text = dr2["nroCalle"].ToString();
-                           localidadUPD.Text = dr2["localidad"].ToString();
-                           comboBoxPaisUPD.SelectedText= dr2["pais"].ToString();
-                           comboBoxTipoUPD.SelectedText=dr2["tipoIdentificacion"].ToString();
-                           numIdUPD.Text=dr2["nroIdentificacion"].ToString();
-                           String fecha=  dr2["fechaNacimiento"].ToString();
-                           dateTimePickerUPD.Value= DateTime.Parse(fecha);
-                           cargarCheckedListBoxHoteles(idUsrModificar);
-                           cargarCheckedListBoxRoles(idUsrModificar);
+                    if (dr.Read() == true)
+                    {
+                        //Completa usrName
 
-                         }
+                        usernameUPD.Text = dr["usuario"].ToString();
+                        //TRAE DATOS USUARIO CON ESE ID
 
+                        String id = dr["idUsuario"].ToString();
+                        idUsrModificar = Convert.ToInt32(id);
                         
-                     }
-                    
-              
-            }}
+                    }
+
+                    dr.Close();
+                    cargarCheckedListBoxHoteles(idUsrModificar);
+                    cargarCheckedListBoxRoles(idUsrModificar); 
+
+                        SqlCommand traerUsrInfo = new SqlCommand("SELECT nombre,apellido,mail,telefono,calle,nroCalle,localidad,tipoIdentificacion,numeroIdentificacion,fechaNacimiento,nombrePais FROM [PISOS_PICADOS].Usuario join [PISOS_PICADOS].Pais on (pais=idPais) WHERE idUsuario=@id", Globals.conexionGlobal);
+                        traerUsrInfo.Parameters.AddWithValue("@id",idUsrModificar);
+                        SqlDataReader dr2 = traerUsrInfo.ExecuteReader();
+
+                        if (dr2.Read() == true)
+                        {
+                            nombreUPD.Text = dr2["nombre"].ToString();
+                            apellidoUPD.Text = dr2["apellido"].ToString();
+                            mailUPD.Text = dr2["mail"].ToString();
+                            telUPD.Text = dr2["telefono"].ToString();
+                            calleUPD.Text = dr2["calle"].ToString();
+                            nroUPD.Text = dr2["nroCalle"].ToString();
+                            localidadUPD.Text = dr2["localidad"].ToString();
+                            comboBoxTipoUPD.Text = dr2["tipoIdentificacion"].ToString();
+                            numIdUPD.Text = dr2["numeroIdentificacion"].ToString();
+                            String fecha = dr2["fechaNacimiento"].ToString();
+                            dateTimePickerUPD.Text = fecha;
+                            comboBoxPaisUPD.Text = dr2["nombrePais"].ToString();
+                        }
+                           
+                          
+                        
+                        dr2.Close();
+                        
+                        
+
+                          
+                }
+            }
             catch (Exception exc)
             {
                 MessageBox.Show("No se encontró Usuario");
@@ -549,71 +566,46 @@ namespace FrbaHotel.AbmUsuario
   //CHEQUEOS TAB NUEVO USR------------------------------------------------------------------------------------------------
 
    
-        private void numDoc_KeyPress(object sender, KeyPressEventArgs e)
+        private void numeros_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
             else{e.Handled = true;}
         }
 
-        private void textBoxTel_KeyPress(object sender, KeyPressEventArgs e)
+      
+        private void textos_KeyPress(object sender, KeyPressEventArgs e)
         {
             {
-                if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void textNroCalle_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
                 else { e.Handled = true; }
             }
         }
 
-        private void usernameText_KeyPress(object sender, KeyPressEventArgs e) {
+        private void textoYNros_KeyPress(object sender, KeyPressEventArgs e) {
             {
                 if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+        private void textosYespacios_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+        private void textoNrosYespacios_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
                 else { e.Handled = true; }
             }
         }
         
-        private void pass_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-            {
-                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-
-        }
-        private void nombreBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void apellido_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void textBoxCalle_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void textBoxLoc_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
+        
+       
         private void chequearSiHayCamposIncompletos() {
             if (String.IsNullOrEmpty(tel.Text)
                || String.IsNullOrEmpty(numDoc.Text)
@@ -622,12 +614,12 @@ namespace FrbaHotel.AbmUsuario
                || String.IsNullOrEmpty(pass.Text)
                || String.IsNullOrEmpty(nombre.Text)
                || String.IsNullOrEmpty(apellido.Text)
-               || String.IsNullOrEmpty(comboBoxTipo.SelectedText)
+               || String.IsNullOrEmpty(comboBoxTipo.Text)
                || String.IsNullOrEmpty(mail.Text)
                || String.IsNullOrEmpty(calle.Text)
                || String.IsNullOrEmpty(localidad.Text)
                || ((dateTimePicker1.Checked) == false)
-               || String.IsNullOrEmpty(comboBoxPais.SelectedText)
+               || String.IsNullOrEmpty(comboBoxPais.Text)
               
                 )
             {
@@ -638,93 +630,42 @@ namespace FrbaHotel.AbmUsuario
 
    //------------------------------------------------------------------------------------------------------------------------
    //CHEQUEOS TAB BAJA------------------------------------------------------------------------------------------------
+        private void llenarDataGridView()
+        {
+            try
+            {
+
+                SqlDataAdapter adapter = new SqlDataAdapter("select e.idUsuario 'Id',e.usuario 'Usuario', e.contrasena 'Contraseña', u.nombre 'Nombre', u.apellido 'Apellido',u.mail 'Mail',u.telefono 'Teléfono',u.calle 'Calle',u.nroCalle 'Nro Calle',u.localidad 'Localidad',u.pais 'Pais',u.tipoIdentificacion 'Tipo id',u.numeroIdentificacion 'Nro Identificación',u.fechaNacimiento 'Fecha Nacimiento' from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1", Globals.conexionGlobal);
+                dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                dataGridView1.DataSource = dataTable;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("No se pudo llenar el DataGridView");
+            }
+        }
 
 
 
   //------------------------------------------------------------------------------------------------------------------------
   //CHEQUEOS TAB MODIFICAR------------------------------------------------------------------------------------------------
      
-        private void numIdUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-            else { e.Handled = true; }
-        }
-
-        private void telUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void nroUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-
-        private void usernameUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-
-        private void passUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-            {
-                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-
-        }
-        private void nombreUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void apellidoUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void calleUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
-        private void localidadUPD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
-        }
+       
         private void chequearSiHayCamposIncompletosUPD()
         {
             if (String.IsNullOrEmpty(telUPD.Text)
                || String.IsNullOrEmpty(numIdUPD.Text)
                || String.IsNullOrEmpty(nroUPD.Text)
                || String.IsNullOrEmpty(usernameUPD.Text)
-               || String.IsNullOrEmpty(passUPD.Text)
                || String.IsNullOrEmpty(nombreUPD.Text)
                || String.IsNullOrEmpty(apellidoUPD.Text)
-               || String.IsNullOrEmpty(comboBoxTipoUPD.SelectedText)
+               || String.IsNullOrEmpty(comboBoxTipoUPD.Text)
                || String.IsNullOrEmpty(mailUPD.Text)
                || String.IsNullOrEmpty(calleUPD.Text)
                || String.IsNullOrEmpty(localidadUPD.Text)
                || ((dateTimePickerUPD.Checked) == false)
-               || String.IsNullOrEmpty(comboBoxPaisUPD.SelectedText)
+               || String.IsNullOrEmpty(comboBoxPaisUPD.Text)
                 )
             {
                 MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -736,24 +677,27 @@ namespace FrbaHotel.AbmUsuario
         private void cargarCheckedListBoxHoteles(int idUsrModificar)
         {
 
-            SqlCommand cmdBuscarHotelesUsuario = new SqlCommand("select H.nombre from [PISOS_PICADOS].EmpleadoxHotel E join [PISOS_PICADOS].Hotel H on (E.idHotel = H.idHotel) WHERE E.idUsuario = @idUsuario", Globals.conexionGlobal);
-            cmdBuscarHotelesUsuario.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsrModificar;
+            vaciarCheckedList(checkedListBoxHotelesUPD);
+            vaciarCheckedList(checkedListBoxHotelesUPDNo);
+
+            SqlCommand cmdBuscarHotelesUsuario = new SqlCommand("select H.nombre 'NombreHotel' from [PISOS_PICADOS].EmpleadoxHotel E join [PISOS_PICADOS].Hotel H on (E.idHotel = H.idHotel) WHERE E.idUsuario = @idUsuario", Globals.conexionGlobal);
+            cmdBuscarHotelesUsuario.Parameters.AddWithValue("@idUsuario", idUsrModificar);
             SqlDataReader reader = cmdBuscarHotelesUsuario.ExecuteReader();
 
             while (reader.Read())
             {
-                checkedListBoxHotelesUPD.Items.Add((reader["H.nombre"]).ToString());
+                checkedListBoxHotelesUPD.Items.Add((reader["NombreHotel"]).ToString());
             }
 
             reader.Close();
 
             SqlCommand cmdBuscarHotelesNoUsuario = new SqlCommand("select nombre from [PISOS_PICADOS].Hotel  WHERE nombre  not in (select H.nombre from [PISOS_PICADOS].EmpleadoxHotel E join [PISOS_PICADOS].Hotel H on (E.idHotel = H.idHotel) WHERE E.idUsuario = @idUsuario)", Globals.conexionGlobal);
-            cmdBuscarHotelesNoUsuario.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsrModificar;
+            cmdBuscarHotelesNoUsuario.Parameters.AddWithValue("@idUsuario", idUsrModificar);
             SqlDataReader reader2 = cmdBuscarHotelesNoUsuario.ExecuteReader();
 
             while (reader2.Read())
             {
-                checkedListBoxHotelesUPDNo.Items.Add((reader["nombre"]).ToString());
+                checkedListBoxHotelesUPDNo.Items.Add((reader2["nombre"]).ToString());
             }
 
             reader2.Close();
@@ -763,25 +707,26 @@ namespace FrbaHotel.AbmUsuario
 
         private void cargarCheckedListBoxRoles(int idModificar)
         {
+           
 
-            SqlCommand cmdBuscarHotelesUsuario = new SqlCommand("select R.nombreRol from [PISOS_PICADOS].RolxUsuario U join [PISOS_PICADOS].Rol R on (R.idRol = U.idRol) WHERE U.idUsuario = @idUsuario", Globals.conexionGlobal);
-            cmdBuscarHotelesUsuario.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idModificar;
-            SqlDataReader reader = cmdBuscarHotelesUsuario.ExecuteReader();
+            SqlCommand cmdBuscarRolesUsuario = new SqlCommand("select distinct (R.nombreRol) 'nomRol' from [PISOS_PICADOS].RolxUsuario U join [PISOS_PICADOS].Rol R on (R.idRol = U.idRol) WHERE U.idUsuario = @idUsuario", Globals.conexionGlobal);
+            cmdBuscarRolesUsuario.Parameters.AddWithValue("@idUsuario", idModificar);
+            SqlDataReader reader3 = cmdBuscarRolesUsuario.ExecuteReader();
 
-            while (reader.Read())
+            while (reader3.Read())
             {
-                checkedListBoxHotelesUPD.Items.Add((reader["R.nombreRol"]).ToString());
+                checkedListBoxRolesUPD.Items.Add((reader3["nomRol"]).ToString());
             }
 
-            reader.Close();
+            reader3.Close();
 
-            SqlCommand cmdBuscarHotelesNoUsuario = new SqlCommand("select nombre from [PISOS_PICADOS].Rol  WHERE nombre  not in (select R.nombreRol from [PISOS_PICADOS].RolxUsuario U join [PISOS_PICADOS].Rol R on (R.idRol = U.idRol) WHERE U.idUsuario = @idUsuario)", Globals.conexionGlobal);
-            cmdBuscarHotelesNoUsuario.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idModificar;
-            SqlDataReader reader2 = cmdBuscarHotelesNoUsuario.ExecuteReader();
+            SqlCommand cmdBuscarRolesNoUsuario = new SqlCommand("select distinct (nombreRol) 'nomRol' from [PISOS_PICADOS].Rol  WHERE nombreRol  not in (select distinct(nombreRol) from [PISOS_PICADOS].RolxUsuario U join [PISOS_PICADOS].Rol R on (R.idRol = U.idRol) WHERE U.idUsuario = @idUsuario)", Globals.conexionGlobal);
+            cmdBuscarRolesNoUsuario.Parameters.AddWithValue("@idUsuario", idModificar);
+            SqlDataReader reader2 = cmdBuscarRolesNoUsuario.ExecuteReader();
 
             while (reader2.Read())
             {
-                checkedListBoxHotelesUPDNo.Items.Add((reader["nombre"]).ToString());
+                checkedListBoxRolesUPDNo.Items.Add((reader2["nomRol"]).ToString());
             }
 
             reader2.Close();
@@ -797,9 +742,9 @@ namespace FrbaHotel.AbmUsuario
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-       
 
-       
+
+
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
         {
@@ -816,14 +761,24 @@ namespace FrbaHotel.AbmUsuario
             nroCalle.ResetText();
             localidad.ResetText();
             dateTimePicker1.ResetText();
-            checkedListHoteles = new CheckedListBox();
-            checkedListBoxRoles = new CheckedListBox();
-        }
+            this.vaciarCheckedList(checkedListBoxRoles);
+            this.vaciarCheckedList(checkedListHoteles);
 
+            
+        }
+            
+
+        private void vaciarCheckedList(CheckedListBox clb) 
+        {   
+            for (int i = 0; i < clb.Items.Count; i++)
+            {
+                clb.Items.RemoveAt(i);
+            }
+
+        }
         private void buttonLimpiarUPD_Click(object sender, EventArgs e)
         {
             usernameUPD.ResetText();
-            passUPD.ResetText();
             nombreUPD.ResetText();
             apellidoUPD.ResetText();
             comboBoxTipoUPD.ResetText();
@@ -835,15 +790,15 @@ namespace FrbaHotel.AbmUsuario
             nroUPD.ResetText();
             localidadUPD.ResetText();
             dateTimePickerUPD.ResetText();
-            checkedListBoxHotelesUPD = new CheckedListBox();
-            checkedListBoxHotelesUPDNo = new CheckedListBox();
-            checkedListBoxRolesUPD = new CheckedListBox();
-            checkedListBoxRolesUPDNo = new CheckedListBox();
+            this.vaciarCheckedList(checkedListBoxHotelesUPD);
+            this.vaciarCheckedList(checkedListBoxHotelesUPDNo);
+            this.vaciarCheckedList(checkedListBoxRolesUPD);
+            this.vaciarCheckedList(checkedListBoxRolesUPDNo);
         }
 
         private void buttonRecargarTabla_Click(object sender, EventArgs e)
         {
-            utils.mostrarUsuarios(dataGridView1);
+            this.llenarDataGridView();
         }
     }
 }
