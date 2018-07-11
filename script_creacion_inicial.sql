@@ -242,7 +242,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].checkInYaRealizado', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].checkOutYaRealizado', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
+	DROP FUNCTION [PISOS_PICADOS].checkOutYaRealizado;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -2940,10 +2940,6 @@ RETURN 1
 RETURN 0
 END
 GO
-
-
-
-
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
