@@ -323,8 +323,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].quitarConsumible', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].registrarReserva', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].registrarReserva;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].EliminarReservasNoEfectivizada', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada;
+IF OBJECT_ID(N'[PISOS_PICADOS].EliminarReservasNoEfectivizadas', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizadas;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].registrarCheckIn', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].registrarCheckIn;
@@ -3885,7 +3885,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada @fechaActual DATE
+CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizadas @fechaActual DATE
 AS
 BEGIN
 	UPDATE es
