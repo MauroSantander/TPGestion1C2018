@@ -43,9 +43,31 @@ namespace FrbaHotel.RegistrarEstadia
             //chequeos
             int verificacion = 1;
 
+            //verifico si el usuario tiene permiso para tocar esta estadía
+            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+            int hotelDeLaEstadia;
+            try
+            {
+                hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+            }
+            catch
+            {
+                //si rompe es porque no existe la estadia
+                MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (textBoxCodigoReserva.Text == "")
             {
                 MessageBox.Show("Ingrese el código de la reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (hotelDeLaEstadia != Globals.idHotelUsuario)
+            {
+                MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 verificacion = 0;
             }
 
@@ -197,15 +219,32 @@ namespace FrbaHotel.RegistrarEstadia
             //chequeos
             int verificacion = 1;
 
+            //verifico si el usuario tiene permiso para tocar esta estadía
+            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+            int hotelDeLaEstadia;
+            try
+            {
+                hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+            }
+            catch
+            {
+                //si rompe es porque no existe la estadia
+                MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (textBoxCodigoReserva.Text == "")
             {
                 MessageBox.Show("Ingrese el código de la reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 verificacion = 0;
             }
 
-            if (verificacion == 0)
+            if (hotelDeLaEstadia != Globals.idHotelUsuario)
             {
-                return;
+                MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
             }
 
             //chequeo estado de la reserva
@@ -220,20 +259,20 @@ namespace FrbaHotel.RegistrarEstadia
             if (estadoReserva == 3)
             {
                 MessageBox.Show("La reserva ya fue efectivizada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                verificacion = 0;
             }
             //reservas canceladas
             if (estadoReserva == 2 || estadoReserva == 4)
             {
                 MessageBox.Show("La reserva se encuentra cancelada", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                verificacion = 0;
             }
 
             //reservas inexistentes
             if (estadoReserva == 0)
             {
                 MessageBox.Show("La reserva no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                verificacion = 0;
             }
 
             //verifico si se hizo check-in previamente
@@ -246,7 +285,7 @@ namespace FrbaHotel.RegistrarEstadia
             if (yaSeRealizoCheckIn == 0)
             {
                 MessageBox.Show("El check-in nunca fué realizado para esta reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                verificacion = 0;
             }
 
             //chequeo que check-out ya no se haya realizado
@@ -259,6 +298,11 @@ namespace FrbaHotel.RegistrarEstadia
             if (yaSeRealizoCheckOut == 1)
             {
                 MessageBox.Show("El check-out ya fue realizado sobre esta reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (verificacion == 0)
+            {
                 return;
             }
 
