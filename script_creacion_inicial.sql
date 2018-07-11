@@ -3916,7 +3916,16 @@ BEGIN
 
 	DELETE exc
 	FROM [PISOS_PICADOS].EstadiaxConsumible AS exc
-	WHERE exc.idEstadia in (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+	WHERE exc.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+
+	DELETE rf
+	FROM [PISOS_PICADOS].RenglonFactura AS rf JOIN [PISOS_PICADOS].Factura AS fac
+	ON rf.numeroFactura = fac.numeroFactura
+	WHERE fac.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+
+	DELETE f
+	FROM [PISOS_PICADOS].Factura AS f
+	WHERE f.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
 
 	DELETE es
 	FROM [PISOS_PICADOS].Estadia AS es
