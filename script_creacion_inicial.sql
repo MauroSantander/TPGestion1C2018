@@ -2901,7 +2901,7 @@ RETURN 0
 END
 GO
 
-<<<<<<< HEAD
+
 CREATE FUNCTION [PISOS_PICADOS].esElDiaDeInicio (@fecha DATE, @codReserva INT)
 RETURNS INT
 AS
@@ -2987,8 +2987,7 @@ WHERE r.codigoRegimen = @codigoReserva
 )
 GO
 
-=======
->>>>>>> 81affd96b8c305f46653ad5b43b3718c1fea994d
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
