@@ -3907,7 +3907,7 @@ BEGIN
 
 	DELETE exc
 	FROM [PISOS_PICADOS].EstadiaxConsumible AS exc
-	WHERE exc.idEstadia in (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=5)
+	WHERE exc.idEstadia in (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
 
 	DELETE es
 	FROM [PISOS_PICADOS].Estadia AS es
