@@ -238,6 +238,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].hotelDeReserva', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].esElDiaDeInicio', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].esElDiaDeInicio;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].checkInYaRealizado', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2915,6 +2918,17 @@ RETURN 0
 END
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].checkInYaRealizado(@codReserva INT)
+RETURNS INT 
+AS 
+BEGIN
+IF (SELECT e.fechaCheckIn FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva) IS NULL
+RETURN 0
+RETURN 1
+END
+GO
+
+
 
 
 
@@ -3911,7 +3925,8 @@ INSERT INTO [PISOS_PICADOS].Estadia (
 		)
 	VALUES (
 		@codReserva
-		,(SELECT DATEDIFF(DAY,r.fechaInicio,r.fechaFin) FROM [PISOS_PICADOS].Reserva AS r WHERE r.codigoReserva=@codReserva)
+		,(SELECT DATEDIFF(DAY,r.fechaInicio,r.fechaFin) FROM [PISOS_PICADOS].Reserva AS r
+		 WHERE r.codigoReserva=@codReserva)
 		);
 END 
 GO
