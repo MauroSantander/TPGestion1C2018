@@ -1386,6 +1386,18 @@ VALUES ('Pasaporte Repetido')
 INSERT INTO [PISOS_PICADOS].EstadoUsuario
 VALUES ('Mail Repetido')
 
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+VALUES('Efectivo')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+VALUES('Tarjeta De Credito')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+VALUES('Tarjeta De Debitp')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+VALUES('Cheque')
+
 SET IDENTITY_INSERT [PISOS_PICADOS].Usuario ON
 
 INSERT INTO [PISOS_PICADOS].Usuario (
