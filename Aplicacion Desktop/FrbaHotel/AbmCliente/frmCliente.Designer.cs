@@ -31,6 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabCliente = new System.Windows.Forms.TabControl();
             this.Alta = new System.Windows.Forms.TabPage();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.cbPaises = new System.Windows.Forms.ComboBox();
             this.labelPais = new System.Windows.Forms.Label();
             this.Localidad = new System.Windows.Forms.TextBox();
@@ -57,6 +58,7 @@
             this.labelApellido = new System.Windows.Forms.Label();
             this.labelNombre = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnLimpiarModif = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.dataGridViewModificarCliente = new System.Windows.Forms.DataGridView();
             this.btnCancelarModif = new System.Windows.Forms.Button();
@@ -74,6 +76,7 @@
             this.label30 = new System.Windows.Forms.Label();
             this.lblBuscarPor = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnLimpiartab3 = new System.Windows.Forms.Button();
             this.btnCancelarBaja = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -122,6 +125,7 @@
             // Alta
             // 
             this.Alta.BackColor = System.Drawing.Color.Transparent;
+            this.Alta.Controls.Add(this.btnLimpiar);
             this.Alta.Controls.Add(this.cbPaises);
             this.Alta.Controls.Add(this.label1);
             this.Alta.Controls.Add(this.labelPais);
@@ -155,6 +159,16 @@
             this.Alta.TabIndex = 0;
             this.Alta.Text = "Alta";
             this.Alta.Click += new System.EventHandler(this.Alta_Click);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(23, 516);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(87, 28);
+            this.btnLimpiar.TabIndex = 45;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // cbPaises
             // 
@@ -309,9 +323,9 @@
             // 
             // BotonCancelar
             // 
-            this.BotonCancelar.Location = new System.Drawing.Point(396, 506);
+            this.BotonCancelar.Location = new System.Drawing.Point(422, 516);
             this.BotonCancelar.Name = "BotonCancelar";
-            this.BotonCancelar.Size = new System.Drawing.Size(99, 48);
+            this.BotonCancelar.Size = new System.Drawing.Size(87, 28);
             this.BotonCancelar.TabIndex = 14;
             this.BotonCancelar.Text = "Cancelar";
             this.BotonCancelar.UseVisualStyleBackColor = true;
@@ -319,9 +333,9 @@
             // 
             // BotonCrear
             // 
-            this.BotonCrear.Location = new System.Drawing.Point(265, 506);
+            this.BotonCrear.Location = new System.Drawing.Point(309, 516);
             this.BotonCrear.Name = "BotonCrear";
-            this.BotonCrear.Size = new System.Drawing.Size(109, 48);
+            this.BotonCrear.Size = new System.Drawing.Size(87, 28);
             this.BotonCrear.TabIndex = 13;
             this.BotonCrear.Text = "Crear";
             this.BotonCrear.UseVisualStyleBackColor = true;
@@ -410,6 +424,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnLimpiarModif);
             this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Controls.Add(this.dataGridViewModificarCliente);
             this.tabPage2.Controls.Add(this.btnCancelarModif);
@@ -434,6 +449,16 @@
             this.tabPage2.Text = "Modificar";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // btnLimpiarModif
+            // 
+            this.btnLimpiarModif.Location = new System.Drawing.Point(16, 542);
+            this.btnLimpiarModif.Name = "btnLimpiarModif";
+            this.btnLimpiarModif.Size = new System.Drawing.Size(94, 33);
+            this.btnLimpiarModif.TabIndex = 78;
+            this.btnLimpiarModif.Text = "Limpiar";
+            this.btnLimpiarModif.UseVisualStyleBackColor = true;
+            this.btnLimpiarModif.Click += new System.EventHandler(this.btnLimpiarTab2_Click);
             // 
             // label10
             // 
@@ -549,6 +574,7 @@
             this.cmbTipoIdModif.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipoIdModif.FormattingEnabled = true;
             this.cmbTipoIdModif.Items.AddRange(new object[] {
+            "Vacío",
             "DNI",
             "L.E",
             "Carnet Ext.",
@@ -589,6 +615,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnLimpiartab3);
             this.tabPage3.Controls.Add(this.btnCancelarBaja);
             this.tabPage3.Controls.Add(this.label5);
             this.tabPage3.Controls.Add(this.label6);
@@ -611,6 +638,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Baja";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // btnLimpiartab3
+            // 
+            this.btnLimpiartab3.Location = new System.Drawing.Point(16, 542);
+            this.btnLimpiartab3.Name = "btnLimpiartab3";
+            this.btnLimpiartab3.Size = new System.Drawing.Size(94, 33);
+            this.btnLimpiartab3.TabIndex = 75;
+            this.btnLimpiartab3.Text = "Limpiar";
+            this.btnLimpiartab3.UseVisualStyleBackColor = true;
+            this.btnLimpiartab3.Click += new System.EventHandler(this.btnLimpiartab3_Click);
             // 
             // btnCancelarBaja
             // 
@@ -699,6 +736,7 @@
             this.cbTipoId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipoId.FormattingEnabled = true;
             this.cbTipoId.Items.AddRange(new object[] {
+            "Vacío",
             "DNI",
             "L.E",
             "Carnet Ext.",
@@ -856,5 +894,8 @@
         private System.Windows.Forms.Button btnCancelarModif;
         private System.Windows.Forms.DataGridView dataGridViewModificarCliente;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button btnLimpiartab3;
+        private System.Windows.Forms.Button btnLimpiarModif;
     }
 }

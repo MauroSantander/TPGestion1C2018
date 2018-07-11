@@ -242,7 +242,7 @@ IF OBJECT_ID(N'[PISOS_PICADOS].checkInYaRealizado', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].checkOutYaRealizado', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
+	DROP FUNCTION [PISOS_PICADOS].checkOutYaRealizado;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -2941,10 +2941,6 @@ RETURN 0
 END
 GO
 
-
-
-
-
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
@@ -3920,7 +3916,16 @@ BEGIN
 
 	DELETE exc
 	FROM [PISOS_PICADOS].EstadiaxConsumible AS exc
-	WHERE exc.idEstadia in (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+	WHERE exc.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+
+	DELETE rf
+	FROM [PISOS_PICADOS].RenglonFactura AS rf JOIN [PISOS_PICADOS].Factura AS fac
+	ON rf.numeroFactura = fac.numeroFactura
+	WHERE fac.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+
+	DELETE f
+	FROM [PISOS_PICADOS].Factura AS f
+	WHERE f.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
 
 	DELETE es
 	FROM [PISOS_PICADOS].Estadia AS es

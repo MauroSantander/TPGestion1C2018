@@ -13,9 +13,7 @@ namespace FrbaHotel
 {
     class Utils
     {
-        SqlCommand comando;
-        SqlDataReader lector;
-
+     
         SqlDataAdapter adapter;
         DataTable dataTable;
 
@@ -82,6 +80,9 @@ namespace FrbaHotel
             {
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
+            
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
         }
 
         /* public void mostrarFuncionalidadesPara(Rol unRol, DataGridView dgv) 
