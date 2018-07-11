@@ -3891,6 +3891,10 @@ BEGIN
 	INNER JOIN [PISOS_PICADOS].Reserva AS re ON hr.codigoReserva = re.codigoReserva
 	WHERE re.estado = 5
 
+	DELETE exc
+	FROM [PISOS_PICADOS].EstadiaxConsumible AS exc
+	WHERE exc.idEstadia in (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=5)
+
 	DELETE es
 	FROM [PISOS_PICADOS].Estadia AS es
 	WHERE es.estado = 0
