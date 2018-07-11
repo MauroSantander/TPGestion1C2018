@@ -241,6 +241,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].esElDiaDeInicio', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].checkInYaRealizado', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].checkOutYaRealizado', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -2923,6 +2926,16 @@ RETURNS INT
 AS 
 BEGIN
 IF EXISTS (SELECT e.fechaCheckIn FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva and fechaCheckIn IS NOT NULL) 
+RETURN 1
+RETURN 0
+END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].checkOutYaRealizado(@codReserva INT)
+RETURNS INT 
+AS 
+BEGIN
+IF EXISTS (SELECT e.fechaCheckOut FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva and fechaCheckOut IS NOT NULL) 
 RETURN 1
 RETURN 0
 END
