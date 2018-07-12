@@ -129,6 +129,12 @@
     <Compile Include="CancelarReserva\frmCancelarReserva.Designer.cs">
       <DependentUpon>frmCancelarReserva.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerarModificacionReserva\frmModificarReserva.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerarModificacionReserva\frmModificarReserva.Designer.cs">
+      <DependentUpon>frmModificarReserva.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\frmElegirHotel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,11 +155,11 @@
     <Compile Include="frmMenu.Designer.cs">
       <DependentUpon>frmMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenerarModificacionReserva\Form1.cs">
+    <Compile Include="GenerarModificacionReserva\frmGenerarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GenerarModificacionReserva\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GenerarModificacionReserva\frmGenerarReserva.Designer.cs">
+      <DependentUpon>frmGenerarReserva.cs</DependentUpon>
     </Compile>
     <Compile Include="ListadoEstadistico\frmListadoEstadistico.cs">
       <SubType>Form</SubType>
@@ -175,11 +181,11 @@
     <Compile Include="RegistrarConsumible\frmRegistrarConsumible.Designer.cs">
       <DependentUpon>frmRegistrarConsumible.cs</DependentUpon>
     </Compile>
-    <Compile Include="RegistrarEstadia\Form1.cs">
+    <Compile Include="RegistrarEstadia\frmRegistrarEstadia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrarEstadia\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="RegistrarEstadia\frmRegistrarEstadia.Designer.cs">
+      <DependentUpon>frmRegistrarEstadia.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AbmCliente\frmCliente.resx">
       <DependentUpon>frmCliente.cs</DependentUpon>
@@ -223,6 +229,9 @@
     <EmbeddedResource Include="CancelarReserva\frmCancelarReserva.resx">
       <DependentUpon>frmCancelarReserva.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GenerarModificacionReserva\frmModificarReserva.resx">
+      <DependentUpon>frmModificarReserva.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ListadoEstadistico\frmListadoEstadistico.resx">
       <DependentUpon>frmListadoEstadistico.cs</DependentUpon>
     </EmbeddedResource>
@@ -235,8 +244,8 @@
     <EmbeddedResource Include="frmMenu.resx">
       <DependentUpon>frmMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GenerarModificacionReserva\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="GenerarModificacionReserva\frmGenerarReserva.resx">
+      <DependentUpon>frmGenerarReserva.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\frmLogIn.resx">
       <DependentUpon>frmLogIn.cs</DependentUpon>
@@ -252,6 +261,9 @@
     </Compile>
     <EmbeddedResource Include="RegistrarConsumible\frmRegistrarConsumible.resx">
       <DependentUpon>frmRegistrarConsumible.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegistrarEstadia\frmRegistrarEstadia.resx">
+      <DependentUpon>frmRegistrarEstadia.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

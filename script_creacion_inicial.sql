@@ -2928,10 +2928,6 @@ RETURN 0
 END
 GO
 
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 29d6fbb... Merge branch 'master' of https://github.com/orlandoleonardo/TPGestion1C2018
 CREATE FUNCTION [PISOS_PICADOS].esElDiaDeInicio (@fecha DATE, @codReserva INT)
 RETURNS INT
 AS
@@ -3017,10 +3013,6 @@ WHERE r.codigoRegimen = @codigoReserva
 )
 GO
 
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 29d6fbb... Merge branch 'master' of https://github.com/orlandoleonardo/TPGestion1C2018
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)

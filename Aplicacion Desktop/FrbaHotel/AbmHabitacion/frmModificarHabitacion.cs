@@ -39,8 +39,7 @@ namespace FrbaHotel.AbmHabitacion
         {
             //inicializo objetos con datos para modificar
             this.CenterToScreen();
-            comboBoxUbicacion.Items.Add("Frente");
-            comboBoxUbicacion.Items.Add("Interno");
+            Utils.cargarUbicacion(comboBoxUbicacion);
             textBoxNumero.Text = numeroHab.ToString();
             textBoxPiso.Text = pisoHab.ToString();
             if (ubicacionHab == "S")
@@ -173,22 +172,12 @@ namespace FrbaHotel.AbmHabitacion
 
         private void textBoxNumero_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Textbox solo acepta números
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Utils.txtSoloAceptaNumeros(textBoxNumero, sender, e);
         }
 
         private void textBoxPiso_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Textbox solo acepta números
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Utils.txtSoloAceptaNumeros(textBoxPiso, sender, e);
         }
     }
 }
