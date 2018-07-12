@@ -130,8 +130,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacion', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].hotelCumple', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].hotelCumple;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplen', N'IF') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].habitacionesQueCumplen;
+IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplen2', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].habitacionesQueCumplen2;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerHotelDeHabitacion', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion;
@@ -2423,13 +2423,14 @@ BEGIN
 	IF ( @cantCuadru >= (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(4,@idHotel,@fechaInicio ,@fechaFin )))
 	RETURN 4
 	IF ( @cantKing >= (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(5,@idHotel,@fechaInicio ,@fechaFin )))
-	RETURN 5				
+	RETURN 5
+	RETURN 0				
 END
 GO
 
 /*Dado un hotel un tipo de habitacion , una fecha de reserva y una cantidad devuelve el una lista de habitaciones
 que cumplen */
-CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen (
+CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen2 (
 	@tipo INT
 	,@idHotel INT
 	,@fechaReserva DATE
