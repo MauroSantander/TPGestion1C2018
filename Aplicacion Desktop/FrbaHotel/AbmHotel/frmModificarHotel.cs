@@ -26,6 +26,7 @@ namespace FrbaHotel.AbmHotel
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             chequearSiHayCamposIncompletos();
             if (!validarEmail(textBoxMail.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
@@ -73,8 +74,67 @@ namespace FrbaHotel.AbmHotel
             try
             {
                 comandoMod.ExecuteReader();
+                if (checkedListBoxRegimenesAgregar.CheckedItems.Count > 0)
+                {
+                    //agrega regimenes seleccionados 
+                    for (int i = 0; i < checkedListBoxRegimenesAgregar.CheckedItems.Count; i++)
+                    {
+
+                        string nombreRegimen = checkedListBoxRegimenesAgregar.CheckedItems[i].ToString();
+                        SqlCommand GETidRegimen = new SqlCommand("select codigoRegimen from [PISOS_PICADOS].Regimen where descripcion = @nombreRegimen", Globals.conexionGlobal);
+                        GETidRegimen.Parameters.AddWithValue("@nombreRegimen", nombreRegimen);
+                        int idRegimen = (int)GETidRegimen.ExecuteScalar();
+
+                        SqlCommand agregarRegimen = new SqlCommand("[PISOS_PICADOS].agregarRegimen", Globals.conexionGlobal);
+                        agregarRegimen.CommandType = CommandType.StoredProcedure;
+                        agregarRegimen.Parameters.Add("@idHotel", SqlDbType.Int);
+                        agregarRegimen.Parameters["@idHotel"].Value = idHotel;
+                        agregarRegimen.Parameters.Add("@idRegimen", SqlDbType.Int);
+                        agregarRegimen.Parameters["@idRegimen"].Value = idRegimen;
+                        agregarRegimen.ExecuteNonQuery();
+                    }
+                }
+
+
+                String regimenesSinModificar="";
+
+                if (checkedListBoxRegimenes.CheckedItems.Count > 0) 
+                {
+                    
+                    for (int i = 0; i < checkedListBoxRegimenes.CheckedItems.Count; i++)
+                    {
+
+                        string nombreRegimen = checkedListBoxRegimenes.CheckedItems[i].ToString();
+                        
+                        SqlCommand GETidRegimen = new SqlCommand("select codigoRegimen from [PISOS_PICADOS].Regimen where descripcion = @nombreRegimen", Globals.conexionGlobal);
+                        GETidRegimen.Parameters.AddWithValue("@nombreRegimen", nombreRegimen);
+                        int idRegimen = (int)GETidRegimen.ExecuteScalar();
+
+                        SqlCommand puedeQuitar = new SqlCommand("select [PISOS_PICADOS].puedeBorrarseRegimen(@nombreRegimen,@idHotel,@fecha)", Globals.conexionGlobal);
+                        puedeQuitar.Parameters.AddWithValue("@nombreRegimen", nombreRegimen);
+                        puedeQuitar.Parameters.AddWithValue("@idHotel", idHotel);
+                        puedeQuitar.Parameters.AddWithValue("@fecha", Globals.FechaDelSistema);
+                        if ((int)puedeQuitar.ExecuteScalar() == 1)
+                        {
+                            SqlCommand quitarRegimenHotel = new SqlCommand("[PISOS_PICADOS].quitarRegimen", Globals.conexionGlobal);
+                            quitarRegimenHotel.CommandType = CommandType.StoredProcedure;
+                            quitarRegimenHotel.Parameters.Add("@idHotel", SqlDbType.Int);
+                            quitarRegimenHotel.Parameters["@idHotel"].Value = idHotel;
+                            quitarRegimenHotel.Parameters.Add("@idRegimen", SqlDbType.Int);
+                            quitarRegimenHotel.Parameters["@idRegimen"].Value = idRegimen;
+                            quitarRegimenHotel.Parameters.AddWithValue("@fecha", Globals.FechaDelSistema);
+                            quitarRegimenHotel.ExecuteNonQuery();
+                        }
+                        else 
+                        {
+                            MessageBox.Show("No se puede quitar el régimen " +nombreRegimen+ ", tiene habitaciones reservadas con él");
+                            regimenesSinModificar = ", algunos regimenes no se cambiaron porque tenían reservas";
+                        }
+                    }
+                
+                }
                 pantallaHoteles.actualizarDataGrid();
-                MessageBox.Show("Modificación correcta");
+                MessageBox.Show("Modificación correcta"+regimenesSinModificar);
               
 
             }
@@ -105,7 +165,7 @@ namespace FrbaHotel.AbmHotel
             pantallaHoteles = pantHoteles;
             if (fechaCreacion != "")
             {
-                dateTimePickerCreacion.Value = DateTime.ParseExact(fechaCreacion, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                dateTimePickerCreacion.Text = fechaCreacion;
             }
 
             
@@ -148,7 +208,7 @@ namespace FrbaHotel.AbmHotel
            
             try
             {
-                if (email == null) { return false; }
+                if (email == "") { return false; }
                 else
                 {
                     new MailAddress(email);

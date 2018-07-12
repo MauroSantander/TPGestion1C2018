@@ -37,33 +37,42 @@ namespace FrbaHotel.AbmHotel
 
         private void buttonBaja_Click(object sender, EventArgs e)
         {
-            try
-            {
-                using (SqlConnection cnn = Globals.conexionGlobal)
-                {
-                    String cadenaBajaHotel = "PISOS_PICADOS.bajaHotel";
+            
+            
 
-                    if (dateTimeDesde.Value == null && dateTimeHasta.Value == null && String.IsNullOrEmpty(razon.Text)) { MessageBox.Show("Complete todos los campos"); }
+                    if ( razon.Text=="") { MessageBox.Show("Informe el motivo de la baja"); }
                     if (dateTimeDesde.Value > dateTimeHasta.Value) { MessageBox.Show("Coloque un rango de fechas correcto"); }
+                    SqlCommand puedeDarseDeBaja = new SqlCommand("select [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin)", Globals.conexionGlobal);
+                    puedeDarseDeBaja.Parameters.AddWithValue("@idHotel", idHotel);
+                    puedeDarseDeBaja.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
+                    puedeDarseDeBaja.Parameters.AddWithValue("@fechaFin", dateTimeHasta.Value.ToString("yyyy-MM-dd"));
+                     Boolean  puede = (bool)puedeDarseDeBaja.ExecuteScalar();
+                   
+                    if (puede)
+                    {
+                        SqlCommand comandoBajaHotel = new SqlCommand("PISOS_PICADOS.bajaDeHotel", Globals.conexionGlobal);
+                        comandoBajaHotel.CommandType = CommandType.StoredProcedure;
 
-                    SqlCommand comandoBajaHotel = new SqlCommand(cadenaBajaHotel, Globals.conexionGlobal);
-                    comandoBajaHotel.CommandType = CommandType.StoredProcedure;
+                        comandoBajaHotel.Parameters.AddWithValue("@idHotel", idHotel);
+                        comandoBajaHotel.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
+                        comandoBajaHotel.Parameters.AddWithValue("@fechaFin", dateTimeHasta.Value.ToString("yyyy-MM-dd"));
+                        comandoBajaHotel.Parameters.AddWithValue("@razon", razon.Text);
 
-                    comandoBajaHotel.Parameters.AddWithValue("@id", idHotel);
-                    comandoBajaHotel.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
-                    comandoBajaHotel.Parameters.AddWithValue("@fechaFin", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
-                    comandoBajaHotel.Parameters.AddWithValue("@razon", razon.Text);
-                    comandoBajaHotel.ExecuteReader().Close();
-                    MessageBox.Show("Hotel dado de baja correctamente");
-                    pantallaHoteles.eliminarRowHotel();
-                    this.Close();
+                        comandoBajaHotel.ExecuteNonQuery();
+                        MessageBox.Show("Hotel dado de baja correctamente");
+                        pantallaHoteles.eliminarRowHotel();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hay reservas y/o huéspedes en el hotel entre esas fechas");
+                    }
 
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Error");
-            }
+                    
+
+                
+            
+            
         }
 
        

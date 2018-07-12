@@ -29,14 +29,13 @@ namespace FrbaHotel.AbmHotel
         private void button1_Click(object sender, EventArgs e)
         {
                 chequearSiHayCamposIncompletos();
-                if (textBoxMail != null)
+                if (textBoxMail.Text != "")
                 {
                     if (!validarEmail(textBoxMail.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 }
+                if (checkedListRegimenes.CheckedItems.Count == 0) { MessageBox.Show("Seleccione Regimen/es", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
             int idPAIS;
-
-
             try
             {
                 SqlCommand cmdpais = new SqlCommand("select idPais from [PISOS_PICADOS].Pais where nombrePais = @paisSelect", Globals.conexionGlobal);
@@ -60,7 +59,7 @@ namespace FrbaHotel.AbmHotel
             comandoMod.Parameters.Add("@nroCalle", SqlDbType.VarChar);
             comandoMod.Parameters.Add("@estrellas", SqlDbType.Int);
             comandoMod.Parameters.Add("@ciudad", SqlDbType.VarChar);
-            comandoMod.Parameters.Add("@idPais", SqlDbType.Int);
+            comandoMod.Parameters.Add("@pais", SqlDbType.Int);
             comandoMod.Parameters.Add("@fechaCreacion", SqlDbType.Date);
             comandoMod.Parameters.Add("@autorId", SqlDbType.Int);
 
@@ -71,14 +70,35 @@ namespace FrbaHotel.AbmHotel
             comandoMod.Parameters["@nroCalle"].Value = textBoxNroCalle.Text;
             comandoMod.Parameters["@estrellas"].Value = int.Parse(cBestrellas.Text);
             comandoMod.Parameters["@ciudad"].Value = textBoxCIU.Text;
-            comandoMod.Parameters["@idPais"].Value = idPAIS;
+            comandoMod.Parameters["@pais"].Value = idPAIS;
             comandoMod.Parameters["@fechaCreacion"].Value = dateTimePickerCreacion.Value.ToString("yyyy-MM-dd") ;
             comandoMod.Parameters["@autorId"].Value = Globals.idUsuarioSesion;
+
+            
 
             try
             {
                 comandoMod.ExecuteReader();
-                pantallaHoteles.actualizarDataGrid();
+                SqlCommand idNuevoHotel= new SqlCommand("select idHotel from [PISOS_PICADOS].Hotel where nombre = @nombreNuevo" , Globals.conexionGlobal);
+                idNuevoHotel.Parameters.AddWithValue("@nombreNuevo", textBoxName.Text );
+                int idNuevo = (int)idNuevoHotel.ExecuteScalar();
+
+                for (int i = 0; i < checkedListRegimenes.CheckedItems.Count; i++) 
+                {
+                    string nombreRegimen = checkedListRegimenes.CheckedItems[i].ToString();
+                    SqlCommand GETidRegimen = new SqlCommand("select codigoRegimen from [PISOS_PICADOS].Regimen where descripcion = @nombreRegimen", Globals.conexionGlobal);
+                    GETidRegimen.Parameters.AddWithValue("@nombreRegimen", nombreRegimen);
+                    int idRegimen = (int)GETidRegimen.ExecuteScalar();
+
+                    SqlCommand agregarRegimen = new SqlCommand("[PISOS_PICADOS].agregarRegimen", Globals.conexionGlobal);
+                    agregarRegimen.CommandType = CommandType.StoredProcedure;
+                    agregarRegimen.Parameters.Add("@idHotel", SqlDbType.Int);
+                    agregarRegimen.Parameters["@idHotel"].Value = idNuevo;
+                    agregarRegimen.Parameters.Add("@idRegimen", SqlDbType.Int);
+                    agregarRegimen.Parameters["@idRegimen"].Value = idRegimen;
+                    agregarRegimen.ExecuteNonQuery();
+                }
+                    pantallaHoteles.actualizarDataGrid();
                 MessageBox.Show("Creación correcta");
 
             }
