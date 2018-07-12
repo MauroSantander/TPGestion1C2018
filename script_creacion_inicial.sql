@@ -27,14 +27,14 @@ IF OBJECT_ID(N'[PISOS_PICADOS].EmpleadoxHotel', N'U') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].Consumible', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].Consumible
 
+IF OBJECT_ID(N'[PISOS_PICADOS].FormaDePago', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].FormaDePago
+
 IF OBJECT_ID(N'[PISOS_PICADOS].Factura', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].Factura
 
 IF OBJECT_ID(N'[PISOS_PICADOS].Estadia', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].Estadia
-
-IF OBJECT_ID(N'[PISOS_PICADOS].FormaDePago', N'U') IS NOT NULL
-	DROP TABLE [PISOS_PICADOS].FormaDePago
 
 IF OBJECT_ID(N'[PISOS_PICADOS].TipoDePago', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].TipoDePago
@@ -258,6 +258,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].mostrarConsumibles', N'IF') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].mostrarHabitaciones', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].mostrarHabitaciones;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].puedeBorrarseRegimen', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].puedeBorrarseRegimen;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -3081,6 +3084,22 @@ RETURN (
 		)
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].puedeBorrarseRegimen (@nombreRegimen VARCHAR (255),@idHotel INT, @fecha DATE)
+RETURNS INT
+AS
+BEGIN
+IF EXISTS (SELECT res.codigoReserva FROM [PISOS_PICADOS].RegimenxHotel AS rxh 
+JOIN [PISOS_PICADOS].Regimen AS r ON rxh.codigoRegimen = r.codigoRegimen
+JOIN [PISOS_PICADOS].Habitacion AS h ON rxh.idHotel = h.idHotel
+JOIN [PISOS_PICADOS].HabitacionxReserva AS hxr ON h.idHabitacion = hxr.idHabitacion
+JOIN [PISOS_PICADOS].Reserva AS res ON hxr.codigoReserva = res.codigoReserva
+WHERE rxh.idHotel = @idHotel AND r.descripcion = @nombreRegimen AND
+(res.fechaInicio > @fecha OR @fecha BETWEEN res.fechaInicio AND res.fechaFin))
+RETURN 0
+RETURN 1
+END 
+GO
+
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
@@ -3680,16 +3699,6 @@ CREATE PROCEDURE [PISOS_PICADOS].quitarRegimen @idHotel INT
 	,@fecha DATE
 AS
 BEGIN
-	IF NOT EXISTS (
-			SELECT codigoReserva
-			FROM [PISOS_PICADOS].Reserva
-			WHERE codigoRegimen = @idRegimen
-				AND (
-					fechaInicio > @fecha
-					OR @fecha BETWEEN fechaInicio
-						AND fechaFin
-					)
-			)
 		DELETE
 		FROM [PISOS_PICADOS].RegimenxHotel
 		WHERE idHotel = @idHotel
