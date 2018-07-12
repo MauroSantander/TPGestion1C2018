@@ -3796,8 +3796,8 @@ CREATE PROCEDURE [PISOS_PICADOS].bajaDeHotel @idHotel INT
 	,@fechaFin DATE
 	,@razon VARCHAR(255)
 AS
-BEGIN
-	IF [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin) = 0
+	IF [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin) = 1
+	RETURN 0
 		INSERT INTO [PISOS_PICADOS].BajaHotel (
 			idHotel
 			,fechaInicio
@@ -3810,7 +3810,7 @@ BEGIN
 			,@fechaFin
 			,@razon
 			)
-END
+	RETURN 1
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].cancelarReserva @codigoReserva INT
@@ -4293,8 +4293,8 @@ AS
 BEGIN
 	DECLARE @idEstadia INT
 	DECLARE @cliente INT
-	SELECT @idEstadia =e.idEstadia FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva
-	SELECT @cliente =r.idCliente FROM [PISOS_PICADOS].Reserva AS r WHERE r.codigoReserva = @codReserva
+	SET @idEstadia = (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva)
+	SET @cliente = (SELECT r.idCliente FROM [PISOS_PICADOS].Reserva AS r WHERE r.codigoReserva = @codReserva)
 	INSERT INTO [PISOS_PICADOS].Factura (
 		fecha
 		,idEstadia
