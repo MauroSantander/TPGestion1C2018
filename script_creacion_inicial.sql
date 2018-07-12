@@ -268,9 +268,11 @@ IF OBJECT_ID(N'[PISOS_PICADOS].yaSeFacturo', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacionesHotel', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].precioHabitacionesHotel;
 
-
 IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplen', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].habitacionesQueCumplen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplenReserva', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].habitacionesQueCumplenReserva;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -4091,7 +4093,7 @@ CREATE PROCEDURE [PISOS_PICADOS].registrarReserva @fechaReserva DATE
 	,@fechaInicio DATE
 	,@fechaFin DATE
 	,@cantHuespedes INT
-	,@codRegimen INT
+	,@nombreRegimen INT
 	,@idCliente INT
 	,@idHotel INT
 	,@cantSimple INT
@@ -4101,6 +4103,8 @@ CREATE PROCEDURE [PISOS_PICADOS].registrarReserva @fechaReserva DATE
 	,@cantKing INT
 AS
 BEGIN
+	DECLARE @codRegimen INT
+	SET @codRegimen = (SELECT r.codigoRegimen FROM [PISOS_PICADOS].Regimen AS r WHERE r.nombre = @nombreRegimen)
 	INSERT INTO [PISOS_PICADOS].Reserva (
 		fechaRealizacion
 		,fechaInicio
@@ -4125,90 +4129,17 @@ BEGIN
 	DECLARE @idReserva INT = SCOPE_IDENTITY();
 	DECLARE @cont INT;
 
-	SET @cont = 0
-
-	WHILE (@cont < @cantSimple)
-	BEGIN
-		INSERT INTO [PISOS_PICADOS].HabitacionxReserva
+	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
 		VALUES (
 			(
 				SELECT idHabitacion
-				FROM [PISOS_PICADOS].Habitacion
-				WHERE idHabitacion = [PISOS_PICADOS].habitacionQueCumple(1, @idHotel, @fechaInicio)
+				FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru
+				,@cantKing,@idHotel,@fechaInicio,@fechaFin)
 				)
 			,@idReserva
 			);
 
-		SET @cont = @cont + 1
-	END
-
-	SET @cont = 0
-
-	WHILE (@cont < @cantDoble)
-	BEGIN
-		INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			(
-				SELECT idHabitacion
-				FROM [PISOS_PICADOS].Habitacion
-				WHERE idHabitacion = [PISOS_PICADOS].habitacionQueCumple(2, @idHotel, @fechaInicio)
-				)
-			,@idReserva
-			);
-
-		SET @cont = @cont + 1
-	END
-
-	SET @cont = 0
-
-	WHILE (@cont < @cantTriple)
-	BEGIN
-		INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			(
-				SELECT idHabitacion
-				FROM [PISOS_PICADOS].Habitacion
-				WHERE idHabitacion = [PISOS_PICADOS].habitacionQueCumple(3, @idHotel, @fechaInicio)
-				)
-			,@idReserva
-			);
-
-		SET @cont = @cont + 1
-	END
-
-	SET @cont = 0
-
-	WHILE (@cont < @cantCuadru)
-	BEGIN
-		INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			(
-				SELECT idHabitacion
-				FROM [PISOS_PICADOS].Habitacion
-				WHERE idHabitacion = [PISOS_PICADOS].habitacionQueCumple(4, @idHotel, @fechaInicio)
-				)
-			,@idReserva
-			);
-
-		SET @cont = @cont + 1
-	END
-
-	SET @cont = 0
-
-	WHILE (@cont < @cantKing)
-	BEGIN
-		INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			(
-				SELECT idHabitacion
-				FROM [PISOS_PICADOS].Habitacion
-				WHERE idHabitacion = [PISOS_PICADOS].habitacionQueCumple(5, @idHotel, @fechaInicio)
-				)
-			,@idReserva
-			);
-
-		SET @cont = @cont + 1
-	END
+	RETURN @idReserva	
 END;
 GO
 
