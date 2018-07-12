@@ -69,11 +69,6 @@ namespace FrbaHotel
             (new FrbaHotel.AbmCliente.frmCliente()).ShowDialog();
         }
 
-        private void btnABMRegimenEstadia_Click(object sender, EventArgs e)
-        {
-            (new FrbaHotel.RegistrarEstadia.frmRegistrarEstadia()).ShowDialog();
-        }
-
         private void btnCancelarReserva_Click(object sender, EventArgs e)
         {
             (new FrbaHotel.CancelarReserva.frmCancelarReserva()).ShowDialog();

@@ -32,7 +32,6 @@
             this.labelMenuPrincipal = new System.Windows.Forms.Label();
             this.btnSalir = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnABMRegimenEstadia = new System.Windows.Forms.Button();
             this.btnABMCliente = new System.Windows.Forms.Button();
             this.btnABMHotel = new System.Windows.Forms.Button();
             this.btnABMHabitacion = new System.Windows.Forms.Button();
@@ -54,7 +53,7 @@
             // btnListadoEstadistico
             // 
             this.btnListadoEstadistico.Enabled = false;
-            this.btnListadoEstadistico.Location = new System.Drawing.Point(244, 280);
+            this.btnListadoEstadistico.Location = new System.Drawing.Point(244, 234);
             this.btnListadoEstadistico.Name = "btnListadoEstadistico";
             this.btnListadoEstadistico.Size = new System.Drawing.Size(84, 45);
             this.btnListadoEstadistico.TabIndex = 3;
@@ -75,7 +74,7 @@
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(244, 331);
+            this.btnSalir.Location = new System.Drawing.Point(244, 285);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(84, 45);
             this.btnSalir.TabIndex = 4;
@@ -85,7 +84,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnABMRegimenEstadia);
             this.groupBox1.Controls.Add(this.btnABMCliente);
             this.groupBox1.Controls.Add(this.btnABMHotel);
             this.groupBox1.Controls.Add(this.btnABMHabitacion);
@@ -93,21 +91,10 @@
             this.groupBox1.Controls.Add(this.btnABMRol);
             this.groupBox1.Location = new System.Drawing.Point(24, 57);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(100, 327);
+            this.groupBox1.Size = new System.Drawing.Size(100, 273);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ABMs";
-            // 
-            // btnABMRegimenEstadia
-            // 
-            this.btnABMRegimenEstadia.Enabled = false;
-            this.btnABMRegimenEstadia.Location = new System.Drawing.Point(6, 274);
-            this.btnABMRegimenEstadia.Name = "btnABMRegimenEstadia";
-            this.btnABMRegimenEstadia.Size = new System.Drawing.Size(84, 45);
-            this.btnABMRegimenEstadia.TabIndex = 5;
-            this.btnABMRegimenEstadia.Text = "ABM Regimen de Estadía";
-            this.btnABMRegimenEstadia.UseVisualStyleBackColor = true;
-            this.btnABMRegimenEstadia.Click += new System.EventHandler(this.btnABMRegimenEstadia_Click);
             // 
             // btnABMCliente
             // 
@@ -258,7 +245,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 396);
+            this.ClientSize = new System.Drawing.Size(359, 342);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnSalir);
@@ -283,7 +270,6 @@
         private System.Windows.Forms.Label labelMenuPrincipal;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnABMRegimenEstadia;
         private System.Windows.Forms.Button btnABMCliente;
         private System.Windows.Forms.Button btnABMHotel;
         private System.Windows.Forms.Button btnABMHabitacion;
