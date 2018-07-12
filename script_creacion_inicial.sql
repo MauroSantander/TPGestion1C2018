@@ -3811,10 +3811,7 @@ CREATE PROCEDURE [PISOS_PICADOS].bajaDeHotel @idHotel INT
 	,@fechaFin DATE
 	,@razon VARCHAR(255)
 AS
-	IF [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin) = 1
-	BEGIN
-	RETURN 0
-	END
+BEGIN
 		INSERT INTO [PISOS_PICADOS].BajaHotel (
 			idHotel
 			,fechaInicio
@@ -3828,6 +3825,7 @@ AS
 			,@razon
 			)
 	RETURN 1
+END
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].cancelarReserva @codigoReserva INT
