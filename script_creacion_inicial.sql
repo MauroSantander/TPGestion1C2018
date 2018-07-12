@@ -4093,7 +4093,7 @@ CREATE PROCEDURE [PISOS_PICADOS].registrarReserva @fechaReserva DATE
 	,@fechaInicio DATE
 	,@fechaFin DATE
 	,@cantHuespedes INT
-	,@nombreRegimen INT
+	,@nombreRegimen VARCHAR(255)
 	,@idCliente INT
 	,@idHotel INT
 	,@cantSimple INT
