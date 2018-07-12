@@ -235,6 +235,20 @@ IF OBJECT_ID(N'[PISOS_PICADOS].tieneUnSoloHotel', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].hotelDeReserva', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].hotelDeReserva;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].esElDiaDeInicio', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].esElDiaDeInicio;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].checkInYaRealizado', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].checkInYaRealizado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].checkOutYaRealizado', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].checkOutYaRealizado;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].MostrarTablaRegimen', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].MostrarTablaRegimen;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].RegistradoCliente', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].RegistradoCliente;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].mostrarConsumibles', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].mostrarConsumibles;
@@ -324,8 +338,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].quitarConsumible', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].registrarReserva', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].registrarReserva;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].EliminarReservasNoEfectivizada', N'P') IS NOT NULL
-	DROP PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada;
+IF OBJECT_ID(N'[PISOS_PICADOS].EliminarReservasNoEfectivizadas', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizadas;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].registrarCheckIn', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].registrarCheckIn;
@@ -362,6 +376,10 @@ IF OBJECT_ID(N'[PISOS_PICADOS].quitarHotelAUsuario', N'P') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].establecerEstadoReserva', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].establecerEstadoReserva;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].registrarEstadia', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].registrarEstadia;
+
 
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
@@ -551,7 +569,6 @@ CREATE TABLE [PISOS_PICADOS].EstadiaxConsumible (
 CREATE TABLE [PISOS_PICADOS].FormaDePago (
 	idFormaDePago INT PRIMARY KEY IDENTITY
 	,descripcion VARCHAR(255)
-	,numeroTarjeta INT
 	)
 
 CREATE TABLE [PISOS_PICADOS].Factura (
@@ -1304,6 +1321,16 @@ VALUES ('Zambia');
 
 INSERT INTO [PISOS_PICADOS].Pais
 VALUES ('Zimbabue');
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Efectivo')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Tarjeta de Credito')
+
+INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+Values('Tarjeta de Debito')
+
 
 INSERT INTO [PISOS_PICADOS].Rol
 VALUES (
@@ -2860,7 +2887,7 @@ BEGIN
 						FROM [PISOS_PICADOS].Reserva AS r
 						WHERE r.codigoReserva = @codReserva
 						), @fechaActual)
-				) = 0
+				) > 0
 			)
 		RETURN 4
 
@@ -2901,7 +2928,10 @@ RETURN 0
 END
 GO
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 29d6fbb... Merge branch 'master' of https://github.com/orlandoleonardo/TPGestion1C2018
 CREATE FUNCTION [PISOS_PICADOS].esElDiaDeInicio (@fecha DATE, @codReserva INT)
 RETURNS INT
 AS
@@ -2987,7 +3017,10 @@ WHERE r.codigoRegimen = @codigoReserva
 )
 GO
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 29d6fbb... Merge branch 'master' of https://github.com/orlandoleonardo/TPGestion1C2018
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
@@ -3139,7 +3172,6 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado @idAutor INT
 	,@idUsuario INT
 	,@username VARCHAR(255)
-	,@password VARCHAR(255)
 	,@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
 	,@mail VARCHAR(255)
@@ -3153,12 +3185,7 @@ CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado @idAutor INT
 	,@fechaNacimiento DATE
 AS
 BEGIN
-	IF ([PISOS_PICADOS].esAdmin(@idAutor) = 1)
-		IF @password IS NOT NULL
-			UPDATE [PISOS_PICADOS].Empleado
-			SET contrasena = @password
-			WHERE @idUsuario = idUsuario
-
+	
 	IF @nombre IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET nombre = @nombre
@@ -3857,15 +3884,6 @@ BEGIN
 
 	SET @cont = 0
 
-	INSERT INTO [PISOS_PICADOS].Estadia (
-		codigoReserva
-		,diasReserva
-		)
-	VALUES (
-		@idReserva
-		,DATEDIFF(DAY, @fechaFin, @fechaFin)
-		);
-
 	WHILE (@cont < @cantSimple)
 	BEGIN
 		INSERT INTO [PISOS_PICADOS].HabitacionxReserva
@@ -3951,7 +3969,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizada @fechaActual DATE
+CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizadas @fechaActual DATE
 AS
 BEGIN
 	UPDATE es
@@ -3970,8 +3988,42 @@ BEGIN
 	FROM [PISOS_PICADOS].HabitacionxReserva AS hr
 	INNER JOIN [PISOS_PICADOS].Reserva AS re ON hr.codigoReserva = re.codigoReserva
 	WHERE re.estado = 5
+
+	DELETE exc
+	FROM [PISOS_PICADOS].EstadiaxConsumible AS exc
+	WHERE exc.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+
+	DELETE rf
+	FROM [PISOS_PICADOS].RenglonFactura AS rf JOIN [PISOS_PICADOS].Factura AS fac
+	ON rf.numeroFactura = fac.numeroFactura
+	WHERE fac.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+
+	DELETE f
+	FROM [PISOS_PICADOS].Factura AS f
+	WHERE f.idEstadia IN (SELECT e.idEstadia FROM [PISOS_PICADOS].Estadia AS E WHERE e.estado=0)
+
+	DELETE es
+	FROM [PISOS_PICADOS].Estadia AS es
+	WHERE es.estado = 0
+
 END
 GO
+/*ACA*/
+CREATE PROCEDURE [PISOS_PICADOS].registrarEstadia @codReserva INT 
+AS
+BEGIN
+INSERT INTO [PISOS_PICADOS].Estadia (
+		codigoReserva
+		,diasReserva
+		)
+	VALUES (
+		@codReserva
+		,(SELECT DATEDIFF(DAY,r.fechaInicio,r.fechaFin) FROM [PISOS_PICADOS].Reserva AS r
+		 WHERE r.codigoReserva=@codReserva)
+		);
+END 
+GO
+
 
 CREATE PROCEDURE [PISOS_PICADOS].registrarCheckIn @fechaIngreso DATE
 	,@idEncargado INT
