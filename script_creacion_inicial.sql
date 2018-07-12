@@ -36,6 +36,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].Estadia', N'U') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].FormaDePago', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].FormaDePago
 
+IF OBJECT_ID(N'[PISOS_PICADOS].TipoDePago', N'U') IS NOT NULL
+	DROP TABLE [PISOS_PICADOS].TipoDePago
+
 IF OBJECT_ID(N'[PISOS_PICADOS].Funcionalidad', N'U') IS NOT NULL
 	DROP TABLE [PISOS_PICADOS].Funcionalidad
 
@@ -565,8 +568,8 @@ CREATE TABLE [PISOS_PICADOS].EstadiaxConsumible (
 		)
 	)
 
-CREATE TABLE [PISOS_PICADOS].FormaDePago (
-	idFormaDePago INT PRIMARY KEY IDENTITY
+CREATE TABLE [PISOS_PICADOS].TipoDePago (
+	idTipoDePago INT PRIMARY KEY IDENTITY
 	,descripcion VARCHAR(255)
 	)
 
@@ -574,9 +577,15 @@ CREATE TABLE [PISOS_PICADOS].Factura (
 	numeroFactura INT PRIMARY KEY IDENTITY(2396745, 1)
 	,fecha DATE
 	,idEstadia INT REFERENCES [PISOS_PICADOS].Estadia
-	,formaDePago INT REFERENCES [PISOS_PICADOS].FormaDePago DEFAULT NULL
 	,cliente INT REFERENCES [PISOS_PICADOS].Cliente
 	,total NUMERIC(8, 2)
+	)
+
+CREATE TABLE [PISOS_PICADOS].FormaDePago (
+	idFormaDePago INT PRIMARY KEY IDENTITY
+	,idFactura INT REFERENCES [PISOS_PICADOS].Factura
+	,idTipoDePago INT REFERENCES [PISOS_PICADOS].TipoDePago 
+	,numeroTarjeta INT DEFAULT NULL
 	)
 
 CREATE TABLE [PISOS_PICADOS].RenglonFactura (
@@ -1321,13 +1330,13 @@ VALUES ('Zambia');
 INSERT INTO [PISOS_PICADOS].Pais
 VALUES ('Zimbabue');
 
-INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+INSERT INTO [PISOS_PICADOS].TipoDePago (descripcion)
 VALUES ('Efectivo')
 
-INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+INSERT INTO [PISOS_PICADOS].TipoDePago (descripcion)
 VALUES ('Tarjeta de Credito')
 
-INSERT INTO [PISOS_PICADOS].FormaDePago (descripcion)
+INSERT INTO [PISOS_PICADOS].TipoDePago (descripcion)
 VALUES ('Tarjeta de Debito')
 
 INSERT INTO [PISOS_PICADOS].Rol
@@ -4267,29 +4276,36 @@ GO
 CREATE PROCEDURE [PISOS_PICADOS].FacturarReserva @idEstadia INT
 	,@fecha DATE
 	,@cliente INT
-	,@tipoPago VARCHAR(255)
+	,@formaDePago VARCHAR(255)
+	,@numeroTarjeta INT 
 AS
 BEGIN
 	INSERT INTO [PISOS_PICADOS].Factura (
 		fecha
 		,idEstadia
-		,formaDePago
 		,cliente
 		,total
 		)
 	VALUES (
 		@fecha
 		,@idEstadia
-		,(
-			SELECT idFormaDePago
-			FROM [PISOS_PICADOS].FormaDePago
-			WHERE descripcion = @tipoPago
-			)
 		,@cliente
 		,[PISOS_PICADOS].calcularPrecioRenglones(@idEstadia) + [PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idEstadia) + [PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idEstadia)
 		)
 
 	DECLARE @numFactura INT = SCOPE_IDENTITY();
+
+	INSERT INTO [PISOS_PICADOS].FormaDePago(
+		idFactura
+		,idTipoDePago
+		,numeroTarjeta
+		)
+	VALUES (
+		@numFactura
+		,(SELECT tp.idTipoDePago FROM [PISOS_PICADOS].TipoDePago AS tp WHERE tp.descripcion = @formaDePago)
+		,@numeroTarjeta
+		)
+
 	DECLARE @idConsumible INT
 		,@cant INT
 		,@precio INT
