@@ -130,8 +130,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacion', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].hotelCumple', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].hotelCumple;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplen2', N'IF') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].habitacionesQueCumplen2;
+IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesDeterminadasQueCumplen', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].habitacionesDeterminadasQueCumplen;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerHotelDeHabitacion', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion;
@@ -2377,26 +2377,37 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen(@idTipo INT,@idHotel INT,@fechaInicio DATE,@fechaFin DATE)
+CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen (
+	@idTipo INT
+	,@idHotel INT
+	,@fechaInicio DATE
+	,@fechaFin DATE
+	)
 RETURNS TABLE
 AS
-RETURN
-(
-SELECT idHabitacion FROM [PISOS_PICADOS].Habitacion WHERE tipo = @idTipo AND idHotel = @idHotel AND habilitada = 1
-AND idHabitacion NOT IN (
-		SELECT p.idHabitacion
-		FROM [PISOS_PICADOS].Reserva AS q
-		INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-		WHERE (
-			@fechaInicio BETWEEN fechaInicio
-			AND fechaFin
-				)
-			OR (
-				@fechaInicio < fechaInicio
-				AND (@fechaFin BETWEEN fechaInicio AND fechaFin)
+RETURN (
+		SELECT idHabitacion
+		FROM [PISOS_PICADOS].Habitacion
+		WHERE tipo = @idTipo
+			AND idHotel = @idHotel
+			AND habilitada = 1
+			AND idHabitacion NOT IN (
+				SELECT p.idHabitacion
+				FROM [PISOS_PICADOS].Reserva AS q
+				INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
+				WHERE (
+						@fechaInicio BETWEEN fechaInicio
+							AND fechaFin
+						)
+					OR (
+						@fechaInicio < fechaInicio
+						AND (
+							@fechaFin BETWEEN fechaInicio
+								AND fechaFin
+							)
+						)
 				)
 		)
-)
 GO
 
 /*Dada una fecha un hotel y una determinada cant de habitaciones de un tipo verifica si el hotel 
@@ -2414,26 +2425,59 @@ CREATE FUNCTION [PISOS_PICADOS].hotelCumple (
 RETURNS INT
 AS
 BEGIN
-	IF ( @cantSimple > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(1,@idHotel,@fechaInicio ,@fechaFin )))
-	RETURN 1
-	IF ( @cantDoble > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(2,@idHotel,@fechaInicio ,@fechaFin )))
-	RETURN 2
-	IF ( @cantTriple > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(3,@idHotel,@fechaInicio ,@fechaFin )))
-	RETURN 3
-	IF ( @cantCuadru > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(4,@idHotel,@fechaInicio ,@fechaFin )))
-	RETURN 4
-	IF ( @cantKing > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(5,@idHotel,@fechaInicio ,@fechaFin )))
-	RETURN 5
-	RETURN 0				
+	IF (
+			@cantSimple > (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].habitacionesQueCumplen(1, @idHotel, @fechaInicio, @fechaFin)
+				)
+			)
+		RETURN 1
+
+	IF (
+			@cantDoble > (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].habitacionesQueCumplen(2, @idHotel, @fechaInicio, @fechaFin)
+				)
+			)
+		RETURN 2
+
+	IF (
+			@cantTriple > (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].habitacionesQueCumplen(3, @idHotel, @fechaInicio, @fechaFin)
+				)
+			)
+		RETURN 3
+
+	IF (
+			@cantCuadru > (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].habitacionesQueCumplen(4, @idHotel, @fechaInicio, @fechaFin)
+				)
+			)
+		RETURN 4
+
+	IF (
+			@cantKing > (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].habitacionesQueCumplen(5, @idHotel, @fechaInicio, @fechaFin)
+				)
+			)
+		RETURN 5
+
+	RETURN 0
 END
 GO
 
+
+
 /*Dado un hotel un tipo de habitacion , una fecha de reserva y una cantidad devuelve el una lista de habitaciones
 que cumplen */
-CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen2 (
-	@tipo INT
+CREATE FUNCTION [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (
+	@idTipo INT
 	,@idHotel INT
-	,@fechaReserva DATE
+	,@fechaInicio DATE
+	,@fechaFin DATE
 	,@cant INT
 	)
 RETURNS TABLE
@@ -2441,17 +2485,57 @@ AS
 RETURN (
 		SELECT TOP (@cant) idHabitacion
 		FROM [PISOS_PICADOS].Habitacion
-		WHERE tipo = @tipo
+		WHERE tipo = @idTipo
 			AND idHotel = @idHotel
 			AND habilitada = 1
-			AND idHabitacion IN (
+			AND idHabitacion NOT IN (
 				SELECT p.idHabitacion
 				FROM [PISOS_PICADOS].Reserva AS q
 				INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-				WHERE @fechaReserva NOT BETWEEN fechaInicio
-						AND fechaFin
+				WHERE (
+						@fechaInicio BETWEEN fechaInicio
+							AND fechaFin
+						)
+					OR (
+						@fechaInicio < fechaInicio
+						AND (
+							@fechaFin BETWEEN fechaInicio
+								AND fechaFin
+							)
+						)
 				)
-		);
+		)
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplenReserva (@cantSimple INT
+	,@cantDoble INT
+	,@cantTriple INT
+	,@cantCuadru INT
+	,@cantKing INT
+	,@idHotel INT
+	,@fechaInicio DATE
+	,@fechaFin DATE )
+
+RETURNS TABLE 
+AS 
+RETURN (
+SELECT H.idHabitacion AS idHabitacion
+,h.numero AS Numero
+,h.piso AS Piso
+FROM [PISOS_PICADOS].Habitacion AS h 
+WHERE h.idHotel = @idHotel AND 
+(
+H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (1,@idHotel,@fechaInicio,@fechaFin,@cantSimple))
+OR
+H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen(2,@idHotel,@fechaInicio,@fechaFin,@cantDoble))
+OR
+H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (3,@idHotel,@fechaInicio,@fechaFin,@cantTriple))
+OR
+H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (4,@idHotel,@fechaInicio,@fechaFin,@cantCuadru))
+OR
+H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (5,@idHotel,@fechaInicio,@fechaFin,@cantKing))
+)
+)
 GO
 
 /* infroma si un cliente dado su nombre apellido y numero de identificacion esta habilitado
