@@ -4305,7 +4305,7 @@ BEGIN
 		@fecha
 		,@idEstadia
 		,@cliente
-		,[PISOS_PICADOS].calcularPrecioRenglones(@idEstadia) + [PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idEstadia) + [PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idEstadia)
+		,ISNULL([PISOS_PICADOS].calcularPrecioRenglones(@idEstadia),0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idEstadia),0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idEstadia),0)
 		)
 
 	DECLARE @numFactura INT = SCOPE_IDENTITY();
