@@ -127,8 +127,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacion', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].hotelCumple', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].hotelCumple;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].habitacionQueCumple', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].habitacionQueCumple;
+IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplen', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].habitacionesQueCumplen;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].obtenerHotelDeHabitacion', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].obtenerHotelDeHabitacion;
@@ -2387,18 +2387,18 @@ BEGIN
 END
 GO
 
-/*Dado un hotel un tipo de habitacion y una fecha de reserva devuelve el id de la primera habiatcion 
-disponible del hotel con esas caracteristicas */
-CREATE FUNCTION [PISOS_PICADOS].habitacionQueCumple (
+/*Dado un hotel un tipo de habitacion , una fecha de reserva y una cantidad devuelve el una lista de habitaciones
+que cumplen */
+CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen (
 	@tipo INT
 	,@idHotel INT
 	,@fechaReserva DATE
+	,@cant INT
 	)
-RETURNS INT
+RETURNS TABLE
 AS
-BEGIN
 	RETURN (
-			SELECT TOP (1) idHabitacion
+			SELECT TOP (@cant) idHabitacion
 			FROM [PISOS_PICADOS].Habitacion
 			WHERE tipo = @tipo
 				AND idHotel = @idHotel
@@ -2411,7 +2411,6 @@ BEGIN
 							AND fechaFin
 					)
 			);
-END
 GO
 
 /* infroma si un cliente dado su nombre apellido y numero de identificacion esta habilitado
