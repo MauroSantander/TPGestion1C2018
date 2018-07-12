@@ -4102,7 +4102,6 @@ CREATE PROCEDURE [PISOS_PICADOS].registrarReserva @fechaReserva DATE
 	,@cantCuadru INT
 	,@cantKing INT
 AS
-BEGIN
 	DECLARE @codRegimen INT
 	SET @codRegimen = (SELECT r.codigoRegimen FROM [PISOS_PICADOS].Regimen AS r WHERE r.nombre = @nombreRegimen)
 	INSERT INTO [PISOS_PICADOS].Reserva (
@@ -4120,7 +4119,7 @@ BEGIN
 		,@fechaInicio
 		,@fechaFin
 		,@cantHuespedes
-		,@codRegimen
+		,(SELECT codigoRegimen FROM [PISOS_PICADOS].Regimen WHERE nombre = @nombreRegimen)
 		,1
 		,@idCliente
 		,((DATEDIFF(day, @fechaInicio, @fechaFIN)) * [PISOS_PICADOS].precioReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel))
@@ -4140,7 +4139,7 @@ BEGIN
 			);
 
 	RETURN @idReserva	
-END;
+
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizadas @fechaActual DATE
