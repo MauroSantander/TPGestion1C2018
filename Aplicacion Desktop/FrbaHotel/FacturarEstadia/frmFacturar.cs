@@ -13,6 +13,7 @@ namespace FrbaHotel.FacturarEstadia
 {
     public partial class frmFacturar : Form
     {
+        long codigoReserva = -1;
         public frmFacturar()
         {
             InitializeComponent();
@@ -20,8 +21,12 @@ namespace FrbaHotel.FacturarEstadia
 
         private void frmFacturar_Load(object sender, EventArgs e)
         {
+            labelRegimen.Text = "";
+            label.Text = "";
             this.CenterToScreen();
-            SqlCommand cmdFormasDePago = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].FormaDePago", Globals.conexionGlobal);
+
+            //cargo formas de pago
+            SqlCommand cmdFormasDePago = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].TipoDePago", Globals.conexionGlobal);
 
             SqlDataReader reader = cmdFormasDePago.ExecuteReader();
 
@@ -32,6 +37,7 @@ namespace FrbaHotel.FacturarEstadia
 
             reader.Close();
 
+            comboBoxFormaDePago.SelectedIndex = 0;
             return;
 
         }
@@ -44,13 +50,13 @@ namespace FrbaHotel.FacturarEstadia
         private void comboBoxFormaDePago_SelectedIndexChanged(object sender, EventArgs e)
         {
             //si elige efectivo no muestro textbox de número de tarjeta
-            if (comboBoxFormaDePago.SelectedItem != "Efectivo")
+            if (comboBoxFormaDePago.SelectedIndex == 0)
             {
-                textBoxNumeroTarjeta.Visible = true;
+                textBoxNumeroTarjeta.Visible = false;
             }
             else
             {
-                textBoxNumeroTarjeta.Visible = false;
+                textBoxNumeroTarjeta.Visible = true;
             }
         }
 
@@ -62,6 +68,184 @@ namespace FrbaHotel.FacturarEstadia
         private void textBoxCodigoReserva_KeyPress(object sender, KeyPressEventArgs e)
         {
             Utils.txtSoloAceptaNumeros(textBoxCodigoReserva, sender, e);
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            //chequeos
+
+            int verificacion = 1;
+
+            if (textBoxCodigoReserva.Text == "")
+            {
+                MessageBox.Show("Ingrese un código de reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (verificacion == 0)
+            {
+                return;
+            }
+
+            //verifico si el usuario tiene permiso para tocar esta estadía
+            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+            int hotelDeLaEstadia;
+            try
+            {
+                hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+            }
+            catch
+            {
+                //si rompe es porque no existe la estadia
+                MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (hotelDeLaEstadia != Globals.idHotelUsuario)
+            {
+                MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //fin chequeos
+
+            cargarDataGridHabitaciones();
+            cargarDataGridConsumibles();
+
+            SqlCommand cmdBuscarRegimenReserva = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Regimen as r JOIN [PISOS_PICADOS].Reserva as re on r.codigoRegimen = re.codigoRegimen and re.codigoReserva = @codigoReserva", Globals.conexionGlobal);
+            cmdBuscarRegimenReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarRegimenReserva.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+
+            labelRegimen.Text = cmdBuscarRegimenReserva.ExecuteScalar().ToString();
+            label.Text = "Régimen de la estadía:";
+            codigoReserva = Int64.Parse(textBoxCodigoReserva.Text);
+
+        }
+
+        private void cargarDataGridHabitaciones()
+        {
+            //traigo información de la reserva y lleno datagrid
+            SqlCommand cmdBuscarHabitacionesReserva = new SqlCommand("SELECT * FROM [PISOS_PICADOS].mostrarHabitaciones (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHabitacionesReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHabitacionesReserva.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+            SqlDataReader reader;
+            try
+            {
+                reader = cmdBuscarHabitacionesReserva.ExecuteReader();
+            }
+            catch
+            {
+                //si rompe es porque la reserva no existe
+                MessageBox.Show("La reserva no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DataTable dtHabitaciones = new DataTable();
+            dtHabitaciones.Load(reader);
+            dgvHabitaciones.DataSource = dtHabitaciones;
+            reader.Close();
+        }
+
+        private void cargarDataGridConsumibles() 
+        {
+            //traigo información de la reserva y lleno datagrid
+            SqlCommand cmdBuscarConsumuiblesReserva = new SqlCommand("SELECT * FROM [PISOS_PICADOS].mostrarConsumibles (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarConsumuiblesReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarConsumuiblesReserva.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+            SqlDataReader reader;
+            try
+            {
+                reader = cmdBuscarConsumuiblesReserva.ExecuteReader();
+            }
+            catch
+            {
+                //si rompe es porque la reserva no existe
+                MessageBox.Show("La reserva no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DataTable dtConsumibles = new DataTable();
+            dtConsumibles.Load(reader);
+            dgvConsumibles.DataSource = dtConsumibles;
+            reader.Close();
+        }
+
+        private void btnFacturar_Click(object sender, EventArgs e)
+        {
+            //chequeos
+            int verificacion = 1;
+
+            if (codigoReserva == -1)
+            {
+                MessageBox.Show("Primero debe buscar una reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (comboBoxFormaDePago.SelectedIndex == -1)
+            {
+                MessageBox.Show("Seleccione un medio de pago.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (textBoxNumeroTarjeta.Text == "" && textBoxNumeroTarjeta.Visible)
+            {
+                MessageBox.Show("Ingrese un número de tarjeta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (verificacion == 0)
+            {
+                return;
+            }
+
+            //chequeo si ya se facturó
+            SqlCommand cmdChequearSiYaSeFacturo = new SqlCommand("SELECT [PISOS_PICADOS].yaSeFacturo (@codigoReserva)", Globals.conexionGlobal);
+            //agrego parámetro
+            cmdChequearSiYaSeFacturo.Parameters.Add("@codReserva", SqlDbType.Int);
+            //doy valor a parámetro
+            cmdChequearSiYaSeFacturo.Parameters["@codReserva"].Value = codigoReserva;
+            //ejecuto y recibo resultado
+            int yaSeFacturo = (int)cmdChequearSiYaSeFacturo.ExecuteScalar();
+
+            if (yaSeFacturo == 1)
+            {
+                MessageBox.Show("Ya se facturó esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            //fin chequeos
+
+            SqlCommand cmdFacturar = new SqlCommand("[PISOS_PICADOS].FacturarReserva", Globals.conexionGlobal);
+            //agrego parámetros
+            cmdFacturar.CommandType = CommandType.StoredProcedure;
+            cmdFacturar.Parameters.Add("@codReserva", SqlDbType.Int);
+            cmdFacturar.Parameters.Add("@fecha", SqlDbType.Date);
+            cmdFacturar.Parameters.Add("@formaDePago", SqlDbType.VarChar);
+            cmdFacturar.Parameters.Add("@numeroTarjeta", SqlDbType.BigInt);
+            //doy valor a parámetros
+            cmdFacturar.Parameters["@codReserva"].Value = codigoReserva;
+            cmdFacturar.Parameters["@fecha"].Value = Globals.FechaDelSistema.ToString("yyyy-MM-dd");
+            cmdFacturar.Parameters["@formaDePago"].Value = comboBoxFormaDePago.Text;
+            if (comboBoxFormaDePago.SelectedIndex == 0)
+            {
+                cmdFacturar.Parameters["@numeroTarjeta"].Value = DBNull.Value;
+            }
+            else
+            {
+                cmdFacturar.Parameters["@numeroTarjeta"].Value = Int64.Parse(textBoxNumeroTarjeta.Text);
+            }
+
+            try
+            {
+                cmdFacturar.ExecuteNonQuery();
+                MessageBox.Show("Facturación realizada correctamente.");
+            }
+            catch
+            {
+                MessageBox.Show("Error al facturar. Compruebe los datos e intente nuevamente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }
