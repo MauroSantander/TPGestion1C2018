@@ -3067,6 +3067,8 @@ RETURNS TABLE
 AS
 RETURN (
 		SELECT h.idHabitacion AS IdHabitacion
+			,hote.nombre AS Hotel
+			,h.piso AS Piso
 			,h.numero AS [Numero de Habitacion]
 			,t.tipoCamas AS [Tipo de Habitacion]
 			,[PISOS_PICADOS].precioHabitacion(t.idTipo, r.codigoRegimen, h.idHotel) AS Precio
@@ -3074,6 +3076,7 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS hxr ON r.codigoReserva = hxr.codigoReserva
 		INNER JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
 		INNER JOIN [PISOS_PICADOS].Tipo AS t ON h.tipo = t.idTipo
+		INNER JOIN [PISOS_PICADOS].Hotel AS hote ON h.idHotel = hote.idHotel
 		WHERE r.codigoRegimen = @codigoReserva
 		)
 GO
