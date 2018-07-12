@@ -101,6 +101,25 @@ namespace FrbaHotel.RegistrarConsumible
         {
             //chequeos
 
+            int verificacion = 1;
+
+            if (listAFacturar.Items.Count < 1)
+            {
+                MessageBox.Show("Agregue al menos un consumible.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (txtCodigoReserva.Text == "")
+            {
+                MessageBox.Show("Inserte un código de reserva que se corresponda a una estadía.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (verificacion == 0)
+            {
+                return;
+            }
+
             //verifico si el usuario tiene permiso para tocar esta estadía
             SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
             cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
@@ -117,28 +136,9 @@ namespace FrbaHotel.RegistrarConsumible
                 return;
             }
 
-            int verificacion = 1;
-
-            if (listAFacturar.Items.Count < 1)
-            {
-                MessageBox.Show("Agregue al menos un consumible.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                verificacion = 0;
-            }
-
-            if (txtCodigoReserva.Text == "")
-            {
-                MessageBox.Show("Inserte un código de reserva que se corresponda a una estadía.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                verificacion = 0;
-            }
-
             if (hotelDeLaEstadia != Globals.idHotelUsuario)
             {
                 MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                verificacion = 0;
-            }
-
-            if (verificacion == 0)
-            {
                 return;
             }
 

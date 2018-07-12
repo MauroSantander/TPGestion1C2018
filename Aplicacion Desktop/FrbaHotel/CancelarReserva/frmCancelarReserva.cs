@@ -32,6 +32,24 @@ namespace FrbaHotel.CancelarReserva
         {
             //chequeos
 
+            int verificacion = 1;
+
+            if (txtCodigo.Text == "")
+            {
+                MessageBox.Show("Debe insertar un código de reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+            if (txtMotivo.Text == "")
+            {
+                MessageBox.Show("Debe insertar un motivo de cancelación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (verificacion == 0)
+            {
+                return;
+            }
+
             //verifico si el usuario tiene permiso para tocar esta estadía
             SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
             cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
@@ -48,29 +66,12 @@ namespace FrbaHotel.CancelarReserva
                 return;
             }
 
-            int verificacion = 1;
-
-            if (txtCodigo.Text == "")
-            {
-                MessageBox.Show("Debe insertar un código de reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                verificacion = 0;
-            }
-            if (txtMotivo.Text == "")
-            {
-                MessageBox.Show("Debe insertar un motivo de cancelación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                verificacion = 0;
-            }
-
             if (hotelDeLaEstadia != Globals.idHotelUsuario)
             {
                 MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                verificacion = 0;
-            }
-
-            if (verificacion == 0)
-            {
                 return;
             }
+
             //fin chequeos
 
             //Verifico que la reserva exista y esté activa con la siguiente función:
