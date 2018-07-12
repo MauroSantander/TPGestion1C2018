@@ -265,6 +265,7 @@
             this.Controls.Add(this.labelMenuPrincipal);
             this.Controls.Add(this.btnListadoEstadistico);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmMenu";
             this.Text = "Inicio";
             this.Load += new System.EventHandler(this.frmMenu_Load);

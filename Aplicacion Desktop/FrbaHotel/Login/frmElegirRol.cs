@@ -11,8 +11,10 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Login
 {
+
     public partial class frmElegirRol : Form
     {
+        int noShowLogin = 0;
         public frmElegirRol()
         {
             InitializeComponent();
@@ -72,8 +74,8 @@ namespace FrbaHotel.Login
                 instanciafrmElegirHotel.Show();
             }
 
+            noShowLogin = 1;
             this.Close();
-            Globals.getLogin().Hide();
             return;
         }
 
@@ -81,6 +83,13 @@ namespace FrbaHotel.Login
         {
             this.CenterToScreen();
             cbRol.SelectedItem = cbRol.Items[0];
+            noShowLogin = 0;
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            if (noShowLogin == 0) Globals.getLogin().Show();
         }
     }
 }

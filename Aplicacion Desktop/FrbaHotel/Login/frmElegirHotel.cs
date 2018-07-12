@@ -13,6 +13,7 @@ namespace FrbaHotel.Login
 {
     public partial class frmElegirHotel : Form
     {
+        int noShowLogin = 0;
         frmMenu frmMenuInstancia;
         int idUser;
 
@@ -25,6 +26,7 @@ namespace FrbaHotel.Login
 
         private void frmElegirHotel_Load(object sender, EventArgs e)
         {
+            noShowLogin = 0;
             this.CenterToScreen();
             //inicializo combobox de hoteles
             SqlCommand cmd = new SqlCommand("SELECT nombre FROM [PISOS_PICADOS].Hotel as h JOIN [PISOS_PICADOS].EmpleadoxHotel as e on h.idHotel = e.idHotel WHERE e.idUsuario = @usuario", Globals.conexionGlobal);
@@ -60,7 +62,15 @@ namespace FrbaHotel.Login
             Globals.idHotelUsuario = (int)cmd.ExecuteScalar();
 
             frmMenuInstancia.Show();
+            noShowLogin = 1;
             this.Close();
         }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            if (noShowLogin == 0) Globals.getLogin().Show();
+        }
+
     }
 }

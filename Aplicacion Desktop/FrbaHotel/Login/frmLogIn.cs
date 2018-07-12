@@ -102,8 +102,10 @@ namespace FrbaHotel.Login
                 }
                 else
                 {
+                    Globals.getLogin().Hide();
                     frmElegirRol frmElegirRol = new frmElegirRol(textBoxUsuario.Text);
                     frmElegirRol.ShowDialog();
+                    return;
                 }
             }
 
