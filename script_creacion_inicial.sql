@@ -3218,7 +3218,6 @@ AS
 	JOIN [PISOS_PICADOS].Tipo AS t on hab.tipo = t.idTipo
 	WHERE h.idHotel = 1
 	GROUP BY r.codigoRegimen,r.descripcion,t.idTipo,t.tipoCamas,h.idHotel
-	ORDER BY r.codigoRegimen
 	)
 GO
 
