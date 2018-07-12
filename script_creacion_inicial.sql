@@ -112,6 +112,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].hotelTieneReservas', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].habilitadoHotel', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].habilitadoHotel;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadia', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].obtenerEstadia;
+
 IF OBJECT_ID(N'[PISOS_PICADOS].netearConsumibles', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].netearConsumibles;
 
@@ -147,9 +150,6 @@ IF OBJECT_ID(N'[PISOS_PICADOS].obtenerEstadoUsuario', N'FN') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].existeUsuario', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].existeUsuario;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].calcularPrecioRenglones', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].calcularPrecioRenglones;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].calcularPrecioPorDiasHospedados', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasHospedados;
@@ -264,6 +264,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].puedeBorrarseRegimen', N'FN') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].yaSeFacturo', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].yaSeFacturo;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].precioHabitacionesHotel', N'IF') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].precioHabitacionesHotel;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -2285,17 +2288,31 @@ BEGIN
 END
 GO
 
+CREATE FUNCTION [Pisos_Picados].obtenerEstadia (@codReserva INT)
+RETURNS INT
+AS 
+BEGIN
+	RETURN(
+			SELECT e.idEstadia
+			FROM [PISOS_PICADOS].Estadia AS e
+			WHERE e.codigoReserva = @codReserva
+			)
+END
+GO
+
 /*Dado una estadia devuelve el valor total para todos los consumibles*/
-CREATE FUNCTION [PISOS_PICADOS].netearConsumibles (@idEstadia INT)
+CREATE FUNCTION [PISOS_PICADOS].netearConsumibles (@codigoReserva INT)
 RETURNS NUMERIC(9, 2)
 AS
 BEGIN
+	DECLARE @idEstadia INT
+	SET @idEstadia =[PISOS_PICADOS].obtenerEstadia(@codigoReserva)
 	RETURN (
-			SELECT SUM(cantidad * precio)
-			FROM [PISOS_PICADOS].EstadiaxConsumible
-				,[PISOS_PICADOS].Consumible
-			WHERE idEstadia = @idEstadia
-				AND Consumible.idConsumible = EstadiaxConsumible.idConsumible
+			SELECT   SUM(ec.cantidad * c.precio)
+	FROM [PISOS_PICADOS].EstadiaxConsumible AS ec
+	INNER JOIN Consumible AS c ON ec.idConsumible = c.idConsumible
+	WHERE ec.idEstadia = @idEstadia
+	GROUP BY ec.idEstadia
 			)
 END
 GO
@@ -2357,19 +2374,22 @@ GO
 /*Dada una fecha un hotel y una determinada cant de habitaciones de un tipo verifica si el hotel 
 puede cumplir la demanda en la fecha dada*/
 CREATE FUNCTION [PISOS_PICADOS].hotelCumple (
-	@cantHabitaciones INT
-	,@tipo INT
+	 @cantSimple INT
+	,@cantDoble INT
+	,@cantTriple INT
+	,@cantCuadru INT
+	,@cantKing INT
 	,@idHotel INT
 	,@fechaReserva DATE
 	)
 RETURNS INT
 AS
 BEGIN
-	IF (
-			@cantHabitaciones = (
+	IF( (
+			@cantSimple <= (
 				SELECT COUNT(*)
 				FROM [PISOS_PICADOS].Habitacion
-				WHERE tipo = @tipo
+				WHERE tipo = 1
 					AND idHotel = @idHotel
 					AND habilitada = 1
 					AND idHabitacion NOT IN (
@@ -2381,6 +2401,75 @@ BEGIN
 						)
 				)
 			)
+		AND
+		(
+			@cantDoble <= (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].Habitacion
+				WHERE tipo = 2
+					AND idHotel = @idHotel
+					AND habilitada = 1
+					AND idHabitacion NOT IN (
+						SELECT p.idHabitacion
+						FROM [PISOS_PICADOS].Reserva AS q
+						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
+						WHERE @fechaReserva BETWEEN fechaInicio
+								AND fechaFin
+						)
+				)
+			)
+		AND
+		(
+			@cantTriple <= (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].Habitacion
+				WHERE tipo = 3
+					AND idHotel = @idHotel
+					AND habilitada = 1
+					AND idHabitacion NOT IN (
+						SELECT p.idHabitacion
+						FROM [PISOS_PICADOS].Reserva AS q
+						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
+						WHERE @fechaReserva BETWEEN fechaInicio
+								AND fechaFin
+						)
+				)
+			)
+		AND
+		(
+			@cantCuadru <= (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].Habitacion
+				WHERE tipo = 4
+					AND idHotel = @idHotel
+					AND habilitada = 1
+					AND idHabitacion NOT IN (
+						SELECT p.idHabitacion
+						FROM [PISOS_PICADOS].Reserva AS q
+						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
+						WHERE @fechaReserva BETWEEN fechaInicio
+								AND fechaFin
+						)
+				)
+			)
+		AND
+		(
+			@cantKing <= (
+				SELECT COUNT(*)
+				FROM [PISOS_PICADOS].Habitacion
+				WHERE tipo = 1
+					AND idHotel = @idHotel
+					AND habilitada = 1
+					AND idHabitacion NOT IN (
+						SELECT p.idHabitacion
+						FROM [PISOS_PICADOS].Reserva AS q
+						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
+						WHERE @fechaReserva BETWEEN fechaInicio
+								AND fechaFin
+						)
+				)
+			)
+	)
 		RETURN 1;
 
 	RETURN 0;
@@ -2457,22 +2546,6 @@ BEGIN
 	SET @resultado = (@cantSimple * [PISOS_PICADOS].precioHabitacion(1, @codRegimen, @idHotel) + @cantDoble * [PISOS_PICADOS].precioHabitacion(2, @codRegimen, @idHotel) + @cantTriple * [PISOS_PICADOS].precioHabitacion(3, @codRegimen, @idHotel) + @cantCuadru * [PISOS_PICADOS].precioHabitacion(4, @codRegimen, @idHotel) + @cantKing * [PISOS_PICADOS].precioHabitacion(5, @codRegimen, @idHotel))
 
 	RETURN @resultado
-END
-GO
-
-CREATE FUNCTION [PISOS_PICADOS].calcularPrecioRenglones (@idEstadia INT)
-RETURNS INT
-AS
-BEGIN
-	DECLARE @total INT
-
-	SELECT @total = SUM(ec.cantidad * c.precio)
-	FROM [PISOS_PICADOS].EstadiaxConsumible AS ec
-	INNER JOIN Consumible AS c ON ec.idConsumible = c.idConsumible
-	WHERE ec.idEstadia = @idEstadia
-	GROUP BY ec.idEstadia
-
-	RETURN @total
 END
 GO
 
@@ -3129,6 +3202,24 @@ BEGIN
 
 	RETURN 0
 END
+GO
+
+CREATE FUNCTION [PISOS_PICADOS].precioHabitacionesHotel(@idHotel INT)
+RETURNS TABLE
+AS 
+	RETURN 
+	(SELECT T.tipoCamas AS [Tipo de Habitacion]
+	,r.descripcion AS [Tipo Regimen]
+	,[PISOS_PICADOS].precioHabitacion(T.idTipo,R.codigoRegimen,h.idHotel) AS [Precio Habitacion]
+	FROM [PISOS_PICADOS].Hotel AS h
+	JOIN [PISOS_PICADOS].RegimenxHotel AS rxh ON h.idHotel = rxh.idHotel
+	JOIN[PISOS_PICADOS].Regimen AS r ON rxh.codigoRegimen = r.codigoRegimen
+	JOIN [PISOS_PICADOS].Habitacion AS hab ON h.idHotel = hab.idHotel
+	JOIN [PISOS_PICADOS].Tipo AS t on hab.tipo = t.idTipo
+	WHERE h.idHotel = 1
+	GROUP BY r.codigoRegimen,r.descripcion,t.idTipo,t.tipoCamas,h.idHotel
+	ORDER BY r.codigoRegimen
+	)
 GO
 
 /* STORED PROCEDURES ------------------------------------------------------*/
@@ -4183,7 +4274,7 @@ BEGIN
 	WHERE codigoReserva = @codReserva
 END
 GO
-
+/*
 CREATE PROCEDURE [PISOS_PICADOS].modificarReserva @fechaInicio DATE
 	,@fechaFin DATE
 	,@cantHuespedes INT
@@ -4316,7 +4407,7 @@ BEGIN
 	END
 END
 GO
-
+*/
 CREATE PROCEDURE [PISOS_PICADOS].FacturarReserva @codReserva INT
 	,@fecha DATE
 	,@formaDePago VARCHAR(255)
@@ -4326,11 +4417,7 @@ BEGIN
 	DECLARE @idEstadia INT
 	DECLARE @cliente INT
 
-	SET @idEstadia = (
-			SELECT e.idEstadia
-			FROM [PISOS_PICADOS].Estadia AS e
-			WHERE e.codigoReserva = @codReserva
-			)
+	SET @idEstadia = [PISOS_PICADOS].obtenerEstadia(@codReserva)
 	SET @cliente = (
 			SELECT r.idCliente
 			FROM [PISOS_PICADOS].Reserva AS r
@@ -4347,7 +4434,7 @@ BEGIN
 		@fecha
 		,@idEstadia
 		,@cliente
-		,ISNULL([PISOS_PICADOS].calcularPrecioRenglones(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idEstadia), 0)
+		,ISNULL([PISOS_PICADOS].netearConsumibles(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idEstadia), 0)
 		)
 
 	DECLARE @numFactura INT = SCOPE_IDENTITY();
