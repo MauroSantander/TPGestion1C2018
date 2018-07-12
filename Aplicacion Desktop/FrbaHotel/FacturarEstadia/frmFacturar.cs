@@ -21,6 +21,8 @@ namespace FrbaHotel.FacturarEstadia
 
         private void frmFacturar_Load(object sender, EventArgs e)
         {
+            labelTotal.Text = "$0";
+            labelDescuento.Text = "-$0";
             labelRegimen.Text = "";
             label.Text = "";
             this.CenterToScreen();
@@ -122,6 +124,65 @@ namespace FrbaHotel.FacturarEstadia
             label.Text = "Régimen de la estadía:";
             codigoReserva = Int64.Parse(textBoxCodigoReserva.Text);
 
+            labelTotalHabitaciones.Text = "$" + calcularTotalHabitaciones();
+            labelTotalConsumibles.Text = "$" + netearConsumibles();
+
+            //si tiene régimen all inclusive le resto los consumibles porque estaban incluidos
+            if (labelRegimen.Text == "All inclusive")
+            {
+                labelDescuento.Text = "-$" + netearConsumibles();
+                labelTotal.Text = "$" + calcularTotalHabitaciones();
+            }
+            else
+            {
+                labelTotal.Text = "$" + calcularTotal();
+            }
+
+        }
+
+        private string calcularTotalHabitaciones()
+        {
+            float total = 0;
+
+            for (int i = 0; i < dgvHabitaciones.Rows.Count; i++) 
+            {
+                total += float.Parse(dgvHabitaciones.Rows[i].Cells["Precio"].ToString());
+            }
+
+            return total.ToString();
+        }
+
+        private string calcularTotal()
+        {
+            //Total es total de consumibles + total de habitaciones
+            //cargo en variables asi no llamo múltiples veces al método de gusto
+            string _netearConsumibles = netearConsumibles();
+            string _calcularTotalHabitaciones = calcularTotalHabitaciones();
+
+            if (_netearConsumibles == "0" && _calcularTotalHabitaciones == "0")
+            {
+                return "0";
+            }
+            if (_netearConsumibles == "0")
+            {
+                return _calcularTotalHabitaciones;
+            }
+            if (_calcularTotalHabitaciones == "0")
+            {
+                return _netearConsumibles;
+            }
+
+            return "0";
+        }
+
+        private string netearConsumibles()
+        {
+            float total = 0;
+            SqlCommand cmdNetearConsumibles = new SqlCommand("SELECT [PISOS_PICADOS].netearConsumibles (@codigoReserva)", Globals.conexionGlobal);
+            cmdNetearConsumibles.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdNetearConsumibles.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+            total += float.Parse(cmdNetearConsumibles.ExecuteScalar().ToString());
+            return total.ToString();
         }
 
         private void cargarDataGridHabitaciones()

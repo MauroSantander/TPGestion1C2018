@@ -40,6 +40,14 @@
             this.textBoxCodigoReserva = new System.Windows.Forms.TextBox();
             this.dgvHabitaciones = new System.Windows.Forms.DataGridView();
             this.dgvConsumibles = new System.Windows.Forms.DataGridView();
+            this.labelTotal = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelDescuento = new System.Windows.Forms.Label();
+            this.labelTotalHabitaciones = new System.Windows.Forms.Label();
+            this.labelTotalConsumibles = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).BeginInit();
@@ -50,7 +58,7 @@
             // 
             this.groupBox1.Controls.Add(this.textBoxNumeroTarjeta);
             this.groupBox1.Controls.Add(this.comboBoxFormaDePago);
-            this.groupBox1.Location = new System.Drawing.Point(12, 251);
+            this.groupBox1.Location = new System.Drawing.Point(12, 328);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(362, 53);
             this.groupBox1.TabIndex = 1;
@@ -77,7 +85,7 @@
             // 
             // btnFacturar
             // 
-            this.btnFacturar.Location = new System.Drawing.Point(299, 310);
+            this.btnFacturar.Location = new System.Drawing.Point(299, 387);
             this.btnFacturar.Name = "btnFacturar";
             this.btnFacturar.Size = new System.Drawing.Size(75, 23);
             this.btnFacturar.TabIndex = 2;
@@ -87,7 +95,7 @@
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(218, 310);
+            this.btnSalir.Location = new System.Drawing.Point(218, 387);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 23);
             this.btnSalir.TabIndex = 3;
@@ -167,7 +175,7 @@
             this.dgvConsumibles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvConsumibles.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dgvConsumibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvConsumibles.Location = new System.Drawing.Point(12, 157);
+            this.dgvConsumibles.Location = new System.Drawing.Point(12, 175);
             this.dgvConsumibles.MultiSelect = false;
             this.dgvConsumibles.Name = "dgvConsumibles";
             this.dgvConsumibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -175,11 +183,91 @@
             this.dgvConsumibles.TabIndex = 5;
             this.dgvConsumibles.TabStop = false;
             // 
+            // labelTotal
+            // 
+            this.labelTotal.AutoSize = true;
+            this.labelTotal.Location = new System.Drawing.Point(344, 303);
+            this.labelTotal.Name = "labelTotal";
+            this.labelTotal.Size = new System.Drawing.Size(19, 13);
+            this.labelTotal.TabIndex = 6;
+            this.labelTotal.Text = "$0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 279);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(171, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Descuento por régimen de estadía";
+            // 
+            // labelDescuento
+            // 
+            this.labelDescuento.AutoSize = true;
+            this.labelDescuento.Location = new System.Drawing.Point(341, 279);
+            this.labelDescuento.Name = "labelDescuento";
+            this.labelDescuento.Size = new System.Drawing.Size(22, 13);
+            this.labelDescuento.TabIndex = 8;
+            this.labelDescuento.Text = "-$0";
+            // 
+            // labelTotalHabitaciones
+            // 
+            this.labelTotalHabitaciones.AutoSize = true;
+            this.labelTotalHabitaciones.Location = new System.Drawing.Point(344, 154);
+            this.labelTotalHabitaciones.Name = "labelTotalHabitaciones";
+            this.labelTotalHabitaciones.Size = new System.Drawing.Size(19, 13);
+            this.labelTotalHabitaciones.TabIndex = 9;
+            this.labelTotalHabitaciones.Text = "$0";
+            // 
+            // labelTotalConsumibles
+            // 
+            this.labelTotalConsumibles.AutoSize = true;
+            this.labelTotalConsumibles.Location = new System.Drawing.Point(344, 257);
+            this.labelTotalConsumibles.Name = "labelTotalConsumibles";
+            this.labelTotalConsumibles.Size = new System.Drawing.Size(19, 13);
+            this.labelTotalConsumibles.TabIndex = 10;
+            this.labelTotalConsumibles.Text = "$0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 257);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(110, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Total por consumibles";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 154);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(112, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Total por habitaciones";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 303);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Total";
+            // 
             // frmFacturar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 342);
+            this.ClientSize = new System.Drawing.Size(392, 417);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelTotalConsumibles);
+            this.Controls.Add(this.labelTotalHabitaciones);
+            this.Controls.Add(this.labelDescuento);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelTotal);
             this.Controls.Add(this.dgvConsumibles);
             this.Controls.Add(this.dgvHabitaciones);
             this.Controls.Add(this.groupBox2);
@@ -197,6 +285,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvHabitaciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConsumibles)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -214,5 +303,13 @@
         private System.Windows.Forms.DataGridView dgvConsumibles;
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label labelRegimen;
+        private System.Windows.Forms.Label labelTotal;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelDescuento;
+        private System.Windows.Forms.Label labelTotalHabitaciones;
+        private System.Windows.Forms.Label labelTotalConsumibles;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
