@@ -70,7 +70,6 @@
             this.labelMenuPrincipal.Size = new System.Drawing.Size(246, 39);
             this.labelMenuPrincipal.TabIndex = 5;
             this.labelMenuPrincipal.Text = "Menú Principal";
-            this.labelMenuPrincipal.Click += new System.EventHandler(this.labelMenuPrincipal_Click);
             // 
             // btnSalir
             // 

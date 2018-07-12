@@ -31,23 +31,42 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtpInicioReserva = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpFinReserva = new System.Windows.Forms.DateTimePicker();
             this.btnCrear = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxRegimen = new System.Windows.Forms.ComboBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.comboBoxHotel = new System.Windows.Forms.ComboBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.numKing = new System.Windows.Forms.NumericUpDown();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.numCuadruple = new System.Windows.Forms.NumericUpDown();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.numTriple = new System.Windows.Forms.NumericUpDown();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.numDoble = new System.Windows.Forms.NumericUpDown();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.numSimple = new System.Windows.Forms.NumericUpDown();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox5.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numKing)).BeginInit();
+            this.groupBox13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numCuadruple)).BeginInit();
+            this.groupBox14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numTriple)).BeginInit();
+            this.groupBox16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numDoble)).BeginInit();
+            this.groupBox17.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSimple)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -69,7 +88,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.dateTimePicker1);
+            this.groupBox2.Controls.Add(this.dtpFinReserva);
             this.groupBox2.Location = new System.Drawing.Point(12, 169);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(230, 53);
@@ -77,16 +96,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Hasta";
             // 
-            // dateTimePicker1
+            // dtpFinReserva
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(15, 19);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 1;
+            this.dtpFinReserva.Location = new System.Drawing.Point(15, 19);
+            this.dtpFinReserva.Name = "dtpFinReserva";
+            this.dtpFinReserva.Size = new System.Drawing.Size(200, 20);
+            this.dtpFinReserva.TabIndex = 1;
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(167, 292);
+            this.btnCrear.Location = new System.Drawing.Point(425, 253);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
             this.btnCrear.TabIndex = 4;
@@ -95,7 +114,7 @@
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(86, 292);
+            this.btnSalir.Location = new System.Drawing.Point(344, 253);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 23);
             this.btnSalir.TabIndex = 5;
@@ -115,38 +134,12 @@
             // 
             // comboBoxRegimen
             // 
+            this.comboBoxRegimen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRegimen.FormattingEnabled = true;
             this.comboBoxRegimen.Location = new System.Drawing.Point(15, 19);
             this.comboBoxRegimen.Name = "comboBoxRegimen";
             this.comboBoxRegimen.Size = new System.Drawing.Size(121, 21);
             this.comboBoxRegimen.TabIndex = 0;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.numericUpDown1);
-            this.groupBox4.Location = new System.Drawing.Point(167, 228);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(75, 53);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Huéspedes";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(15, 19);
-            this.numericUpDown1.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(45, 20);
-            this.numericUpDown1.TabIndex = 0;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // label1
             // 
@@ -178,26 +171,162 @@
             // 
             // comboBoxHotel
             // 
+            this.comboBoxHotel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxHotel.FormattingEnabled = true;
             this.comboBoxHotel.Location = new System.Drawing.Point(12, 19);
             this.comboBoxHotel.Name = "comboBoxHotel";
             this.comboBoxHotel.Size = new System.Drawing.Size(200, 21);
             this.comboBoxHotel.TabIndex = 0;
             // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.groupBox12);
+            this.groupBox11.Controls.Add(this.groupBox13);
+            this.groupBox11.Controls.Add(this.groupBox14);
+            this.groupBox11.Controls.Add(this.groupBox16);
+            this.groupBox11.Controls.Add(this.groupBox17);
+            this.groupBox11.Location = new System.Drawing.Point(252, 9);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(248, 210);
+            this.groupBox11.TabIndex = 12;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Habitaciones";
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.numKing);
+            this.groupBox12.Location = new System.Drawing.Point(23, 142);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(102, 53);
+            this.groupBox12.TabIndex = 13;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "King";
+            // 
+            // numKing
+            // 
+            this.numKing.Location = new System.Drawing.Point(27, 19);
+            this.numKing.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numKing.Name = "numKing";
+            this.numKing.Size = new System.Drawing.Size(45, 20);
+            this.numKing.TabIndex = 0;
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.numCuadruple);
+            this.groupBox13.Location = new System.Drawing.Point(137, 83);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(102, 53);
+            this.groupBox13.TabIndex = 17;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Base cuádruple";
+            // 
+            // numCuadruple
+            // 
+            this.numCuadruple.Location = new System.Drawing.Point(24, 19);
+            this.numCuadruple.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numCuadruple.Name = "numCuadruple";
+            this.numCuadruple.Size = new System.Drawing.Size(45, 20);
+            this.numCuadruple.TabIndex = 0;
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.numTriple);
+            this.groupBox14.Location = new System.Drawing.Point(23, 83);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(102, 53);
+            this.groupBox14.TabIndex = 15;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Base triple";
+            // 
+            // numTriple
+            // 
+            this.numTriple.Location = new System.Drawing.Point(27, 19);
+            this.numTriple.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numTriple.Name = "numTriple";
+            this.numTriple.Size = new System.Drawing.Size(45, 20);
+            this.numTriple.TabIndex = 0;
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.numDoble);
+            this.groupBox16.Location = new System.Drawing.Point(137, 24);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(102, 53);
+            this.groupBox16.TabIndex = 14;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Base doble";
+            // 
+            // numDoble
+            // 
+            this.numDoble.Location = new System.Drawing.Point(24, 19);
+            this.numDoble.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numDoble.Name = "numDoble";
+            this.numDoble.Size = new System.Drawing.Size(45, 20);
+            this.numDoble.TabIndex = 0;
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.numSimple);
+            this.groupBox17.Location = new System.Drawing.Point(23, 24);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(102, 53);
+            this.groupBox17.TabIndex = 12;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Base simple";
+            // 
+            // numSimple
+            // 
+            this.numSimple.Location = new System.Drawing.Point(27, 19);
+            this.numSimple.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numSimple.Name = "numSimple";
+            this.numSimple.Size = new System.Drawing.Size(45, 20);
+            this.numSimple.TabIndex = 0;
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.Location = new System.Drawing.Point(263, 253);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 13;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            // 
             // frmGenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(263, 324);
+            this.ClientSize = new System.Drawing.Size(512, 288);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnCrear);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox11);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmGenerarReserva";
             this.Text = "Generar reserva";
@@ -205,9 +334,18 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numKing)).EndInit();
+            this.groupBox13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numCuadruple)).EndInit();
+            this.groupBox14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numTriple)).EndInit();
+            this.groupBox16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numDoble)).EndInit();
+            this.groupBox17.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numSimple)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,17 +356,27 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dtpInicioReserva;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpFinReserva;
         private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox comboBoxRegimen;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ComboBox comboBoxHotel;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.NumericUpDown numKing;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.NumericUpDown numCuadruple;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.NumericUpDown numTriple;
+        private System.Windows.Forms.GroupBox groupBox16;
+        private System.Windows.Forms.NumericUpDown numDoble;
+        private System.Windows.Forms.GroupBox groupBox17;
+        private System.Windows.Forms.NumericUpDown numSimple;
+        private System.Windows.Forms.Button btnLimpiar;
 
     }
 }
