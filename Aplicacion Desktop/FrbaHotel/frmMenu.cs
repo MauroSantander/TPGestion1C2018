@@ -107,10 +107,6 @@ namespace FrbaHotel
             {
                 btnABMHabitacion.Enabled = true;
             }
-            if (id == 6)
-            {
-                btnABMRegimenEstadia.Enabled = true;
-            }
             if (id == 7)
             {
                 btnGenerarReserva.Enabled = true;
