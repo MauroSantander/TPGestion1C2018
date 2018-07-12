@@ -201,9 +201,9 @@ namespace FrbaHotel.FacturarEstadia
             //chequeo si ya se facturó
             SqlCommand cmdChequearSiYaSeFacturo = new SqlCommand("SELECT [PISOS_PICADOS].yaSeFacturo (@codigoReserva)", Globals.conexionGlobal);
             //agrego parámetro
-            cmdChequearSiYaSeFacturo.Parameters.Add("@codReserva", SqlDbType.Int);
+            cmdChequearSiYaSeFacturo.Parameters.Add("@codigoReserva", SqlDbType.Int);
             //doy valor a parámetro
-            cmdChequearSiYaSeFacturo.Parameters["@codReserva"].Value = codigoReserva;
+            cmdChequearSiYaSeFacturo.Parameters["@codigoReserva"].Value = codigoReserva;
             //ejecuto y recibo resultado
             int yaSeFacturo = (int)cmdChequearSiYaSeFacturo.ExecuteScalar();
 
