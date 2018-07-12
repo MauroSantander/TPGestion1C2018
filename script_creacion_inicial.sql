@@ -262,6 +262,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].mostrarHabitaciones', N'IF') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].puedeBorrarseRegimen', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].puedeBorrarseRegimen;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].yaSeFacturo', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].yaSeFacturo;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -3099,6 +3102,18 @@ RETURN 0
 RETURN 1
 END 
 GO
+
+CREATE FUNCTION [PISOS_PICADOS].yaSeFacturo(@codigoReserva INT)
+RETURNS INT
+AS 
+BEGIN
+IF EXISTS (SELECT F.numeroFactura FROM [PISOS_PICADOS].Factura AS f JOIN Estadia AS e ON f.idEstadia = e.idEstadia
+WHERE e.codigoReserva = @codigoReserva )
+RETURN 1
+RETURN 0
+END 
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
