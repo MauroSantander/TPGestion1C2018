@@ -159,6 +159,7 @@ namespace FrbaHotel.Login
             //Si es invitado se lo manda al menu con rol n° 3, que es el de invitado
             frmMenu frmMenuInstance = new frmMenu();
             frmMenuInstance.asignarRol(3);
+            Globals.rolUsuario = "Guest";
             frmMenuInstance.Show();
             this.Hide();
         }

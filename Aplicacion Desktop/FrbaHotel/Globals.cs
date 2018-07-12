@@ -20,6 +20,7 @@ namespace FrbaHotel
         
         public static int idUsuarioSesion = 0;
         public static int idHotelUsuario = 0;
+        public static string rolUsuario = "";
 
         public static void setUsuarioSesion(int id) 
         {

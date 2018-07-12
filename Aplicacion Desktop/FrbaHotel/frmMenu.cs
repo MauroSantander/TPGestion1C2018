@@ -19,11 +19,6 @@ namespace FrbaHotel
             InitializeComponent();
         }
 
-        private void labelMenuPrincipal_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnABMRol_Click(object sender, EventArgs e)
         {
             (new FrbaHotel.AbmRol.frmABMRol()).ShowDialog();
@@ -56,7 +51,7 @@ namespace FrbaHotel
 
         private void btnModificarReserva_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.GenerarModificacionReserva.frmGenerarReserva()/*.tabControl(1)*/).ShowDialog();
+            (new FrbaHotel.GenerarModificacionReserva.frmModificarReserva()).ShowDialog();
         }
 
         private void btnRegistrarConsumibles_Click(object sender, EventArgs e)
@@ -139,33 +134,27 @@ namespace FrbaHotel
 
         public void asignarRol(int idRol)
         {
-              String querySelect = "SELECT idFuncionalidad FROM [PISOS_PICADOS].RolxFuncionalidad WHERE idRol = @id ";
+            if (idRol == 1)
+            {
+                Globals.rolUsuario = "Administrador";
+            }
 
-              SqlCommand commandSelect = new SqlCommand(querySelect, Globals.conexionGlobal);
-              commandSelect.Parameters.Add("@id", SqlDbType.Int);
-              commandSelect.Parameters["@id"].Value = idRol;
+            String querySelect = "SELECT idFuncionalidad FROM [PISOS_PICADOS].RolxFuncionalidad WHERE idRol = @id ";
+
+            SqlCommand commandSelect = new SqlCommand(querySelect, Globals.conexionGlobal);
+            commandSelect.Parameters.Add("@id", SqlDbType.Int);
+            commandSelect.Parameters["@id"].Value = idRol;
               
-              SqlDataReader reader = commandSelect.ExecuteReader();
+            SqlDataReader reader = commandSelect.ExecuteReader();
 
-              List<int> funcionalidades = new List<int>();
-              while (reader.Read())
-              {
-                  int id = (int) reader["idFuncionalidad"];
-                  habilitarBoton(id);
-                  //String lectura = reader["idFuncionalidad"].ToString();
-                  //MessageBox.Show(lectura);
-                  //funcionalidades.Add(Convert.ToInt32(reader["idFuncionalidad"]));
-              }
-
-              //String cadena = funcionalidades.ToString();
-            
-              /*foreach (int id in funcionalidades)
-              {
-                  habilitarBoton(id);
-              }*/
-              reader.Close();
-              //this.ShowDialog();
-          }
+            List<int> funcionalidades = new List<int>();
+            while (reader.Read())
+            {
+                int id = (int) reader["idFuncionalidad"];
+                habilitarBoton(id);
+            }
+            reader.Close();
+        }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
