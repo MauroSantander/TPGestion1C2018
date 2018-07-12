@@ -105,7 +105,7 @@ namespace FrbaHotel.AbmHotel
             pantallaHoteles = pantHoteles;
             if (fechaCreacion != "")
             {
-                dateTimePickerCreacion.Value = DateTime.ParseExact(fechaCreacion, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                dateTimePickerCreacion.Text= fechaCreacion;
             }
 
             
