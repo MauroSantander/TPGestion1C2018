@@ -2290,9 +2290,9 @@ GO
 
 CREATE FUNCTION [Pisos_Picados].obtenerEstadia (@codReserva INT)
 RETURNS INT
-AS 
+AS
 BEGIN
-	RETURN(
+	RETURN (
 			SELECT e.idEstadia
 			FROM [PISOS_PICADOS].Estadia AS e
 			WHERE e.codigoReserva = @codReserva
@@ -2306,13 +2306,15 @@ RETURNS NUMERIC(9, 2)
 AS
 BEGIN
 	DECLARE @idEstadia INT
-	SET @idEstadia =[PISOS_PICADOS].obtenerEstadia(@codigoReserva)
+
+	SET @idEstadia = [PISOS_PICADOS].obtenerEstadia(@codigoReserva)
+
 	RETURN (
-			SELECT   SUM(ec.cantidad * c.precio)
-	FROM [PISOS_PICADOS].EstadiaxConsumible AS ec
-	INNER JOIN Consumible AS c ON ec.idConsumible = c.idConsumible
-	WHERE ec.idEstadia = @idEstadia
-	GROUP BY ec.idEstadia
+			SELECT SUM(ec.cantidad * c.precio)
+			FROM [PISOS_PICADOS].EstadiaxConsumible AS ec
+			INNER JOIN Consumible AS c ON ec.idConsumible = c.idConsumible
+			WHERE ec.idEstadia = @idEstadia
+			GROUP BY ec.idEstadia
 			)
 END
 GO
@@ -2374,19 +2376,20 @@ GO
 /*Dada una fecha un hotel y una determinada cant de habitaciones de un tipo verifica si el hotel 
 puede cumplir la demanda en la fecha dada*/
 CREATE FUNCTION [PISOS_PICADOS].hotelCumple (
-	 @cantSimple INT
+	@cantSimple INT
 	,@cantDoble INT
 	,@cantTriple INT
 	,@cantCuadru INT
 	,@cantKing INT
 	,@idHotel INT
-	,@fechaReserva DATE
+	,@fechaInicio DATE
+	,@fechaFin DATE
 	)
 RETURNS INT
 AS
 BEGIN
-	IF( (
-			@cantSimple <= (
+	IF (
+			@cantSimple >= (
 				SELECT COUNT(*)
 				FROM [PISOS_PICADOS].Habitacion
 				WHERE tipo = 1
@@ -2396,14 +2399,24 @@ BEGIN
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
 						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-						WHERE @fechaReserva BETWEEN fechaInicio
-								AND fechaFin
+						WHERE (
+								@fechaInicio BETWEEN fechaInicio
+									AND fechaFin
+								)
+							OR (
+								@fechaInicio < fechaInicio
+								AND (
+									@fechaFin BETWEEN fechaInicio
+										AND fechaFin
+									)
+								)
 						)
 				)
 			)
-		AND
-		(
-			@cantDoble <= (
+		RETURN 1
+
+	IF (
+			@cantDoble >= (
 				SELECT COUNT(*)
 				FROM [PISOS_PICADOS].Habitacion
 				WHERE tipo = 2
@@ -2413,14 +2426,24 @@ BEGIN
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
 						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-						WHERE @fechaReserva BETWEEN fechaInicio
-								AND fechaFin
+						WHERE (
+								@fechaInicio BETWEEN fechaInicio
+									AND fechaFin
+								)
+							OR (
+								@fechaInicio < fechaInicio
+								AND (
+									@fechaFin BETWEEN fechaInicio
+										AND fechaFin
+									)
+								)
 						)
 				)
 			)
-		AND
-		(
-			@cantTriple <= (
+		RETURN 2
+
+	IF (
+			@cantTriple >= (
 				SELECT COUNT(*)
 				FROM [PISOS_PICADOS].Habitacion
 				WHERE tipo = 3
@@ -2430,14 +2453,24 @@ BEGIN
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
 						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-						WHERE @fechaReserva BETWEEN fechaInicio
-								AND fechaFin
+						WHERE (
+								@fechaInicio BETWEEN fechaInicio
+									AND fechaFin
+								)
+							OR (
+								@fechaInicio < fechaInicio
+								AND (
+									@fechaFin BETWEEN fechaInicio
+										AND fechaFin
+									)
+								)
 						)
 				)
 			)
-		AND
-		(
-			@cantCuadru <= (
+		RETURN 3
+
+	IF (
+			@cantCuadru >= (
 				SELECT COUNT(*)
 				FROM [PISOS_PICADOS].Habitacion
 				WHERE tipo = 4
@@ -2447,32 +2480,50 @@ BEGIN
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
 						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-						WHERE @fechaReserva BETWEEN fechaInicio
-								AND fechaFin
+						WHERE (
+								@fechaInicio BETWEEN fechaInicio
+									AND fechaFin
+								)
+							OR (
+								@fechaInicio < fechaInicio
+								AND (
+									@fechaFin BETWEEN fechaInicio
+										AND fechaFin
+									)
+								)
 						)
 				)
 			)
-		AND
-		(
-			@cantKing <= (
+		RETURN 4
+
+	IF (
+			@cantKing >= (
 				SELECT COUNT(*)
 				FROM [PISOS_PICADOS].Habitacion
-				WHERE tipo = 1
+				WHERE tipo = 5
 					AND idHotel = @idHotel
 					AND habilitada = 1
 					AND idHabitacion NOT IN (
 						SELECT p.idHabitacion
 						FROM [PISOS_PICADOS].Reserva AS q
 						INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-						WHERE @fechaReserva BETWEEN fechaInicio
-								AND fechaFin
+						WHERE (
+								@fechaInicio BETWEEN fechaInicio
+									AND fechaFin
+								)
+							OR (
+								@fechaInicio < fechaInicio
+								AND (
+									@fechaFin BETWEEN fechaInicio
+										AND fechaFin
+									)
+								)
 						)
 				)
 			)
-	)
-		RETURN 1;
+		RETURN 5
 
-	RETURN 0;
+	RETURN 1
 END
 GO
 
@@ -2486,20 +2537,20 @@ CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen (
 	)
 RETURNS TABLE
 AS
-	RETURN (
-			SELECT TOP (@cant) idHabitacion
-			FROM [PISOS_PICADOS].Habitacion
-			WHERE tipo = @tipo
-				AND idHotel = @idHotel
-				AND habilitada = 1
-				AND idHabitacion IN (
-					SELECT p.idHabitacion
-					FROM [PISOS_PICADOS].Reserva AS q
-					INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
-					WHERE @fechaReserva NOT BETWEEN fechaInicio
-							AND fechaFin
-					)
-			);
+RETURN (
+		SELECT TOP (@cant) idHabitacion
+		FROM [PISOS_PICADOS].Habitacion
+		WHERE tipo = @tipo
+			AND idHotel = @idHotel
+			AND habilitada = 1
+			AND idHabitacion IN (
+				SELECT p.idHabitacion
+				FROM [PISOS_PICADOS].Reserva AS q
+				INNER JOIN [PISOS_PICADOS].HabitacionxReserva AS p ON q.codigoReserva = p.codigoReserva
+				WHERE @fechaReserva NOT BETWEEN fechaInicio
+						AND fechaFin
+				)
+		);
 GO
 
 /* infroma si un cliente dado su nombre apellido y numero de identificacion esta habilitado
@@ -3204,21 +3255,25 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].precioHabitacionesHotel(@idHotel INT)
+CREATE FUNCTION [PISOS_PICADOS].precioHabitacionesHotel (@idHotel INT)
 RETURNS TABLE
-AS 
-	RETURN 
-	(SELECT T.tipoCamas AS [Tipo de Habitacion]
-	,r.descripcion AS [Tipo Regimen]
-	,[PISOS_PICADOS].precioHabitacion(T.idTipo,R.codigoRegimen,h.idHotel) AS [Precio Habitacion]
-	FROM [PISOS_PICADOS].Hotel AS h
-	JOIN [PISOS_PICADOS].RegimenxHotel AS rxh ON h.idHotel = rxh.idHotel
-	JOIN[PISOS_PICADOS].Regimen AS r ON rxh.codigoRegimen = r.codigoRegimen
-	JOIN [PISOS_PICADOS].Habitacion AS hab ON h.idHotel = hab.idHotel
-	JOIN [PISOS_PICADOS].Tipo AS t on hab.tipo = t.idTipo
-	WHERE h.idHotel = 1
-	GROUP BY r.codigoRegimen,r.descripcion,t.idTipo,t.tipoCamas,h.idHotel
-	)
+AS
+RETURN (
+		SELECT T.tipoCamas AS [Tipo de Habitacion]
+			,r.descripcion AS [Tipo Regimen]
+			,[PISOS_PICADOS].precioHabitacion(T.idTipo, R.codigoRegimen, h.idHotel) AS [Precio Habitacion]
+		FROM [PISOS_PICADOS].Hotel AS h
+		INNER JOIN [PISOS_PICADOS].RegimenxHotel AS rxh ON h.idHotel = rxh.idHotel
+		INNER JOIN [PISOS_PICADOS].Regimen AS r ON rxh.codigoRegimen = r.codigoRegimen
+		INNER JOIN [PISOS_PICADOS].Habitacion AS hab ON h.idHotel = hab.idHotel
+		INNER JOIN [PISOS_PICADOS].Tipo AS t ON hab.tipo = t.idTipo
+		WHERE h.idHotel = 1
+		GROUP BY r.codigoRegimen
+			,r.descripcion
+			,t.idTipo
+			,t.tipoCamas
+			,h.idHotel
+		)
 GO
 
 /* STORED PROCEDURES ------------------------------------------------------*/
@@ -4273,6 +4328,7 @@ BEGIN
 	WHERE codigoReserva = @codReserva
 END
 GO
+
 /*
 CREATE PROCEDURE [PISOS_PICADOS].modificarReserva @fechaInicio DATE
 	,@fechaFin DATE
