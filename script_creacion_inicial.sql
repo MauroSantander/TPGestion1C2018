@@ -2414,15 +2414,15 @@ CREATE FUNCTION [PISOS_PICADOS].hotelCumple (
 RETURNS INT
 AS
 BEGIN
-	IF ( @cantSimple >= (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(1,@idHotel,@fechaInicio ,@fechaFin )))
+	IF ( @cantSimple > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(1,@idHotel,@fechaInicio ,@fechaFin )))
 	RETURN 1
-	IF ( @cantDoble >= (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(2,@idHotel,@fechaInicio ,@fechaFin )))
+	IF ( @cantDoble > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(2,@idHotel,@fechaInicio ,@fechaFin )))
 	RETURN 2
-	IF ( @cantTriple >= (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(3,@idHotel,@fechaInicio ,@fechaFin )))
+	IF ( @cantTriple > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(3,@idHotel,@fechaInicio ,@fechaFin )))
 	RETURN 3
-	IF ( @cantCuadru >= (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(4,@idHotel,@fechaInicio ,@fechaFin )))
+	IF ( @cantCuadru > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(4,@idHotel,@fechaInicio ,@fechaFin )))
 	RETURN 4
-	IF ( @cantKing >= (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(5,@idHotel,@fechaInicio ,@fechaFin )))
+	IF ( @cantKing > (SELECT COUNT(*) FROM [PISOS_PICADOS].habitacionesQueCumplen(5,@idHotel,@fechaInicio ,@fechaFin )))
 	RETURN 5
 	RETURN 0				
 END
