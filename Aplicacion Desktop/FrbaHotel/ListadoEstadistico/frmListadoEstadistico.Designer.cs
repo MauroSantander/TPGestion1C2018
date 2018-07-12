@@ -95,6 +95,7 @@
             // 
             // comboBoxAño
             // 
+            this.comboBoxAño.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAño.FormattingEnabled = true;
             this.comboBoxAño.Location = new System.Drawing.Point(407, 45);
             this.comboBoxAño.Name = "comboBoxAño";
@@ -121,6 +122,7 @@
             // 
             // comboBoxTops
             // 
+            this.comboBoxTops.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTops.FormattingEnabled = true;
             this.comboBoxTops.Location = new System.Drawing.Point(10, 45);
             this.comboBoxTops.Name = "comboBoxTops";
