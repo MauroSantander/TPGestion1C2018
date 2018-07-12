@@ -38,7 +38,7 @@ namespace FrbaHotel.AbmHotel
         private void buttonBaja_Click(object sender, EventArgs e)
         {
             
-            
+            //chequeos
 
                     if ( razon.Text=="") { MessageBox.Show("Informe el motivo de la baja"); }
                     if (dateTimeDesde.Value > dateTimeHasta.Value) { MessageBox.Show("Coloque un rango de fechas correcto"); }
@@ -47,9 +47,12 @@ namespace FrbaHotel.AbmHotel
                     puedeDarseDeBaja.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
                     puedeDarseDeBaja.Parameters.AddWithValue("@fechaFin", dateTimeHasta.Value.ToString("yyyy-MM-dd"));
                      Boolean  puede = (bool)puedeDarseDeBaja.ExecuteScalar();
-                   
+            //
+      
                     if (puede)
                     {
+                        //PASO CHEQUEOS, SE DA LA BAJA
+
                         SqlCommand comandoBajaHotel = new SqlCommand("PISOS_PICADOS.bajaDeHotel", Globals.conexionGlobal);
                         comandoBajaHotel.CommandType = CommandType.StoredProcedure;
 

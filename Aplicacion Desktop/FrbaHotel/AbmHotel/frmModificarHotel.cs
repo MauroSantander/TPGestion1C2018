@@ -23,7 +23,8 @@ namespace FrbaHotel.AbmHotel
             InitializeComponent();
         }
         
-
+        // BOTON MODIFICAR ------------------------------------------------------------------------------------------- 
+     
         private void button1_Click(object sender, EventArgs e)
         {
             
@@ -76,7 +77,8 @@ namespace FrbaHotel.AbmHotel
                 comandoMod.ExecuteReader();
                 if (checkedListBoxRegimenesAgregar.CheckedItems.Count > 0)
                 {
-                    //agrega regimenes seleccionados 
+                //agrega regimenes seleccionados 
+                
                     for (int i = 0; i < checkedListBoxRegimenesAgregar.CheckedItems.Count; i++)
                     {
 
@@ -97,6 +99,8 @@ namespace FrbaHotel.AbmHotel
 
 
                 String regimenesSinModificar="";
+
+            //QUITAR REGIMENES QUE POSEE
 
                 if (checkedListBoxRegimenes.CheckedItems.Count > 0) 
                 {
