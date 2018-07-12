@@ -81,7 +81,8 @@ namespace FrbaHotel
 
         private void btnFacturarEstadia_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("No implementado");
+            FacturarEstadia.frmFacturar instanciaFacturar = new FacturarEstadia.frmFacturar();
+            instanciaFacturar.ShowDialog();
         }
 
         private void btnListadoEstadistico_Click(object sender, EventArgs e)
