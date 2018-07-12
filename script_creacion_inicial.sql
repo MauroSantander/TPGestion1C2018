@@ -588,7 +588,7 @@ CREATE TABLE [PISOS_PICADOS].FormaDePago (
 	idFormaDePago INT PRIMARY KEY IDENTITY
 	,idFactura INT REFERENCES [PISOS_PICADOS].Factura
 	,idTipoDePago INT REFERENCES [PISOS_PICADOS].TipoDePago 
-	,numeroTarjeta INT DEFAULT NULL
+	,numeroTarjeta BIGINT DEFAULT NULL
 	)
 
 CREATE TABLE [PISOS_PICADOS].RenglonFactura (
@@ -4285,13 +4285,16 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].FacturarReserva @idEstadia INT
+CREATE PROCEDURE [PISOS_PICADOS].FacturarReserva @codReserva INT
 	,@fecha DATE
-	,@cliente INT
 	,@formaDePago VARCHAR(255)
-	,@numeroTarjeta INT 
+	,@numeroTarjeta BIGINT 
 AS
 BEGIN
+	DECLARE @idEstadia INT
+	DECLARE @cliente INT
+	SELECT @idEstadia =e.idEstadia FROM [PISOS_PICADOS].Estadia AS e WHERE e.codigoReserva = @codReserva
+	SELECT @cliente =r.idCliente FROM [PISOS_PICADOS].Reserva AS r WHERE r.codigoReserva = @codReserva
 	INSERT INTO [PISOS_PICADOS].Factura (
 		fecha
 		,idEstadia
