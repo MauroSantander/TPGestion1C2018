@@ -458,7 +458,8 @@ CREATE TABLE [PISOS_PICADOS].Hotel (
 
 CREATE TABLE [PISOS_PICADOS].EmpleadoxHotel (
 	idUsuario INT REFERENCES [PISOS_PICADOS].Empleado
-	,idHotel INT REFERENCES [PISOS_PICADOS].Hotel PRIMARY KEY (
+	,idHotel INT REFERENCES [PISOS_PICADOS].Hotel 
+	 PRIMARY KEY (
 		idUsuario
 		,idHotel
 		)
@@ -515,7 +516,7 @@ CREATE TABLE [PISOS_PICADOS].RolxFuncionalidad (
 CREATE TABLE [PISOS_PICADOS].RolxUsuario (
 	idRol INT REFERENCES [PISOS_PICADOS].Rol
 	,idUsuario INT REFERENCES [PISOS_PICADOS].Usuario
-	,PRIMARY KEY (
+	PRIMARY KEY (
 		idRol
 		,idUsuario
 		)
@@ -3510,12 +3511,12 @@ AS
 BEGIN
 	INSERT INTO [PISOS_PICADOS].RolxUsuario
 	VALUES (
-		@idUsuario
-		,(
+		(
 			SELECT idRol
 			FROM [PISOS_PICADOS].Rol
 			WHERE nombreRol = @nombreRol
 			)
+		,@idUsuario
 		)
 END;
 GO
