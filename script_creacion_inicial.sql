@@ -4186,55 +4186,15 @@ AS
 		,@idCliente
 		,((DATEDIFF(day, @fechaInicio, @fechaFIN)) * [PISOS_PICADOS].precioReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel))
 		);
-/*ACA*/
 	DECLARE @idReserva INT = SCOPE_IDENTITY();
-	DECLARE @idHabitacion INT,@numero INT,@piso INT ,@idTipo INT, @tipo VARCHAR(255)
-	DECLARE C1 CURSOR 
-	FOR SELECT  *
-				FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru
-				,@cantKing,@idHotel,@fechaInicio,@fechaFin) 
-	OPEN C1	
-	FETCH NEXT FROM C1 INTO  @idHabitacion ,@numero ,@piso  ,@idTipo , @tipo 
-	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			@idHabitacion
-			,@idReserva
-			);	
-	FETCH NEXT FROM C1 INTO  @idHabitacion ,@numero ,@piso  ,@idTipo , @tipo 
-	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			@idHabitacion
-			,@idReserva
-			);	
-	FETCH NEXT FROM C1 INTO  @idHabitacion ,@numero ,@piso  ,@idTipo , @tipo 
-	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			@idHabitacion
-			,@idReserva
-			);	
-	FETCH NEXT FROM C1 INTO  @idHabitacion ,@numero ,@piso  ,@idTipo , @tipo 
-	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			@idHabitacion
-			,@idReserva
-			);	
-	FETCH NEXT FROM C1 INTO  @idHabitacion ,@numero ,@piso  ,@idTipo , @tipo 
-	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			@idHabitacion
-			,@idReserva
-			);	
 
-/*	
-	WHILE (@@FETCH_STATUS = 0)
-	BEGIN
+
+	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
+		SELECT a.idHabitacion,@idReserva
+		FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing
+		,@idHotel,@fechaInicio,@fechaFin) AS a     
+			
 	
-	FETCH NEXT FROM C1 INTO @idHabitacion ,@numero ,@piso  ,@idTipo , @tipo 
-	END	
-*/
-	CLOSE C1
-	DEALLOCATE C1
-
 	RETURN @idReserva
 GO
 
@@ -4382,24 +4342,11 @@ BEGIN
 	INSERT INTO [PISOS_PICADOS].Modificacion(estadoReserva,descripcion,usuario,fecha)
 	Values(2,@motivo,@idAutor,@fechaActual)
 
-	DECLARE @idHabitacion INT
-	DECLARE C2 CURSOR 
-	FOR SELECT  a.idHabitacion
-				FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru
-				,@cantKing,@idHotel,@fechaInicio,@fechaFin) AS a
-	OPEN C2
-	FETCH C2 INTO @idHabitacion
-	WHILE (@@FETCH_STATUS = 0)
-	BEGIN
 	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			@idHabitacion
-			,@idReserva
-			);	
-	FETCH C2 INTO @idHabitacion	
-	END	
-	CLOSE C2
-	DEALLOCATE C2
+		SELECT a.idHabitacion,@idReserva
+		FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing
+		,@idHotel,@fechaInicio,@fechaFin) AS a     
+
 END
 GO
 
