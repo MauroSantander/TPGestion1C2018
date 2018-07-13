@@ -3281,14 +3281,14 @@ SELECT u.idUsuario AS idUsuario
 ,u.mail AS Mail
 ,u.telefono AS Telefono
 ,u.calle AS Calle
-,u.nroCalle AS [Numero de Calle]
+,u.nroCalle AS [Numero de calle]
 ,u.localidad AS Localidad
-,p.nombrePais AS [Pais de Origen]
+,p.nombrePais AS Pais
 ,c.nacionalidad AS Nacionalidad
-,u.tipoIdentificacion AS [Tipo de Identificacion]
-,u.numeroIdentificacion AS [Numero de Identificacion]
-,u.fechaNacimiento AS [Fecha de Nacimiento]
-,eu.detalleEstado AS [Estado de Usuario]
+,u.tipoIdentificacion AS [Tipo de identificacion]
+,u.numeroIdentificacion AS [Numero de identificacion]
+,u.fechaNacimiento AS [Fecha de nacimiento]
+,eu.detalleEstado AS [Estado de usuario]
 FROM [PISOS_PICADOS].Usuario AS u JOIN [PISOS_PICADOS].Cliente AS c ON u.idUsuario = c.idUsuario
 JOIN [PISOS_PICADOS].Pais AS p ON u.pais = p.idPais 
 JOIN [PISOS_PICADOS].EstadoUsuario AS eu ON u.estado = eu.idEstado
