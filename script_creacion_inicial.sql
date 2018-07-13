@@ -4596,7 +4596,10 @@ AS
 	COMMIT TRANSACTION TREliminacionHotelesReserva
 	SET @resp = 0
 	END
+	ELSE
+	BEGIN
 	ROLLBACK TRANSACTION TREliminacionHotelesReserva;
+	END
 	RETURN @resp
 GO
 
