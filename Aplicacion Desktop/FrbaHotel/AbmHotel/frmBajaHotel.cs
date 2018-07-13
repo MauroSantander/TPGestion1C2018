@@ -30,8 +30,20 @@ namespace FrbaHotel.AbmHotel
 
         private void frmBajaHotel_Load(object sender, EventArgs e)
         {
-            textBoxId.Text = idHotel.ToString();
+
             this.CenterToScreen();
+            textBoxId.Text = idHotel.ToString();
+            SqlCommand cmdNombreHotel = new SqlCommand("select nombre from [PISOS_PICADOS].Hotel where idHotel= @id", Globals.conexionGlobal);
+            cmdNombreHotel.Parameters.AddWithValue("@id", idHotel);
+            SqlDataReader reader = cmdNombreHotel.ExecuteReader();
+
+            while (reader.Read())
+            {
+                textBoxNombre.Text=reader["nombre"].ToString();
+            }
+
+            reader.Close();
+           
         }
 
        

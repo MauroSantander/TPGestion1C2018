@@ -37,29 +37,34 @@
             this.buttonBaja = new System.Windows.Forms.Button();
             this.razon = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.textBoxNombre = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(124, 41);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(130, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.Size = new System.Drawing.Size(59, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "ID Hotel";
             // 
             // textBoxId
             // 
-            this.textBoxId.Location = new System.Drawing.Point(61, 63);
+            this.textBoxId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxId.Location = new System.Drawing.Point(90, 31);
             this.textBoxId.Name = "textBoxId";
             this.textBoxId.ReadOnly = true;
-            this.textBoxId.Size = new System.Drawing.Size(200, 20);
+            this.textBoxId.Size = new System.Drawing.Size(139, 21);
             this.textBoxId.TabIndex = 1;
+            this.textBoxId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 111);
+            this.label2.Location = new System.Drawing.Point(12, 134);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 2;
@@ -68,7 +73,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 158);
+            this.label3.Location = new System.Drawing.Point(12, 181);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 3;
@@ -76,21 +81,24 @@
             // 
             // dateTimeDesde
             // 
-            this.dateTimeDesde.Location = new System.Drawing.Point(90, 109);
+            this.dateTimeDesde.Location = new System.Drawing.Point(90, 132);
+            this.dateTimeDesde.MinDate = new System.DateTime(2018, 7, 13, 0, 0, 0, 0);
             this.dateTimeDesde.Name = "dateTimeDesde";
             this.dateTimeDesde.Size = new System.Drawing.Size(200, 20);
             this.dateTimeDesde.TabIndex = 4;
             // 
             // dateTimeHasta
             // 
-            this.dateTimeHasta.Location = new System.Drawing.Point(90, 156);
+            this.dateTimeHasta.Location = new System.Drawing.Point(90, 179);
+            this.dateTimeHasta.MinDate = new System.DateTime(2018, 7, 13, 7, 2, 29, 0);
             this.dateTimeHasta.Name = "dateTimeHasta";
             this.dateTimeHasta.Size = new System.Drawing.Size(200, 20);
             this.dateTimeHasta.TabIndex = 5;
+            this.dateTimeHasta.Value = new System.DateTime(2018, 7, 13, 7, 2, 29, 0);
             // 
             // buttonBaja
             // 
-            this.buttonBaja.Location = new System.Drawing.Point(113, 312);
+            this.buttonBaja.Location = new System.Drawing.Point(108, 328);
             this.buttonBaja.Name = "buttonBaja";
             this.buttonBaja.Size = new System.Drawing.Size(102, 38);
             this.buttonBaja.TabIndex = 6;
@@ -100,7 +108,7 @@
             // 
             // razon
             // 
-            this.razon.Location = new System.Drawing.Point(90, 201);
+            this.razon.Location = new System.Drawing.Point(90, 224);
             this.razon.Name = "razon";
             this.razon.Size = new System.Drawing.Size(214, 82);
             this.razon.TabIndex = 8;
@@ -109,17 +117,39 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 204);
+            this.label4.Location = new System.Drawing.Point(12, 227);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "Motivo:";
+            // 
+            // textBoxNombre
+            // 
+            this.textBoxNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxNombre.Location = new System.Drawing.Point(33, 83);
+            this.textBoxNombre.Name = "textBoxNombre";
+            this.textBoxNombre.ReadOnly = true;
+            this.textBoxNombre.Size = new System.Drawing.Size(257, 21);
+            this.textBoxNombre.TabIndex = 10;
+            this.textBoxNombre.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(114, 65);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(96, 15);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Nombre Hotel";
             // 
             // frmBajaHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(327, 387);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBoxNombre);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.razon);
             this.Controls.Add(this.buttonBaja);
@@ -149,5 +179,7 @@
         private System.Windows.Forms.Button buttonBaja;
         private System.Windows.Forms.RichTextBox razon;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxNombre;
+        private System.Windows.Forms.Label label5;
     }
 }
