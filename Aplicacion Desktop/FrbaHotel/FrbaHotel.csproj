@@ -165,6 +165,12 @@
     <Compile Include="FacturarEstadia\frmFacturar.Designer.cs">
       <DependentUpon>frmFacturar.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmCambiarContrasena.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCambiarContrasena.Designer.cs">
+      <DependentUpon>frmCambiarContrasena.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerarModificacionReserva\frmModificarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -288,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FacturarEstadia\frmFacturar.resx">
       <DependentUpon>frmFacturar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCambiarContrasena.resx">
+      <DependentUpon>frmCambiarContrasena.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerarModificacionReserva\frmModificarReserva.resx">
       <DependentUpon>frmModificarReserva.cs</DependentUpon>

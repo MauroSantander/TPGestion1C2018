@@ -178,6 +178,11 @@ namespace FrbaHotel
             RegistrarEstadia.frmRegistrarEstadia instanciaRegEstadia = new RegistrarEstadia.frmRegistrarEstadia();
             instanciaRegEstadia.ShowDialog();
         }
+
+        private void btnCambiarContrasena_Click(object sender, EventArgs e)
+        {
+            (new frmCambiarContrasena()).ShowDialog();
+        }
     }
 
 }

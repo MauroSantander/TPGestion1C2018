@@ -45,6 +45,7 @@
             this.btnRegistrarEstadia = new System.Windows.Forms.Button();
             this.btnFacturarEstadia = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnCambiarContraseña = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -240,11 +241,22 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Estadias";
             // 
+            // btnCambiarContraseña
+            // 
+            this.btnCambiarContraseña.Location = new System.Drawing.Point(136, 234);
+            this.btnCambiarContraseña.Name = "btnCambiarContraseña";
+            this.btnCambiarContraseña.Size = new System.Drawing.Size(84, 45);
+            this.btnCambiarContraseña.TabIndex = 3;
+            this.btnCambiarContraseña.Text = "Cambiar Contraseña";
+            this.btnCambiarContraseña.UseVisualStyleBackColor = true;
+            this.btnCambiarContraseña.Click += new System.EventHandler(this.btnCambiarContrasena_Click);
+            // 
             // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(359, 342);
+            this.Controls.Add(this.btnCambiarContraseña);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnSalir);
@@ -282,5 +294,6 @@
         private System.Windows.Forms.Button btnRegistrarEstadia;
         private System.Windows.Forms.Button btnFacturarEstadia;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnCambiarContraseña;
     }
 }
