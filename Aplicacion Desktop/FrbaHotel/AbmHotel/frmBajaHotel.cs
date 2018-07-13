@@ -31,6 +31,7 @@ namespace FrbaHotel.AbmHotel
         private void frmBajaHotel_Load(object sender, EventArgs e)
         {
             textBoxId.Text = idHotel.ToString();
+            this.CenterToScreen();
         }
 
        
@@ -42,14 +43,14 @@ namespace FrbaHotel.AbmHotel
 
                     if ( razon.Text=="") { MessageBox.Show("Informe el motivo de la baja"); }
                     if (dateTimeDesde.Value > dateTimeHasta.Value) { MessageBox.Show("Coloque un rango de fechas correcto"); }
-                    SqlCommand puedeDarseDeBaja = new SqlCommand("select [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin)", Globals.conexionGlobal);
-                    puedeDarseDeBaja.Parameters.AddWithValue("@idHotel", idHotel);
-                    puedeDarseDeBaja.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
-                    puedeDarseDeBaja.Parameters.AddWithValue("@fechaFin", dateTimeHasta.Value.ToString("yyyy-MM-dd"));
-                     Boolean  puede = (bool)puedeDarseDeBaja.ExecuteScalar();
+                    SqlCommand tieneReservas = new SqlCommand("select [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin)", Globals.conexionGlobal);
+                    tieneReservas.Parameters.AddWithValue("@idHotel", idHotel);
+                    tieneReservas.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
+                    tieneReservas.Parameters.AddWithValue("@fechaFin", dateTimeHasta.Value.ToString("yyyy-MM-dd"));
+                     Boolean  poseeReservas = (bool)tieneReservas.ExecuteScalar();
             //
       
-                    if (puede)
+                    if (!poseeReservas)
                     {
                         //PASO CHEQUEOS, SE DA LA BAJA
 
