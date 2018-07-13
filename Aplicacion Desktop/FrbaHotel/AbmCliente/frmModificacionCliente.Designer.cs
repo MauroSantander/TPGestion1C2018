@@ -134,6 +134,7 @@
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(146, 20);
             this.txtTelefono.TabIndex = 0;
+            this.txtTelefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTelefono_KeyPress);
             // 
             // groupBox10
             // 
@@ -168,6 +169,7 @@
             this.txtNroCalle.Name = "txtNroCalle";
             this.txtNroCalle.Size = new System.Drawing.Size(146, 20);
             this.txtNroCalle.TabIndex = 0;
+            this.txtNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNroCalle_KeyPress);
             // 
             // groupBox8
             // 
@@ -223,6 +225,7 @@
             this.txtNacionalidad.Name = "txtNacionalidad";
             this.txtNacionalidad.Size = new System.Drawing.Size(146, 20);
             this.txtNacionalidad.TabIndex = 0;
+            this.txtNacionalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNacionalidad_KeyPress);
             // 
             // groupBox5
             // 
@@ -288,6 +291,7 @@
             this.txtNroId.Name = "txtNroId";
             this.txtNroId.Size = new System.Drawing.Size(146, 20);
             this.txtNroId.TabIndex = 0;
+            this.txtNroId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNroId_KeyPress);
             // 
             // groupBox2
             // 
@@ -305,6 +309,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(146, 20);
             this.txtApellido.TabIndex = 0;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
             // 
             // groupBox1
             // 
@@ -322,6 +327,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(146, 20);
             this.txtNombre.TabIndex = 0;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // frmModificacionCliente
             // 

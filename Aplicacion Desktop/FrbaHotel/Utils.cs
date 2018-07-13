@@ -261,6 +261,15 @@ namespace FrbaHotel
             }
         }
 
+        public static void txtSoloAceptaLetras(TextBox textbox, object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Este campo solo acepta letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public static void cargarUbicacion(ComboBox comboBoxUbicacion)
         {
             comboBoxUbicacion.Items.Add("Frente");

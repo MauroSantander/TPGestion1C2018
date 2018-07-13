@@ -249,29 +249,34 @@ namespace FrbaHotel.AbmCliente
             this.Close();
         }
 
-        //Ambos KeyPress a continuación corroboran en tiempo real que el usuario no ingrese caracteres incorrectos
-        private void soloTexto_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else
-                {
-                    e.Handled = true;
-                    MessageBox.Show("Este campo sólo acepta letras", "Error", MessageBoxButtons.OK);
-                }
-            }
+            Utils.txtSoloAceptaLetras(txtNombre, sender, e);
         }
 
-        private void soloNumeros_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtApellido_KeyPress(object sender, KeyPressEventArgs e)
         {
-            {
-                if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else
-                {
-                    e.Handled = true;
-                    MessageBox.Show("Este campo solo admite números", "Error", MessageBoxButtons.OK);
-                }
-            }
+            Utils.txtSoloAceptaLetras(txtApellido, sender, e);
+        }
+
+        private void txtNroId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaNumeros(txtNroId, sender, e);
+        }
+
+        private void txtTelefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaNumeros(txtTelefono, sender, e);
+        }
+
+        private void txtNroCalle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaNumeros(txtNroCalle, sender, e);
+        }
+
+        private void txtNacionalidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaLetras(txtNacionalidad, sender, e);
         }
 
     }

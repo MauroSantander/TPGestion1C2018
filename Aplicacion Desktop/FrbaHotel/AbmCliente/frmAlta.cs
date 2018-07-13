@@ -60,31 +60,6 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-        //los siguientes KeyPress limitan el uso de caracteres inapropiados en los textbox que los referencien
-        private void soloTexto_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else
-                {
-                    e.Handled = true;
-                    MessageBox.Show("Este campo sólo acepta letras", "Error", MessageBoxButtons.OK);
-                }
-            }
-        }
-
-        private void soloNros_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else
-                {
-                    e.Handled = true;
-                    MessageBox.Show("Este campo solo admite números", "Error", MessageBoxButtons.OK);
-                }
-            }
-        }
-
         //la siguiente función nos provee seguridad con la validación de lo ingresado por el usuario como su mail
         static bool validarEmail(string email)
         {
@@ -291,6 +266,36 @@ namespace FrbaHotel.AbmCliente
             Localidad.ResetText();
             Nacionalidad.ResetText();
             FechaNacimiento.ResetText();
+        }
+
+        private void nroId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaNumeros(nroId, sender, e);
+        }
+
+        private void Telefono_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaNumeros(Telefono, sender, e);
+        }
+
+        private void NroCalle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaNumeros(NroCalle, sender, e);
+        }
+
+        private void Nombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaLetras(Nombre, sender, e);
+        }
+
+        private void Apellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaLetras(Apellido, sender, e);
+        }
+
+        private void Nacionalidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utils.txtSoloAceptaLetras(Nacionalidad, sender, e);
         }
     }
 }
