@@ -3518,7 +3518,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE[PISOS_PICADOS].actualizarContrasena @idUsuario INT , @contrasena INT
+CREATE PROCEDURE[PISOS_PICADOS].actualizarContrasena @idUsuario INT , @contrasena VARCHAR(255)
 AS 
 BEGIN
 		UPDATE [PISOS_PICADOS].Empleado
@@ -4290,16 +4290,19 @@ END
 GO
 
 
-CREATE PROCEDURE [PISOS_PICADOS].modificarReserva @fechaInicio DATE
+CREATE PROCEDURE [PISOS_PICADOS].modificarReserva @fechaActual DATE
+	,@fechaInicio DATE
 	,@fechaFin DATE
 	,@cantHuespedes INT
 	,@nombreRegimen VARCHAR(255)
 	,@idReserva INT
+	,@idAutor INT
 	,@cantSimple INT
 	,@cantDoble INT
 	,@cantTriple INT
 	,@cantCuadru INT
 	,@cantKing INT
+	,@motivo VARCHAR(255)
 AS
 BEGIN
 	DECLARE @idHotel INT
@@ -4324,6 +4327,9 @@ BEGIN
 		,estado = 2
 		,precioTotal = ((DATEDIFF(day, @fechaInicio, @fechaFIN)) * [PISOS_PICADOS].precioReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel))
 	WHERE codigoReserva = @idReserva
+
+	INSERT INTO [PISOS_PICADOS].Modificacion(estadoReserva,descripcion,usuario,fecha)
+	Values(2,@motivo,@idAutor,@fechaActual)
 
 	DECLARE @idHabitacion INT
 	DECLARE C1 CURSOR 
@@ -4566,15 +4572,16 @@ AS
 	DELETE
 	FROM [PISOS_PICADOS].HabitacionxReserva
 	WHERE codigoReserva = @idReserva
-
-	IF ([PISOS_PICADOS].hotelCumple(@cantSimple,@cantDoble,
-	@cantTriple,@cantCuadru,@cantKing,@idHotel,@fechaInicio,@fechaFin) = 0)
+	DECLARE @resp INT
+	SET @resp = ([PISOS_PICADOS].hotelCumple(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing,
+	@idHotel,@fechaInicio,@fechaFin ))
+	IF @resp = 0
 	BEGIN
 	COMMIT TRANSACTION TREliminacionHotelesReserva
 	RETURN 1
 	END
 	ROLLBACK TRANSACTION TREliminacionHotelesReserva;
-	RETURN 0
+	RETURN @resp
 GO
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
