@@ -180,6 +180,7 @@ namespace FrbaHotel.AbmHotel
 
         private void NuevoHotel_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             SqlCommand cmdBuscarRegimenes = new SqlCommand("select descripcion from [PISOS_PICADOS].Regimen", Globals.conexionGlobal);
             SqlDataReader reader2 = cmdBuscarRegimenes.ExecuteReader();
 

@@ -76,7 +76,7 @@ namespace FrbaHotel.AbmUsuario
             SqlCommand verificarId = new SqlCommand("SELECT [PISOS_PICADOS].estaRepetido(@tipo,@numero)", Globals.conexionGlobal);
             verificarId.Parameters.AddWithValue("@tipo", comboBoxTipo.Text);
             verificarId.Parameters.AddWithValue("@numero", numDoc.Text);
-            //if (((int)verificarId.ExecuteScalar()) == 1) { MessageBox.Show("Tipo y Nro de Identificación existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (((int)verificarId.ExecuteScalar()) > 0) { MessageBox.Show("Tipo y Nro de Identificación existente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (countNombreUsr > 0) { MessageBox.Show("Nombre de Usuario existente, escriba otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (countMail > 0) { MessageBox.Show("Mail existente, escriba otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
@@ -94,7 +94,6 @@ namespace FrbaHotel.AbmUsuario
             //agregar parametros
             comandoAltaUsuario.Parameters.Add("@username", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@password", SqlDbType.VarChar);
-            comandoAltaUsuario.Parameters.Add("@rol", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@nombre", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@apellido", SqlDbType.VarChar);
             comandoAltaUsuario.Parameters.Add("@mail", SqlDbType.VarChar);
@@ -108,11 +107,8 @@ namespace FrbaHotel.AbmUsuario
             comandoAltaUsuario.Parameters.Add("@fechaNacimiento", SqlDbType.DateTime);
             comandoAltaUsuario.Parameters.Add("@estado", SqlDbType.Bit);
 
-            string unRol = checkedListBoxRoles.CheckedItems[0].ToString();
-            //cargar valores
             comandoAltaUsuario.Parameters["@username"].Value = username.Text;
             comandoAltaUsuario.Parameters["@password"].Value = pass.Text;
-            comandoAltaUsuario.Parameters["@rol"].Value = unRol;
             comandoAltaUsuario.Parameters["@nombre"].Value = nombre.Text;
             comandoAltaUsuario.Parameters["@apellido"].Value = apellido.Text;
             comandoAltaUsuario.Parameters["@mail"].Value = mail.Text;
@@ -139,8 +135,7 @@ namespace FrbaHotel.AbmUsuario
 
             for (int i = 0; i < (int)checkedListBoxRoles.CheckedItems.Count; i++)
             {
-                if (checkedListBoxRoles.CheckedItems[i].ToString() != unRol)
-                {
+                
                     SqlCommand agregarRol = new SqlCommand("[PISOS_PICADOS].agregarRolAUsuario", Globals.conexionGlobal);
                     agregarRol.CommandType = CommandType.StoredProcedure;
 
@@ -149,7 +144,7 @@ namespace FrbaHotel.AbmUsuario
                     agregarRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
                     agregarRol.Parameters["@nombreRol"].Value = checkedListBoxRoles.CheckedItems[i].ToString();
                     agregarRol.ExecuteNonQuery();
-                }
+                
 
 
             }

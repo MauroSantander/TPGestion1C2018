@@ -151,7 +151,7 @@ namespace FrbaHotel.AbmHotel
 
 
         private void ModificarHotel_Load(object sender, EventArgs e)
-        { }
+        { this.CenterToScreen(); }
           
        
         public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, String nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, frmHoteles pantHoteles)
