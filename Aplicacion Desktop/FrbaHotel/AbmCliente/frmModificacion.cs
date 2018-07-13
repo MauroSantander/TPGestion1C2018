@@ -108,6 +108,21 @@ namespace FrbaHotel.AbmCliente
             if (txtMailModif.Text == "") { cadenaMail = "mail LIKE '%'"; }
             else { cadenaMail = "mail LIKE '" + txtMailModif.Text + "'"; };
 
+            if (txtMailModif.Text != "")
+            {
+                if (validarEmail(txtMailModif.Text))
+                {
+                    cadenaMail = "mail LIKE '" + txtMailModif.Text + "'";
+                }
+                else
+                {
+                    MessageBox.Show("La dirección de e-mail ingresada no es válida");
+                    throw new Exception("Mail no válido");
+                }
+            }
+            else { cadenaMail = "mail LIKE '%'"; };
+
+
             //este string es la consulta sql con todos los valores de los filtros de búsqueda
             String compuesto = " SELECT * FROM [PISOS_PICADOS].Usuario WHERE " + cadenaNombre
                 + " AND " + cadenaApellido + " AND " + cadenaTipoId + " AND "

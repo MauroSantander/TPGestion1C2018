@@ -32,34 +32,35 @@
             this.btnAlta = new System.Windows.Forms.Button();
             this.btnBaja = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(91, 125);
+            this.btnModificar.Location = new System.Drawing.Point(91, 112);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(85, 30);
-            this.btnModificar.TabIndex = 1;
+            this.btnModificar.TabIndex = 2;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
             this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnAlta
             // 
-            this.btnAlta.Location = new System.Drawing.Point(91, 74);
+            this.btnAlta.Location = new System.Drawing.Point(91, 61);
             this.btnAlta.Name = "btnAlta";
             this.btnAlta.Size = new System.Drawing.Size(85, 30);
-            this.btnAlta.TabIndex = 0;
+            this.btnAlta.TabIndex = 1;
             this.btnAlta.Text = "Dar de Alta";
             this.btnAlta.UseVisualStyleBackColor = true;
             this.btnAlta.Click += new System.EventHandler(this.btnAlta_Click);
             // 
             // btnBaja
             // 
-            this.btnBaja.Location = new System.Drawing.Point(91, 175);
+            this.btnBaja.Location = new System.Drawing.Point(91, 162);
             this.btnBaja.Name = "btnBaja";
             this.btnBaja.Size = new System.Drawing.Size(85, 30);
-            this.btnBaja.TabIndex = 2;
+            this.btnBaja.TabIndex = 3;
             this.btnBaja.Text = "Dar de Baja";
             this.btnBaja.UseVisualStyleBackColor = true;
             this.btnBaja.Click += new System.EventHandler(this.btnBaja_Click);
@@ -74,16 +75,27 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Seleccione la acción que desea realizar:";
             // 
-            // FrmInicial
+            // btnSalir
+            // 
+            this.btnSalir.Location = new System.Drawing.Point(91, 209);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(85, 30);
+            this.btnSalir.TabIndex = 4;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
+            // frmInicialCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnBaja);
             this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.btnAlta);
-            this.Name = "FrmInicial";
+            this.Name = "frmInicialCliente";
             this.Text = "FrmInicial";
             this.Load += new System.EventHandler(this.FrmInicial_Load);
             this.ResumeLayout(false);
@@ -97,6 +109,7 @@
         private System.Windows.Forms.Button btnAlta;
         private System.Windows.Forms.Button btnBaja;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnSalir;
 
     }
 }

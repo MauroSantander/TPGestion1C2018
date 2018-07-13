@@ -120,7 +120,7 @@ namespace FrbaHotel.AbmCliente
                 }
                 else {
                     MessageBox.Show("La dirección de e-mail ingresada no es válida");
-                    throw new ExecutionEngineException("Mail no válido");
+                    throw new Exception("Mail no válido");
                 }
             }
             else { cadenaMail = "mail LIKE '%'"; };

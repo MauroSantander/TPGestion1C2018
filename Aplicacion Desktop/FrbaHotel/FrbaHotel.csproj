@@ -57,12 +57,6 @@
     <Compile Include="AbmCliente\frmBaja.Designer.cs">
       <DependentUpon>frmBaja.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmCliente\frmCliente.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmCliente\frmCliente.Designer.cs">
-      <DependentUpon>frmCliente.cs</DependentUpon>
-    </Compile>
     <Compile Include="AbmCliente\frmInicialCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,9 +228,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\frmBaja.resx">
       <DependentUpon>frmBaja.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmCliente\frmCliente.resx">
-      <DependentUpon>frmCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\frmInicialCliente.resx">
       <DependentUpon>frmInicialCliente.cs</DependentUpon>
