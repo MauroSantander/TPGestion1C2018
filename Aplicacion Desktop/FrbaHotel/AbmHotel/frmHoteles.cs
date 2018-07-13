@@ -50,17 +50,7 @@ namespace FrbaHotel.AbmHotel
             AutoCompleteStringCollection idColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("idHotel", textBoxID, idColeccion);
 
-            AutoCompleteStringCollection calleColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("calle", textBoxCalle, calleColeccion);
-
-            AutoCompleteStringCollection mailColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("mail", textBoxMail, mailColeccion);
-
-            AutoCompleteStringCollection nroCalleColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("nroCalle", textBoxNroCalle, nroCalleColeccion);
-
-            AutoCompleteStringCollection telColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("telefono", textBoxTelefono, telColeccion);
+            
 
             //Autocomplete Ciudad
 
@@ -194,8 +184,8 @@ namespace FrbaHotel.AbmHotel
 
         private void button1_Click(object sender, EventArgs e)
         {
-            textBoxID.Text = ""; textBoxCiudad.Text = ""; textBoxCalle.Text = ""; 
-            textBoxNombre.Text = ""; textBoxNroCalle.Text = ""; textBoxMail.Text = ""; textBoxTelefono.Text = "";
+            textBoxID.Text = ""; textBoxCiudad.Text = ""; 
+            textBoxNombre.Text = "";
             estrellas.Text = "Seleccionar"; comboBoxPais.Text = "Seleccionar";
 
 
@@ -215,15 +205,11 @@ namespace FrbaHotel.AbmHotel
 
             if (textBoxCiudad.Text != "") { cadenaFiltro = cadenaFiltro + " and ciudad = '" + textBoxCiudad.Text + "'"; }
 
-            if (textBoxCalle.Text != "") { cadenaFiltro = cadenaFiltro + " and calle = '" + textBoxCalle.Text + "'"; }
-
-            if (textBoxMail.Text != "") { cadenaFiltro = cadenaFiltro + " and mail = '" + textBoxMail.Text + "'"; }
-            if (textBoxTelefono.Text != "") { cadenaFiltro = cadenaFiltro + " and telefono = '" + textBoxTelefono.Text + "'"; }
-
+            
+            
             if (estrellas.Text != "" && estrellas.Text != "Seleccionar") { cadenaFiltro = cadenaFiltro + " and estrellas = " + estrellas.Text; }
 
-            if (textBoxNroCalle.Text != "") { cadenaFiltro = cadenaFiltro + " and nroCalle = " + textBoxNroCalle.Text; }
-
+          
 
             if (comboBoxPais.Text != "" && comboBoxPais.Text != "Seleccionar")
             {
