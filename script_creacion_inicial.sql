@@ -3318,10 +3318,11 @@ RETURNS INT
 AS
 BEGIN
 RETURN(
-SELECT H.idHabitacion
+SELECT COUNT(*)
 FROM [PISOS_PICADOS].HabitacionxReserva AS hxr 
 JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
 WHERE hxr.codigoReserva = @codigoReserva AND h.tipo = @idTipo
+GROUP BY h.tipo
 )
 END
 GO
