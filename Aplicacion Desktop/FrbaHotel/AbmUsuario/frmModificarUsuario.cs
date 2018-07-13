@@ -183,7 +183,7 @@ namespace FrbaHotel.AbmUsuario
 
                 }
                 MessageBox.Show("Usuario Modificado correctamente");
-                pantallaUsuario.llenarDataGridView();
+                pantallaUsuario.llenarDataGridView("");
                 this.Close();
 
             }
