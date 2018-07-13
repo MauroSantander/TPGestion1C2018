@@ -61,7 +61,7 @@ namespace FrbaHotel
 
         private void btnABMCliente_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.AbmCliente.frmCliente()).ShowDialog();
+            (new FrbaHotel.AbmCliente.frmInicialCliente()).ShowDialog();
         }
 
         private void btnCancelarReserva_Click(object sender, EventArgs e)

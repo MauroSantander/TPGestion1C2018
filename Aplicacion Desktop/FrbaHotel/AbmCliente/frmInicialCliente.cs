@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.AbmCliente
 {
-    public partial class frmInicial : Form
+    public partial class frmInicialCliente : Form
     {
-        public frmInicial()
+        public frmInicialCliente()
         {
             InitializeComponent();
         }
