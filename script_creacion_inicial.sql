@@ -4349,7 +4349,7 @@ BEGIN
 	Values(2,@motivo,@idAutor,@fechaActual)
 
 	DECLARE @idHabitacion INT
-	DECLARE C1 CURSOR 
+	DECLARE C2 CURSOR 
 	FOR SELECT  a.idHabitacion
 				FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru
 				,@cantKing,@idHotel,@fechaInicio,@fechaFin) AS a
@@ -4591,15 +4591,7 @@ AS
 	WHERE codigoReserva = @idReserva
 	SET @resp = ([PISOS_PICADOS].hotelCumple(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing,
 	@idHotel,@fechaInicio,@fechaFin ))
-	IF @resp = 0
-	BEGIN
-	COMMIT TRANSACTION TREliminacionHotelesReserva
-	SET @resp = 0
-	END
-	ELSE
-	BEGIN
 	ROLLBACK TRANSACTION TREliminacionHotelesReserva;
-	END
 	RETURN @resp
 GO
 
