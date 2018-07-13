@@ -22,10 +22,15 @@ namespace FrbaHotel
         public static int idUsuarioSesion = -1;
         public static int idHotelUsuario = 0;
         public static string rolUsuario = "";
+        public static string contrasenaUsuario;
 
         public static void setUsuarioSesion(int id) 
         {
             idUsuarioSesion = id;
+        }
+        public static void setContraseñaUsuario(String contrasena)
+        {
+            contrasenaUsuario = contrasena;
         }
 
         public static string obtenerStringConexion()
