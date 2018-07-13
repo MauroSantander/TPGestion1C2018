@@ -41,7 +41,6 @@ namespace FrbaHotel.AbmCliente
             //agrego la opción de que los comboBox estén seteados en "Vacío" (aunque el cliente luego deba cambiarlo
             //dado a que es un campo obligatorio)
             cbPaises.Items.Add("Vacío");
-            TipoId.Items.Add("Vacío");
 
             //carga los paises en el combo box cbPaises, extrayendolos de la tabla Pais hecha en sql;
             SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
@@ -103,27 +102,93 @@ namespace FrbaHotel.AbmCliente
         private void BotonCrear_Click(object sender, EventArgs e)
         {
             //Validaciones
-            String tipoIdCliente = TipoId.Text;
-            if (string.IsNullOrEmpty(nroId.Text)) { MessageBox.Show("Debe completar el número de identificación."); return; }
-            int nroIdCliente = int.Parse(nroId.Text);
-            if (string.IsNullOrEmpty(NroCalle.Text)) { MessageBox.Show("Debe completar el número de calle."); return; }
-            int nroCalleCliente = int.Parse(NroCalle.Text);
+            int verificacion = 1;
+
             DateTime fechaNacimientoCliente = FechaNacimiento.Value;
             string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");
 
-            if (Nombre.Text == "") { MessageBox.Show("Debe completar el campo nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (Apellido.Text == "") { MessageBox.Show("Debe completar el campo apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (tipoIdCliente == "" || tipoIdCliente == "Vacío") { MessageBox.Show("Seleccione el tipo de identificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (nroIdCliente < 0) { MessageBox.Show("Debe insertar un número de identificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (Mail.Text == "") { MessageBox.Show("Debe insertar un mail.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (!validarEmail(Mail.Text)) { MessageBox.Show("El mail es inválido.", "Error"); return; }
-            if (utilizador.estaRepetidoMail(Mail.Text)) { MessageBox.Show("El mail está repetido.", "Error"); return; }
-            if (Calle.Text == "") { MessageBox.Show("Debe insertar una calle.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (nroCalleCliente < 0) { MessageBox.Show("Debe insertar un número de calle.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (Localidad.Text == "") { MessageBox.Show("Debe insertar una localidad.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (cbPaises.Text == "" || cbPaises.SelectedItem.ToString() == "Vacío") { MessageBox.Show("Debe seleccionar un país.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (Nacionalidad.Text == "") { MessageBox.Show("Debe insertar una nacionalidad.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (Nombre.Text == "") 
+            {
+                MessageBox.Show("Debe completar el campo nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+            if (Apellido.Text == "") 
+            {
+                MessageBox.Show("Debe completar el campo apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            String tipoIdCliente = TipoId.Text;
+            if (tipoIdCliente == "" || tipoIdCliente == "Vacío")
+            {
+                MessageBox.Show("Seleccione el tipo de identificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (nroId.Text == "")
+            {
+                MessageBox.Show("Debe completar el número de identificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (Mail.Text == "")
+            {
+                MessageBox.Show("Debe insertar un mail.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+            else
+            {
+                if (!validarEmail(Mail.Text))
+                {
+                    MessageBox.Show("El mail es inválido.", "Error");
+                    verificacion = 0;
+                }
+            }
             
+            if (utilizador.estaRepetidoMail(Mail.Text))
+            {
+                MessageBox.Show("El mail está repetido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (Telefono.Text == "")
+            {
+                MessageBox.Show("Debe insertar un telefono.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (cbPaises.Text == "" || cbPaises.SelectedItem.ToString() == "Vacío")
+            {
+                MessageBox.Show("Debe seleccionar un país.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (Localidad.Text == "")
+            {
+                MessageBox.Show("Debe insertar una localidad.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (Calle.Text == "") 
+            {
+                MessageBox.Show("Debe insertar una calle.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                verificacion = 0;
+            }
+            
+            if (Nacionalidad.Text == "") 
+            {
+                MessageBox.Show("Debe insertar una nacionalidad.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (verificacion == 0)
+            {
+                return;
+            }
+
+            int nroCalleCliente = int.Parse(NroCalle.Text);
+            int nroIdCliente = int.Parse(nroId.Text);
+
             //si un usuario intenta ingresar un tipo de identificación junto con un nro de identificacion que coincide con
             //el de otro cliente, no debe permitirse que lo ingrese
             if (utilizador.estaRepetidoIdentificacion(nroIdCliente, tipoIdCliente))

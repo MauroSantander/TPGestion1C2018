@@ -161,7 +161,7 @@ namespace FrbaHotel
             else { return false; }
         }
 
-        public int obtenerIdUsuario(String nombre, String apellido, int nroIdentificacion)
+        public int obtenerIdUsuario(string nombre, string apellido, int nroIdentificacion)
         {
 
             string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
@@ -181,7 +181,7 @@ namespace FrbaHotel
 
         public int obtenerEstadoCliente(int idCliente)
         {
-            String cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
+            string cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
 
             SqlCommand obtenerEstado = new SqlCommand(cadenaObtenerEstado, Globals.conexionGlobal);
 

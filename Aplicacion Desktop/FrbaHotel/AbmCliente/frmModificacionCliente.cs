@@ -20,15 +20,29 @@ namespace FrbaHotel.AbmCliente
         Utils c = new Utils();
 
         //son los valores que voy a necesitar en la funcion de obtener idUsuario
-        static String nombreOriginalGlobal;
-        static String apellidoOriginalGlobal;
+        static string nombreOriginalGlobal;
+        static string apellidoOriginalGlobal;
         static int nroIdOriginalGlobal;
-        static String mailOriginalGlobal;
+        static string mailOriginalGlobal;
+        frmModificacion frmModificacionInstancia;
 
 
-        public frmModificacionCliente(String nombreOriginal, String apellidoOriginal, int nroIdOriginal, String mailOriginal)
+        public frmModificacionCliente(string nombreOriginal, string apellidoOriginal, int nroIdOriginal, string mailOriginal, frmModificacion instanciaPadre)
         {
             InitializeComponent();
+
+            nombreOriginalGlobal = nombreOriginal;
+            apellidoOriginalGlobal = apellidoOriginal;
+            nroIdOriginalGlobal = nroIdOriginal;
+            mailOriginalGlobal = mailOriginal;
+            frmModificacionInstancia = instanciaPadre;
+
+        }
+
+        private void frmModificacionCliente_Load(object sender, EventArgs e)
+        {
+            //centra el formulario
+            this.CenterToScreen();
 
             //Cargar paises en el comboBox cbPaises
             SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
@@ -42,21 +56,9 @@ namespace FrbaHotel.AbmCliente
 
             reader.Close();
 
-            txtNombre.Text = nombreOriginal;
-            txtApellido.Text = apellidoOriginal;
-            txtNroId.Text = nroIdOriginal.ToString();
-
-            nombreOriginalGlobal = nombreOriginal;
-            apellidoOriginalGlobal = apellidoOriginal;
-            nroIdOriginalGlobal = nroIdOriginal;
-            mailOriginalGlobal = mailOriginal;
-
-        }
-
-        private void frmModificacionCliente_Load(object sender, EventArgs e)
-        {
-            //centra el formulario
-            this.CenterToScreen();
+            txtNombre.Text = nombreOriginalGlobal;
+            txtApellido.Text = apellidoOriginalGlobal;
+            txtNroId.Text = nroIdOriginalGlobal.ToString();
         }
 
 
@@ -76,32 +78,112 @@ namespace FrbaHotel.AbmCliente
         private void btnAceptarModif(object sender, EventArgs e)
         {            
             //Validaciones
-            String TipoIdCliente = cbTipoId.Text;
-            if (string.IsNullOrEmpty(txtNroId.Text)) { MessageBox.Show("Completar numero de id cliente"); return; }
-            int NroIdCliente = int.Parse(txtNroId.Text);
-            String TelefonoCliente = txtTelefono.Text;
-            String CalleCliente = txtCalle.Text;
-            if (string.IsNullOrEmpty(txtNroCalle.Text)) { MessageBox.Show("Completar numero de calle"); return; }
-            int NroCalleCliente = int.Parse(txtNroCalle.Text);
-            DateTime FechaNacimientoCliente = dtpFechaNacimiento.Value;            
-            string selectDateAsString = dtpFechaNacimiento.Value.ToString("yyyy-MM-dd");            
-            if (txtNombre.Text == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (txtApellido.Text == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NroIdCliente < 0) { MessageBox.Show("Complete nroID correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (txtMail.Text == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (!validarEmail(txtMail.Text)) { MessageBox.Show("Mail inválido", "Error"); return; }
-            if (txtMail.Text != mailOriginalGlobal && c.estaRepetidoMail(txtMail.Text)) { MessageBox.Show("Mail ya existente", "Error"); return; }
-            if (txtCalle.Text == "") { MessageBox.Show("Complete calle correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (txtLocalidad.Text == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (txtNacionalidad.Text == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NroIdCliente != nroIdOriginalGlobal && c.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
+            int verificacion = 1;
+
+            string selectDateAsString = dtpFechaNacimiento.Value.ToString("yyyy-MM-dd");
+
+            if (txtNombre.Text == "")
             {
-                MessageBox.Show("Identificación repetida");
+                MessageBox.Show("Debe completar el campo nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+            if (txtApellido.Text == "")
+            {
+                MessageBox.Show("Debe completar el campo apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            String tipoIdCliente = cbTipoId.Text;
+            if (tipoIdCliente == "" || tipoIdCliente == "Vacío")
+            {
+                MessageBox.Show("Seleccione el tipo de identificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (txtNroId.Text == "")
+            {
+                MessageBox.Show("Debe completar el número de identificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (txtMail.Text == "")
+            {
+                MessageBox.Show("Debe insertar un mail.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+            else
+            {
+                if (!validarEmail(txtMail.Text))
+                {
+                    MessageBox.Show("El mail es inválido.", "Error");
+                    verificacion = 0;
+                }
+            }
+
+            if (txtMail.Text != mailOriginalGlobal)
+            {
+                if (c.estaRepetidoMail(txtMail.Text))
+                {
+                    MessageBox.Show("El mail está repetido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    verificacion = 0;
+                }
+            }
+            if (txtTelefono.Text == "")
+            {
+                MessageBox.Show("Debe insertar un telefono.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (cbPaises.Text == "" || cbPaises.SelectedItem.ToString() == "Vacío")
+            {
+                MessageBox.Show("Debe seleccionar un país.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (txtLocalidad.Text == "")
+            {
+                MessageBox.Show("Debe insertar una localidad.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (txtCalle.Text == "")
+            {
+                MessageBox.Show("Debe insertar una calle.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            if (txtNacionalidad.Text == "")
+            {
+                MessageBox.Show("Debe insertar una nacionalidad.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verificacion = 0;
+            }
+
+            string TipoIdCliente = "";
+            int NroIdCliente = 0;
+
+            if (cbTipoId.Text != "" && cbTipoId.Text != "Vacío" && txtNroId.Text != "")
+            {
+                TipoIdCliente = cbTipoId.Text;
+                NroIdCliente = int.Parse(txtNroId.Text);
+
+                if (NroIdCliente != nroIdOriginalGlobal && c.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
+                {
+                    MessageBox.Show("Identificación repetida");
+                    verificacion = 0;
+                }
+            }
+
+            if (verificacion == 0)
+            {
                 return;
             }
+
+            int nroCalleCliente = int.Parse(txtNroCalle.Text);
+            int nroIdCliente = int.Parse(txtNroId.Text);
+
+            string TelefonoCliente = txtTelefono.Text;
+            string CalleCliente = txtCalle.Text;
+            int NroCalleCliente = int.Parse(txtNroCalle.Text);
             
             //En esta secccion se busca obtener el estado del cliente
             //Primero obtenemos su id con el objetivo de usarlo para buscar en la BD
@@ -157,28 +239,15 @@ namespace FrbaHotel.AbmCliente
             cmdModificacion.ExecuteNonQuery();
             MessageBox.Show("Modificación realizada","Aceptar",MessageBoxButtons.OK);
 
+            frmModificacionInstancia.recargarClientes();
+            this.Close();
+
         }
 
         private void btnCancelarModif2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        private void txtNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dtpFechaNacimiento_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cbPaises_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
 
         //Ambos KeyPress a continuación corroboran en tiempo real que el usuario no ingrese caracteres incorrectos
         private void soloTexto_KeyPress(object sender, KeyPressEventArgs e)
@@ -205,8 +274,7 @@ namespace FrbaHotel.AbmCliente
             }
         }
 
-
-
-
     }
 }
+            
+           

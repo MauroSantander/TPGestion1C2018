@@ -25,10 +25,13 @@ namespace FrbaHotel.AbmCliente
             //centra el formulario
             this.CenterToScreen();
 
-            cmbTipoIdModif.SelectedItem = "Vacío";
+            cmbTipoId.SelectedItem = "Vacío";
 
-            cargarClientes();
+            dataGridViewModificarCliente.DataSource = cargarClientes();
+        }
 
+        public void recargarClientes()
+        {
             dataGridViewModificarCliente.DataSource = cargarClientes();
         }
 
@@ -76,11 +79,11 @@ namespace FrbaHotel.AbmCliente
         private void btnLimpiarModif_Click(object sender, EventArgs e)
         {
             //limpiar los textBox y setea el comboBox de tipoId en "Vacío"
-            txtNombreModif.ResetText();
-            txtApellidoModif.ResetText();
-            cmbTipoIdModif.SelectedItem = "Vacío";
-            txtNroIdModif.ResetText();
-            txtMailModif.ResetText();
+            txtNombre.ResetText();
+            txtApellido.ResetText();
+            cmbTipoId.SelectedItem = "Vacío";
+            txtNroId.ResetText();
+            txtMail.ResetText();
         }
 
 
@@ -89,52 +92,43 @@ namespace FrbaHotel.AbmCliente
 
             //en las siguientes variables guardaremos los valores de los filtros pero con un formato apto
             //para ser llevado a consulta sql
-            string cadenaNombre;
-            string cadenaApellido;
-            string cadenaTipoId;
-            string cadenaNroIdentificacion;
-            string cadenaMail;
+            string cadenaNombre = "";
+            string cadenaApellido = "";
+            string cadenaTipoId = "";
+            string cadenaNroIdentificacion = "";
+            string cadenaMail = "";
 
-            if (txtNombreModif.Text == "") { cadenaNombre = "nombre LIKE '%'"; }
-            else { cadenaNombre = "nombre LIKE '" + txtNombreModif.Text + "'"; };
+            string query = "SELECT * FROM [PISOS_PICADOS].mostrarClientes () WHERE 1=1 ";
 
-            if (txtApellidoModif.Text == "") { cadenaApellido = "apellido LIKE '%'"; }
-            else { cadenaApellido = "apellido LIKE '" + txtApellidoModif.Text + "'"; };
-
-            if (cmbTipoIdModif.SelectedItem.ToString() == "Vacío") { cadenaTipoId = "tipoIdentificacion LIKE '%'"; }
-            else { cadenaTipoId = "tipoIdentificacion LIKE '" + cmbTipoIdModif.SelectedItem.ToString() + "'"; };
-
-            if (txtNroIdModif.Text == "") { cadenaNroIdentificacion = "numeroIdentificacion LIKE '%'"; }
-            else { cadenaNroIdentificacion = "numeroIdentificacion LIKE '" + int.Parse(txtNroIdModif.Text) + "'"; };
-
-            if (txtMailModif.Text == "") { cadenaMail = "mail LIKE '%'"; }
-            else { cadenaMail = "mail LIKE '" + txtMailModif.Text + "'"; };
-
-            if (txtMailModif.Text != "")
+            if (txtNombre.Text != "")
             {
-                if (validarEmail(txtMailModif.Text))
-                {
-                    cadenaMail = "mail LIKE '" + txtMailModif.Text + "'";
-                }
-                else
-                {
-                    MessageBox.Show("La dirección de e-mail ingresada no es válida");
-                    throw new Exception("Mail no válido");
-                }
+                cadenaNombre = "AND Nombre LIKE '%" + txtNombre.Text + "%'";
             }
-            else { cadenaMail = "mail LIKE '%'"; };
+            if (txtApellido.Text != "")
+            {
+                cadenaApellido = "AND Apellido LIKE '%" + txtApellido.Text + "%'";
+            }
+            if (txtMail.Text != "")
+            {
+                cadenaMail = "AND Mail LIKE '%" + txtMail.Text + "%'";
+            }
+            if (cmbTipoId.SelectedItem != "Vacío")
+            {
+                cadenaTipoId = "AND [Tipo de Identificacion] = '" + cmbTipoId.Text + "'";
+            }
+            if (txtNroId.Text != "")
+            {
+                cadenaNroIdentificacion = "AND [Numero de Identificacion] = " + txtNroId.Text;
+            }
 
-
-            //este string es la consulta sql con todos los valores de los filtros de búsqueda
-            String compuesto = " SELECT * FROM [PISOS_PICADOS].Usuario WHERE " + cadenaNombre
-                + " AND " + cadenaApellido + " AND " + cadenaTipoId + " AND "
-                + cadenaNroIdentificacion + " AND " + cadenaMail;
+            query = query + cadenaNombre + cadenaApellido + cadenaMail + cadenaTipoId + cadenaNroIdentificacion;
 
             //obtenemos un DataTable con los clientes solicitados
             DataTable dataTableCM = new DataTable();
-            SqlCommand comandoClientesModificado = new SqlCommand(compuesto, Globals.conexionGlobal);
-            SqlDataReader readerClienteModificado = comandoClientesModificado.ExecuteReader();
-            dataTableCM.Load(readerClienteModificado);
+            SqlCommand cmdMostrarClientes = new SqlCommand(query, Globals.conexionGlobal);
+            SqlDataReader reader = cmdMostrarClientes.ExecuteReader();
+            dataTableCM.Load(reader);
+            reader.Close();
             return dataTableCM;
         }
 
@@ -159,13 +153,13 @@ namespace FrbaHotel.AbmCliente
             //en el DataGridView y conocer sus valores que aparecerán por defecto en un formulario especial para la 
             //modificacion de un cliente
 
-            String nombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nombre"].Value;
-            String apellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
-            String tipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["tipoIdentificacion"].Value;
-            int nroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["numeroIdentificacion"].Value; //modificado a string para poder usar el contenido
-            String mailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["mail"].Value;
+            String nombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Nombre"].Value;
+            String apellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Apellido"].Value;
+            String tipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Tipo de identificacion"].Value;
+            int nroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["Numero de identificacion"].Value; //modificado a string para poder usar el contenido
+            String mailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Mail"].Value;
             //una vez obtenido lo necesario para el form de modificación, lo construyo
-            frmModificacionCliente modificacion = new frmModificacionCliente(nombreClienteFila, apellidoClienteFila, nroIdClienteFila, mailClienteFila);
+            frmModificacionCliente modificacion = new frmModificacionCliente(nombreClienteFila, apellidoClienteFila, nroIdClienteFila, mailClienteFila,this);
 
             /////////****** antes de seguir obtengo id de usuario para relacionarlo con su nacionalidad que está en la tabla cliente******///////// 
             //busco el id del cliente porque lo necesitaré al buscar su nacionalidad, la cual está en la tabla Cliente 
@@ -199,42 +193,32 @@ namespace FrbaHotel.AbmCliente
             //nacionalidad buscada
 
             String TelefonoClienteFila;
-            if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["telefono"].FormattedValue.ToString()))
+            if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["Telefono"].FormattedValue.ToString()))
             {
-                TelefonoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["telefono"].Value;
+                TelefonoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Telefono"].Value;
                 modificacion.txtTelefono.Text = TelefonoClienteFila;
             }
 
-            String calleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["calle"].Value;
+            String calleClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Calle"].Value;
 
             int NroCalleClienteFila;
-            if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["nroCalle"].FormattedValue.ToString()))
+            if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["Numero de calle"].FormattedValue.ToString()))
             {
-                NroCalleClienteFila = Convert.ToInt32(dataGridViewModificarCliente.CurrentRow.Cells["nroCalle"].Value);
+                NroCalleClienteFila = Convert.ToInt32(dataGridViewModificarCliente.CurrentRow.Cells["Numero de calle"].Value);
                 modificacion.txtNroCalle.Text = NroCalleClienteFila.ToString();
             }
 
             String LocalidadClienteFila;
-            if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["localidad"].FormattedValue.ToString()))
+            if (!string.IsNullOrEmpty(dataGridViewModificarCliente.CurrentRow.Cells["Localidad"].FormattedValue.ToString()))
             {
-                LocalidadClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["localidad"].Value;
+                LocalidadClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Localidad"].Value;
                 modificacion.txtLocalidad.Text = LocalidadClienteFila;
             }
 
-
-            int nroPaisClienteFila = Convert.ToInt32(dataGridViewModificarCliente.CurrentRow.Cells["pais"].Value);
-
-            String cadenaObtenerNombrePais = "SELECT [PISOS_PICADOS].obtenerNombrePais (@idPais)";
-
-            SqlCommand cmdObtenerNombrePais = new SqlCommand(cadenaObtenerNombrePais, Globals.conexionGlobal);
-
-            cmdObtenerNombrePais.Parameters.Add("@idPais", SqlDbType.Int);
-            cmdObtenerNombrePais.Parameters["@idPais"].Value = nroPaisClienteFila;
-
-            String nombrePais = (String)cmdObtenerNombrePais.ExecuteScalar();
+            String nombrePais = (string)dataGridViewModificarCliente.CurrentRow.Cells["Pais"].Value;
 
             String nacionalidadClienteFila = nacionalidadCliente;
-            DateTime FechaNacimientoClienteFila = (DateTime)dataGridViewModificarCliente.CurrentRow.Cells["fechaNacimiento"].Value;
+            DateTime FechaNacimientoClienteFila = (DateTime)dataGridViewModificarCliente.CurrentRow.Cells["Fecha de nacimiento"].Value;
             
             //el form de  modificacion se abrira con los valores del usuario cargados
             modificacion.txtNombre.Text = nombreClienteFila;
@@ -249,10 +233,6 @@ namespace FrbaHotel.AbmCliente
 
             modificacion.Show();
         }
-
-
-
-
     }
 
 
