@@ -24,25 +24,13 @@ namespace FrbaHotel.AbmCliente
         static string apellidoOriginalGlobal;
         static int nroIdOriginalGlobal;
         static string mailOriginalGlobal;
+        static string paisOriginalGlobal;
         frmModificacion frmModificacionInstancia;
 
 
-        public frmModificacionCliente(string nombreOriginal, string apellidoOriginal, int nroIdOriginal, string mailOriginal, frmModificacion instanciaPadre)
+        public frmModificacionCliente(string nombreOriginal, string apellidoOriginal, int nroIdOriginal, string mailOriginal, string paisOriginal, frmModificacion instanciaPadre)
         {
             InitializeComponent();
-
-            nombreOriginalGlobal = nombreOriginal;
-            apellidoOriginalGlobal = apellidoOriginal;
-            nroIdOriginalGlobal = nroIdOriginal;
-            mailOriginalGlobal = mailOriginal;
-            frmModificacionInstancia = instanciaPadre;
-
-        }
-
-        private void frmModificacionCliente_Load(object sender, EventArgs e)
-        {
-            //centra el formulario
-            this.CenterToScreen();
 
             //Cargar paises en el comboBox cbPaises
             SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
@@ -56,9 +44,24 @@ namespace FrbaHotel.AbmCliente
 
             reader.Close();
 
+            nombreOriginalGlobal = nombreOriginal;
+            apellidoOriginalGlobal = apellidoOriginal;
+            nroIdOriginalGlobal = nroIdOriginal;
+            mailOriginalGlobal = mailOriginal;
+            frmModificacionInstancia = instanciaPadre;
+            paisOriginalGlobal = paisOriginal;
+
+        }
+
+        private void frmModificacionCliente_Load(object sender, EventArgs e)
+        {
+            //centra el formulario
+            this.CenterToScreen();
+
             txtNombre.Text = nombreOriginalGlobal;
             txtApellido.Text = apellidoOriginalGlobal;
             txtNroId.Text = nroIdOriginalGlobal.ToString();
+            cbPaises.SelectedItem = paisOriginalGlobal;
         }
 
 

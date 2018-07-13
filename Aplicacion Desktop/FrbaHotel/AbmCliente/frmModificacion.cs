@@ -153,13 +153,14 @@ namespace FrbaHotel.AbmCliente
             //en el DataGridView y conocer sus valores que aparecerán por defecto en un formulario especial para la 
             //modificacion de un cliente
 
-            String nombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Nombre"].Value;
-            String apellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Apellido"].Value;
-            String tipoIdClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Tipo de identificacion"].Value;
+            string nombreClienteFila = (string)dataGridViewModificarCliente.CurrentRow.Cells["Nombre"].Value;
+            string apellidoClienteFila = (string)dataGridViewModificarCliente.CurrentRow.Cells["Apellido"].Value;
+            string tipoIdClienteFila = (string)dataGridViewModificarCliente.CurrentRow.Cells["Tipo de identificacion"].Value;
             int nroIdClienteFila = (int)dataGridViewModificarCliente.CurrentRow.Cells["Numero de identificacion"].Value; //modificado a string para poder usar el contenido
-            String mailClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["Mail"].Value;
+            string mailClienteFila = (string)dataGridViewModificarCliente.CurrentRow.Cells["Mail"].Value;
+            string paisFila = (string)dataGridViewModificarCliente.CurrentRow.Cells["Pais"].Value;
             //una vez obtenido lo necesario para el form de modificación, lo construyo
-            frmModificacionCliente modificacion = new frmModificacionCliente(nombreClienteFila, apellidoClienteFila, nroIdClienteFila, mailClienteFila,this);
+            frmModificacionCliente modificacion = new frmModificacionCliente(nombreClienteFila, apellidoClienteFila, nroIdClienteFila, mailClienteFila, paisFila, this);
 
             /////////****** antes de seguir obtengo id de usuario para relacionarlo con su nacionalidad que está en la tabla cliente******///////// 
             //busco el id del cliente porque lo necesitaré al buscar su nacionalidad, la cual está en la tabla Cliente 
