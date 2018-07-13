@@ -35,33 +35,6 @@ namespace FrbaHotel.AbmCliente
             dataGridViewModificarCliente.DataSource = cargarClientes();
         }
 
-
-        //los siguientes KeyPress limitan la posibilidad de los usuarios de ingresar caracteres incorrectos en los
-        //campos que los referencien
-        private void soloTexto_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsLetter(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else
-                {
-                    e.Handled = true;
-                    MessageBox.Show("Este campo sólo acepta letras", "Error", MessageBoxButtons.OK);
-                }
-            }
-        }
-
-        private void soloNros_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            {
-                if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else
-                {
-                    e.Handled = true;
-                    MessageBox.Show("Este campo sólo acepta números", "Error", MessageBoxButtons.OK);
-                }
-            }
-        }
-
         //valida que el mail ingresado tenga estructura correcta de email
         static bool validarEmail(string email)
         {
