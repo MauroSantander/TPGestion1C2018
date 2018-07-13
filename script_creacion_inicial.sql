@@ -2524,7 +2524,10 @@ RETURN (
 SELECT H.idHabitacion AS idHabitacion
 ,h.numero AS Numero
 ,h.piso AS Piso
+,t.idTipo AS idTipo
+,t.tipoCamas AS Tipo
 FROM [PISOS_PICADOS].Habitacion AS h 
+JOIN [PISOS_PICADOS].Tipo AS t ON h.tipo = t.idTipo
 WHERE h.idHotel = @idHotel AND 
 (
 H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (1,@idHotel,@fechaInicio,@fechaFin,@cantSimple))
@@ -3346,7 +3349,6 @@ GO
 
 CREATE PROCEDURE [PISOS_PICADOS].altaEmpleado @username VARCHAR(255)
 	,@password VARCHAR(255)
-	,@rol VARCHAR(255)
 	,@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
 	,@mail VARCHAR(255)
@@ -3392,21 +3394,6 @@ BEGIN
 		,HASHBYTES('SHA2_256', @password)
 		);
 
-	INSERT INTO [PISOS_PICADOS].RolxUsuario
-	VALUES (
-		(
-			SELECT idRol
-			FROM [PISOS_PICADOS].Rol
-			WHERE nombreRol = @rol
-			)
-		,(
-			SELECT idUsuario
-			FROM [PISOS_PICADOS].Usuario AS p
-			WHERE p.numeroIdentificacion = @numeroDocumento
-				AND p.apellido = @apellido
-				AND p.nombre = @nombre
-			)
-		)
 END;
 GO
 
