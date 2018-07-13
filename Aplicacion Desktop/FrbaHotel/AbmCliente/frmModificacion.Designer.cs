@@ -244,7 +244,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmModificacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Modificación de usuario";
+            this.Text = "Modificación de Cliente";
             this.Load += new System.EventHandler(this.frmModificacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewModificarCliente)).EndInit();
             this.filtros.ResumeLayout(false);
