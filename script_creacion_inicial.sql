@@ -404,6 +404,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].registrarEstadia', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].puedeModificarReserva', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].puedeModificarReserva;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].actualizarContrasena', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].actualizarContrasena;
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -1466,6 +1469,15 @@ VALUES (
 	96945
 	,'admin'
 	,HASHBYTES('SHA2_256', 'w23e')
+	);
+
+INSERT INTO [PISOS_PICADOS].Cliente(
+	idUsuario
+	,nacionalidad
+	)
+VALUES (
+	96945
+	,'ARGENTINO'
 	);
 
 SET IDENTITY_INSERT [PISOS_PICADOS].Consumible ON
@@ -3448,37 +3460,37 @@ BEGIN
 	IF @nombre IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET nombre = @nombre
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @apellido IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET apellido = @apellido
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @mail IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET mail = @mail
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @telefono IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET telefono = @telefono
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @calle IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET calle = @calle
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @numeroCalle IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET nroCalle = @numeroCalle
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @localidad IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET localidad = @localidad
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @pais IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
@@ -3487,24 +3499,34 @@ BEGIN
 				FROM [PISOS_PICADOS].Pais
 				WHERE nombrePais = @pais
 				)
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @tipoDocumento IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET tipoIdentificacion = @tipoDocumento
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @numeroDocumento IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET numeroIdentificacion = @numeroDocumento
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 
 	IF @fechaNacimiento IS NOT NULL
 		UPDATE [PISOS_PICADOS].Usuario
 		SET fechaNacimiento = @fechaNacimiento
-		WHERE @idUsuario = idUsuario
+		WHERE idUsuario = @idUsuario
 END;
 GO
+
+CREATE PROCEDURE[PISOS_PICADOS].actualizarContrasena @idUsuario INT , @contrasena INT
+AS 
+BEGIN
+		UPDATE [PISOS_PICADOS].Empleado
+		SET contrasena = HASHBYTES('SHA2_256', @contrasena)
+		WHERE idUsuario = @idUsuario
+END 
+GO
+
 
 CREATE PROCEDURE [PISOS_PICADOS].quitarRolAUsuario @idUsuario INT
 	,@nombreRol VARCHAR(255)
