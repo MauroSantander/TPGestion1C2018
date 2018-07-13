@@ -300,6 +300,11 @@ namespace FrbaHotel.AbmUsuario
             this.llenarDataGridView("");
         }
 
+        private void buttonCrearUsr_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
 
        
 

@@ -97,6 +97,7 @@
             // username
             // 
             this.username.Location = new System.Drawing.Point(68, 28);
+            this.username.MaxLength = 255;
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(224, 20);
             this.username.TabIndex = 28;
@@ -114,7 +115,9 @@
             // pass
             // 
             this.pass.Location = new System.Drawing.Point(390, 27);
+            this.pass.MaxLength = 255;
             this.pass.Name = "pass";
+            this.pass.PasswordChar = '*';
             this.pass.Size = new System.Drawing.Size(229, 20);
             this.pass.TabIndex = 29;
             this.pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoYNros_KeyPress);
@@ -228,6 +231,7 @@
             // localidad
             // 
             this.localidad.Location = new System.Drawing.Point(63, 225);
+            this.localidad.MaxLength = 255;
             this.localidad.Name = "localidad";
             this.localidad.Size = new System.Drawing.Size(255, 20);
             this.localidad.TabIndex = 31;
@@ -245,6 +249,7 @@
             // nroCalle
             // 
             this.nroCalle.Location = new System.Drawing.Point(390, 193);
+            this.nroCalle.MaxLength = 9;
             this.nroCalle.Name = "nroCalle";
             this.nroCalle.Size = new System.Drawing.Size(133, 20);
             this.nroCalle.TabIndex = 29;
@@ -262,6 +267,7 @@
             // calle
             // 
             this.calle.Location = new System.Drawing.Point(63, 193);
+            this.calle.MaxLength = 255;
             this.calle.Name = "calle";
             this.calle.Size = new System.Drawing.Size(255, 20);
             this.calle.TabIndex = 27;
@@ -290,6 +296,7 @@
             // mail
             // 
             this.mail.Location = new System.Drawing.Point(63, 114);
+            this.mail.MaxLength = 255;
             this.mail.Name = "mail";
             this.mail.Size = new System.Drawing.Size(255, 20);
             this.mail.TabIndex = 16;
@@ -297,6 +304,7 @@
             // tel
             // 
             this.tel.Location = new System.Drawing.Point(63, 148);
+            this.tel.MaxLength = 255;
             this.tel.Name = "tel";
             this.tel.Size = new System.Drawing.Size(255, 20);
             this.tel.TabIndex = 15;
@@ -333,6 +341,7 @@
             // nombre
             // 
             this.nombre.Location = new System.Drawing.Point(63, 19);
+            this.nombre.MaxLength = 255;
             this.nombre.Name = "nombre";
             this.nombre.Size = new System.Drawing.Size(255, 20);
             this.nombre.TabIndex = 12;
@@ -341,6 +350,7 @@
             // apellido
             // 
             this.apellido.Location = new System.Drawing.Point(63, 45);
+            this.apellido.MaxLength = 255;
             this.apellido.Name = "apellido";
             this.apellido.Size = new System.Drawing.Size(255, 20);
             this.apellido.TabIndex = 11;

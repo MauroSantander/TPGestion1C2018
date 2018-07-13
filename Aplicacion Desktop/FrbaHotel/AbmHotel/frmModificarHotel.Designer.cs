@@ -105,6 +105,7 @@
             // textBoxCIU
             // 
             this.textBoxCIU.Location = new System.Drawing.Point(150, 217);
+            this.textBoxCIU.MaxLength = 255;
             this.textBoxCIU.Name = "textBoxCIU";
             this.textBoxCIU.Size = new System.Drawing.Size(178, 20);
             this.textBoxCIU.TabIndex = 89;
@@ -138,6 +139,7 @@
             // textBoxCalle
             // 
             this.textBoxCalle.Location = new System.Drawing.Point(150, 141);
+            this.textBoxCalle.MaxLength = 255;
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(178, 20);
             this.textBoxCalle.TabIndex = 84;
@@ -146,6 +148,7 @@
             // textBoxMail
             // 
             this.textBoxMail.Location = new System.Drawing.Point(150, 55);
+            this.textBoxMail.MaxLength = 255;
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(178, 20);
             this.textBoxMail.TabIndex = 83;
@@ -153,6 +156,7 @@
             // textBoxTE
             // 
             this.textBoxTE.Location = new System.Drawing.Point(150, 101);
+            this.textBoxTE.MaxLength = 255;
             this.textBoxTE.Name = "textBoxTE";
             this.textBoxTE.Size = new System.Drawing.Size(178, 20);
             this.textBoxTE.TabIndex = 82;
@@ -161,6 +165,7 @@
             // textBoxName
             // 
             this.textBoxName.Location = new System.Drawing.Point(150, 13);
+            this.textBoxName.MaxLength = 255;
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(178, 20);
             this.textBoxName.TabIndex = 81;
@@ -242,6 +247,7 @@
             // textBoxNroCalle
             // 
             this.textBoxNroCalle.Location = new System.Drawing.Point(415, 141);
+            this.textBoxNroCalle.MaxLength = 9;
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(98, 20);
             this.textBoxNroCalle.TabIndex = 93;

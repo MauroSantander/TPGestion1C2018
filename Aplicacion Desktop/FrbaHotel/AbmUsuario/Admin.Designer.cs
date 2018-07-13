@@ -65,6 +65,7 @@
             this.buttonCrearUsr.TabIndex = 70;
             this.buttonCrearUsr.Text = "Crear Usuario";
             this.buttonCrearUsr.UseVisualStyleBackColor = true;
+            this.buttonCrearUsr.Click += new System.EventHandler(this.buttonCrearUsr_Click_1);
             // 
             // label15
             // 
@@ -127,6 +128,7 @@
             // textBoxNroId
             // 
             this.textBoxNroId.Location = new System.Drawing.Point(508, 65);
+            this.textBoxNroId.MaxLength = 9;
             this.textBoxNroId.Name = "textBoxNroId";
             this.textBoxNroId.Size = new System.Drawing.Size(171, 20);
             this.textBoxNroId.TabIndex = 63;
@@ -185,6 +187,7 @@
             // textBoxUsuario
             // 
             this.textBoxUsuario.Location = new System.Drawing.Point(106, 32);
+            this.textBoxUsuario.MaxLength = 255;
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(171, 20);
             this.textBoxUsuario.TabIndex = 66;
@@ -212,6 +215,7 @@
             // textBoxNombre
             // 
             this.textBoxNombre.Location = new System.Drawing.Point(106, 63);
+            this.textBoxNombre.MaxLength = 255;
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(171, 20);
             this.textBoxNombre.TabIndex = 76;
@@ -229,6 +233,7 @@
             // textBoxApellido
             // 
             this.textBoxApellido.Location = new System.Drawing.Point(106, 93);
+            this.textBoxApellido.MaxLength = 255;
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(171, 20);
             this.textBoxApellido.TabIndex = 78;
@@ -246,6 +251,7 @@
             // textBoxCalle
             // 
             this.textBoxCalle.Location = new System.Drawing.Point(827, 95);
+            this.textBoxCalle.MaxLength = 255;
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(183, 20);
             this.textBoxCalle.TabIndex = 82;
@@ -263,6 +269,7 @@
             // textBoxLocalidad
             // 
             this.textBoxLocalidad.Location = new System.Drawing.Point(827, 60);
+            this.textBoxLocalidad.MaxLength = 255;
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(183, 20);
             this.textBoxLocalidad.TabIndex = 80;
@@ -302,6 +309,7 @@
             // textBoxNroCalle
             // 
             this.textBoxNroCalle.Location = new System.Drawing.Point(1076, 95);
+            this.textBoxNroCalle.MaxLength = 9;
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(88, 20);
             this.textBoxNroCalle.TabIndex = 86;

@@ -236,6 +236,7 @@
             // usernameUPD
             // 
             this.usernameUPD.Location = new System.Drawing.Point(64, 23);
+            this.usernameUPD.MaxLength = 255;
             this.usernameUPD.Name = "usernameUPD";
             this.usernameUPD.Size = new System.Drawing.Size(190, 20);
             this.usernameUPD.TabIndex = 43;
@@ -293,6 +294,7 @@
             // localidadUPD
             // 
             this.localidadUPD.Location = new System.Drawing.Point(63, 213);
+            this.localidadUPD.MaxLength = 255;
             this.localidadUPD.Name = "localidadUPD";
             this.localidadUPD.Size = new System.Drawing.Size(191, 20);
             this.localidadUPD.TabIndex = 23;
@@ -310,6 +312,7 @@
             // nroUPD
             // 
             this.nroUPD.Location = new System.Drawing.Point(290, 181);
+            this.nroUPD.MaxLength = 9;
             this.nroUPD.Name = "nroUPD";
             this.nroUPD.Size = new System.Drawing.Size(125, 20);
             this.nroUPD.TabIndex = 21;
@@ -334,6 +337,7 @@
             // calleUPD
             // 
             this.calleUPD.Location = new System.Drawing.Point(63, 181);
+            this.calleUPD.MaxLength = 255;
             this.calleUPD.Name = "calleUPD";
             this.calleUPD.Size = new System.Drawing.Size(191, 20);
             this.calleUPD.TabIndex = 17;
@@ -342,6 +346,7 @@
             // mailUPD
             // 
             this.mailUPD.Location = new System.Drawing.Point(63, 114);
+            this.mailUPD.MaxLength = 255;
             this.mailUPD.Name = "mailUPD";
             this.mailUPD.Size = new System.Drawing.Size(255, 20);
             this.mailUPD.TabIndex = 16;
@@ -349,6 +354,7 @@
             // telUPD
             // 
             this.telUPD.Location = new System.Drawing.Point(63, 148);
+            this.telUPD.MaxLength = 255;
             this.telUPD.Name = "telUPD";
             this.telUPD.Size = new System.Drawing.Size(255, 20);
             this.telUPD.TabIndex = 15;
@@ -357,6 +363,7 @@
             // numIdUPD
             // 
             this.numIdUPD.Location = new System.Drawing.Point(263, 80);
+            this.numIdUPD.MaxLength = 9;
             this.numIdUPD.Name = "numIdUPD";
             this.numIdUPD.Size = new System.Drawing.Size(182, 20);
             this.numIdUPD.TabIndex = 14;
@@ -385,6 +392,7 @@
             // nombreUPD
             // 
             this.nombreUPD.Location = new System.Drawing.Point(63, 19);
+            this.nombreUPD.MaxLength = 255;
             this.nombreUPD.Name = "nombreUPD";
             this.nombreUPD.Size = new System.Drawing.Size(255, 20);
             this.nombreUPD.TabIndex = 12;
@@ -393,6 +401,7 @@
             // apellidoUPD
             // 
             this.apellidoUPD.Location = new System.Drawing.Point(63, 45);
+            this.apellidoUPD.MaxLength = 255;
             this.apellidoUPD.Name = "apellidoUPD";
             this.apellidoUPD.Size = new System.Drawing.Size(255, 20);
             this.apellidoUPD.TabIndex = 11;
