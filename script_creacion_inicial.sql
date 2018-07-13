@@ -401,6 +401,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].establecerEstadoReserva', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].registrarEstadia', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].registrarEstadia;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].puedeModificarReserva', N'P') IS NOT NULL
+	DROP PROCEDURE [PISOS_PICADOS].puedeModificarReserva;
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -4516,6 +4519,40 @@ BEGIN
 			)
 		AND fechaInicio > '20180713'
 END
+GO
+
+CREATE PROCEDURE [PISOS_PICADOS].puedeModificarReserva (@fechaInicio DATE
+	,@fechaFin DATE
+	,@idReserva INT
+	,@cantSimple INT
+	,@cantDoble INT
+	,@cantTriple INT
+	,@cantCuadru INT
+	,@cantKing INT)
+
+AS
+	DECLARE @idHotel INT
+
+	SET @idHotel = [PISOS_PICADOS].obtenerHotelDeHabitacion((
+				SELECT TOP 1 idHabitacion
+				FROM [PISOS_PICADOS].HabitacionxReserva
+				WHERE codigoReserva = @idReserva
+				))
+
+	BEGIN TRANSACTION TREliminacionHotelesReserva
+
+	DELETE
+	FROM [PISOS_PICADOS].HabitacionxReserva
+	WHERE codigoReserva = @idReserva
+
+	IF ([PISOS_PICADOS].hotelCumple(@cantSimple,@cantDoble,
+	@cantTriple,@cantCuadru,@cantKing,@idHotel,@fechaInicio,@fechaFin) = 0)
+	BEGIN
+	COMMIT TRANSACTION TREliminacionHotelesReserva
+	RETURN 1
+	END
+	ROLLBACK TRANSACTION TREliminacionHotelesReserva;
+	RETURN 0
 GO
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
