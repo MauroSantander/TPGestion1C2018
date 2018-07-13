@@ -65,7 +65,7 @@
             this.buttonCrearUsr.TabIndex = 70;
             this.buttonCrearUsr.Text = "Crear Usuario";
             this.buttonCrearUsr.UseVisualStyleBackColor = true;
-            this.buttonCrearUsr.Click += new System.EventHandler(this.buttonCrearUsr_Click_1);
+            this.buttonCrearUsr.Click += new System.EventHandler(this.buttonCrearUsr_Click);
             // 
             // label15
             // 
@@ -85,6 +85,7 @@
             this.buttonActualizar.TabIndex = 73;
             this.buttonActualizar.Text = "Actualizar";
             this.buttonActualizar.UseVisualStyleBackColor = true;
+            this.buttonActualizar.Click += new System.EventHandler(this.buttonActualizar_Click);
             // 
             // dataGridViewUsuarios
             // 
@@ -114,6 +115,7 @@
             this.buttonBaja.TabIndex = 62;
             this.buttonBaja.Text = "Dar de baja";
             this.buttonBaja.UseVisualStyleBackColor = true;
+            this.buttonBaja.Click += new System.EventHandler(this.buttonBaja_Click);
             // 
             // buttonFiltrar
             // 
@@ -151,7 +153,7 @@
             "L.E",
             "Carnet Ext.",
             "Pasaporte",
-            "Vacío"});
+            "Seleccionar"});
             this.comboBoxTipoId.Location = new System.Drawing.Point(508, 34);
             this.comboBoxTipoId.Name = "comboBoxTipoId";
             this.comboBoxTipoId.Size = new System.Drawing.Size(171, 21);

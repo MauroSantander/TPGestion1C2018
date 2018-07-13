@@ -57,6 +57,7 @@ namespace FrbaHotel.Login
                 getId.Parameters["@username"].Value = textBoxUsuario.Text;
                 int idUsr = (int)getId.ExecuteScalar();
                 Globals.setUsuarioSesion(idUsr);
+                Globals.setContraseñaUsuario(textBoxContrasena.Text);
                 
                 //continua 
                 

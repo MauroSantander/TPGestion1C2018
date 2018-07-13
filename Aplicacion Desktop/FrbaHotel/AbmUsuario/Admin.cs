@@ -47,19 +47,19 @@ namespace FrbaHotel.AbmUsuario
             reader.Close();
             
             AutoCompleteStringCollection usernameColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("e.usuario", textBoxUsuario, usernameColeccion);
+            this.cargarAutocomplete("e.usuario", "Usuario", textBoxUsuario, usernameColeccion);
 
             AutoCompleteStringCollection nombreColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("u.nombre", textBoxNombre, nombreColeccion);
+            this.cargarAutocomplete("u.nombre","Nombre", textBoxNombre, nombreColeccion);
 
             AutoCompleteStringCollection apColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("u.apellido", textBoxApellido, apColeccion);
+            this.cargarAutocomplete("u.apellido","Apellido" ,textBoxApellido, apColeccion);
 
             AutoCompleteStringCollection locColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("u.localidad", textBoxLocalidad, locColeccion);
+            this.cargarAutocomplete("u.localidad","Localidad", textBoxLocalidad, locColeccion);
 
             AutoCompleteStringCollection calleColeccion = new AutoCompleteStringCollection();
-            this.cargarAutocomplete("u.calle", textBoxCalle, calleColeccion);
+            this.cargarAutocomplete("u.calle","Calle", textBoxCalle, calleColeccion);
 
 
         }
@@ -89,11 +89,11 @@ namespace FrbaHotel.AbmUsuario
             String mail = dataGridViewUsuarios.CurrentRow.Cells["Mail"].Value.ToString();
             String tel = dataGridViewUsuarios.CurrentRow.Cells["Teléfono"].Value.ToString();
             String calle = dataGridViewUsuarios.CurrentRow.Cells["Calle"].Value.ToString();
-            String nroCalle = dataGridViewUsuarios.CurrentRow.Cells["Nro Calle"].Value.ToString();
+            String nroCalle = dataGridViewUsuarios.CurrentRow.Cells["NroCalle"].Value.ToString();
             String localidad = dataGridViewUsuarios.CurrentRow.Cells["Localidad"].Value.ToString();
             String pais = dataGridViewUsuarios.CurrentRow.Cells["Pais"].Value.ToString();
-            String tipoId = dataGridViewUsuarios.CurrentRow.Cells["Tipo id"].Value.ToString();
-            String nroident =dataGridViewUsuarios.CurrentRow.Cells["Nro Identificación"].Value.ToString();
+            String tipoId = dataGridViewUsuarios.CurrentRow.Cells["TipoId"].Value.ToString();
+            String nroident =dataGridViewUsuarios.CurrentRow.Cells["NroIdentificación"].Value.ToString();
             String fechaNacimiento = dataGridViewUsuarios.CurrentRow.Cells["Fecha Nacimiento"].Value.ToString();
 
             int idPais = int.Parse(pais);
@@ -229,15 +229,15 @@ namespace FrbaHotel.AbmUsuario
 
         }
 
-        private void cargarAutocomplete(String columna, TextBox textbox, AutoCompleteStringCollection coleccion)
+        private void cargarAutocomplete(String columna,String nombre, TextBox textbox, AutoCompleteStringCollection coleccion)
         {
-            string query = "Select " + columna + " from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1";
+            string query = "Select " + columna +" '"+nombre+"'  from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1";
             SqlCommand llenarColeccion = new SqlCommand(query, Globals.conexionGlobal);
             SqlDataReader dr = llenarColeccion.ExecuteReader();
             if (dr.HasRows == true)
             {
                 while (dr.Read())
-                    coleccion.Add(dr["" + columna + ""].ToString());
+                    coleccion.Add(dr[nombre].ToString());
 
             }
 
@@ -300,10 +300,10 @@ namespace FrbaHotel.AbmUsuario
             this.llenarDataGridView("");
         }
 
-        private void buttonCrearUsr_Click_1(object sender, EventArgs e)
-        {
+       
+        
 
-        }
+       
 
 
        
