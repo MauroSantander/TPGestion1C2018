@@ -164,7 +164,7 @@
             // 
             // buttonFiltrar
             // 
-            this.buttonFiltrar.Location = new System.Drawing.Point(638, 92);
+            this.buttonFiltrar.Location = new System.Drawing.Point(639, 109);
             this.buttonFiltrar.Name = "buttonFiltrar";
             this.buttonFiltrar.Size = new System.Drawing.Size(209, 52);
             this.buttonFiltrar.TabIndex = 86;
@@ -185,7 +185,7 @@
             // 
             this.comboBoxPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPais.FormattingEnabled = true;
-            this.comboBoxPais.Location = new System.Drawing.Point(81, 26);
+            this.comboBoxPais.Location = new System.Drawing.Point(67, 30);
             this.comboBoxPais.Name = "comboBoxPais";
             this.comboBoxPais.Size = new System.Drawing.Size(207, 21);
             this.comboBoxPais.TabIndex = 88;
@@ -238,7 +238,7 @@
             this.groupBox2.Controls.Add(this.textBoxCiudad);
             this.groupBox2.Location = new System.Drawing.Point(309, 23);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(294, 130);
+            this.groupBox2.Size = new System.Drawing.Size(294, 138);
             this.groupBox2.TabIndex = 96;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ubicación";
@@ -255,7 +255,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(639, 30);
+            this.button1.Location = new System.Drawing.Point(639, 25);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(210, 37);
             this.button1.TabIndex = 99;

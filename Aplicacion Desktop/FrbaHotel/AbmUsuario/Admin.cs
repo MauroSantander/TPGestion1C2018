@@ -71,7 +71,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void buttonCrearUsr_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.AbmUsuario.frmNuevoUsuario()).ShowDialog();
+            (new FrbaHotel.AbmUsuario.frmNuevoUsuario()).abrirPantalla(this);
         }
 
 

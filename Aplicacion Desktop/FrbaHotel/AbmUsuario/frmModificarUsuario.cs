@@ -129,7 +129,7 @@ namespace FrbaHotel.AbmUsuario
                     agregarRol.CommandType = CommandType.StoredProcedure;
                     agregarRol.Parameters.Add("@idUsuario", SqlDbType.Int);
                     agregarRol.Parameters["@idUsuario"].Value = idUsuario;
-                    agregarRol.Parameters.Add("@nombreRol", SqlDbType.Int);
+                    agregarRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
                     agregarRol.Parameters["@nombreRol"].Value = nombreRol;
                     agregarRol.ExecuteNonQuery();
 

@@ -14,9 +14,16 @@ namespace FrbaHotel.AbmUsuario
 {
     public partial class frmNuevoUsuario : Form
     {
+        Admin pantallaAdmin;
         public frmNuevoUsuario()
         {
             InitializeComponent();
+        }
+
+        public void abrirPantalla(Admin pantalla) 
+        {
+            pantallaAdmin=pantalla;
+            this.ShowDialog();
         }
         private void frmNuevoUsuario_Load(object sender, EventArgs e)
         {
@@ -164,6 +171,7 @@ namespace FrbaHotel.AbmUsuario
 
 
             MessageBox.Show("Usuario creado correctamente");
+            pantallaAdmin.llenarDataGridView("");
 
             this.Close();
 
@@ -286,6 +294,11 @@ namespace FrbaHotel.AbmUsuario
                 if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
                 else { e.Handled = true; }
             }
+        }
+
+        private void buttonCerrar_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
     
