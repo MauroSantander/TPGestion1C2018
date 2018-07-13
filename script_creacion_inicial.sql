@@ -277,6 +277,9 @@ IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplenReserva', N'IF') IS NOT NUL
 IF OBJECT_ID(N'[PISOS_PICADOS].mostrarClientes', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].mostrarClientes;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].cantHabitacionesReservaTipo', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].cantHabitacionesReservaTipo;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -3310,6 +3313,19 @@ JOIN [PISOS_PICADOS].EstadoUsuario AS eu ON u.estado = eu.idEstado
 )
 GO
 
+CREATE FUNCTION [PISOS_PICADOS].cantHabitacionesReservaTipo(@codigoReserva INT,@idTipo INT)
+RETURNS INT
+AS
+BEGIN
+RETURN(
+SELECT H.idHabitacion
+FROM [PISOS_PICADOS].HabitacionxReserva AS hxr 
+JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
+WHERE hxr.codigoReserva = @codigoReserva AND h.tipo = @idTipo
+)
+END
+GO
+
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
@@ -4581,7 +4597,6 @@ AS
 	END
 	ROLLBACK TRANSACTION TREliminacionHotelesReserva;
 	RETURN @resp
-	END
 GO
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
