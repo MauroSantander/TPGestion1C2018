@@ -37,7 +37,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             labelCodigoReserva.Text = codigoReserva;
             this.CenterToScreen();
 
-            //cargo hoteles
+            //cargo hotel
             SqlCommand cargarHotelReserva = new SqlCommand("SELECT nombre FROM [PISOS_PICADOS].Hotel WHERE idHotel IN (SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva))", Globals.conexionGlobal);
             cargarHotelReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
             cargarHotelReserva.Parameters["@codigoReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
@@ -49,7 +49,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                 }
             catch
             {
-                MessageBox.Show("Error al cargar el hotel del usuario. Reinicie sesión y vuelva a intentar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al cargar el hotel de la reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
                 return;
             }
@@ -59,32 +59,53 @@ namespace FrbaHotel.GenerarModificacionReserva
             cargarRegimenReserva.Parameters.Add("@idReserva", SqlDbType.Int);
             cargarRegimenReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
             string regimen = (string)cargarRegimenReserva.ExecuteScalar();
-            comboBoxRegimen.SelectedItem = regimen;
 
             //cargo fechaInicio
-            SqlCommand cargarFechaInicioReserva = new SqlCommand("SELECT fechaInicio FROM [PISOS_PICADOS].Reserva", Globals.conexionGlobal);
+            SqlCommand cargarFechaInicioReserva = new SqlCommand("SELECT fechaInicio FROM [PISOS_PICADOS].Reserva WHERE codigoReserva = @idReserva", Globals.conexionGlobal);
             cargarFechaInicioReserva.Parameters.Add("@idReserva", SqlDbType.Int);
             cargarFechaInicioReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
             string fechaInicio = cargarFechaInicioReserva.ExecuteScalar().ToString();
-            dtpInicioReserva.Value = Convert.ToDateTime(fechaInicio);
+            dtpInicioReserva.Value = DateTime.Parse(fechaInicio);
 
             //cargo fechaFin
-            SqlCommand cargarFechaFinReserva = new SqlCommand("SELECT fechaFin FROM [PISOS_PICADOS].Reserva", Globals.conexionGlobal);
+            SqlCommand cargarFechaFinReserva = new SqlCommand("SELECT fechaFin FROM [PISOS_PICADOS].Reserva WHERE codigoReserva = @idReserva", Globals.conexionGlobal);
             cargarFechaFinReserva.Parameters.Add("@idReserva", SqlDbType.Int);
             cargarFechaFinReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
             string fechaFin = cargarFechaFinReserva.ExecuteScalar().ToString();
-            dtpFinReserva.Value = Convert.ToDateTime(fechaFin);
-
+            dtpFinReserva.Value = DateTime.Parse(fechaFin);
+            
             //cargo cantidad de habitaciones
+            SqlCommand cargarCantHabitacionesSimples = new SqlCommand("SELECT [PISOS_PICADOS].cantHabitacionesReserva (@codigoReserva, 1)", Globals.conexionGlobal);
+            cargarCantHabitacionesSimples.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cargarCantHabitacionesSimples.Parameters["@codigoReserva"].Value = Int64.Parse(codigoReserva);
+            numSimple.Value = (int)cargarCantHabitacionesSimples.ExecuteScalar();
 
+            SqlCommand cargarCantHabitacionesDobles = new SqlCommand("SELECT [PISOS_PICADOS].cantHabitacionesReserva (@codigoReserva, 2)", Globals.conexionGlobal);
+            cargarCantHabitacionesDobles.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cargarCantHabitacionesDobles.Parameters["@codigoReserva"].Value = Int64.Parse(codigoReserva);
+            numDoble.Value = (int)cargarCantHabitacionesDobles.ExecuteScalar();
 
+            SqlCommand cargarCantHabitacionesTriples = new SqlCommand("SELECT [PISOS_PICADOS].cantHabitacionesReserva (@codigoReserva, 3)", Globals.conexionGlobal);
+            cargarCantHabitacionesTriples.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cargarCantHabitacionesTriples.Parameters["@codigoReserva"].Value = Int64.Parse(codigoReserva);
+            numTriple.Value = (int)cargarCantHabitacionesTriples.ExecuteScalar();
+
+            SqlCommand cargarCantHabitacionesCuadruples = new SqlCommand("SELECT [PISOS_PICADOS].cantHabitacionesReserva (@codigoReserva, 4)", Globals.conexionGlobal);
+            cargarCantHabitacionesCuadruples.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cargarCantHabitacionesCuadruples.Parameters["@codigoReserva"].Value = Int64.Parse(codigoReserva);
+            numCuadruple.Value = (int)cargarCantHabitacionesCuadruples.ExecuteScalar();
+
+            SqlCommand cargarCantHabitacionesKing = new SqlCommand("SELECT [PISOS_PICADOS].cantHabitacionesReserva (@codigoReserva, 5)", Globals.conexionGlobal);
+            cargarCantHabitacionesKing.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cargarCantHabitacionesKing.Parameters["@codigoReserva"].Value = Int64.Parse(codigoReserva);
+            numKing.Value = (int)cargarCantHabitacionesKing.ExecuteScalar();
 
             //agrego item por si no sabe el régimen que quiere
             comboBoxRegimen.Items.Add("Vacío");
 
             //busco regímenes
             Utils.cargarRegimenes(comboBoxRegimen);
-            comboBoxRegimen.SelectedIndex = 0;
+            comboBoxRegimen.SelectedItem = regimen;
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -241,6 +262,8 @@ namespace FrbaHotel.GenerarModificacionReserva
                 cmdPuedeModificarReserva.ExecuteNonQuery();
                 int resultadoBusqueda = (int)retorno.Value;
 
+                MessageBox.Show(resultadoBusqueda.ToString());
+
                 //según resultado aviso al usuario
                 if (resultadoBusqueda == 0)
                 {
@@ -254,7 +277,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                         SqlCommand modificarReserva = new SqlCommand(spModificarReserva, Globals.conexionGlobal);
                         modificarReserva.CommandType = CommandType.StoredProcedure;
 
-                        modificarReserva.Parameters.Add("@fechaModificacion", SqlDbType.Date);
+                        modificarReserva.Parameters.Add("@fechaActual", SqlDbType.Date);
                         modificarReserva.Parameters.Add("@fechaInicio", SqlDbType.Date);
                         modificarReserva.Parameters.Add("@fechaFin", SqlDbType.Date);
                         modificarReserva.Parameters.Add("@cantHuespedes", SqlDbType.Int);
@@ -268,7 +291,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                         modificarReserva.Parameters.Add("@cantKing", SqlDbType.Int);
                         modificarReserva.Parameters.Add("@motivo", SqlDbType.VarChar);
 
-                        modificarReserva.Parameters["@fechaModificacion"].Value = Globals.FechaDelSistema;
+                        modificarReserva.Parameters["@fechaActual"].Value = Globals.FechaDelSistema;
                         modificarReserva.Parameters["@fechaInicio"].Value = dtpInicioReserva.Value.ToString("yyyy-MM-dd");
                         modificarReserva.Parameters["@fechaFin"].Value = dtpFinReserva.Value.ToString("yyyy-MM-dd");
                         modificarReserva.Parameters["@cantHuespedes"].Value = cantHuespedes;
