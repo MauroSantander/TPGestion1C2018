@@ -49,7 +49,7 @@
             this.textBoxNroCalle = new System.Windows.Forms.TextBox();
             this.textBoxCalle = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.comboBoxPAIS = new System.Windows.Forms.ComboBox();
+            this.comboBoxPais = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +96,7 @@
             this.textBoxCIU.Name = "textBoxCIU";
             this.textBoxCIU.Size = new System.Drawing.Size(178, 20);
             this.textBoxCIU.TabIndex = 72;
-            this.textBoxCIU.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.textBoxCIU.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // label3
             // 
@@ -144,7 +144,7 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(178, 20);
             this.textBoxName.TabIndex = 64;
-            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // label18
             // 
@@ -233,7 +233,7 @@
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(178, 20);
             this.textBoxCalle.TabIndex = 96;
-            this.textBoxCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.textBoxCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // label19
             // 
@@ -244,9 +244,9 @@
             this.label19.TabIndex = 95;
             this.label19.Text = "Calle:";
             // 
-            // comboBoxPAIS
+            // comboBoxPais
             // 
-            this.comboBoxPAIS.AutoCompleteCustomSource.AddRange(new string[] {
+            this.comboBoxPais.AutoCompleteCustomSource.AddRange(new string[] {
             "Afganistán",
             "Albania",
             "Alemania",
@@ -441,216 +441,21 @@
             "Yibuti",
             "Zambia",
             "Zimbabue"});
-            this.comboBoxPAIS.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.comboBoxPAIS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPAIS.FormattingEnabled = true;
-            this.comboBoxPAIS.Items.AddRange(new object[] {
-            "Afganistán",
-            "Albania",
-            "Alemania",
-            "Andorra",
-            "Angola",
-            "Antigua y Barbuda",
-            "Arabia Saudita",
-            "Argelia",
-            "Argentina",
-            "Armenia",
-            "Australia",
-            "Austria",
-            "Azerbaiyán",
-            "Bahamas",
-            "Bangladés",
-            "Barbados",
-            "Baréin",
-            "Bélgica",
-            "Belice",
-            "Benín",
-            "Bielorrusia",
-            "Birmania",
-            "Bolivia",
-            "Bosnia y Herzegovina",
-            "Botsuana",
-            "Brasil",
-            "Brunéi",
-            "Bulgaria",
-            "Burkina Faso",
-            "Burundi",
-            "Bután",
-            "Cabo Verde",
-            "Camboya",
-            "Camerún",
-            "Canadá",
-            "Catar",
-            "Chad",
-            "Chile",
-            "China",
-            "Chipre",
-            "Ciudad del Vaticano",
-            "Colombia",
-            "Comoras",
-            "Corea del Norte",
-            "Corea del Sur",
-            "Costa de Marfil",
-            "Costa Rica",
-            "Croacia",
-            "Cuba",
-            "Dinamarca",
-            "Dominica",
-            "Ecuador",
-            "Egipto",
-            "El Salvador",
-            "Emiratos Árabes Unidos",
-            "Eritrea",
-            "Eslovaquia",
-            "Eslovenia",
-            "España",
-            "Estados Unidos",
-            "Estonia",
-            "Etiopía",
-            "Filipinas",
-            "Finlandia",
-            "Fiyi",
-            "Francia",
-            "Gabón",
-            "Gambia",
-            "Georgia",
-            "Ghana",
-            "Granada",
-            "Grecia",
-            "Guatemala",
-            "Guyana",
-            "Guinea",
-            "Guinea ecuatorial",
-            "Guinea-Bisáu",
-            "Haití",
-            "Honduras",
-            "Hungría",
-            "India",
-            "Indonesia",
-            "Irak",
-            "Irán",
-            "Irlanda",
-            "Islandia",
-            "Islas Marshall",
-            "Islas Salomón",
-            "Israel",
-            "Italia",
-            "Jamaica",
-            "Japón",
-            "Jordania",
-            "Kazajistán",
-            "Kenia",
-            "Kirguistán",
-            "Kiribati",
-            "Kuwait",
-            "Laos",
-            "Lesoto",
-            "Letonia",
-            "Líbano",
-            "Liberia",
-            "Libia",
-            "Liechtenstein",
-            "Lituania",
-            "Luxemburgo",
-            "Madagascar",
-            "Malasia",
-            "Malaui",
-            "Maldivas",
-            "Malí",
-            "Malta",
-            "Marruecos",
-            "Mauricio",
-            "Mauritania",
-            "México",
-            "Micronesia",
-            "Moldavia",
-            "Mónaco",
-            "Mongolia",
-            "Montenegro",
-            "Mozambique",
-            "Namibia",
-            "Nauru",
-            "Nepal",
-            "Nicaragua",
-            "Níger",
-            "Nigeria",
-            "Noruega",
-            "Nueva Zelanda",
-            "Omán",
-            "Países Bajos",
-            "Pakistán",
-            "Palaos",
-            "Panamá",
-            "Papúa Nueva Guinea",
-            "Paraguay",
-            "Perú",
-            "Polonia",
-            "Portugal",
-            "Reino Unido",
-            "República Centroafricana",
-            "República Checa",
-            "República de Macedonia",
-            "República del Congo",
-            "República Democrática del Congo",
-            "República Dominicana",
-            "República Sudafricana",
-            "Ruanda",
-            "Rumanía",
-            "Rusia",
-            "Samoa",
-            "San Cristóbal y Nieves",
-            "San Marino",
-            "San Vicente y las Granadinas",
-            "Santa Lucía",
-            "Santo Tomé y Príncipe",
-            "Senegal",
-            "Serbia",
-            "Seychelles",
-            "Sierra Leona",
-            "Singapur",
-            "Siria",
-            "Somalia",
-            "Sri Lanka",
-            "Suazilandia",
-            "Sudán",
-            "Sudán del Sur",
-            "Suecia",
-            "Suiza",
-            "Surinam",
-            "Tailandia",
-            "Tanzania",
-            "Tayikistán",
-            "Timor Oriental",
-            "Togo",
-            "Tonga",
-            "Trinidad y Tobago",
-            "Túnez",
-            "Turkmenistán",
-            "Turquía",
-            "Tuvalu",
-            "Ucrania",
-            "Uganda",
-            "Uruguay",
-            "Uzbekistán",
-            "Vanuatu",
-            "Venezuela",
-            "Vietnam",
-            "Yemen",
-            "Yibuti",
-            "Zambia",
-            "Zimbabue"});
-            this.comboBoxPAIS.Location = new System.Drawing.Point(130, 233);
-            this.comboBoxPAIS.Name = "comboBoxPAIS";
-            this.comboBoxPAIS.Size = new System.Drawing.Size(197, 21);
-            this.comboBoxPAIS.TabIndex = 99;
-            this.comboBoxPAIS.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.comboBoxPais.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.comboBoxPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPais.FormattingEnabled = true;
+            this.comboBoxPais.Location = new System.Drawing.Point(130, 233);
+            this.comboBoxPais.Name = "comboBoxPais";
+            this.comboBoxPais.Size = new System.Drawing.Size(197, 21);
+            this.comboBoxPais.TabIndex = 99;
+            this.comboBoxPais.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
             // 
-            // NuevoHotel
+            // frmNuevoHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(703, 624);
-            this.Controls.Add(this.comboBoxPAIS);
+            this.Controls.Add(this.comboBoxPais);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBoxNroCalle);
             this.Controls.Add(this.textBoxCalle);
@@ -670,7 +475,7 @@
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
-            this.Name = "NuevoHotel";
+            this.Name = "frmNuevoHotel";
             this.Text = "Nuevo Hotel";
             this.Load += new System.EventHandler(this.NuevoHotel_Load);
             this.groupBox2.ResumeLayout(false);
@@ -703,7 +508,7 @@
         private System.Windows.Forms.TextBox textBoxNroCalle;
         private System.Windows.Forms.TextBox textBoxCalle;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox comboBoxPAIS;
+        private System.Windows.Forms.ComboBox comboBoxPais;
 
     }
 }

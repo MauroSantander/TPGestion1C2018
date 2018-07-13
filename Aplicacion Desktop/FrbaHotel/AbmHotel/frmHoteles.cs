@@ -28,6 +28,18 @@ namespace FrbaHotel.AbmHotel
         private void frmHoteles_Load(object sender, EventArgs e)
         {
             utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
+            //inicializo combobox de paises
+            SqlCommand cmd = new SqlCommand("select nombrePais from [PISOS_PICADOS].Pais", Globals.conexionGlobal);
+
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                comboBoxPais.Items.Add((reader["nombrePais"]).ToString());
+            }
+
+            reader.Close();
         }
 
         public void actualizarDataGrid() {
@@ -100,9 +112,9 @@ namespace FrbaHotel.AbmHotel
                 DV.RowFilter = string.Format("nombre LIKE '%{0}%' ", textBoxNombre.Text);
                 dataGridViewHoteles.DataSource = DV;
             }
-            if (!String.IsNullOrEmpty(textBoxPais.Text))
+            if (!String.IsNullOrEmpty(comboBoxPais.Text))
             {
-                DV.RowFilter = string.Format("pais LIKE '%{0}%' ", textBoxPais.Text);
+                DV.RowFilter = string.Format("pais LIKE '%{0}%' ", comboBoxPais.Text);
                 dataGridViewHoteles.DataSource = DV;
             }
             if (!String.IsNullOrEmpty(textBoxCiudad.Text))

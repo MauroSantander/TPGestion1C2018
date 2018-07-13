@@ -37,7 +37,7 @@ namespace FrbaHotel.AbmHotel
             try
             {
                 SqlCommand cmdpais = new SqlCommand("select idPais from [PISOS_PICADOS].Pais where nombrePais = @paisSelect", Globals.conexionGlobal);
-                cmdpais.Parameters.AddWithValue("@paisSelect",comboBoxPAIS.Text);
+                cmdpais.Parameters.AddWithValue("@paisSelect",comboBoxPais.Text);
                 idPAIS = (int)cmdpais.ExecuteScalar();
             }
             catch (Exception ex)
@@ -148,12 +148,11 @@ namespace FrbaHotel.AbmHotel
             }
         }
 
-        
+
 
         private void ModificarHotel_Load(object sender, EventArgs e)
-        {
-
-        }
+        { }
+          
        
         public void cargarDatos(int id, String nombre, String mail, String telefono, String calle, String nroCalle, String ciudad, String pais, String fechaCreacion, int estrellas, frmHoteles pantHoteles)
         {
@@ -163,7 +162,20 @@ namespace FrbaHotel.AbmHotel
             textBoxTE.Text = telefono;
             textBoxCalle.Text = calle;
             textBoxNroCalle.Text = nroCalle.ToString();
-            comboBoxPAIS.Text = pais;
+              //inicializo combobox de paises
+            SqlCommand cmd = new SqlCommand("select nombrePais from [PISOS_PICADOS].Pais", Globals.conexionGlobal);
+
+
+            SqlDataReader reader3 = cmd.ExecuteReader();
+
+            while (reader3.Read())
+            {
+                comboBoxPais.Items.Add((reader3["nombrePais"]).ToString());
+            }
+
+            reader3.Close();
+        
+            comboBoxPais.Text = pais;
             textBoxCIU.Text = ciudad;
             cBestrellas.Text = estrellas.ToString();
             pantallaHoteles = pantHoteles;
@@ -238,6 +250,30 @@ namespace FrbaHotel.AbmHotel
                 else { e.Handled = true; }
             }
         }
+        private void textoYNros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+        private void textosYespacios_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+        private void textoNrosYespacios_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
     
      
 
@@ -248,7 +284,7 @@ namespace FrbaHotel.AbmHotel
                || textBoxTE.Text==""
                || textBoxCalle.Text==""
                || textBoxNroCalle.Text==""
-               || comboBoxPAIS.Text==""
+               || comboBoxPais.Text==""
                || textBoxCIU.Text==""
                || cBestrellas.Text==""
                || ((dateTimePickerCreacion.Checked) == false)
