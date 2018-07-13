@@ -4560,7 +4560,7 @@ CREATE PROCEDURE [PISOS_PICADOS].puedeModificarReserva (@fechaInicio DATE
 
 AS
 	DECLARE @idHotel INT
-
+	DECLARE @resp INT
 	SET @idHotel = [PISOS_PICADOS].obtenerHotelDeHabitacion((
 				SELECT TOP 1 idHabitacion
 				FROM [PISOS_PICADOS].HabitacionxReserva
@@ -4572,16 +4572,16 @@ AS
 	DELETE
 	FROM [PISOS_PICADOS].HabitacionxReserva
 	WHERE codigoReserva = @idReserva
-	DECLARE @resp INT
 	SET @resp = ([PISOS_PICADOS].hotelCumple(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing,
 	@idHotel,@fechaInicio,@fechaFin ))
 	IF @resp = 0
 	BEGIN
 	COMMIT TRANSACTION TREliminacionHotelesReserva
-	RETURN 1
+	SET @resp = 0
 	END
 	ROLLBACK TRANSACTION TREliminacionHotelesReserva;
 	RETURN @resp
+	END
 GO
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
