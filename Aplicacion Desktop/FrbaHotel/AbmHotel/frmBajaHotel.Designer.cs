@@ -115,7 +115,7 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Motivo:";
             // 
-            // BajaHotel
+            // frmBajaHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -129,7 +129,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxId);
             this.Controls.Add(this.label1);
-            this.Name = "BajaHotel";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Name = "frmBajaHotel";
             this.Text = "BajaHotel";
             this.Load += new System.EventHandler(this.frmBajaHotel_Load);
             this.ResumeLayout(false);

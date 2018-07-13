@@ -555,6 +555,7 @@
             this.Controls.Add(this.buttonActualizar);
             this.Controls.Add(this.buttonVolver);
             this.Controls.Add(this.groupBox3);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmModificarUsuario";
             this.Text = "Modificar Usuario";
             this.Load += new System.EventHandler(this.frmModificarUsuario_Load);

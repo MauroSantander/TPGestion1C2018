@@ -94,7 +94,7 @@
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
             this.dataGridViewUsuarios.ReadOnly = true;
             this.dataGridViewUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewUsuarios.Size = new System.Drawing.Size(1158, 270);
+            this.dataGridViewUsuarios.Size = new System.Drawing.Size(1158, 306);
             this.dataGridViewUsuarios.TabIndex = 72;
             // 
             // buttonLimpiar
@@ -348,6 +348,7 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.textBoxUsuario);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Admin";
             this.Text = "Usuarios";
             this.Load += new System.EventHandler(this.Admin_Load);

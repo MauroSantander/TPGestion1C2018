@@ -279,6 +279,7 @@
             this.Controls.Add(this.buttonNew);
             this.Controls.Add(this.dataGridViewHoteles);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmHoteles";
             this.Text = "Hoteles";

@@ -531,6 +531,7 @@
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmModificarHotel";
             this.Text = "Modificar Hotel";
             this.Load += new System.EventHandler(this.ModificarHotel_Load);

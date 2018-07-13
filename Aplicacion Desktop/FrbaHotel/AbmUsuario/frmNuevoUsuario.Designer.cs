@@ -449,6 +449,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmNuevoUsuario";
             this.Text = "Nuevo Usuario";
             this.Load += new System.EventHandler(this.frmNuevoUsuario_Load);
