@@ -277,8 +277,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].habitacionesQueCumplenReserva', N'IF') IS NOT NUL
 IF OBJECT_ID(N'[PISOS_PICADOS].mostrarClientes', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].mostrarClientes;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].cantHabitacionesReservaTipo', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].cantHabitacionesReservaTipo;
+IF OBJECT_ID(N'[PISOS_PICADOS].cantHabitacionesReserva', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].cantHabitacionesReserva;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -3313,7 +3313,7 @@ JOIN [PISOS_PICADOS].EstadoUsuario AS eu ON u.estado = eu.idEstado
 )
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].cantHabitacionesReservaTipo(@codigoReserva INT,@idTipo INT)
+CREATE FUNCTION [PISOS_PICADOS].cantHabitacionesReserva(@codigoReserva INT,@idTipo INT)
 RETURNS INT
 AS
 BEGIN
