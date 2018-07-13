@@ -3606,12 +3606,12 @@ AS
 		@idusuario
 		,@nacionalidad
 		);
+	DECLARE @idCliente INT = SCOPE_IDENTITY();
 	INSERT INTO [PISOS_PICADOS].RolxUsuario
 	VALUES (
 		3
 		,@idusuario
 		);
-	DECLARE @idCliente INT = SCOPE_IDENTITY();
 	RETURN @idCliente
 GO
 
