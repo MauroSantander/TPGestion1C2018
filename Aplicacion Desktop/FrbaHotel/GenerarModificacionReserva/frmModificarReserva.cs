@@ -14,9 +14,20 @@ namespace FrbaHotel.GenerarModificacionReserva
     public partial class frmModificarReserva : Form
     {
         int idCliente;
+        public void setCliente(int id)
+        {
+            idCliente = id;
+        }
+
         public frmModificarReserva()
         {
             InitializeComponent();
+        }
+
+        public frmModificarReserva(string codigoReserva)
+        {
+            InitializeComponent();
+            labelCodigoReserva.Text = codigoReserva;
         }
 
         private void frmModificarReserva_Load(object sender, EventArgs e)
@@ -26,29 +37,19 @@ namespace FrbaHotel.GenerarModificacionReserva
             this.CenterToScreen();
 
             //cargo hoteles
-            //si es recepción solo cargo el hotel donde trabaja
-            if (Globals.rolUsuario == "Guest" || Globals.rolUsuario == "Administrador")
+            SqlCommand cargarHotelReserva = new SqlCommand("SELECT nombre FROM [PISOS_PICADOS].Hotel WHERE idHotel IN (SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva))", Globals.conexionGlobal);
+            cargarHotelReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cargarHotelReserva.Parameters["@codigoReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
+            //recibo nombre hotel
+            try
             {
-                Utils.cargarHoteles(comboBoxHotel);
-                comboBoxHotel.SelectedIndex = 0;
-            }
-            else
+                string nombreHotel = cargarHotelReserva.ExecuteScalar().ToString();
+                labelHotel.Text = nombreHotel;
+                }
+            catch
             {
-                SqlCommand cargarHotelUsuario = new SqlCommand("SELECT nombre FROM [PISOS_PICADOS].Hotel WHERE idHotel = @id", Globals.conexionGlobal);
-                cargarHotelUsuario.Parameters.Add("@id", SqlDbType.Int);
-                cargarHotelUsuario.Parameters["@id"].Value = Globals.idHotelUsuario;
-                //recibo nombre hotel
-                try
-                {
-                    string nombreHotel = cargarHotelUsuario.ExecuteScalar().ToString();
-                    comboBoxHotel.Items.Add(nombreHotel);
-                    comboBoxHotel.SelectedIndex = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("Error al cargar el hotel del usuario. Reinicie sesión y vuelva a intentar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                MessageBox.Show("Error al cargar el hotel del usuario. Reinicie sesión y vuelva a intentar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             //agrego item por si no sabe el régimen que quiere
@@ -82,7 +83,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             SqlCommand buscarIdHotel = new SqlCommand("SELECT idHotel FROM [PISOS_PICADOS].Hotel WHERE nombre = @nombreHotel", Globals.conexionGlobal);
             buscarIdHotel.Parameters.Add("@nombreHotel", SqlDbType.VarChar);
-            buscarIdHotel.Parameters["@nombreHotel"].Value = comboBoxHotel.Text;
+            buscarIdHotel.Parameters["@nombreHotel"].Value = labelHotel.Text;
 
             idHotel = (int)buscarIdHotel.ExecuteScalar();
 
@@ -145,22 +146,6 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void btnCrear_Click(object sender, EventArgs e)
         {
             {
-                if (idCliente == -1)
-                {
-                    DialogResult dialogResult = MessageBox.Show("Debe identificarse o registrarse en el sistema para poder hacer una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        procesoInicioSesion();
-                        return;
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        return;
-                    }
-                }
-
-                int codigoReservaNuevo = 0;
-
                 //chequeos
 
                 if (comboBoxRegimen.Text == "Vacío")
@@ -177,88 +162,92 @@ namespace FrbaHotel.GenerarModificacionReserva
 
                 //fin chequeos
 
-                int idHotel = 0;
-                //busco idHotel
-                SqlCommand buscarIdHotel = new SqlCommand("SELECT idHotel FROM [PISOS_PICADOS].Hotel WHERE nombre = @nombreHotel", Globals.conexionGlobal);
-                buscarIdHotel.Parameters.Add("@nombreHotel", SqlDbType.VarChar);
-                buscarIdHotel.Parameters["@nombreHotel"].Value = comboBoxHotel.Text;
-
-                idHotel = (int)buscarIdHotel.ExecuteScalar();
+                if (idCliente == -1)
+                {
+                    DialogResult dialogResult = MessageBox.Show("Debe identificarse o registrarse en el sistema para poder modificar una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        procesoInicioSesion();
+                        return;
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
 
                 //ejecuto función para ver si cumple lo demandado
-                SqlCommand cmdhotelCumple = new SqlCommand("SELECT [PISOS_PICADOS].hotelCumple (@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @idHotel, @fechaInicio, @fechaFin)", Globals.conexionGlobal);
-                cmdhotelCumple.Parameters.Add("@cantSimple", SqlDbType.Int);
-                cmdhotelCumple.Parameters.Add("@cantDoble", SqlDbType.Int);
-                cmdhotelCumple.Parameters.Add("@cantTriple", SqlDbType.Int);
-                cmdhotelCumple.Parameters.Add("@cantCuadru", SqlDbType.Int);
-                cmdhotelCumple.Parameters.Add("@cantKing", SqlDbType.Int);
-                cmdhotelCumple.Parameters.Add("@idHotel", SqlDbType.Int);
-                cmdhotelCumple.Parameters.Add("@fechaInicio", SqlDbType.Date);
-                cmdhotelCumple.Parameters.Add("@fechaFin", SqlDbType.Date);
+                SqlCommand cmdPuedeModificarReserva = new SqlCommand("SELECT [PISOS_PICADOS].puedeModificarReserva (@fechaInicio, @fechaFin, @idReserva, @cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing)", Globals.conexionGlobal);
+                cmdPuedeModificarReserva.Parameters.Add("@fechaInicio", SqlDbType.Date);
+                cmdPuedeModificarReserva.Parameters.Add("@fechaFin", SqlDbType.Date);
+                cmdPuedeModificarReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+                cmdPuedeModificarReserva.Parameters.Add("@cantSimple", SqlDbType.Int);
+                cmdPuedeModificarReserva.Parameters.Add("@cantDoble", SqlDbType.Int);
+                cmdPuedeModificarReserva.Parameters.Add("@cantTriple", SqlDbType.Int);
+                cmdPuedeModificarReserva.Parameters.Add("@cantCuadru", SqlDbType.Int);
+                cmdPuedeModificarReserva.Parameters.Add("@cantKing", SqlDbType.Int);
 
-                cmdhotelCumple.Parameters["@cantSimple"].Value = numSimple.Value;
-                cmdhotelCumple.Parameters["@cantDoble"].Value = numDoble.Value;
-                cmdhotelCumple.Parameters["@cantTriple"].Value = numTriple.Value;
-                cmdhotelCumple.Parameters["@cantCuadru"].Value = numCuadruple.Value;
-                cmdhotelCumple.Parameters["@cantKing"].Value = numKing.Value;
-                cmdhotelCumple.Parameters["@idHotel"].Value = idHotel;
-                cmdhotelCumple.Parameters["@fechaInicio"].Value = dtpInicioReserva.Value.ToString("yyyy-MM-dd");
-                cmdhotelCumple.Parameters["@fechaFin"].Value = dtpFinReserva.Value.ToString("yyyy-MM-dd");
-
+                cmdPuedeModificarReserva.Parameters["@fechaInicio"].Value = dtpInicioReserva.Value.ToString("yyyy-MM-dd");
+                cmdPuedeModificarReserva.Parameters["@fechaFin"].Value = dtpFinReserva.Value.ToString("yyyy-MM-dd");
+                cmdPuedeModificarReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
+                cmdPuedeModificarReserva.Parameters["@cantSimple"].Value = numSimple.Value;
+                cmdPuedeModificarReserva.Parameters["@cantDoble"].Value = numDoble.Value;
+                cmdPuedeModificarReserva.Parameters["@cantTriple"].Value = numTriple.Value;
+                cmdPuedeModificarReserva.Parameters["@cantCuadru"].Value = numCuadruple.Value;
+                cmdPuedeModificarReserva.Parameters["@cantKing"].Value = numKing.Value;
+                
                 //ejecuto y recibo resultado
-                int resultadoBusqueda = (int)cmdhotelCumple.ExecuteScalar();
+                int resultadoBusqueda = (int)cmdPuedeModificarReserva.ExecuteScalar();
 
                 //según resultado aviso al usuario
                 if (resultadoBusqueda == 0)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Existe disponibilidad para la reserva solicitada. ¿Desea registrarla?", "Disponibilidad", MessageBoxButtons.YesNo);
+                    DialogResult dialogResult = MessageBox.Show("Existe disponibilidad para la modificación solicitada. ¿Desea concretarla?", "Disponibilidad", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
                         //calculo cantidad huéspedes
                         int cantHuespedes = (int)numSimple.Value + (int)numDoble.Value * 2 + (int)numTriple.Value * 3 + (int)numCuadruple.Value * 4 + (int)numKing.Value * 5;
                         //efectúo la reserva
-                        string spRegistrarReserva = "[PISOS_PICADOS].registrarReserva";
-                        SqlCommand registrarReserva = new SqlCommand(spRegistrarReserva, Globals.conexionGlobal);
-                        registrarReserva.CommandType = CommandType.StoredProcedure;
+                        string spModificarReserva = "[PISOS_PICADOS].modificarReserva";
+                        SqlCommand modificarReserva = new SqlCommand(spModificarReserva, Globals.conexionGlobal);
+                        modificarReserva.CommandType = CommandType.StoredProcedure;
 
-                        registrarReserva.Parameters.Add("@fechaReserva", SqlDbType.Date);
-                        registrarReserva.Parameters.Add("@fechaInicio", SqlDbType.Date);
-                        registrarReserva.Parameters.Add("@fechaFin", SqlDbType.Date);
-                        registrarReserva.Parameters.Add("@cantHuespedes", SqlDbType.Int);
-                        registrarReserva.Parameters.Add("@nombreRegimen", SqlDbType.VarChar);
-                        registrarReserva.Parameters.Add("@idCliente", SqlDbType.Int);
-                        registrarReserva.Parameters.Add("@idHotel", SqlDbType.Int);
-                        registrarReserva.Parameters.Add("@cantSimple", SqlDbType.Int);
-                        registrarReserva.Parameters.Add("@cantDoble", SqlDbType.Int);
-                        registrarReserva.Parameters.Add("@cantTriple", SqlDbType.Int);
-                        registrarReserva.Parameters.Add("@cantCuadru", SqlDbType.Int);
-                        registrarReserva.Parameters.Add("@cantKing", SqlDbType.Int);
-                        var retorno = registrarReserva.Parameters.Add("@idReserva", SqlDbType.Int);
-                        retorno.Direction = ParameterDirection.ReturnValue;
+                        modificarReserva.Parameters.Add("@fechaModificacion", SqlDbType.Date);
+                        modificarReserva.Parameters.Add("@fechaInicio", SqlDbType.Date);
+                        modificarReserva.Parameters.Add("@fechaFin", SqlDbType.Date);
+                        modificarReserva.Parameters.Add("@cantHuespedes", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@nombreRegimen", SqlDbType.VarChar);
+                        modificarReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@idAutor", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@cantSimple", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@cantDoble", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@cantTriple", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@cantCuadru", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@cantKing", SqlDbType.Int);
+                        modificarReserva.Parameters.Add("@motivo", SqlDbType.VarChar);
 
-                        registrarReserva.Parameters["@fechaReserva"].Value = Globals.FechaDelSistema;
-                        registrarReserva.Parameters["@fechaInicio"].Value = dtpInicioReserva.Value.ToString("yyyy-MM-dd");
-                        registrarReserva.Parameters["@fechaFin"].Value = dtpFinReserva.Value.ToString("yyyy-MM-dd");
-                        registrarReserva.Parameters["@cantHuespedes"].Value = cantHuespedes;
-                        registrarReserva.Parameters["@nombreRegimen"].Value = comboBoxRegimen.Text;
-                        registrarReserva.Parameters["@idCliente"].Value = idCliente;
-                        registrarReserva.Parameters["@idHotel"].Value = idHotel;
-                        registrarReserva.Parameters["@cantSimple"].Value = numSimple.Value;
-                        registrarReserva.Parameters["@cantDoble"].Value = numDoble.Value;
-                        registrarReserva.Parameters["@cantTriple"].Value = numTriple.Value;
-                        registrarReserva.Parameters["@cantCuadru"].Value = numCuadruple.Value;
-                        registrarReserva.Parameters["@cantKing"].Value = numKing.Value;
-                        registrarReserva.Parameters["@idReserva"].Value = DBNull.Value;
+                        modificarReserva.Parameters["@fechaModificacion"].Value = Globals.FechaDelSistema;
+                        modificarReserva.Parameters["@fechaInicio"].Value = dtpInicioReserva.Value.ToString("yyyy-MM-dd");
+                        modificarReserva.Parameters["@fechaFin"].Value = dtpFinReserva.Value.ToString("yyyy-MM-dd");
+                        modificarReserva.Parameters["@cantHuespedes"].Value = cantHuespedes;
+                        modificarReserva.Parameters["@nombreRegimen"].Value = comboBoxRegimen.Text;
+                        modificarReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
+                        modificarReserva.Parameters["@idAutor"].Value = idCliente;
+                        modificarReserva.Parameters["@cantSimple"].Value = numSimple.Value;
+                        modificarReserva.Parameters["@cantDoble"].Value = numDoble.Value;
+                        modificarReserva.Parameters["@cantTriple"].Value = numTriple.Value;
+                        modificarReserva.Parameters["@cantCuadru"].Value = numCuadruple.Value;
+                        modificarReserva.Parameters["@cantKing"].Value = numKing.Value;
+                        modificarReserva.Parameters["@motivo"].Value = txtMotivo.Text;
 
                         try
                         {
-                            registrarReserva.ExecuteNonQuery();
-                            codigoReservaNuevo = (int)retorno.Value;
-                            MessageBox.Show("Reserva registrada correctamente. Su código de reserva es: " + codigoReservaNuevo + ". Le servirá para modificaciones y para hacer el ingreso en el hotel.", "Reserva", MessageBoxButtons.OK);
+                            modificarReserva.ExecuteNonQuery();
+                            MessageBox.Show("Reserva modificada correctamente.", "Reserva", MessageBoxButtons.OK);
                         }
                         catch
                         {
-                            MessageBox.Show("Error al registrar la reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Error al modificar la reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else if (dialogResult == DialogResult.No)
@@ -292,11 +281,6 @@ namespace FrbaHotel.GenerarModificacionReserva
                     return;
                 }
             }
-        }
-
-        private void txtCodigoReserva_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            Utils.txtSoloAceptaNumeros(txtCodigoReserva, sender, e);
         }
 
         private void procesoInicioSesion()

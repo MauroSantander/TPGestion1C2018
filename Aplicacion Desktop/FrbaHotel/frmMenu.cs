@@ -51,7 +51,7 @@ namespace FrbaHotel
 
         private void btnModificarReserva_Click(object sender, EventArgs e)
         {
-            (new FrbaHotel.GenerarModificacionReserva.frmModificarReserva()).ShowDialog();
+            (new FrbaHotel.GenerarModificacionReserva.frmCodigoParaModificar()).ShowDialog();
         }
 
         private void btnRegistrarConsumibles_Click(object sender, EventArgs e)

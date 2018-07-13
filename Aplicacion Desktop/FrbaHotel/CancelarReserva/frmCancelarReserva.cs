@@ -123,7 +123,7 @@ namespace FrbaHotel.CancelarReserva
             }
             else if (estadoReserva == 4)
             {
-                MessageBox.Show("No puede cancelar la reserva el mismo día.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Las reservas solo pueden cancelarse hasta un día antes del comienzo de la misma.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

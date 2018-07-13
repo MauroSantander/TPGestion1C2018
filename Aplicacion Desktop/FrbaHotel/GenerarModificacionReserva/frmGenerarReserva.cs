@@ -125,20 +125,6 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            if (idCliente == -1)
-            {
-                DialogResult dialogResult = MessageBox.Show("Debe identificarse o registrarse en el sistema para poder hacer una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    procesoInicioSesion();
-                    return;
-                }
-                else if (dialogResult == DialogResult.No)
-                {
-                    return;
-                }
-            }
-
             int codigoReservaNuevo = 0;
 
             //chequeos
@@ -156,6 +142,20 @@ namespace FrbaHotel.GenerarModificacionReserva
             }
 
             //fin chequeos
+
+            if (idCliente == -1)
+            {
+                DialogResult dialogResult = MessageBox.Show("Debe identificarse o registrarse en el sistema para poder hacer una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    procesoInicioSesion();
+                    return;
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+            }
 
             int idHotel = 0;
             //busco idHotel
@@ -228,7 +228,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                     registrarReserva.Parameters["@cantTriple"].Value = numTriple.Value;
                     registrarReserva.Parameters["@cantCuadru"].Value = numCuadruple.Value;
                     registrarReserva.Parameters["@cantKing"].Value = numKing.Value;
-                    registrarReserva.Parameters["@idReserva"].Value = DBNull.Value;
+                    //registrarReserva.Parameters["@idReserva"].Value = DBNull.Value;
 
                     try
                     {

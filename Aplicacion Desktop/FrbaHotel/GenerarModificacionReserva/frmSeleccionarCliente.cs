@@ -104,8 +104,16 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             int idCliente = (int)dataGridViewModificarCliente.CurrentRow.Cells["idUsuario"].Value;
-            generarReservaInstancia.setCliente(idCliente);
-            generarReservaInstancia.volver(this);
+            if (modificarReservaInstancia != null)
+            {
+                modificarReservaInstancia.setCliente(idCliente);
+                modificarReservaInstancia.volver(this);
+            }
+            if (generarReservaInstancia != null)
+            {
+                generarReservaInstancia.setCliente(idCliente);
+                generarReservaInstancia.volver(this);
+            }
         }
     }
 }

@@ -33,7 +33,6 @@
             this.dgvPrecios = new System.Windows.Forms.DataGridView();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.comboBoxHotel = new System.Windows.Forms.ComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.comboBoxRegimen = new System.Windows.Forms.ComboBox();
             this.btnSalir = new System.Windows.Forms.Button();
@@ -53,7 +52,10 @@
             this.numDoble = new System.Windows.Forms.NumericUpDown();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.numSimple = new System.Windows.Forms.NumericUpDown();
-            this.txtCodigoReserva = new System.Windows.Forms.TextBox();
+            this.labelCodigoReserva = new System.Windows.Forms.Label();
+            this.labelHotel = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.txtMotivo = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrecios)).BeginInit();
@@ -72,11 +74,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDoble)).BeginInit();
             this.groupBox17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSimple)).BeginInit();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtCodigoReserva);
+            this.groupBox1.Controls.Add(this.labelCodigoReserva);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(227, 47);
@@ -89,7 +92,7 @@
             this.groupBox4.Controls.Add(this.dgvPrecios);
             this.groupBox4.Location = new System.Drawing.Point(514, 16);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(325, 276);
+            this.groupBox4.Size = new System.Drawing.Size(325, 177);
             this.groupBox4.TabIndex = 25;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Precios";
@@ -105,12 +108,12 @@
             this.dgvPrecios.MultiSelect = false;
             this.dgvPrecios.Name = "dgvPrecios";
             this.dgvPrecios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPrecios.Size = new System.Drawing.Size(313, 255);
+            this.dgvPrecios.Size = new System.Drawing.Size(313, 156);
             this.dgvPrecios.TabIndex = 0;
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(341, 256);
+            this.btnLimpiar.Location = new System.Drawing.Point(341, 263);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
             this.btnLimpiar.TabIndex = 24;
@@ -120,23 +123,13 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.comboBoxHotel);
+            this.groupBox5.Controls.Add(this.labelHotel);
             this.groupBox5.Location = new System.Drawing.Point(12, 65);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(227, 50);
             this.groupBox5.TabIndex = 22;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Hotel";
-            // 
-            // comboBoxHotel
-            // 
-            this.comboBoxHotel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxHotel.FormattingEnabled = true;
-            this.comboBoxHotel.Location = new System.Drawing.Point(12, 19);
-            this.comboBoxHotel.Name = "comboBoxHotel";
-            this.comboBoxHotel.Size = new System.Drawing.Size(200, 21);
-            this.comboBoxHotel.TabIndex = 0;
-            this.comboBoxHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxHotel_SelectedIndexChanged);
             // 
             // groupBox3
             // 
@@ -160,7 +153,7 @@
             // 
             // btnSalir
             // 
-            this.btnSalir.Location = new System.Drawing.Point(260, 256);
+            this.btnSalir.Location = new System.Drawing.Point(260, 263);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 23);
             this.btnSalir.TabIndex = 19;
@@ -170,7 +163,7 @@
             // 
             // btnCrear
             // 
-            this.btnCrear.Location = new System.Drawing.Point(422, 256);
+            this.btnCrear.Location = new System.Drawing.Point(422, 263);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
             this.btnCrear.TabIndex = 18;
@@ -223,7 +216,7 @@
             this.groupBox11.Controls.Add(this.groupBox17);
             this.groupBox11.Location = new System.Drawing.Point(249, 12);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(248, 213);
+            this.groupBox11.Size = new System.Drawing.Size(248, 221);
             this.groupBox11.TabIndex = 23;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Habitaciones";
@@ -338,19 +331,49 @@
             this.numSimple.Size = new System.Drawing.Size(45, 20);
             this.numSimple.TabIndex = 0;
             // 
-            // txtCodigoReserva
+            // labelCodigoReserva
             // 
-            this.txtCodigoReserva.Location = new System.Drawing.Point(12, 20);
-            this.txtCodigoReserva.Name = "txtCodigoReserva";
-            this.txtCodigoReserva.Size = new System.Drawing.Size(200, 20);
-            this.txtCodigoReserva.TabIndex = 0;
-            this.txtCodigoReserva.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoReserva_KeyPress);
+            this.labelCodigoReserva.AutoSize = true;
+            this.labelCodigoReserva.Location = new System.Drawing.Point(9, 19);
+            this.labelCodigoReserva.Name = "labelCodigoReserva";
+            this.labelCodigoReserva.Size = new System.Drawing.Size(43, 13);
+            this.labelCodigoReserva.TabIndex = 0;
+            this.labelCodigoReserva.Text = "000000";
+            // 
+            // labelHotel
+            // 
+            this.labelHotel.AutoSize = true;
+            this.labelHotel.Location = new System.Drawing.Point(12, 20);
+            this.labelHotel.Name = "labelHotel";
+            this.labelHotel.Size = new System.Drawing.Size(115, 13);
+            this.labelHotel.TabIndex = 0;
+            this.labelHotel.Text = "Hotel Nicolás Domingo";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.txtMotivo);
+            this.groupBox7.Location = new System.Drawing.Point(514, 203);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(325, 89);
+            this.groupBox7.TabIndex = 27;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Motivo de modificación";
+            // 
+            // txtMotivo
+            // 
+            this.txtMotivo.Location = new System.Drawing.Point(6, 19);
+            this.txtMotivo.MaxLength = 255;
+            this.txtMotivo.Multiline = true;
+            this.txtMotivo.Name = "txtMotivo";
+            this.txtMotivo.Size = new System.Drawing.Size(313, 64);
+            this.txtMotivo.TabIndex = 27;
             // 
             // frmModificarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(869, 301);
+            this.ClientSize = new System.Drawing.Size(848, 301);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox5);
@@ -370,6 +393,7 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrecios)).EndInit();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
@@ -384,6 +408,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDoble)).EndInit();
             this.groupBox17.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numSimple)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -391,12 +417,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtCodigoReserva;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.DataGridView dgvPrecios;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.ComboBox comboBoxHotel;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox comboBoxRegimen;
         private System.Windows.Forms.Button btnSalir;
@@ -416,5 +440,9 @@
         private System.Windows.Forms.NumericUpDown numDoble;
         private System.Windows.Forms.GroupBox groupBox17;
         private System.Windows.Forms.NumericUpDown numSimple;
+        private System.Windows.Forms.Label labelCodigoReserva;
+        private System.Windows.Forms.Label labelHotel;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.TextBox txtMotivo;
     }
 }
