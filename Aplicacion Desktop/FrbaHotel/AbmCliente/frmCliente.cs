@@ -29,6 +29,8 @@ namespace FrbaHotel.AbmCliente
             //centra el formulario
             this.CenterToScreen();
 
+            cbPaises.Items.Add("Vacío");
+
             //carga los paises en el combo box cbPaises, extrayendolos de la tabla Pais hecha en sql;
             SqlCommand cmdBuscarPaises = new SqlCommand("SELECT nombrePais FROM [PISOS_PICADOS].Pais", Globals.conexionGlobal);
 
@@ -41,8 +43,16 @@ namespace FrbaHotel.AbmCliente
 
             reader.Close();
 
-            utilizador.llenarDataGridView(dataGridViewClientes, "Usuario");
-            utilizador.llenarDataGridView(dataGridViewModificarCliente, "Usuario");
+            TipoId.Items.Add("Vacío");
+            TipoId.SelectedItem = "Vacío";
+            cbPaises.SelectedItem = "Vacío";
+            cbTipoId.SelectedItem = "Vacío";
+            cmbTipoIdModif.SelectedItem = "Vacío";
+
+            dataGridViewClientes.DataSource = cargarClientesBaja();
+            dataGridViewClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewModificarCliente.DataSource = cargarClientesParaModif();
+            dataGridViewModificarCliente.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
         }
 
@@ -109,17 +119,15 @@ namespace FrbaHotel.AbmCliente
                 using (SqlConnection con = Globals.conexionGlobal)
                 {
                     String cadenaBajaUsuario = "[PISOS_PICADOS].bajaUsuario";
-
+                    
                     SqlCommand comandoBajaUsuario = new SqlCommand(cadenaBajaUsuario, Globals.conexionGlobal);
                     comandoBajaUsuario.CommandType = CommandType.StoredProcedure;
-
-
                     comandoBajaUsuario.Parameters.Add("@idUsuario", SqlDbType.Int);
                     comandoBajaUsuario.Parameters["@idUsuario"].Value = idUsuario;
-
+                    
                     comandoBajaUsuario.ExecuteNonQuery();
-
-                    MessageBox.Show("Usuario eliminado correctamente");
+                    
+                    MessageBox.Show("Usuario dado de baja correctamente");
                 }
             }
 
@@ -235,26 +243,26 @@ namespace FrbaHotel.AbmCliente
         private void BotonCrear_Click(object sender, EventArgs e)
         {
             //Validaciones
-            String TipoIdCliente = TipoId.Text;
+            String tipoIdCliente = TipoId.Text;
             if (string.IsNullOrEmpty(nroId.Text)) {MessageBox.Show("Completar numero de id cliente"); return;}
-            int NroIdCliente = int.Parse(nroId.Text);
+            int nroIdCliente = int.Parse(nroId.Text);
             if (string.IsNullOrEmpty(NroCalle.Text)) {MessageBox.Show("Completar numero de calle");return;}
-            int NroCalleCliente = int.Parse(NroCalle.Text);
-            DateTime FechaNacimientoCliente = FechaNacimiento.Value;
+            int nroCalleCliente = int.Parse(NroCalle.Text);
+            DateTime fechaNacimientoCliente = FechaNacimiento.Value;
             string selectDateAsString = FechaNacimiento.Value.ToString("yyyy-MM-dd");            
             
             if (Nombre.Text == "") { MessageBox.Show("Complete nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Apellido.Text == "") { MessageBox.Show("Complete apellido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (TipoIdCliente == "") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NroIdCliente < 0) { MessageBox.Show("Complete nroID", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (tipoIdCliente == "" || tipoIdCliente == "Vacío") { MessageBox.Show("Complete tipoId", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (nroIdCliente < 0) { MessageBox.Show("Complete nroID correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Mail.Text == "") { MessageBox.Show("Complete mail correctamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (!validarEmail(Mail.Text) || utilizador.estaRepetidoMail(Mail.Text)) { MessageBox.Show("mail inválido", "Error"); return; }
             if (Calle.Text == "") { MessageBox.Show("Complete calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (NroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (nroCalleCliente < 0) { MessageBox.Show("Complete nro de calle", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Localidad.Text == "") { MessageBox.Show("Complete localidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (cbPaises.Text == "") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (cbPaises.Text == "" || cbPaises.SelectedItem.ToString() == "Vacío") { MessageBox.Show("Complete país", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (Nacionalidad.Text == "") { MessageBox.Show("Complete nacionalidad", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (utilizador.estaRepetidoIdentificacion(NroIdCliente, TipoIdCliente))
+            if (utilizador.estaRepetidoIdentificacion(nroIdCliente, tipoIdCliente))
                 {
                     MessageBox.Show("Identificación Repetida");
                     return;
@@ -283,16 +291,16 @@ namespace FrbaHotel.AbmCliente
             //cargar valores a los paramtros agregados en el paso anterior
             comandoAltaCliente.Parameters["@nombre"].Value = Nombre.Text;
             comandoAltaCliente.Parameters["@apellido"].Value = Apellido.Text;
-            comandoAltaCliente.Parameters["@tipo"].Value = TipoIdCliente;
-            comandoAltaCliente.Parameters["@numeroI"].Value = NroIdCliente;
+            comandoAltaCliente.Parameters["@tipo"].Value = tipoIdCliente;
+            comandoAltaCliente.Parameters["@numeroI"].Value = nroIdCliente;
             comandoAltaCliente.Parameters["@mail"].Value = Mail.Text;
             comandoAltaCliente.Parameters["@telefono"].Value = Telefono.Text;
             comandoAltaCliente.Parameters["@calle"].Value = Calle.Text;
-            comandoAltaCliente.Parameters["@numeroC"].Value = NroCalleCliente;
+            comandoAltaCliente.Parameters["@numeroC"].Value = nroCalleCliente;
             comandoAltaCliente.Parameters["@localidad"].Value = Localidad.Text;
             comandoAltaCliente.Parameters["@pais"].Value = cbPaises.Text;
             comandoAltaCliente.Parameters["@nacionalidad"].Value = Nacionalidad.Text;
-            comandoAltaCliente.Parameters["@fechaNacimiento"].Value = FechaNacimientoCliente.ToString("yyyy-MM-dd");
+            comandoAltaCliente.Parameters["@fechaNacimiento"].Value = fechaNacimientoCliente.ToString("yyyy-MM-dd");
             
             //ejecuta el sp que da alta al cliente tomando los valores ingresados en el form
             comandoAltaCliente.ExecuteNonQuery();
@@ -402,7 +410,7 @@ namespace FrbaHotel.AbmCliente
         }
 
 
-        public void mostrarClientesFiltrado(DataGridView dgv)
+        public DataTable cargarClientesBaja()
         {
             //esta funcion se encarga de filtrar a los clientes segun los criterios ingresados por el menu del
             // tab de dar de baja a un cliente del frmCliente y, posterior a ello, mostrarlos en una grilla que 
@@ -414,13 +422,15 @@ namespace FrbaHotel.AbmCliente
             string cadenaNroIdentificacion;
             string cadenaMail;
 
+            DataTable dataTableCM = new DataTable();
+
             if (textBoxNombre.Text == "") { cadenaNombre = "nombre LIKE '%'"; }
             else { cadenaNombre = "nombre LIKE '" + textBoxNombre.Text + "'"; };
 
             if (textBoxApellido.Text == "") { cadenaApellido = "apellido LIKE '%'"; }
             else { cadenaApellido = "apellido LIKE '" + textBoxApellido.Text + "'"; };
 
-            if ( cbTipoId.SelectedItem == null || cbTipoId.SelectedItem.ToString() == "" ) { cadenaTipoId = "tipoIdentificacion LIKE '%'"; }
+            if ( cbTipoId.SelectedItem.ToString() == "Vacío") { cadenaTipoId = "tipoIdentificacion LIKE '%'"; }
             else { cadenaTipoId = "tipoIdentificacion LIKE '" + cbTipoId.SelectedItem.ToString() + "'"; };
 
             if (textBoxNroId.Text == "") { cadenaNroIdentificacion = "numeroIdentificacion LIKE '%'"; }
@@ -434,23 +444,32 @@ namespace FrbaHotel.AbmCliente
                 + " AND " + cadenaApellido + " AND " + cadenaTipoId + " AND " 
                 + cadenaNroIdentificacion + " AND " + cadenaMail;
 
-
-            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             
+        SqlCommand comandoClientesModificado = new SqlCommand(compuesto,Globals.conexionGlobal);
+        SqlDataReader readerClienteModificado = comandoClientesModificado.ExecuteReader();
+            
+        dataTableCM.Load(readerClienteModificado);
 
-            SqlDataAdapter adapter = new SqlDataAdapter(compuesto, Globals.conexionGlobal);
-            DataTable dataTable = new DataTable();
-            adapter.Fill(dataTable);
-            dgv.DataSource = dataTable;
-
+        return dataTableCM;
+            
         }
 
 
-        public void mostrarClientesFiltradoParaModif(DataGridView dgv)
+        public void mostrarTodosLosClientes(DataGridView unDgv) {
+            DataTable dtLLenadoDeClientes = new DataTable();
+            String cadenaLLenadoDeClientes = "SELECT * FROM [PISOS_PICADOS].Usuario";
+            SqlCommand comandoLLenadoDeClientes = new SqlCommand(cadenaLLenadoDeClientes,Globals.conexionGlobal);
+            unDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            SqlDataReader readerLLenadoDeClientes = comandoLLenadoDeClientes.ExecuteReader();
+            dtLLenadoDeClientes.Load(readerLLenadoDeClientes);
+            unDgv.DataSource = dtLLenadoDeClientes;
+        }
+
+
+        public DataTable cargarClientesParaModif()
         {
             //esta funcion se encarga de filtrar a los clientes segun los criterios ingresados por el menu del
             // tab de modificar a un cliente del frmCliente, grabando dichas modificaciones en la base de datos
-
 
             string cadenaNombre;
             string cadenaApellido;
@@ -464,7 +483,7 @@ namespace FrbaHotel.AbmCliente
             if (txtApellidoModif.Text == "") { cadenaApellido = "apellido LIKE '%'"; }
             else { cadenaApellido = "apellido LIKE '" + txtApellidoModif.Text + "'"; };
 
-            if (cmbTipoIdModif.SelectedItem == null || cmbTipoIdModif.SelectedItem.ToString() == "") { cadenaTipoId = "tipoIdentificacion LIKE '%'"; }
+            if (cmbTipoIdModif.SelectedItem.ToString() == "Vacío") { cadenaTipoId = "tipoIdentificacion LIKE '%'"; }
             else { cadenaTipoId = "tipoIdentificacion LIKE '" + cmbTipoIdModif.SelectedItem.ToString() + "'"; };
 
             if (txtNroIdModif.Text == "") { cadenaNroIdentificacion = "numeroIdentificacion LIKE '%'"; }
@@ -473,27 +492,42 @@ namespace FrbaHotel.AbmCliente
             if (txtMailModif.Text == "") { cadenaMail = "mail LIKE '%'"; }
             else { cadenaMail = "mail LIKE '" + txtMailModif.Text + "'"; };
 
-
-            string compuesto = " SELECT * FROM [PISOS_PICADOS].Usuario WHERE " + cadenaNombre
+            String compuesto = " SELECT * FROM [PISOS_PICADOS].Usuario WHERE " + cadenaNombre
                 + " AND " + cadenaApellido + " AND " + cadenaTipoId + " AND "
                 + cadenaNroIdentificacion + " AND " + cadenaMail;
 
+            DataTable dataTableCM = new DataTable();
+    
+            SqlCommand comandoClientesModificado = new SqlCommand(compuesto, Globals.conexionGlobal);
+            SqlDataReader readerClienteModificado = comandoClientesModificado.ExecuteReader();
 
-            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataTableCM.Load(readerClienteModificado);
 
-
-            SqlDataAdapter adapter = new SqlDataAdapter(compuesto, Globals.conexionGlobal);
-            DataTable dataTable = new DataTable();
-            adapter.Fill(dataTable);
-            dgv.DataSource = dataTable;
-
+            return dataTableCM;
         }
 
         private void btnBuscarFiltrado(object sender, EventArgs e)
         {
             //usa la funcion que muestra a los clientes en la abm de filtrado y 
             //los muestra en una grilla para luego ser seleccionado el cliente que será modificado
-            mostrarClientesFiltrado(dataGridViewClientes);
+            recargarClientes();
+        }
+
+        public void recargarClientes() {
+
+            dataGridViewClientes.DataSource = null;
+            dataGridViewClientes.Columns.Clear();
+            dataGridViewClientes.DataSource = cargarClientesBaja();
+            //dataGridViewClientes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        
+        }
+
+
+        public void recargarClientesModificacion() {
+            dataGridViewModificarCliente.DataSource = null;
+            dataGridViewModificarCliente.Columns.Clear();
+            dataGridViewModificarCliente.DataSource = cargarClientesBaja();
+            //dataGridViewModificarCliente.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void textBoxNombre_TextChanged(object sender, EventArgs e)
@@ -539,7 +573,7 @@ namespace FrbaHotel.AbmCliente
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             //muestra los clientes segun los filtros solicitados en los campos del form de bajaCliente
-            mostrarClientesFiltradoParaModif(dataGridViewModificarCliente);
+            recargarClientesModificacion();
         }
 
         private void btnSeleccionar_Click(object sender, EventArgs e)
@@ -547,8 +581,6 @@ namespace FrbaHotel.AbmCliente
             //esta funcion entra en acción cuando ya encontramos al cliente a modificar y nos permite seleccionarlo
             //en el DataGridView y conocer sus valores que aparecerán por defecto en un formulario especial para la 
             //modificacion de un cliente
-
-            
 
             String nombreClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["nombre"].Value;
             String apellidoClienteFila = (String)dataGridViewModificarCliente.CurrentRow.Cells["apellido"].Value;
@@ -660,7 +692,6 @@ namespace FrbaHotel.AbmCliente
         private void Nro_IdKeyPress(object sender, KeyPressEventArgs e)
         {
             {
-                //no ingresa numeros al campo y muestra mensaje que lo informa
                 if (Char.IsDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
                 else { e.Handled = true;
                 MessageBox.Show("Este campo sólo acepta números", "Error",MessageBoxButtons.OK);
@@ -673,12 +704,13 @@ namespace FrbaHotel.AbmCliente
             //limpiar los campos del tab altaCliente
             Nombre.ResetText();
             Apellido.ResetText();
-            TipoId.ResetText();
+            TipoId.SelectedItem = "Vacío";
             nroId.ResetText();
             Mail.ResetText();
             Telefono.ResetText();
             Calle.ResetText();
             NroCalle.ResetText();
+            cbPaises.SelectedItem = "Vacío";
             Localidad.ResetText();
             Nacionalidad.ResetText();
             FechaNacimiento.ResetText();
@@ -689,7 +721,7 @@ namespace FrbaHotel.AbmCliente
             //limpiar los campos del tab modificarCliente
             txtNombreModif.ResetText();
             txtApellidoModif.ResetText();
-            cbTipoId.SelectedItem = "Vacío";
+            cmbTipoIdModif.SelectedItem = "Vacío";
             txtNroIdModif.ResetText();
             txtMailModif.ResetText();
         }

@@ -45,11 +45,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbmCliente\frmAlta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\frmAlta.Designer.cs">
+      <DependentUpon>frmAlta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCliente\frmBaja.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\frmBaja.Designer.cs">
+      <DependentUpon>frmBaja.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmCliente\frmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AbmCliente\frmCliente.Designer.cs">
       <DependentUpon>frmCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCliente\frmInicial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\frmInicial.Designer.cs">
+      <DependentUpon>frmInicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmCliente\frmModificacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmCliente\frmModificacion.Designer.cs">
+      <DependentUpon>frmModificacion.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmCliente\frmModificacionCliente.cs">
       <SubType>Form</SubType>
@@ -193,8 +217,20 @@
     <Compile Include="RegistrarEstadia\frmRegistrarEstadia.Designer.cs">
       <DependentUpon>frmRegistrarEstadia.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AbmCliente\frmAlta.resx">
+      <DependentUpon>frmAlta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCliente\frmBaja.resx">
+      <DependentUpon>frmBaja.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\frmCliente.resx">
       <DependentUpon>frmCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCliente\frmInicial.resx">
+      <DependentUpon>frmInicial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmCliente\frmModificacion.resx">
+      <DependentUpon>frmModificacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\frmModificacionCliente.resx">
       <DependentUpon>frmModificacionCliente.cs</DependentUpon>

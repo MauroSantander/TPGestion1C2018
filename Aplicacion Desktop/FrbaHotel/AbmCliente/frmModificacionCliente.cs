@@ -55,7 +55,8 @@ namespace FrbaHotel.AbmCliente
 
         private void frmModificacionCliente_Load(object sender, EventArgs e)
         {
-            this.CenterToScreen(); //centra el Formulario
+            //centra el formulario
+            this.CenterToScreen();
         }
 
 

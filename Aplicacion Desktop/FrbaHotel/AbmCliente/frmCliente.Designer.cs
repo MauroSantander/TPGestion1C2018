@@ -472,6 +472,7 @@
             // dataGridViewModificarCliente
             // 
             this.dataGridViewModificarCliente.AllowUserToOrderColumns = true;
+            this.dataGridViewModificarCliente.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewModificarCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewModificarCliente.Location = new System.Drawing.Point(15, 209);
             this.dataGridViewModificarCliente.Name = "dataGridViewModificarCliente";
@@ -716,7 +717,7 @@
             // 
             this.button2.Location = new System.Drawing.Point(220, 154);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(103, 38);
+            this.button2.Size = new System.Drawing.Size(94, 33);
             this.button2.TabIndex = 66;
             this.button2.Text = "Buscar";
             this.button2.UseVisualStyleBackColor = true;
@@ -790,7 +791,7 @@
             // 
             this.BotonBaja.Location = new System.Drawing.Point(207, 509);
             this.BotonBaja.Name = "BotonBaja";
-            this.BotonBaja.Size = new System.Drawing.Size(127, 51);
+            this.BotonBaja.Size = new System.Drawing.Size(94, 33);
             this.BotonBaja.TabIndex = 5;
             this.BotonBaja.Text = "Dar de Baja";
             this.BotonBaja.UseVisualStyleBackColor = true;
@@ -799,6 +800,7 @@
             // dataGridViewClientes
             // 
             this.dataGridViewClientes.AllowUserToAddRows = false;
+            this.dataGridViewClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClientes.Location = new System.Drawing.Point(15, 209);
             this.dataGridViewClientes.Name = "dataGridViewClientes";
