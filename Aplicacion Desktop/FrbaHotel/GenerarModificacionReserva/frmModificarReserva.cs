@@ -13,6 +13,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 {
     public partial class frmModificarReserva : Form
     {
+        string codigoReserva;
         int idCliente;
         public void setCliente(int id)
         {
@@ -24,16 +25,16 @@ namespace FrbaHotel.GenerarModificacionReserva
             InitializeComponent();
         }
 
-        public frmModificarReserva(string codigoReserva)
+        public frmModificarReserva(string _codigoReserva)
         {
             InitializeComponent();
-            labelCodigoReserva.Text = codigoReserva;
+            codigoReserva = _codigoReserva;
         }
 
         private void frmModificarReserva_Load(object sender, EventArgs e)
         {
             idCliente = Globals.idUsuarioSesion;
-
+            labelCodigoReserva.Text = codigoReserva;
             this.CenterToScreen();
 
             //cargo hoteles
@@ -49,8 +50,34 @@ namespace FrbaHotel.GenerarModificacionReserva
             catch
             {
                 MessageBox.Show("Error al cargar el hotel del usuario. Reinicie sesión y vuelva a intentar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
                 return;
             }
+
+            //cargo régimen
+            SqlCommand cargarRegimenReserva = new SqlCommand("SELECT [PISOS_PICADOS].consultarRegimen (@idReserva)", Globals.conexionGlobal);
+            cargarRegimenReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+            cargarRegimenReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
+            string regimen = (string)cargarRegimenReserva.ExecuteScalar();
+            comboBoxRegimen.SelectedItem = regimen;
+
+            //cargo fechaInicio
+            SqlCommand cargarFechaInicioReserva = new SqlCommand("SELECT fechaInicio FROM [PISOS_PICADOS].Reserva", Globals.conexionGlobal);
+            cargarFechaInicioReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+            cargarFechaInicioReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
+            string fechaInicio = cargarFechaInicioReserva.ExecuteScalar().ToString();
+            dtpInicioReserva.Value = Convert.ToDateTime(fechaInicio);
+
+            //cargo fechaFin
+            SqlCommand cargarFechaFinReserva = new SqlCommand("SELECT fechaFin FROM [PISOS_PICADOS].Reserva", Globals.conexionGlobal);
+            cargarFechaFinReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+            cargarFechaFinReserva.Parameters["@idReserva"].Value = Int64.Parse(labelCodigoReserva.Text);
+            string fechaFin = cargarFechaFinReserva.ExecuteScalar().ToString();
+            dtpFinReserva.Value = Convert.ToDateTime(fechaFin);
+
+            //cargo cantidad de habitaciones
+
+
 
             //agrego item por si no sabe el régimen que quiere
             comboBoxRegimen.Items.Add("Vacío");
@@ -147,16 +174,27 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             {
                 //chequeos
-
+                int verificacion = 1;
                 if (comboBoxRegimen.Text == "Vacío")
                 {
                     MessageBox.Show("Debe elegir un régimen.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    verificacion = 0;
                 }
 
                 if (numSimple.Value == 0 && numDoble.Value == 0 && numTriple.Value == 0 && numCuadruple.Value == 0 && numKing.Value == 0)
                 {
                     MessageBox.Show("Debe elegir por lo menos una habitación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    verificacion = 0;
+                }
+
+                if (txtMotivo.Text == "")
+                {
+                    MessageBox.Show("Debe indicar el motivo por el cual realiza esta modificación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    verificacion = 0;
+                }
+
+                if (verificacion == 0)
+                {
                     return;
                 }
 
@@ -177,7 +215,8 @@ namespace FrbaHotel.GenerarModificacionReserva
                 }
 
                 //ejecuto función para ver si cumple lo demandado
-                SqlCommand cmdPuedeModificarReserva = new SqlCommand("SELECT [PISOS_PICADOS].puedeModificarReserva (@fechaInicio, @fechaFin, @idReserva, @cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing)", Globals.conexionGlobal);
+                SqlCommand cmdPuedeModificarReserva = new SqlCommand("[PISOS_PICADOS].puedeModificarReserva", Globals.conexionGlobal);
+                cmdPuedeModificarReserva.CommandType = CommandType.StoredProcedure;
                 cmdPuedeModificarReserva.Parameters.Add("@fechaInicio", SqlDbType.Date);
                 cmdPuedeModificarReserva.Parameters.Add("@fechaFin", SqlDbType.Date);
                 cmdPuedeModificarReserva.Parameters.Add("@idReserva", SqlDbType.Int);
@@ -186,6 +225,8 @@ namespace FrbaHotel.GenerarModificacionReserva
                 cmdPuedeModificarReserva.Parameters.Add("@cantTriple", SqlDbType.Int);
                 cmdPuedeModificarReserva.Parameters.Add("@cantCuadru", SqlDbType.Int);
                 cmdPuedeModificarReserva.Parameters.Add("@cantKing", SqlDbType.Int);
+                var retorno = cmdPuedeModificarReserva.Parameters.Add("@respuesta", SqlDbType.Int);
+                retorno.Direction = ParameterDirection.ReturnValue;
 
                 cmdPuedeModificarReserva.Parameters["@fechaInicio"].Value = dtpInicioReserva.Value.ToString("yyyy-MM-dd");
                 cmdPuedeModificarReserva.Parameters["@fechaFin"].Value = dtpFinReserva.Value.ToString("yyyy-MM-dd");
@@ -197,7 +238,8 @@ namespace FrbaHotel.GenerarModificacionReserva
                 cmdPuedeModificarReserva.Parameters["@cantKing"].Value = numKing.Value;
                 
                 //ejecuto y recibo resultado
-                int resultadoBusqueda = (int)cmdPuedeModificarReserva.ExecuteScalar();
+                cmdPuedeModificarReserva.ExecuteNonQuery();
+                int resultadoBusqueda = (int)retorno.Value;
 
                 //según resultado aviso al usuario
                 if (resultadoBusqueda == 0)
