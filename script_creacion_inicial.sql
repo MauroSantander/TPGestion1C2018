@@ -3606,7 +3606,6 @@ BEGIN
 		@idusuario
 		,@nacionalidad
 		);
-
 	INSERT INTO [PISOS_PICADOS].RolxUsuario
 	VALUES (
 		3
@@ -4113,16 +4112,24 @@ AS
 		);
 
 	DECLARE @idReserva INT = SCOPE_IDENTITY();
-	
-	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		VALUES (
-			(
-				SELECT  a.idHabitacion
+	DECLARE @idHabitacion INT
+	DECLARE C1 CURSOR 
+	FOR SELECT  a.idHabitacion
 				FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru
 				,@cantKing,@idHotel,@fechaInicio,@fechaFin) AS a
-				)
+	OPEN C1
+	FETCH C1 INTO @idHabitacion
+	WHILE (@@FETCH_STATUS = 0)
+	BEGIN
+	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
+		VALUES (
+			@idHabitacion
 			,@idReserva
 			);	
+	FETCH C1 INTO @idHabitacion	
+	END	
+	CLOSE C1
+	DEALLOCATE C1
 		RETURN @idReserva
 GO
 
