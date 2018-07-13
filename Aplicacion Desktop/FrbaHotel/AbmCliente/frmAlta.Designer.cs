@@ -113,6 +113,7 @@
             // Nombre
             // 
             this.Nombre.Location = new System.Drawing.Point(6, 19);
+            this.Nombre.MaxLength = 255;
             this.Nombre.Name = "Nombre";
             this.Nombre.Size = new System.Drawing.Size(146, 20);
             this.Nombre.TabIndex = 0;
@@ -131,6 +132,7 @@
             // Apellido
             // 
             this.Apellido.Location = new System.Drawing.Point(6, 19);
+            this.Apellido.MaxLength = 255;
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(146, 20);
             this.Apellido.TabIndex = 0;
@@ -149,6 +151,7 @@
             // nroId
             // 
             this.nroId.Location = new System.Drawing.Point(6, 19);
+            this.nroId.MaxLength = 9;
             this.nroId.Name = "nroId";
             this.nroId.Size = new System.Drawing.Size(146, 20);
             this.nroId.TabIndex = 0;
@@ -198,6 +201,7 @@
             // Mail
             // 
             this.Mail.Location = new System.Drawing.Point(6, 19);
+            this.Mail.MaxLength = 255;
             this.Mail.Name = "Mail";
             this.Mail.Size = new System.Drawing.Size(146, 20);
             this.Mail.TabIndex = 0;
@@ -215,6 +219,7 @@
             // Nacionalidad
             // 
             this.Nacionalidad.Location = new System.Drawing.Point(6, 19);
+            this.Nacionalidad.MaxLength = 255;
             this.Nacionalidad.Name = "Nacionalidad";
             this.Nacionalidad.Size = new System.Drawing.Size(146, 20);
             this.Nacionalidad.TabIndex = 0;
@@ -254,6 +259,7 @@
             // Localidad
             // 
             this.Localidad.Location = new System.Drawing.Point(6, 19);
+            this.Localidad.MaxLength = 255;
             this.Localidad.Name = "Localidad";
             this.Localidad.Size = new System.Drawing.Size(146, 20);
             this.Localidad.TabIndex = 0;
@@ -267,10 +273,12 @@
             this.groupBox9.TabIndex = 10;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Número de calle";
+            this.groupBox9.Enter += new System.EventHandler(this.groupBox9_Enter);
             // 
             // NroCalle
             // 
             this.NroCalle.Location = new System.Drawing.Point(6, 19);
+            this.NroCalle.MaxLength = 9;
             this.NroCalle.Name = "NroCalle";
             this.NroCalle.Size = new System.Drawing.Size(146, 20);
             this.NroCalle.TabIndex = 0;
@@ -289,6 +297,7 @@
             // Telefono
             // 
             this.Telefono.Location = new System.Drawing.Point(6, 19);
+            this.Telefono.MaxLength = 9;
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(146, 20);
             this.Telefono.TabIndex = 0;
@@ -297,6 +306,7 @@
             // Calle
             // 
             this.Calle.Location = new System.Drawing.Point(6, 19);
+            this.Calle.MaxLength = 255;
             this.Calle.Name = "Calle";
             this.Calle.Size = new System.Drawing.Size(146, 20);
             this.Calle.TabIndex = 0;

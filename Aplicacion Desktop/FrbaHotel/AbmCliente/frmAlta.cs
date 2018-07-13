@@ -305,5 +305,10 @@ namespace FrbaHotel.AbmCliente
         {
             Utils.txtSoloAceptaLetras(Nacionalidad, sender, e);
         }
+
+        private void groupBox9_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
