@@ -89,6 +89,7 @@
             this.dtpInicioReserva.Name = "dtpInicioReserva";
             this.dtpInicioReserva.Size = new System.Drawing.Size(200, 20);
             this.dtpInicioReserva.TabIndex = 1;
+            this.dtpInicioReserva.ValueChanged += new System.EventHandler(this.dtpInicioReserva_ValueChanged);
             // 
             // groupBox2
             // 
@@ -106,6 +107,7 @@
             this.dtpFinReserva.Name = "dtpFinReserva";
             this.dtpFinReserva.Size = new System.Drawing.Size(200, 20);
             this.dtpFinReserva.TabIndex = 1;
+            this.dtpFinReserva.ValueChanged += new System.EventHandler(this.dtpFinReserva_ValueChanged);
             // 
             // btnCrear
             // 
