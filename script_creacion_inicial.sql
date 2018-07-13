@@ -470,8 +470,7 @@ CREATE TABLE [PISOS_PICADOS].Hotel (
 
 CREATE TABLE [PISOS_PICADOS].EmpleadoxHotel (
 	idUsuario INT REFERENCES [PISOS_PICADOS].Empleado
-	,idHotel INT REFERENCES [PISOS_PICADOS].Hotel 
-	 PRIMARY KEY (
+	,idHotel INT REFERENCES [PISOS_PICADOS].Hotel PRIMARY KEY (
 		idUsuario
 		,idHotel
 		)
@@ -527,8 +526,7 @@ CREATE TABLE [PISOS_PICADOS].RolxFuncionalidad (
 
 CREATE TABLE [PISOS_PICADOS].RolxUsuario (
 	idRol INT REFERENCES [PISOS_PICADOS].Rol
-	,idUsuario INT REFERENCES [PISOS_PICADOS].Usuario
-	PRIMARY KEY (
+	,idUsuario INT REFERENCES [PISOS_PICADOS].Usuario PRIMARY KEY (
 		idRol
 		,idUsuario
 		)
@@ -1474,7 +1472,7 @@ VALUES (
 	,HASHBYTES('SHA2_256', 'w23e')
 	);
 
-INSERT INTO [PISOS_PICADOS].Cliente(
+INSERT INTO [PISOS_PICADOS].Cliente (
 	idUsuario
 	,nacionalidad
 	)
@@ -2493,8 +2491,6 @@ BEGIN
 END
 GO
 
-
-
 /*Dado un hotel un tipo de habitacion , una fecha de reserva y una cantidad devuelve el una lista de habitaciones
 que cumplen */
 CREATE FUNCTION [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (
@@ -2531,38 +2527,50 @@ RETURN (
 		)
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplenReserva (@cantSimple INT
+CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplenReserva (
+	@cantSimple INT
 	,@cantDoble INT
 	,@cantTriple INT
 	,@cantCuadru INT
 	,@cantKing INT
 	,@idHotel INT
 	,@fechaInicio DATE
-	,@fechaFin DATE )
-
-RETURNS TABLE 
-AS 
+	,@fechaFin DATE
+	)
+RETURNS TABLE
+AS
 RETURN (
-SELECT H.idHabitacion AS idHabitacion
-,h.numero AS Numero
-,h.piso AS Piso
-,t.idTipo AS idTipo
-,t.tipoCamas AS Tipo
-FROM [PISOS_PICADOS].Habitacion AS h 
-JOIN [PISOS_PICADOS].Tipo AS t ON h.tipo = t.idTipo
-WHERE h.idHotel = @idHotel AND 
-(
-H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (1,@idHotel,@fechaInicio,@fechaFin,@cantSimple))
-OR
-H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen(2,@idHotel,@fechaInicio,@fechaFin,@cantDoble))
-OR
-H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (3,@idHotel,@fechaInicio,@fechaFin,@cantTriple))
-OR
-H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (4,@idHotel,@fechaInicio,@fechaFin,@cantCuadru))
-OR
-H.idHabitacion IN (SELECT * FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (5,@idHotel,@fechaInicio,@fechaFin,@cantKing))
-)
-)
+		SELECT H.idHabitacion AS idHabitacion
+			,h.numero AS Numero
+			,h.piso AS Piso
+			,t.idTipo AS idTipo
+			,t.tipoCamas AS Tipo
+		FROM [PISOS_PICADOS].Habitacion AS h
+		INNER JOIN [PISOS_PICADOS].Tipo AS t ON h.tipo = t.idTipo
+		WHERE h.idHotel = @idHotel
+			AND (
+				H.idHabitacion IN (
+					SELECT *
+					FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen(1, @idHotel, @fechaInicio, @fechaFin, @cantSimple)
+					)
+				OR H.idHabitacion IN (
+					SELECT *
+					FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen(2, @idHotel, @fechaInicio, @fechaFin, @cantDoble)
+					)
+				OR H.idHabitacion IN (
+					SELECT *
+					FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen(3, @idHotel, @fechaInicio, @fechaFin, @cantTriple)
+					)
+				OR H.idHabitacion IN (
+					SELECT *
+					FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen(4, @idHotel, @fechaInicio, @fechaFin, @cantCuadru)
+					)
+				OR H.idHabitacion IN (
+					SELECT *
+					FROM [PISOS_PICADOS].habitacionesDeterminadasQueCumplen(5, @idHotel, @fechaInicio, @fechaFin, @cantKing)
+					)
+				)
+		)
 GO
 
 /* infroma si un cliente dado su nombre apellido y numero de identificacion esta habilitado
@@ -3288,42 +3296,48 @@ RETURN (
 		)
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].mostrarClientes()
+CREATE FUNCTION [PISOS_PICADOS].mostrarClientes ()
 RETURNS TABLE
 AS
-RETURN 
-(
-SELECT u.idUsuario AS idUsuario
-,u.nombre AS Nombre
-,u.apellido AS Apellido
-,u.mail AS Mail
-,u.telefono AS Telefono
-,u.calle AS Calle
-,u.nroCalle AS [Numero de calle]
-,u.localidad AS Localidad
-,p.nombrePais AS Pais
-,c.nacionalidad AS Nacionalidad
-,u.tipoIdentificacion AS [Tipo de identificacion]
-,u.numeroIdentificacion AS [Numero de identificacion]
-,u.fechaNacimiento AS [Fecha de nacimiento]
-,eu.detalleEstado AS [Estado de usuario]
-FROM [PISOS_PICADOS].Usuario AS u JOIN [PISOS_PICADOS].Cliente AS c ON u.idUsuario = c.idUsuario
-JOIN [PISOS_PICADOS].Pais AS p ON u.pais = p.idPais 
-JOIN [PISOS_PICADOS].EstadoUsuario AS eu ON u.estado = eu.idEstado
-)
+RETURN (
+		SELECT u.idUsuario AS idUsuario
+			,u.nombre AS Nombre
+			,u.apellido AS Apellido
+			,u.mail AS Mail
+			,u.telefono AS Telefono
+			,u.calle AS Calle
+			,u.nroCalle AS [Numero de calle]
+			,u.localidad AS Localidad
+			,p.nombrePais AS Pais
+			,c.nacionalidad AS Nacionalidad
+			,u.tipoIdentificacion AS [Tipo de identificacion]
+			,u.numeroIdentificacion AS [Numero de identificacion]
+			,u.fechaNacimiento AS [Fecha de nacimiento]
+			,eu.detalleEstado AS [Estado de usuario]
+		FROM [PISOS_PICADOS].Usuario AS u
+		INNER JOIN [PISOS_PICADOS].Cliente AS c ON u.idUsuario = c.idUsuario
+		INNER JOIN [PISOS_PICADOS].Pais AS p ON u.pais = p.idPais
+		INNER JOIN [PISOS_PICADOS].EstadoUsuario AS eu ON u.estado = eu.idEstado
+		)
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].cantHabitacionesReserva(@codigoReserva INT,@idTipo INT)
+CREATE FUNCTION [PISOS_PICADOS].cantHabitacionesReserva (
+	@codigoReserva INT
+	,@idTipo INT
+	)
 RETURNS INT
 AS
 BEGIN
-RETURN(
-ISNULL ((SELECT COUNT(*)
-FROM [PISOS_PICADOS].HabitacionxReserva AS hxr 
-JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
-WHERE hxr.codigoReserva = @codigoReserva AND h.tipo = @idTipo
-GROUP BY h.tipo),0)
-)
+	RETURN (
+			ISNULL((
+					SELECT COUNT(*)
+					FROM [PISOS_PICADOS].HabitacionxReserva AS hxr
+					INNER JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
+					WHERE hxr.codigoReserva = @codigoReserva
+						AND h.tipo = @idTipo
+					GROUP BY h.tipo
+					), 0)
+			)
 END
 GO
 
@@ -3454,7 +3468,6 @@ BEGIN
 		,@username
 		,HASHBYTES('SHA2_256', @password)
 		);
-
 END;
 GO
 
@@ -3540,15 +3553,15 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE[PISOS_PICADOS].actualizarContrasena @idUsuario INT , @contrasena VARCHAR(255)
-AS 
+CREATE PROCEDURE [PISOS_PICADOS].actualizarContrasena @idUsuario INT
+	,@contrasena VARCHAR(255)
+AS
 BEGIN
-		UPDATE [PISOS_PICADOS].Empleado
-		SET contrasena = HASHBYTES('SHA2_256', @contrasena)
-		WHERE idUsuario = @idUsuario
-END 
+	UPDATE [PISOS_PICADOS].Empleado
+	SET contrasena = HASHBYTES('SHA2_256', @contrasena)
+	WHERE idUsuario = @idUsuario
+END
 GO
-
 
 CREATE PROCEDURE [PISOS_PICADOS].quitarRolAUsuario @idUsuario INT
 	,@nombreRol VARCHAR(255)
@@ -3645,49 +3658,50 @@ CREATE PROCEDURE [PISOS_PICADOS].SPAltaCliente @nombre VARCHAR(255)
 	,@nacionalidad VARCHAR(255)
 	,@fechaNacimiento DATE
 AS
-	INSERT INTO [PISOS_PICADOS].Usuario (
-		nombre
-		,apellido
-		,mail
-		,telefono
-		,calle
-		,nroCalle
-		,localidad
-		,pais
-		,tipoIdentificacion
-		,numeroIdentificacion
-		,fechaNacimiento
-		,estado
-		)
-	VALUES (
-		@nombre
-		,@apellido
-		,@mail
-		,@telefono
-		,@calle
-		,@numeroC
-		,@localidad
-		,[PISOS_PICADOS].obtenerIDPais(@pais)
-		,@tipo
-		,@numeroI
-		,@fechaNacimiento
-		,1
-		);
+INSERT INTO [PISOS_PICADOS].Usuario (
+	nombre
+	,apellido
+	,mail
+	,telefono
+	,calle
+	,nroCalle
+	,localidad
+	,pais
+	,tipoIdentificacion
+	,numeroIdentificacion
+	,fechaNacimiento
+	,estado
+	)
+VALUES (
+	@nombre
+	,@apellido
+	,@mail
+	,@telefono
+	,@calle
+	,@numeroC
+	,@localidad
+	,[PISOS_PICADOS].obtenerIDPais(@pais)
+	,@tipo
+	,@numeroI
+	,@fechaNacimiento
+	,1
+	);
 
-	DECLARE @idusuario INT = SCOPE_IDENTITY();
+DECLARE @idusuario INT = SCOPE_IDENTITY();
 
-	INSERT INTO [PISOS_PICADOS].Cliente
-	VALUES (
-		@idusuario
-		,@nacionalidad
-		);
+INSERT INTO [PISOS_PICADOS].Cliente
+VALUES (
+	@idusuario
+	,@nacionalidad
+	);
 
-	INSERT INTO [PISOS_PICADOS].RolxUsuario
-	VALUES (
-		3
-		,@idusuario
-		);
-	RETURN @idUsuario
+INSERT INTO [PISOS_PICADOS].RolxUsuario
+VALUES (
+	3
+	,@idusuario
+	);
+
+RETURN @idUsuario
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT
@@ -4164,38 +4178,44 @@ CREATE PROCEDURE [PISOS_PICADOS].registrarReserva @fechaReserva DATE
 	,@cantCuadru INT
 	,@cantKing INT
 AS
-	DECLARE @codRegimen INT
-	SET @codRegimen = (SELECT r.codigoRegimen FROM [PISOS_PICADOS].Regimen AS r WHERE r.descripcion = @nombreRegimen group by r.codigoRegimen)
-	INSERT INTO [PISOS_PICADOS].Reserva (
-		fechaRealizacion
-		,fechaInicio
-		,fechaFin
-		,cantidadHuespedes
-		,codigoRegimen
-		,estado
-		,idCliente
-		,precioTotal
+DECLARE @codRegimen INT
+
+SET @codRegimen = (
+		SELECT r.codigoRegimen
+		FROM [PISOS_PICADOS].Regimen AS r
+		WHERE r.descripcion = @nombreRegimen
+		GROUP BY r.codigoRegimen
 		)
-	VALUES (
-		@fechaReserva
-		,@fechaInicio
-		,@fechaFin
-		,@cantHuespedes
-		,@codRegimen
-		,1
-		,@idCliente
-		,((DATEDIFF(day, @fechaInicio, @fechaFIN)) * [PISOS_PICADOS].precioReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel))
-		);
-	DECLARE @idReserva INT = SCOPE_IDENTITY();
 
+INSERT INTO [PISOS_PICADOS].Reserva (
+	fechaRealizacion
+	,fechaInicio
+	,fechaFin
+	,cantidadHuespedes
+	,codigoRegimen
+	,estado
+	,idCliente
+	,precioTotal
+	)
+VALUES (
+	@fechaReserva
+	,@fechaInicio
+	,@fechaFin
+	,@cantHuespedes
+	,@codRegimen
+	,1
+	,@idCliente
+	,((DATEDIFF(day, @fechaInicio, @fechaFIN)) * [PISOS_PICADOS].precioReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel))
+	);
 
-	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		SELECT a.idHabitacion,@idReserva
-		FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing
-		,@idHotel,@fechaInicio,@fechaFin) AS a     
-			
-	
-	RETURN @idReserva
+DECLARE @idReserva INT = SCOPE_IDENTITY();
+
+INSERT INTO [PISOS_PICADOS].HabitacionxReserva
+SELECT a.idHabitacion
+	,@idReserva
+FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @idHotel, @fechaInicio, @fechaFin) AS a
+
+RETURN @idReserva
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizadas @fechaActual DATE
@@ -4300,7 +4320,6 @@ BEGIN
 END
 GO
 
-
 CREATE PROCEDURE [PISOS_PICADOS].modificarReserva @fechaActual DATE
 	,@fechaInicio DATE
 	,@fechaFin DATE
@@ -4317,15 +4336,22 @@ CREATE PROCEDURE [PISOS_PICADOS].modificarReserva @fechaActual DATE
 AS
 BEGIN
 	DECLARE @idHotel INT
+
 	SET @idHotel = [PISOS_PICADOS].obtenerHotelDeHabitacion((
 				SELECT TOP 1 idHabitacion
 				FROM [PISOS_PICADOS].HabitacionxReserva
 				WHERE codigoReserva = @idReserva
 				))
+
 	DECLARE @codRegimen INT
-	SET @codRegimen = (SELECT r.codigoRegimen FROM [PISOS_PICADOS].Regimen AS r 
-	WHERE r.descripcion = @nombreRegimen group by r.codigoRegimen)
-	
+
+	SET @codRegimen = (
+			SELECT r.codigoRegimen
+			FROM [PISOS_PICADOS].Regimen AS r
+			WHERE r.descripcion = @nombreRegimen
+			GROUP BY r.codigoRegimen
+			)
+
 	DELETE
 	FROM [PISOS_PICADOS].HabitacionxReserva
 	WHERE codigoReserva = @idReserva
@@ -4339,14 +4365,23 @@ BEGIN
 		,precioTotal = ((DATEDIFF(day, @fechaInicio, @fechaFIN)) * [PISOS_PICADOS].precioReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @codRegimen, @idHotel))
 	WHERE codigoReserva = @idReserva
 
-	INSERT INTO [PISOS_PICADOS].Modificacion(estadoReserva,descripcion,usuario,fecha)
-	Values(2,@motivo,@idAutor,@fechaActual)
+	INSERT INTO [PISOS_PICADOS].Modificacion (
+		estadoReserva
+		,descripcion
+		,usuario
+		,fecha
+		)
+	VALUES (
+		2
+		,@motivo
+		,@idAutor
+		,@fechaActual
+		)
 
 	INSERT INTO [PISOS_PICADOS].HabitacionxReserva
-		SELECT a.idHabitacion,@idReserva
-		FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing
-		,@idHotel,@fechaInicio,@fechaFin) AS a     
-
+	SELECT a.idHabitacion
+		,@idReserva
+	FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @idHotel, @fechaInicio, @fechaFin) AS a
 END
 GO
 
@@ -4547,33 +4582,37 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [PISOS_PICADOS].puedeModificarReserva (@fechaInicio DATE
+CREATE PROCEDURE [PISOS_PICADOS].puedeModificarReserva (
+	@fechaInicio DATE
 	,@fechaFin DATE
 	,@idReserva INT
 	,@cantSimple INT
 	,@cantDoble INT
 	,@cantTriple INT
 	,@cantCuadru INT
-	,@cantKing INT)
-
+	,@cantKing INT
+	)
 AS
-	DECLARE @idHotel INT
-	DECLARE @resp INT
-	SET @idHotel = [PISOS_PICADOS].obtenerHotelDeHabitacion((
-				SELECT TOP 1 idHabitacion
-				FROM [PISOS_PICADOS].HabitacionxReserva
-				WHERE codigoReserva = @idReserva
-				))
+DECLARE @idHotel INT
+DECLARE @resp INT
 
-	BEGIN TRANSACTION TREliminacionHotelesReserva
+SET @idHotel = [PISOS_PICADOS].obtenerHotelDeHabitacion((
+			SELECT TOP 1 idHabitacion
+			FROM [PISOS_PICADOS].HabitacionxReserva
+			WHERE codigoReserva = @idReserva
+			))
 
-	DELETE
-	FROM [PISOS_PICADOS].HabitacionxReserva
-	WHERE codigoReserva = @idReserva
-	SET @resp = ([PISOS_PICADOS].hotelCumple(@cantSimple,@cantDoble,@cantTriple,@cantCuadru,@cantKing,
-	@idHotel,@fechaInicio,@fechaFin ))
-	ROLLBACK TRANSACTION TREliminacionHotelesReserva;
-	RETURN @resp
+BEGIN TRANSACTION TREliminacionHotelesReserva
+
+DELETE
+FROM [PISOS_PICADOS].HabitacionxReserva
+WHERE codigoReserva = @idReserva
+
+SET @resp = ([PISOS_PICADOS].hotelCumple(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @idHotel, @fechaInicio, @fechaFin))
+
+ROLLBACK TRANSACTION TREliminacionHotelesReserva;
+
+RETURN @resp
 GO
 
 EXEC [PISOS_PICADOS].CorregirUsuarios
