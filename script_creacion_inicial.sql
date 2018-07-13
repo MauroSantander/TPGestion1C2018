@@ -3570,7 +3570,6 @@ CREATE PROCEDURE [PISOS_PICADOS].SPAltaCliente @nombre VARCHAR(255)
 	,@nacionalidad VARCHAR(255)
 	,@fechaNacimiento DATE
 AS
-BEGIN
 	INSERT INTO [PISOS_PICADOS].Usuario (
 		nombre
 		,apellido
@@ -3612,7 +3611,8 @@ BEGIN
 		3
 		,@idusuario
 		);
-END;
+	DECLARE @idCliente INT = SCOPE_IDENTITY();
+	RETURN @idCliente
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT
