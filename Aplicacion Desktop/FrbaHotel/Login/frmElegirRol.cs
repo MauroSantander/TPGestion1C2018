@@ -54,8 +54,9 @@ namespace FrbaHotel.Login
             cmdBuscarIdRol.Parameters["@nombreRol"].Value = cbRol.SelectedItem.ToString();
             int idRol = (int) cmdBuscarIdRol.ExecuteScalar();
 
-            frmMenu frmMenuInstance = new frmMenu();
-            frmMenuInstance.asignarRol(idRol);
+            frmMenu menuInstance = new frmMenu();
+            menuInstance.asignarRol(idRol);
+            Globals.frmMenuInstance = menuInstance;
 
 
             //verificamos si el usuario tiene un solo hotel. Si solo tiene uno, luego no lo mandamos a elegir
@@ -66,11 +67,11 @@ namespace FrbaHotel.Login
 
             if (unHotel == 1)
             {
-                frmMenuInstance.Show();
+                menuInstance.Show();
             }
             else
             {
-                frmElegirHotel instanciafrmElegirHotel = new frmElegirHotel(Globals.idUsuarioSesion, frmMenuInstance);
+                frmElegirHotel instanciafrmElegirHotel = new frmElegirHotel(Globals.idUsuarioSesion, menuInstance);
                 instanciafrmElegirHotel.Show();
             }
 

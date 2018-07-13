@@ -30,23 +30,28 @@
         {
             this.dataGridViewModificarCliente = new System.Windows.Forms.DataGridView();
             this.btnBuscar = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtMailModif = new System.Windows.Forms.TextBox();
-            this.txtApellidoModif = new System.Windows.Forms.TextBox();
-            this.txtNombreModif = new System.Windows.Forms.TextBox();
-            this.txtNroIdModif = new System.Windows.Forms.TextBox();
-            this.cmbTipoIdModif = new System.Windows.Forms.ComboBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.lblBuscarPor = new System.Windows.Forms.Label();
             this.filtros = new System.Windows.Forms.GroupBox();
             this.btnLimpiarModif = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtMailModif = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtNroIdModif = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cmbTipoIdModif = new System.Windows.Forms.ComboBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtApellidoModif = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtNombreModif = new System.Windows.Forms.TextBox();
             this.btnCancelarModif = new System.Windows.Forms.Button();
             this.btnSeleccionar = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewModificarCliente)).BeginInit();
             this.filtros.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewModificarCliente
@@ -54,80 +59,91 @@
             this.dataGridViewModificarCliente.AllowUserToOrderColumns = true;
             this.dataGridViewModificarCliente.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewModificarCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewModificarCliente.Location = new System.Drawing.Point(26, 208);
+            this.dataGridViewModificarCliente.Location = new System.Drawing.Point(12, 126);
             this.dataGridViewModificarCliente.Name = "dataGridViewModificarCliente";
             this.dataGridViewModificarCliente.ReadOnly = true;
             this.dataGridViewModificarCliente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewModificarCliente.Size = new System.Drawing.Size(678, 337);
-            this.dataGridViewModificarCliente.TabIndex = 90;
+            this.dataGridViewModificarCliente.Size = new System.Drawing.Size(732, 337);
+            this.dataGridViewModificarCliente.TabIndex = 4;
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(174, 153);
+            this.btnBuscar.Location = new System.Drawing.Point(632, 49);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(94, 33);
-            this.btnBuscar.TabIndex = 89;
+            this.btnBuscar.TabIndex = 6;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // label4
+            // filtros
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(484, 27);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 13);
-            this.label4.TabIndex = 88;
-            this.label4.Text = "Mail:";
+            this.filtros.Controls.Add(this.btnLimpiarModif);
+            this.filtros.Controls.Add(this.groupBox2);
+            this.filtros.Controls.Add(this.groupBox3);
+            this.filtros.Controls.Add(this.groupBox4);
+            this.filtros.Controls.Add(this.groupBox5);
+            this.filtros.Controls.Add(this.btnBuscar);
+            this.filtros.Controls.Add(this.groupBox1);
+            this.filtros.Location = new System.Drawing.Point(12, 29);
+            this.filtros.Name = "filtros";
+            this.filtros.Size = new System.Drawing.Size(732, 91);
+            this.filtros.TabIndex = 1;
+            this.filtros.TabStop = false;
+            this.filtros.Text = "Filtros";
             // 
-            // label3
+            // btnLimpiarModif
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 57);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 13);
-            this.label3.TabIndex = 87;
-            this.label3.Text = "Apellido:";
+            this.btnLimpiarModif.Location = new System.Drawing.Point(632, 10);
+            this.btnLimpiarModif.Name = "btnLimpiarModif";
+            this.btnLimpiarModif.Size = new System.Drawing.Size(94, 33);
+            this.btnLimpiarModif.TabIndex = 5;
+            this.btnLimpiarModif.Text = "Limpiar";
+            this.btnLimpiarModif.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // groupBox2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 86;
-            this.label2.Text = "Nombre:";
+            this.groupBox2.Controls.Add(this.txtMailModif);
+            this.groupBox2.Location = new System.Drawing.Point(259, 20);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(112, 54);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Mail";
             // 
             // txtMailModif
             // 
-            this.txtMailModif.Location = new System.Drawing.Point(538, 20);
+            this.txtMailModif.Location = new System.Drawing.Point(6, 19);
             this.txtMailModif.Name = "txtMailModif";
             this.txtMailModif.Size = new System.Drawing.Size(100, 20);
-            this.txtMailModif.TabIndex = 85;
+            this.txtMailModif.TabIndex = 0;
             // 
-            // txtApellidoModif
+            // groupBox3
             // 
-            this.txtApellidoModif.Location = new System.Drawing.Point(82, 51);
-            this.txtApellidoModif.Name = "txtApellidoModif";
-            this.txtApellidoModif.Size = new System.Drawing.Size(100, 20);
-            this.txtApellidoModif.TabIndex = 84;
-            this.txtApellidoModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
-            // 
-            // txtNombreModif
-            // 
-            this.txtNombreModif.Location = new System.Drawing.Point(82, 19);
-            this.txtNombreModif.Name = "txtNombreModif";
-            this.txtNombreModif.Size = new System.Drawing.Size(100, 20);
-            this.txtNombreModif.TabIndex = 83;
-            this.txtNombreModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloTexto_KeyPress);
+            this.groupBox3.Controls.Add(this.txtNroIdModif);
+            this.groupBox3.Location = new System.Drawing.Point(495, 20);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(112, 54);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Número identif.";
             // 
             // txtNroIdModif
             // 
-            this.txtNroIdModif.Location = new System.Drawing.Point(340, 54);
+            this.txtNroIdModif.Location = new System.Drawing.Point(6, 19);
             this.txtNroIdModif.Name = "txtNroIdModif";
             this.txtNroIdModif.Size = new System.Drawing.Size(100, 20);
-            this.txtNroIdModif.TabIndex = 79;
-            this.txtNroIdModif.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNros_KeyPress);
+            this.txtNroIdModif.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.cmbTipoIdModif);
+            this.groupBox4.Location = new System.Drawing.Point(377, 20);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(112, 54);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Tipo identificación";
             // 
             // cmbTipoIdModif
             // 
@@ -139,74 +155,51 @@
             "L.E",
             "Carnet Ext.",
             "Pasaporte"});
-            this.cmbTipoIdModif.Location = new System.Drawing.Point(340, 18);
+            this.cmbTipoIdModif.Location = new System.Drawing.Point(6, 19);
             this.cmbTipoIdModif.Name = "cmbTipoIdModif";
             this.cmbTipoIdModif.Size = new System.Drawing.Size(100, 21);
-            this.cmbTipoIdModif.TabIndex = 80;
+            this.cmbTipoIdModif.TabIndex = 0;
             // 
-            // label31
+            // groupBox5
             // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(232, 57);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(103, 13);
-            this.label31.TabIndex = 82;
-            this.label31.Text = "N° de Identificación:";
+            this.groupBox5.Controls.Add(this.txtApellidoModif);
+            this.groupBox5.Location = new System.Drawing.Point(141, 20);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(112, 54);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Apellido";
             // 
-            // label30
+            // txtApellidoModif
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(232, 26);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(45, 13);
-            this.label30.TabIndex = 81;
-            this.label30.Text = "Tipo ID:";
+            this.txtApellidoModif.Location = new System.Drawing.Point(6, 19);
+            this.txtApellidoModif.Name = "txtApellidoModif";
+            this.txtApellidoModif.Size = new System.Drawing.Size(100, 20);
+            this.txtApellidoModif.TabIndex = 0;
             // 
-            // lblBuscarPor
+            // groupBox1
             // 
-            this.lblBuscarPor.AutoSize = true;
-            this.lblBuscarPor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBuscarPor.Location = new System.Drawing.Point(23, 9);
-            this.lblBuscarPor.Name = "lblBuscarPor";
-            this.lblBuscarPor.Size = new System.Drawing.Size(280, 15);
-            this.lblBuscarPor.TabIndex = 78;
-            this.lblBuscarPor.Text = "Seleccione el cliente que desea modificar:";
+            this.groupBox1.Controls.Add(this.txtNombreModif);
+            this.groupBox1.Location = new System.Drawing.Point(23, 20);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(112, 54);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Nombre";
             // 
-            // filtros
+            // txtNombreModif
             // 
-            this.filtros.Controls.Add(this.txtNombreModif);
-            this.filtros.Controls.Add(this.label30);
-            this.filtros.Controls.Add(this.label31);
-            this.filtros.Controls.Add(this.label4);
-            this.filtros.Controls.Add(this.cmbTipoIdModif);
-            this.filtros.Controls.Add(this.label3);
-            this.filtros.Controls.Add(this.txtNroIdModif);
-            this.filtros.Controls.Add(this.label2);
-            this.filtros.Controls.Add(this.txtApellidoModif);
-            this.filtros.Controls.Add(this.txtMailModif);
-            this.filtros.Location = new System.Drawing.Point(26, 42);
-            this.filtros.Name = "filtros";
-            this.filtros.Size = new System.Drawing.Size(678, 100);
-            this.filtros.TabIndex = 92;
-            this.filtros.TabStop = false;
-            this.filtros.Text = "Filtros";
-            // 
-            // btnLimpiarModif
-            // 
-            this.btnLimpiarModif.Location = new System.Drawing.Point(35, 153);
-            this.btnLimpiarModif.Name = "btnLimpiarModif";
-            this.btnLimpiarModif.Size = new System.Drawing.Size(94, 33);
-            this.btnLimpiarModif.TabIndex = 95;
-            this.btnLimpiarModif.Text = "Limpiar";
-            this.btnLimpiarModif.UseVisualStyleBackColor = true;
-            this.btnLimpiarModif.Click += new System.EventHandler(this.btnLimpiarModif_Click);
+            this.txtNombreModif.Location = new System.Drawing.Point(6, 19);
+            this.txtNombreModif.Name = "txtNombreModif";
+            this.txtNombreModif.Size = new System.Drawing.Size(100, 20);
+            this.txtNombreModif.TabIndex = 0;
             // 
             // btnCancelarModif
             // 
-            this.btnCancelarModif.Location = new System.Drawing.Point(446, 153);
+            this.btnCancelarModif.Location = new System.Drawing.Point(550, 469);
             this.btnCancelarModif.Name = "btnCancelarModif";
             this.btnCancelarModif.Size = new System.Drawing.Size(94, 33);
-            this.btnCancelarModif.TabIndex = 94;
+            this.btnCancelarModif.TabIndex = 3;
             this.btnCancelarModif.Text = "Cancelar";
             this.btnCancelarModif.UseVisualStyleBackColor = true;
             this.btnCancelarModif.Click += new System.EventHandler(this.btnCancelarModif_Click);
@@ -214,32 +207,49 @@
             // btnSeleccionar
             // 
             this.btnSeleccionar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSeleccionar.Location = new System.Drawing.Point(317, 153);
+            this.btnSeleccionar.Location = new System.Drawing.Point(650, 469);
             this.btnSeleccionar.Name = "btnSeleccionar";
             this.btnSeleccionar.Size = new System.Drawing.Size(94, 33);
-            this.btnSeleccionar.TabIndex = 93;
-            this.btnSeleccionar.Text = "Seleccionar";
+            this.btnSeleccionar.TabIndex = 2;
+            this.btnSeleccionar.Text = "Modificar";
             this.btnSeleccionar.UseVisualStyleBackColor = true;
             this.btnSeleccionar.Click += new System.EventHandler(this.btnSeleccionar_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(203, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Seleccione el cliente que desea modificar";
             // 
             // frmModificacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(735, 557);
-            this.Controls.Add(this.btnLimpiarModif);
+            this.ClientSize = new System.Drawing.Size(753, 508);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancelarModif);
             this.Controls.Add(this.btnSeleccionar);
             this.Controls.Add(this.filtros);
             this.Controls.Add(this.dataGridViewModificarCliente);
-            this.Controls.Add(this.btnBuscar);
-            this.Controls.Add(this.lblBuscarPor);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmModificacion";
-            this.Text = "frmModificacion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Modificación de usuario";
             this.Load += new System.EventHandler(this.frmModificacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewModificarCliente)).EndInit();
             this.filtros.ResumeLayout(false);
-            this.filtros.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -249,20 +259,20 @@
 
         private System.Windows.Forms.DataGridView dataGridViewModificarCliente;
         private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtMailModif;
-        private System.Windows.Forms.TextBox txtApellidoModif;
-        private System.Windows.Forms.TextBox txtNombreModif;
-        private System.Windows.Forms.TextBox txtNroIdModif;
-        private System.Windows.Forms.ComboBox cmbTipoIdModif;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label lblBuscarPor;
         private System.Windows.Forms.GroupBox filtros;
-        private System.Windows.Forms.Button btnLimpiarModif;
         private System.Windows.Forms.Button btnCancelarModif;
         private System.Windows.Forms.Button btnSeleccionar;
+        private System.Windows.Forms.Button btnLimpiarModif;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox txtMailModif;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtNroIdModif;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ComboBox cmbTipoIdModif;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox txtApellidoModif;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtNombreModif;
+        private System.Windows.Forms.Label label1;
     }
 }

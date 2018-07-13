@@ -28,6 +28,8 @@ namespace FrbaHotel.AbmCliente
             cmbTipoIdModif.SelectedItem = "Vacío";
 
             cargarClientes();
+
+            dataGridViewModificarCliente.DataSource = cargarClientes();
         }
 
 
@@ -134,8 +136,6 @@ namespace FrbaHotel.AbmCliente
             SqlDataReader readerClienteModificado = comandoClientesModificado.ExecuteReader();
             dataTableCM.Load(readerClienteModificado);
             return dataTableCM;
-            
-        
         }
 
 

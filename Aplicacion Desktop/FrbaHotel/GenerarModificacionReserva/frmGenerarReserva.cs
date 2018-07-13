@@ -14,6 +14,11 @@ namespace FrbaHotel.GenerarModificacionReserva
     public partial class frmGenerarReserva : Form
     {
         int idCliente;
+        public void setCliente(int id)
+        {
+            idCliente = id;
+        }
+
         public frmGenerarReserva()
         {
             InitializeComponent();
@@ -127,6 +132,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                 if (dialogResult == DialogResult.Yes)
                 {
                     procesoInicioSesion();
+                    return;
                 }
                 else if (dialogResult == DialogResult.No)
                 {
@@ -284,14 +290,23 @@ namespace FrbaHotel.GenerarModificacionReserva
             DialogResult dialogResult = MessageBox.Show("¿Ya se registró previamente en el sistema?", "Identificación", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                AbmCliente.frmCliente instanciafrmCliente = new AbmCliente.frmCliente(this);
-                this.Hide();
+                frmSeleccionarCliente seleccionarCliente = new frmSeleccionarCliente();
+                seleccionarCliente.Show();
             }
             else if (dialogResult == DialogResult.No)
             {
                 AbmCliente.frmAlta instanciafrmCliente = new AbmCliente.frmAlta(this);
+                instanciafrmCliente.Show();
                 this.Hide();
+                Globals.frmMenuInstance.Hide();
             }
+        }
+
+        public void volver(AbmCliente.frmAlta instanciaAlta)
+        {
+            instanciaAlta.Close();
+            MessageBox.Show("Gracias por identificarse. Ya puede realizar la reserva.", "Reserva", MessageBoxButtons.OK);
+            this.Show();
         }
     }
 }

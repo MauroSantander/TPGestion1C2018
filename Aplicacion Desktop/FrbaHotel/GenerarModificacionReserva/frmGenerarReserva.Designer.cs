@@ -196,7 +196,7 @@
             this.groupBox11.Controls.Add(this.groupBox17);
             this.groupBox11.Location = new System.Drawing.Point(252, 9);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(248, 210);
+            this.groupBox11.Size = new System.Drawing.Size(248, 213);
             this.groupBox11.TabIndex = 12;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Habitaciones";
@@ -363,6 +363,7 @@
             this.Controls.Add(this.groupBox11);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmGenerarReserva";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Generar reserva";
             this.Load += new System.EventHandler(this.frmGenerarReserva_Load);
             this.groupBox1.ResumeLayout(false);

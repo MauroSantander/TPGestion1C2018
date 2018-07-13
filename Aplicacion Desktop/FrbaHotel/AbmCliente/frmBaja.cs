@@ -29,7 +29,7 @@ namespace FrbaHotel.AbmCliente
 
             cmbTipoId.SelectedItem = "Vacío";
 
-            cargarClientes();
+            dataGridViewClientes.DataSource = cargarClientes();
         }
 
         //los siguientes KeyPress limitan la posibilidad de los usuarios de ingresar caracteres incorrectos en los
@@ -81,13 +81,6 @@ namespace FrbaHotel.AbmCliente
             txtNroId.ResetText();
             txtMail.ResetText();
         }
-
-        //cierra el formulario
-        private void btnCancelarModif_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
 
         //realiza la consulta sql con los parámetros indicados tomando los valores de los filtros
         public DataTable cargarClientes()
@@ -193,8 +186,9 @@ namespace FrbaHotel.AbmCliente
 
         }
 
-
-
-
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

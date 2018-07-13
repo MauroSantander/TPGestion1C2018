@@ -86,15 +86,16 @@ namespace FrbaHotel.Login
                     rol.Parameters.Add("@usuario", SqlDbType.VarChar);
                     rol.Parameters["@Usuario"].Value = textBoxUsuario.Text;
                     int idRol = (int)rol.ExecuteScalar();
-                    frmMenu frmMenuInstance = new frmMenu();
-                    frmMenuInstance.asignarRol(idRol);
+                    frmMenu menuInstance = new frmMenu();
+                    menuInstance.asignarRol(idRol);
+                    Globals.frmMenuInstance = menuInstance;
                     if (unHotel == 1)
                     {
-                        frmMenuInstance.Show();
+                        menuInstance.Show();
                     }
                     else
                     {
-                        frmElegirHotel instanciafrmElegirHotel = new frmElegirHotel(idUsr, frmMenuInstance);
+                        frmElegirHotel instanciafrmElegirHotel = new frmElegirHotel(idUsr, menuInstance);
                         instanciafrmElegirHotel.Show();
                     }
                     Globals.getLogin().Hide();
@@ -157,10 +158,12 @@ namespace FrbaHotel.Login
         private void ingresarInvitado_Click(object sender, EventArgs e)
         {
             //Si es invitado se lo manda al menu con rol n° 3, que es el de invitado
-            frmMenu frmMenuInstance = new frmMenu();
-            frmMenuInstance.asignarRol(3);
+            frmMenu menuInstance = new frmMenu();
+            menuInstance.asignarRol(3);
+            Globals.frmMenuInstance = menuInstance;
             Globals.rolUsuario = "Guest";
-            frmMenuInstance.Show();
+            Globals.idUsuarioSesion = -1;
+            menuInstance.Show();
             this.Hide();
         }
 

@@ -60,6 +60,7 @@ namespace FrbaHotel.Login
             cmd.Parameters.Add("@nombre", SqlDbType.VarChar);
             cmd.Parameters["@nombre"].Value = comboBoxHotel.SelectedItem.ToString();
             Globals.idHotelUsuario = (int)cmd.ExecuteScalar();
+            Globals.frmMenuInstance = frmMenuInstancia;
 
             frmMenuInstancia.Show();
             noShowLogin = 1;
