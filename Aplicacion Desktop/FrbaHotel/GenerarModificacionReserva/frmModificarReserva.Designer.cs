@@ -89,7 +89,7 @@
             this.groupBox4.Controls.Add(this.dgvPrecios);
             this.groupBox4.Location = new System.Drawing.Point(514, 16);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(325, 263);
+            this.groupBox4.Size = new System.Drawing.Size(325, 276);
             this.groupBox4.TabIndex = 25;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Precios";
@@ -105,7 +105,7 @@
             this.dgvPrecios.MultiSelect = false;
             this.dgvPrecios.Name = "dgvPrecios";
             this.dgvPrecios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPrecios.Size = new System.Drawing.Size(313, 240);
+            this.dgvPrecios.Size = new System.Drawing.Size(313, 255);
             this.dgvPrecios.TabIndex = 0;
             // 
             // btnLimpiar

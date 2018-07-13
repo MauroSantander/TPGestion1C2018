@@ -14,10 +14,18 @@ namespace FrbaHotel.GenerarModificacionReserva
     public partial class frmSeleccionarCliente : Form
     {
         frmGenerarReserva generarReservaInstancia;
+        frmModificarReserva modificarReservaInstancia;
+
         public frmSeleccionarCliente(frmGenerarReserva instanciaPadre)
         {
             InitializeComponent();
             generarReservaInstancia = instanciaPadre;
+        }
+
+        public frmSeleccionarCliente(frmModificarReserva instanciaPadre)
+        {
+            InitializeComponent();
+            modificarReservaInstancia = instanciaPadre;
         }
 
         private void frmSeleccionarCliente_Load(object sender, EventArgs e)

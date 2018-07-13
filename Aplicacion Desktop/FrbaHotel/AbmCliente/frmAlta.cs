@@ -16,6 +16,7 @@ namespace FrbaHotel.AbmCliente
     public partial class frmAlta : Form
     {
         GenerarModificacionReserva.frmGenerarReserva frmGenerarReservaInstance = null;
+        GenerarModificacionReserva.frmModificarReserva frmModificarReservaInstance = null;
 
         int vueltaAReserva = 0;
 
@@ -30,6 +31,13 @@ namespace FrbaHotel.AbmCliente
         {
             InitializeComponent();
             frmGenerarReservaInstance = instance;
+            vueltaAReserva = 1;
+        }
+
+        public frmAlta(GenerarModificacionReserva.frmModificarReserva instance)
+        {
+            InitializeComponent();
+            frmModificarReservaInstance = instance;
             vueltaAReserva = 1;
         }
 
