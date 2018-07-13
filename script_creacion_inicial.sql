@@ -3532,6 +3532,11 @@ BEGIN
 		UPDATE [PISOS_PICADOS].Usuario
 		SET fechaNacimiento = @fechaNacimiento
 		WHERE idUsuario = @idUsuario
+
+	IF @username IS NOT NULL
+		UPDATE [PISOS_PICADOS].Empleado
+		SET usuario = @username
+		WHERE idUsuario = @idUsuario
 END;
 GO
 
