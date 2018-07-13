@@ -3606,13 +3606,13 @@ AS
 		@idusuario
 		,@nacionalidad
 		);
-	DECLARE @idCliente INT = SCOPE_IDENTITY();
+
 	INSERT INTO [PISOS_PICADOS].RolxUsuario
 	VALUES (
 		3
 		,@idusuario
 		);
-	RETURN @idCliente
+	RETURN @idUsuario
 GO
 
 CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT
