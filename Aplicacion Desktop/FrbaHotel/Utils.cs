@@ -174,7 +174,7 @@ namespace FrbaHotel
             obtenerId.Parameters["@apellido"].Value = apellido;
             obtenerId.Parameters["@numeroIdentificacion"].Value = nroIdentificacion;
 
-            int idCliente = (int)obtenerId.ExecuteScalar();  //aca es donde falla porque viene con Null
+            int idCliente = (int)obtenerId.ExecuteScalar();
 
             return idCliente;
         }
