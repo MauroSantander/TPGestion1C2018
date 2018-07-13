@@ -13,6 +13,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 {
     public partial class frmGenerarReserva : Form
     {
+        int idCliente;
         public frmGenerarReserva()
         {
             InitializeComponent();
@@ -20,6 +21,8 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void frmGenerarReserva_Load(object sender, EventArgs e)
         {
+            idCliente = Globals.idUsuarioSesion;
+
             this.CenterToScreen();
 
             //cargo hoteles
@@ -117,7 +120,20 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            int idCliente = 96946;
+
+            if (idCliente == -1)
+            {
+                DialogResult dialogResult = MessageBox.Show("Debe identificarse o registrarse en el sistema para poder hacer una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    procesoInicioSesion();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             int codigoReservaNuevo = 0;
 
             //chequeos
@@ -261,6 +277,21 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void dtpFinReserva_ValueChanged(object sender, EventArgs e)
         {
             if (dtpInicioReserva.Value > dtpFinReserva.Value) dtpInicioReserva.Value = dtpFinReserva.Value;
+        }
+
+        private void procesoInicioSesion()
+        {
+            DialogResult dialogResult = MessageBox.Show("¿Ya se registró previamente en el sistema?", "Identificación", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                AbmCliente.frmCliente instanciafrmCliente = new AbmCliente.frmCliente(this);
+                this.Hide();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                AbmCliente.frmAlta instanciafrmCliente = new AbmCliente.frmAlta(this);
+                this.Hide();
+            }
         }
     }
 }
