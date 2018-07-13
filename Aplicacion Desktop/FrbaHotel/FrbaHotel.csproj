@@ -147,6 +147,18 @@
     <Compile Include="AbmUsuario\Admin.Designer.cs">
       <DependentUpon>Admin.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmUsuario\frmModificarUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\frmModificarUsuario.Designer.cs">
+      <DependentUpon>frmModificarUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmUsuario\frmNuevoUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\frmNuevoUsuario.Designer.cs">
+      <DependentUpon>frmNuevoUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="CancelarReserva\frmCancelarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -267,6 +279,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmUsuario\Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\frmModificarUsuario.resx">
+      <DependentUpon>frmModificarUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\frmNuevoUsuario.resx">
+      <DependentUpon>frmNuevoUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CancelarReserva\frmCancelarReserva.resx">
       <DependentUpon>frmCancelarReserva.cs</DependentUpon>

@@ -53,7 +53,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.checkedListBoxRegimenesAgregar = new System.Windows.Forms.CheckedListBox();
             this.buttonCerrar = new System.Windows.Forms.Button();
-            this.comboBoxPAIS = new System.Windows.Forms.ComboBox();
+            this.comboBoxPais = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -78,7 +78,6 @@
             this.groupBox2.TabIndex = 91;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Estrellas";
-            
             // 
             // cBestrellas
             // 
@@ -109,8 +108,7 @@
             this.textBoxCIU.Name = "textBoxCIU";
             this.textBoxCIU.Size = new System.Drawing.Size(178, 20);
             this.textBoxCIU.TabIndex = 89;
-            
-            this.textBoxCIU.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.textBoxCIU.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // label3
             // 
@@ -120,7 +118,6 @@
             this.label3.Size = new System.Drawing.Size(43, 13);
             this.label3.TabIndex = 88;
             this.label3.Text = "Ciudad:";
-            
             // 
             // label2
             // 
@@ -130,7 +127,6 @@
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 86;
             this.label2.Text = "País:";
-            
             // 
             // dateTimePickerCreacion
             // 
@@ -138,7 +134,6 @@
             this.dateTimePickerCreacion.Name = "dateTimePickerCreacion";
             this.dateTimePickerCreacion.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerCreacion.TabIndex = 85;
-            
             // 
             // textBoxCalle
             // 
@@ -146,8 +141,7 @@
             this.textBoxCalle.Name = "textBoxCalle";
             this.textBoxCalle.Size = new System.Drawing.Size(178, 20);
             this.textBoxCalle.TabIndex = 84;
-            
-            this.textBoxCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.textBoxCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // textBoxMail
             // 
@@ -155,7 +149,6 @@
             this.textBoxMail.Name = "textBoxMail";
             this.textBoxMail.Size = new System.Drawing.Size(178, 20);
             this.textBoxMail.TabIndex = 83;
-            
             // 
             // textBoxTE
             // 
@@ -163,7 +156,6 @@
             this.textBoxTE.Name = "textBoxTE";
             this.textBoxTE.Size = new System.Drawing.Size(178, 20);
             this.textBoxTE.TabIndex = 82;
-            
             this.textBoxTE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // textBoxName
@@ -172,8 +164,7 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(178, 20);
             this.textBoxName.TabIndex = 81;
-
-            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // label18
             // 
@@ -183,7 +174,6 @@
             this.label18.Size = new System.Drawing.Size(99, 13);
             this.label18.TabIndex = 80;
             this.label18.Text = "Fecha de creación:";
-           
             // 
             // label19
             // 
@@ -193,7 +183,6 @@
             this.label19.Size = new System.Drawing.Size(33, 13);
             this.label19.TabIndex = 79;
             this.label19.Text = "Calle:";
-            
             // 
             // label20
             // 
@@ -203,7 +192,6 @@
             this.label20.Size = new System.Drawing.Size(29, 13);
             this.label20.TabIndex = 78;
             this.label20.Text = "Mail:";
-            
             // 
             // label21
             // 
@@ -250,7 +238,6 @@
             this.checkedListBoxRegimenes.Name = "checkedListBoxRegimenes";
             this.checkedListBoxRegimenes.Size = new System.Drawing.Size(240, 79);
             this.checkedListBoxRegimenes.TabIndex = 0;
-           
             // 
             // textBoxNroCalle
             // 
@@ -307,9 +294,9 @@
             this.buttonCerrar.UseVisualStyleBackColor = true;
             this.buttonCerrar.Click += new System.EventHandler(this.buttonCerrar_Click);
             // 
-            // comboBoxPAIS
+            // comboBoxPais
             // 
-            this.comboBoxPAIS.AutoCompleteCustomSource.AddRange(new string[] {
+            this.comboBoxPais.AutoCompleteCustomSource.AddRange(new string[] {
             "Afganistán",
             "Albania",
             "Alemania",
@@ -504,216 +491,20 @@
             "Yibuti",
             "Zambia",
             "Zimbabue"});
-            this.comboBoxPAIS.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.comboBoxPAIS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPAIS.FormattingEnabled = true;
-            this.comboBoxPAIS.Items.AddRange(new object[] {
-            "Afganistán",
-            "Albania",
-            "Alemania",
-            "Andorra",
-            "Angola",
-            "Antigua y Barbuda",
-            "Arabia Saudita",
-            "Argelia",
-            "Argentina",
-            "Armenia",
-            "Australia",
-            "Austria",
-            "Azerbaiyán",
-            "Bahamas",
-            "Bangladés",
-            "Barbados",
-            "Baréin",
-            "Bélgica",
-            "Belice",
-            "Benín",
-            "Bielorrusia",
-            "Birmania",
-            "Bolivia",
-            "Bosnia y Herzegovina",
-            "Botsuana",
-            "Brasil",
-            "Brunéi",
-            "Bulgaria",
-            "Burkina Faso",
-            "Burundi",
-            "Bután",
-            "Cabo Verde",
-            "Camboya",
-            "Camerún",
-            "Canadá",
-            "Catar",
-            "Chad",
-            "Chile",
-            "China",
-            "Chipre",
-            "Ciudad del Vaticano",
-            "Colombia",
-            "Comoras",
-            "Corea del Norte",
-            "Corea del Sur",
-            "Costa de Marfil",
-            "Costa Rica",
-            "Croacia",
-            "Cuba",
-            "Dinamarca",
-            "Dominica",
-            "Ecuador",
-            "Egipto",
-            "El Salvador",
-            "Emiratos Árabes Unidos",
-            "Eritrea",
-            "Eslovaquia",
-            "Eslovenia",
-            "España",
-            "Estados Unidos",
-            "Estonia",
-            "Etiopía",
-            "Filipinas",
-            "Finlandia",
-            "Fiyi",
-            "Francia",
-            "Gabón",
-            "Gambia",
-            "Georgia",
-            "Ghana",
-            "Granada",
-            "Grecia",
-            "Guatemala",
-            "Guyana",
-            "Guinea",
-            "Guinea ecuatorial",
-            "Guinea-Bisáu",
-            "Haití",
-            "Honduras",
-            "Hungría",
-            "India",
-            "Indonesia",
-            "Irak",
-            "Irán",
-            "Irlanda",
-            "Islandia",
-            "Islas Marshall",
-            "Islas Salomón",
-            "Israel",
-            "Italia",
-            "Jamaica",
-            "Japón",
-            "Jordania",
-            "Kazajistán",
-            "Kenia",
-            "Kirguistán",
-            "Kiribati",
-            "Kuwait",
-            "Laos",
-            "Lesoto",
-            "Letonia",
-            "Líbano",
-            "Liberia",
-            "Libia",
-            "Liechtenstein",
-            "Lituania",
-            "Luxemburgo",
-            "Madagascar",
-            "Malasia",
-            "Malaui",
-            "Maldivas",
-            "Malí",
-            "Malta",
-            "Marruecos",
-            "Mauricio",
-            "Mauritania",
-            "México",
-            "Micronesia",
-            "Moldavia",
-            "Mónaco",
-            "Mongolia",
-            "Montenegro",
-            "Mozambique",
-            "Namibia",
-            "Nauru",
-            "Nepal",
-            "Nicaragua",
-            "Níger",
-            "Nigeria",
-            "Noruega",
-            "Nueva Zelanda",
-            "Omán",
-            "Países Bajos",
-            "Pakistán",
-            "Palaos",
-            "Panamá",
-            "Papúa Nueva Guinea",
-            "Paraguay",
-            "Perú",
-            "Polonia",
-            "Portugal",
-            "Reino Unido",
-            "República Centroafricana",
-            "República Checa",
-            "República de Macedonia",
-            "República del Congo",
-            "República Democrática del Congo",
-            "República Dominicana",
-            "República Sudafricana",
-            "Ruanda",
-            "Rumanía",
-            "Rusia",
-            "Samoa",
-            "San Cristóbal y Nieves",
-            "San Marino",
-            "San Vicente y las Granadinas",
-            "Santa Lucía",
-            "Santo Tomé y Príncipe",
-            "Senegal",
-            "Serbia",
-            "Seychelles",
-            "Sierra Leona",
-            "Singapur",
-            "Siria",
-            "Somalia",
-            "Sri Lanka",
-            "Suazilandia",
-            "Sudán",
-            "Sudán del Sur",
-            "Suecia",
-            "Suiza",
-            "Surinam",
-            "Tailandia",
-            "Tanzania",
-            "Tayikistán",
-            "Timor Oriental",
-            "Togo",
-            "Tonga",
-            "Trinidad y Tobago",
-            "Túnez",
-            "Turkmenistán",
-            "Turquía",
-            "Tuvalu",
-            "Ucrania",
-            "Uganda",
-            "Uruguay",
-            "Uzbekistán",
-            "Vanuatu",
-            "Venezuela",
-            "Vietnam",
-            "Yemen",
-            "Yibuti",
-            "Zambia",
-            "Zimbabue"});
-            this.comboBoxPAIS.Location = new System.Drawing.Point(151, 182);
-            this.comboBoxPAIS.Name = "comboBoxPAIS";
-            this.comboBoxPAIS.Size = new System.Drawing.Size(197, 21);
-            this.comboBoxPAIS.TabIndex = 98;
-            
+            this.comboBoxPais.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.comboBoxPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPais.FormattingEnabled = true;
+            this.comboBoxPais.Location = new System.Drawing.Point(151, 182);
+            this.comboBoxPais.Name = "comboBoxPais";
+            this.comboBoxPais.Size = new System.Drawing.Size(197, 21);
+            this.comboBoxPais.TabIndex = 98;
             // 
             // frmModificarHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(736, 590);
-            this.Controls.Add(this.comboBoxPAIS);
+            this.Controls.Add(this.comboBoxPais);
             this.Controls.Add(this.buttonCerrar);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label1);
@@ -774,6 +565,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckedListBox checkedListBoxRegimenesAgregar;
         private System.Windows.Forms.Button buttonCerrar;
-        private System.Windows.Forms.ComboBox comboBoxPAIS;
+        private System.Windows.Forms.ComboBox comboBoxPais;
     }
 }

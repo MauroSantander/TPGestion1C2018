@@ -34,7 +34,6 @@
             this.estrellas = new System.Windows.Forms.ComboBox();
             this.textBoxCiudad = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBoxPais = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxNombre = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
@@ -44,6 +43,7 @@
             this.buttonEliminar = new System.Windows.Forms.Button();
             this.buttonFiltrar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.comboBoxPais = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHoteles)).BeginInit();
             this.SuspendLayout();
@@ -104,13 +104,6 @@
             this.label3.Size = new System.Drawing.Size(43, 13);
             this.label3.TabIndex = 79;
             this.label3.Text = "Ciudad:";
-            // 
-            // textBoxPais
-            // 
-            this.textBoxPais.Location = new System.Drawing.Point(171, 77);
-            this.textBoxPais.Name = "textBoxPais";
-            this.textBoxPais.Size = new System.Drawing.Size(178, 20);
-            this.textBoxPais.TabIndex = 78;
             // 
             // label2
             // 
@@ -195,11 +188,21 @@
             this.label4.TabIndex = 87;
             this.label4.Text = "Seleccione un Hotel  para Baja/Modificación:";
             // 
+            // comboBoxPais
+            // 
+            this.comboBoxPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPais.FormattingEnabled = true;
+            this.comboBoxPais.Location = new System.Drawing.Point(171, 74);
+            this.comboBoxPais.Name = "comboBoxPais";
+            this.comboBoxPais.Size = new System.Drawing.Size(178, 21);
+            this.comboBoxPais.TabIndex = 88;
+            // 
             // frmHoteles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 557);
+            this.Controls.Add(this.comboBoxPais);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.buttonFiltrar);
             this.Controls.Add(this.buttonEliminar);
@@ -209,7 +212,6 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.textBoxCiudad);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxPais);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxNombre);
             this.Controls.Add(this.label24);
@@ -231,7 +233,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBoxCiudad;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxPais;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxNombre;
         private System.Windows.Forms.Label label24;
@@ -242,5 +243,6 @@
         private System.Windows.Forms.ComboBox estrellas;
         private System.Windows.Forms.Button buttonFiltrar;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBoxPais;
     }
 }

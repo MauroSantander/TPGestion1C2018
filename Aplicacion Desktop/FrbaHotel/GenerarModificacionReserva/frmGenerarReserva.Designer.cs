@@ -52,6 +52,8 @@
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.numSimple = new System.Windows.Forms.NumericUpDown();
             this.btnLimpiar = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dgvPrecios = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -67,6 +69,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDoble)).BeginInit();
             this.groupBox17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSimple)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPrecios)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -85,6 +89,7 @@
             this.dtpInicioReserva.Name = "dtpInicioReserva";
             this.dtpInicioReserva.Size = new System.Drawing.Size(200, 20);
             this.dtpInicioReserva.TabIndex = 1;
+            this.dtpInicioReserva.ValueChanged += new System.EventHandler(this.dtpInicioReserva_ValueChanged);
             // 
             // groupBox2
             // 
@@ -102,6 +107,7 @@
             this.dtpFinReserva.Name = "dtpFinReserva";
             this.dtpFinReserva.Size = new System.Drawing.Size(200, 20);
             this.dtpFinReserva.TabIndex = 1;
+            this.dtpFinReserva.ValueChanged += new System.EventHandler(this.dtpFinReserva_ValueChanged);
             // 
             // btnCrear
             // 
@@ -111,6 +117,7 @@
             this.btnCrear.TabIndex = 4;
             this.btnCrear.Text = "Buscar";
             this.btnCrear.UseVisualStyleBackColor = true;
+            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
             // 
             // btnSalir
             // 
@@ -140,6 +147,7 @@
             this.comboBoxRegimen.Name = "comboBoxRegimen";
             this.comboBoxRegimen.Size = new System.Drawing.Size(121, 21);
             this.comboBoxRegimen.TabIndex = 0;
+            this.comboBoxRegimen.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegimen_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -177,6 +185,7 @@
             this.comboBoxHotel.Name = "comboBoxHotel";
             this.comboBoxHotel.Size = new System.Drawing.Size(200, 21);
             this.comboBoxHotel.TabIndex = 0;
+            this.comboBoxHotel.SelectedIndexChanged += new System.EventHandler(this.comboBoxHotel_SelectedIndexChanged);
             // 
             // groupBox11
             // 
@@ -312,11 +321,36 @@
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.dgvPrecios);
+            this.groupBox4.Location = new System.Drawing.Point(517, 13);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(325, 263);
+            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Precios";
+            // 
+            // dgvPrecios
+            // 
+            this.dgvPrecios.AllowUserToAddRows = false;
+            this.dgvPrecios.AllowUserToDeleteRows = false;
+            this.dgvPrecios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPrecios.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dgvPrecios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPrecios.Location = new System.Drawing.Point(6, 15);
+            this.dgvPrecios.MultiSelect = false;
+            this.dgvPrecios.Name = "dgvPrecios";
+            this.dgvPrecios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPrecios.Size = new System.Drawing.Size(313, 240);
+            this.dgvPrecios.TabIndex = 0;
+            // 
             // frmGenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(512, 288);
+            this.ClientSize = new System.Drawing.Size(854, 288);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.label2);
@@ -346,6 +380,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDoble)).EndInit();
             this.groupBox17.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numSimple)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPrecios)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,6 +413,8 @@
         private System.Windows.Forms.GroupBox groupBox17;
         private System.Windows.Forms.NumericUpDown numSimple;
         private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.DataGridView dgvPrecios;
 
     }
 }

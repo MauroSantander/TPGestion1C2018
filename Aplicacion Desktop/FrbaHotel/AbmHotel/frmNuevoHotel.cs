@@ -39,7 +39,7 @@ namespace FrbaHotel.AbmHotel
             try
             {
                 SqlCommand cmdpais = new SqlCommand("select idPais from [PISOS_PICADOS].Pais where nombrePais = @paisSelect", Globals.conexionGlobal);
-                cmdpais.Parameters.AddWithValue("@paisSelect", comboBoxPAIS.Text);
+                cmdpais.Parameters.AddWithValue("@paisSelect", comboBoxPais.Text);
                 idPAIS = (int)cmdpais.ExecuteScalar();
             }
             catch (Exception ex)
@@ -135,7 +135,31 @@ namespace FrbaHotel.AbmHotel
                 else { e.Handled = true; }
             }
         }
-    
+
+        private void textoYNros_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+        private void textosYespacios_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
+        private void textoNrosYespacios_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            {
+                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; }
+            }
+        }
+
         private void chequearSiHayCamposIncompletos()
         {
             if (String.IsNullOrEmpty(textBoxName.Text)
@@ -143,7 +167,7 @@ namespace FrbaHotel.AbmHotel
                || String.IsNullOrEmpty(textBoxTE.Text)
                || String.IsNullOrEmpty(textBoxCalle.Text)
                || String.IsNullOrEmpty(textBoxNroCalle.Text)
-               || String.IsNullOrEmpty(comboBoxPAIS.Text)
+               || String.IsNullOrEmpty(comboBoxPais.Text)
                || String.IsNullOrEmpty(textBoxCIU.Text)
                || String.IsNullOrEmpty(cBestrellas.Text)
                || ((dateTimePickerCreacion.Checked) == false)
@@ -165,6 +189,19 @@ namespace FrbaHotel.AbmHotel
             }
 
             reader2.Close();
+
+            //inicializo combobox de paises
+            SqlCommand cmd = new SqlCommand("select nombrePais from [PISOS_PICADOS].Pais", Globals.conexionGlobal);
+
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                comboBoxPais.Items.Add((reader["nombrePais"]).ToString());
+            }
+
+            reader.Close();
         }
 
        
