@@ -161,7 +161,7 @@ namespace FrbaHotel
             else { return false; }
         }
 
-        public int obtenerIdUsuario(String nombre, String apellido, int nroIdentificacion)
+        public int obtenerIdUsuario(string nombre, string apellido, int nroIdentificacion)
         {
 
             string fObtenerId = "SELECT [PISOS_PICADOS].obtenerIDUsuario (@nombre, @apellido, @numeroIdentificacion)";
@@ -174,14 +174,14 @@ namespace FrbaHotel
             obtenerId.Parameters["@apellido"].Value = apellido;
             obtenerId.Parameters["@numeroIdentificacion"].Value = nroIdentificacion;
 
-            int idCliente = (int)obtenerId.ExecuteScalar();  //aca es donde falla porque viene con Null
+            int idCliente = (int)obtenerId.ExecuteScalar();
 
             return idCliente;
         }
 
         public int obtenerEstadoCliente(int idCliente)
         {
-            String cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
+            string cadenaObtenerEstado = "SELECT [PISOS_PICADOS].obtenerEstadoUsuario (@idUsuario)";
 
             SqlCommand obtenerEstado = new SqlCommand(cadenaObtenerEstado, Globals.conexionGlobal);
 
@@ -258,6 +258,15 @@ namespace FrbaHotel
             {
                 e.Handled = true;
                 MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static void txtSoloAceptaLetras(TextBox textbox, object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
+            {
+                e.Handled = true;
+                MessageBox.Show("Este campo solo acepta letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

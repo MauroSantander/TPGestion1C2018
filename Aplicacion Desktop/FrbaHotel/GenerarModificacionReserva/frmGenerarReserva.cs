@@ -125,7 +125,6 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-
             if (idCliente == -1)
             {
                 DialogResult dialogResult = MessageBox.Show("Debe identificarse o registrarse en el sistema para poder hacer una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
@@ -158,7 +157,6 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             //fin chequeos
 
-            int hotelCumple = 0;
             int idHotel = 0;
             //busco idHotel
             SqlCommand buscarIdHotel = new SqlCommand("SELECT idHotel FROM [PISOS_PICADOS].Hotel WHERE nombre = @nombreHotel", Globals.conexionGlobal);
@@ -290,7 +288,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             DialogResult dialogResult = MessageBox.Show("¿Ya se registró previamente en el sistema?", "Identificación", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                frmSeleccionarCliente seleccionarCliente = new frmSeleccionarCliente();
+                frmSeleccionarCliente seleccionarCliente = new frmSeleccionarCliente(this);
                 seleccionarCliente.Show();
             }
             else if (dialogResult == DialogResult.No)
@@ -305,6 +303,13 @@ namespace FrbaHotel.GenerarModificacionReserva
         public void volver(AbmCliente.frmAlta instanciaAlta)
         {
             instanciaAlta.Close();
+            MessageBox.Show("Gracias por identificarse. Ya puede realizar la reserva.", "Reserva", MessageBoxButtons.OK);
+            this.Show();
+        }
+
+        public void volver(frmSeleccionarCliente instanciaSeleccionarCliente)
+        {
+            instanciaSeleccionarCliente.Close();
             MessageBox.Show("Gracias por identificarse. Ya puede realizar la reserva.", "Reserva", MessageBoxButtons.OK);
             this.Show();
         }

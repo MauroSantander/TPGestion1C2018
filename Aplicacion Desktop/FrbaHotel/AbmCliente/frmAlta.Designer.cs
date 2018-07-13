@@ -40,19 +40,19 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.TipoId = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.Mail = new System.Windows.Forms.TextBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.Nacionalidad = new System.Windows.Forms.TextBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cbPaises = new System.Windows.Forms.ComboBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.Localidad = new System.Windows.Forms.TextBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.NroCalle = new System.Windows.Forms.TextBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.Telefono = new System.Windows.Forms.TextBox();
-            this.NroCalle = new System.Windows.Forms.TextBox();
-            this.Localidad = new System.Windows.Forms.TextBox();
-            this.cbPaises = new System.Windows.Forms.ComboBox();
             this.Calle = new System.Windows.Forms.TextBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.Nacionalidad = new System.Windows.Forms.TextBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.FechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -72,7 +72,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(61, 344);
+            this.btnLimpiar.Location = new System.Drawing.Point(154, 344);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(87, 28);
             this.btnLimpiar.TabIndex = 15;
@@ -82,7 +82,7 @@
             // 
             // BotonCancelar
             // 
-            this.BotonCancelar.Location = new System.Drawing.Point(154, 344);
+            this.BotonCancelar.Location = new System.Drawing.Point(61, 344);
             this.BotonCancelar.Name = "BotonCancelar";
             this.BotonCancelar.Size = new System.Drawing.Size(87, 28);
             this.BotonCancelar.TabIndex = 14;
@@ -116,6 +116,7 @@
             this.Nombre.Name = "Nombre";
             this.Nombre.Size = new System.Drawing.Size(146, 20);
             this.Nombre.TabIndex = 0;
+            this.Nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nombre_KeyPress);
             // 
             // groupBox2
             // 
@@ -133,6 +134,7 @@
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(146, 20);
             this.Apellido.TabIndex = 0;
+            this.Apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Apellido_KeyPress);
             // 
             // groupBox3
             // 
@@ -150,6 +152,7 @@
             this.nroId.Name = "nroId";
             this.nroId.Size = new System.Drawing.Size(146, 20);
             this.nroId.TabIndex = 0;
+            this.nroId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nroId_KeyPress);
             // 
             // groupBox4
             // 
@@ -172,6 +175,7 @@
             this.TipoId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TipoId.FormattingEnabled = true;
             this.TipoId.Items.AddRange(new object[] {
+            "Vacío",
             "DNI",
             "L.E",
             "Carnet Ext.",
@@ -191,6 +195,13 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Mail";
             // 
+            // Mail
+            // 
+            this.Mail.Location = new System.Drawing.Point(6, 19);
+            this.Mail.Name = "Mail";
+            this.Mail.Size = new System.Drawing.Size(146, 20);
+            this.Mail.TabIndex = 0;
+            // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.Nacionalidad);
@@ -200,6 +211,14 @@
             this.groupBox6.TabIndex = 11;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Nacionalidad (Libre)";
+            // 
+            // Nacionalidad
+            // 
+            this.Nacionalidad.Location = new System.Drawing.Point(6, 19);
+            this.Nacionalidad.Name = "Nacionalidad";
+            this.Nacionalidad.Size = new System.Drawing.Size(146, 20);
+            this.Nacionalidad.TabIndex = 0;
+            this.Nacionalidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nacionalidad_KeyPress);
             // 
             // groupBox7
             // 
@@ -211,6 +230,17 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "País";
             // 
+            // cbPaises
+            // 
+            this.cbPaises.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbPaises.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cbPaises.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPaises.FormattingEnabled = true;
+            this.cbPaises.Location = new System.Drawing.Point(6, 19);
+            this.cbPaises.Name = "cbPaises";
+            this.cbPaises.Size = new System.Drawing.Size(146, 21);
+            this.cbPaises.TabIndex = 0;
+            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.Localidad);
@@ -220,6 +250,13 @@
             this.groupBox8.TabIndex = 8;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Localidad";
+            // 
+            // Localidad
+            // 
+            this.Localidad.Location = new System.Drawing.Point(6, 19);
+            this.Localidad.Name = "Localidad";
+            this.Localidad.Size = new System.Drawing.Size(146, 20);
+            this.Localidad.TabIndex = 0;
             // 
             // groupBox9
             // 
@@ -231,12 +268,13 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Número de calle";
             // 
-            // Mail
+            // NroCalle
             // 
-            this.Mail.Location = new System.Drawing.Point(6, 19);
-            this.Mail.Name = "Mail";
-            this.Mail.Size = new System.Drawing.Size(146, 20);
-            this.Mail.TabIndex = 0;
+            this.NroCalle.Location = new System.Drawing.Point(6, 19);
+            this.NroCalle.Name = "NroCalle";
+            this.NroCalle.Size = new System.Drawing.Size(146, 20);
+            this.NroCalle.TabIndex = 0;
+            this.NroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NroCalle_KeyPress);
             // 
             // groupBox11
             // 
@@ -254,31 +292,7 @@
             this.Telefono.Name = "Telefono";
             this.Telefono.Size = new System.Drawing.Size(146, 20);
             this.Telefono.TabIndex = 0;
-            // 
-            // NroCalle
-            // 
-            this.NroCalle.Location = new System.Drawing.Point(6, 19);
-            this.NroCalle.Name = "NroCalle";
-            this.NroCalle.Size = new System.Drawing.Size(146, 20);
-            this.NroCalle.TabIndex = 0;
-            // 
-            // Localidad
-            // 
-            this.Localidad.Location = new System.Drawing.Point(6, 19);
-            this.Localidad.Name = "Localidad";
-            this.Localidad.Size = new System.Drawing.Size(146, 20);
-            this.Localidad.TabIndex = 0;
-            // 
-            // cbPaises
-            // 
-            this.cbPaises.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.cbPaises.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbPaises.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPaises.FormattingEnabled = true;
-            this.cbPaises.Location = new System.Drawing.Point(6, 19);
-            this.cbPaises.Name = "cbPaises";
-            this.cbPaises.Size = new System.Drawing.Size(146, 21);
-            this.cbPaises.TabIndex = 0;
+            this.Telefono.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Telefono_KeyPress);
             // 
             // Calle
             // 
@@ -296,13 +310,6 @@
             this.groupBox10.TabIndex = 9;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Calle";
-            // 
-            // Nacionalidad
-            // 
-            this.Nacionalidad.Location = new System.Drawing.Point(6, 19);
-            this.Nacionalidad.Name = "Nacionalidad";
-            this.Nacionalidad.Size = new System.Drawing.Size(146, 20);
-            this.Nacionalidad.TabIndex = 0;
             // 
             // groupBox12
             // 

@@ -56,7 +56,7 @@
             // 
             // btnLimpiarModif
             // 
-            this.btnLimpiarModif.Location = new System.Drawing.Point(632, 10);
+            this.btnLimpiarModif.Location = new System.Drawing.Point(716, 32);
             this.btnLimpiarModif.Name = "btnLimpiarModif";
             this.btnLimpiarModif.Size = new System.Drawing.Size(94, 33);
             this.btnLimpiarModif.TabIndex = 6;
@@ -66,7 +66,7 @@
             // 
             // BotonBaja
             // 
-            this.BotonBaja.Location = new System.Drawing.Point(650, 465);
+            this.BotonBaja.Location = new System.Drawing.Point(836, 461);
             this.BotonBaja.Name = "BotonBaja";
             this.BotonBaja.Size = new System.Drawing.Size(94, 33);
             this.BotonBaja.TabIndex = 2;
@@ -76,7 +76,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(632, 49);
+            this.button2.Location = new System.Drawing.Point(816, 32);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 33);
             this.button2.TabIndex = 5;
@@ -87,7 +87,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 9);
+            this.label1.Location = new System.Drawing.Point(15, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(214, 13);
             this.label1.TabIndex = 0;
@@ -95,7 +95,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(550, 465);
+            this.btnCancelar.Location = new System.Drawing.Point(736, 461);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(94, 33);
             this.btnCancelar.TabIndex = 3;
@@ -112,9 +112,9 @@
             this.groupBox1.Controls.Add(this.btnLimpiarModif);
             this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.groupBox6);
-            this.groupBox1.Location = new System.Drawing.Point(12, 25);
+            this.groupBox1.Location = new System.Drawing.Point(14, 21);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(732, 91);
+            this.groupBox1.Size = new System.Drawing.Size(916, 91);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filtros";
@@ -122,7 +122,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtMail);
-            this.groupBox2.Location = new System.Drawing.Point(259, 20);
+            this.groupBox2.Location = new System.Drawing.Point(277, 20);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(112, 54);
             this.groupBox2.TabIndex = 2;
@@ -139,7 +139,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.txtNroId);
-            this.groupBox3.Location = new System.Drawing.Point(495, 20);
+            this.groupBox3.Location = new System.Drawing.Point(531, 20);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(112, 54);
             this.groupBox3.TabIndex = 4;
@@ -156,7 +156,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.cmbTipoId);
-            this.groupBox4.Location = new System.Drawing.Point(377, 20);
+            this.groupBox4.Location = new System.Drawing.Point(404, 19);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(112, 54);
             this.groupBox4.TabIndex = 3;
@@ -181,7 +181,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.txtApellido);
-            this.groupBox5.Location = new System.Drawing.Point(141, 20);
+            this.groupBox5.Location = new System.Drawing.Point(150, 20);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(112, 54);
             this.groupBox5.TabIndex = 1;
@@ -214,21 +214,23 @@
             // 
             // dataGridViewClientes
             // 
+            this.dataGridViewClientes.AllowUserToAddRows = false;
+            this.dataGridViewClientes.AllowUserToDeleteRows = false;
             this.dataGridViewClientes.AllowUserToOrderColumns = true;
             this.dataGridViewClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewClientes.Location = new System.Drawing.Point(12, 122);
+            this.dataGridViewClientes.Location = new System.Drawing.Point(11, 118);
             this.dataGridViewClientes.Name = "dataGridViewClientes";
             this.dataGridViewClientes.ReadOnly = true;
             this.dataGridViewClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewClientes.Size = new System.Drawing.Size(732, 337);
+            this.dataGridViewClientes.Size = new System.Drawing.Size(919, 337);
             this.dataGridViewClientes.TabIndex = 4;
             // 
             // frmBaja
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 506);
+            this.ClientSize = new System.Drawing.Size(942, 508);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.groupBox1);
