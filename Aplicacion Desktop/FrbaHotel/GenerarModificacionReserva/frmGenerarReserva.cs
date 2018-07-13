@@ -117,7 +117,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
-            int idCliente = 0;
+            int idCliente = 96946;
             int codigoReservaNuevo = 0;
 
             //chequeos
@@ -147,14 +147,14 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             //ejecuto función para ver si cumple lo demandado
             SqlCommand cmdhotelCumple = new SqlCommand("SELECT [PISOS_PICADOS].hotelCumple (@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @idHotel, @fechaInicio, @fechaFin)", Globals.conexionGlobal);
-            cmdhotelCumple.Parameters.Add("@cantSimple", SqlDbType.VarChar);
-            cmdhotelCumple.Parameters.Add("@cantDoble", SqlDbType.VarChar);
-            cmdhotelCumple.Parameters.Add("@cantTriple", SqlDbType.VarChar);
-            cmdhotelCumple.Parameters.Add("@cantCuadru", SqlDbType.VarChar);
-            cmdhotelCumple.Parameters.Add("@cantKing", SqlDbType.VarChar);
-            cmdhotelCumple.Parameters.Add("@idHotel", SqlDbType.VarChar);
-            cmdhotelCumple.Parameters.Add("@fechaInicio", SqlDbType.VarChar);
-            cmdhotelCumple.Parameters.Add("@fechaFin", SqlDbType.VarChar);
+            cmdhotelCumple.Parameters.Add("@cantSimple", SqlDbType.Int);
+            cmdhotelCumple.Parameters.Add("@cantDoble", SqlDbType.Int);
+            cmdhotelCumple.Parameters.Add("@cantTriple", SqlDbType.Int);
+            cmdhotelCumple.Parameters.Add("@cantCuadru", SqlDbType.Int);
+            cmdhotelCumple.Parameters.Add("@cantKing", SqlDbType.Int);
+            cmdhotelCumple.Parameters.Add("@idHotel", SqlDbType.Int);
+            cmdhotelCumple.Parameters.Add("@fechaInicio", SqlDbType.Date);
+            cmdhotelCumple.Parameters.Add("@fechaFin", SqlDbType.Date);
 
             cmdhotelCumple.Parameters["@cantSimple"].Value = numSimple.Value;
             cmdhotelCumple.Parameters["@cantDoble"].Value = numDoble.Value;
@@ -185,7 +185,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                     registrarReserva.Parameters.Add("@fechaInicio", SqlDbType.Date);
                     registrarReserva.Parameters.Add("@fechaFin", SqlDbType.Date);
                     registrarReserva.Parameters.Add("@cantHuespedes", SqlDbType.Int);
-                    registrarReserva.Parameters.Add("@regimen", SqlDbType.VarChar);
+                    registrarReserva.Parameters.Add("@nombreRegimen", SqlDbType.VarChar);
                     registrarReserva.Parameters.Add("@idCliente", SqlDbType.Int);
                     registrarReserva.Parameters.Add("@idHotel", SqlDbType.Int);
                     registrarReserva.Parameters.Add("@cantSimple", SqlDbType.Int);
@@ -193,12 +193,14 @@ namespace FrbaHotel.GenerarModificacionReserva
                     registrarReserva.Parameters.Add("@cantTriple", SqlDbType.Int);
                     registrarReserva.Parameters.Add("@cantCuadru", SqlDbType.Int);
                     registrarReserva.Parameters.Add("@cantKing", SqlDbType.Int);
+                    var retorno = registrarReserva.Parameters.Add("@idReserva", SqlDbType.Int);
+                    retorno.Direction = ParameterDirection.ReturnValue;
 
                     registrarReserva.Parameters["@fechaReserva"].Value = Globals.FechaDelSistema;
                     registrarReserva.Parameters["@fechaInicio"].Value = dtpInicioReserva.Value.ToString("yyyy-MM-dd");
                     registrarReserva.Parameters["@fechaFin"].Value = dtpFinReserva.Value.ToString("yyyy-MM-dd");
                     registrarReserva.Parameters["@cantHuespedes"].Value = cantHuespedes;
-                    registrarReserva.Parameters["@regimen"].Value = comboBoxRegimen.Text;
+                    registrarReserva.Parameters["@nombreRegimen"].Value = comboBoxRegimen.Text;
                     registrarReserva.Parameters["@idCliente"].Value = idCliente;
                     registrarReserva.Parameters["@idHotel"].Value = idHotel;
                     registrarReserva.Parameters["@cantSimple"].Value = numSimple.Value;
@@ -206,11 +208,13 @@ namespace FrbaHotel.GenerarModificacionReserva
                     registrarReserva.Parameters["@cantTriple"].Value = numTriple.Value;
                     registrarReserva.Parameters["@cantCuadru"].Value = numCuadruple.Value;
                     registrarReserva.Parameters["@cantKing"].Value = numKing.Value;
+                    registrarReserva.Parameters["@idReserva"].Value = DBNull.Value;
 
                     try
                     {
                         registrarReserva.ExecuteNonQuery();
-                        MessageBox.Show("Reserva registrada correctamente. Su código de reserva es :" + codigoReservaNuevo + ". Le servirá para modificaciones y para hacer el ingreso en el hotel.", "Reserva", MessageBoxButtons.OK);
+                        codigoReservaNuevo = (int)retorno.Value;
+                        MessageBox.Show("Reserva registrada correctamente. Su código de reserva es: " + codigoReservaNuevo + ". Le servirá para modificaciones y para hacer el ingreso en el hotel.", "Reserva", MessageBoxButtons.OK);
                     }
                     catch
                     {
@@ -247,6 +251,16 @@ namespace FrbaHotel.GenerarModificacionReserva
                 MessageBox.Show("No hay disponibilidad de esa cantidad de habitaciones king.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void dtpInicioReserva_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtpFinReserva.Value < dtpInicioReserva.Value) dtpFinReserva.Value = dtpInicioReserva.Value;
+        }
+
+        private void dtpFinReserva_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtpInicioReserva.Value > dtpFinReserva.Value) dtpInicioReserva.Value = dtpFinReserva.Value;
         }
     }
 }
