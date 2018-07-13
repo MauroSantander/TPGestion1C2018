@@ -314,6 +314,7 @@
             // numDoc
             // 
             this.numDoc.Location = new System.Drawing.Point(287, 80);
+            this.numDoc.MaxLength = 9;
             this.numDoc.Name = "numDoc";
             this.numDoc.Size = new System.Drawing.Size(236, 20);
             this.numDoc.TabIndex = 14;

@@ -59,7 +59,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 1);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 15);
             this.label1.TabIndex = 0;
@@ -126,17 +126,17 @@
             // dataGridViewHoteles
             // 
             this.dataGridViewHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewHoteles.Location = new System.Drawing.Point(68, 203);
+            this.dataGridViewHoteles.Location = new System.Drawing.Point(15, 174);
             this.dataGridViewHoteles.Name = "dataGridViewHoteles";
             this.dataGridViewHoteles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewHoteles.Size = new System.Drawing.Size(739, 295);
+            this.dataGridViewHoteles.Size = new System.Drawing.Size(978, 307);
             this.dataGridViewHoteles.TabIndex = 82;
             // 
             // buttonNew
             // 
-            this.buttonNew.Location = new System.Drawing.Point(152, 507);
+            this.buttonNew.Location = new System.Drawing.Point(217, 497);
             this.buttonNew.Name = "buttonNew";
-            this.buttonNew.Size = new System.Drawing.Size(136, 38);
+            this.buttonNew.Size = new System.Drawing.Size(136, 49);
             this.buttonNew.TabIndex = 83;
             this.buttonNew.Text = "Nuevo Hotel";
             this.buttonNew.UseVisualStyleBackColor = true;
@@ -144,9 +144,9 @@
             // 
             // buttonUpd
             // 
-            this.buttonUpd.Location = new System.Drawing.Point(372, 507);
+            this.buttonUpd.Location = new System.Drawing.Point(437, 497);
             this.buttonUpd.Name = "buttonUpd";
-            this.buttonUpd.Size = new System.Drawing.Size(136, 38);
+            this.buttonUpd.Size = new System.Drawing.Size(136, 49);
             this.buttonUpd.TabIndex = 84;
             this.buttonUpd.Text = "Actualizar Hotel";
             this.buttonUpd.UseVisualStyleBackColor = true;
@@ -154,9 +154,9 @@
             // 
             // buttonEliminar
             // 
-            this.buttonEliminar.Location = new System.Drawing.Point(597, 507);
+            this.buttonEliminar.Location = new System.Drawing.Point(662, 497);
             this.buttonEliminar.Name = "buttonEliminar";
-            this.buttonEliminar.Size = new System.Drawing.Size(136, 38);
+            this.buttonEliminar.Size = new System.Drawing.Size(136, 49);
             this.buttonEliminar.TabIndex = 85;
             this.buttonEliminar.Text = "Baja de Hotel";
             this.buttonEliminar.UseVisualStyleBackColor = true;
@@ -164,9 +164,9 @@
             // 
             // buttonFiltrar
             // 
-            this.buttonFiltrar.Location = new System.Drawing.Point(639, 109);
+            this.buttonFiltrar.Location = new System.Drawing.Point(704, 102);
             this.buttonFiltrar.Name = "buttonFiltrar";
-            this.buttonFiltrar.Size = new System.Drawing.Size(209, 52);
+            this.buttonFiltrar.Size = new System.Drawing.Size(210, 42);
             this.buttonFiltrar.TabIndex = 86;
             this.buttonFiltrar.Text = "Filtrar";
             this.buttonFiltrar.UseVisualStyleBackColor = true;
@@ -175,7 +175,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(65, 187);
+            this.label4.Location = new System.Drawing.Point(12, 160);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(222, 13);
             this.label4.TabIndex = 87;
@@ -223,7 +223,7 @@
             this.groupBox1.Controls.Add(this.label24);
             this.groupBox1.Controls.Add(this.textBoxID);
             this.groupBox1.Controls.Add(this.textBoxNombre);
-            this.groupBox1.Location = new System.Drawing.Point(12, 23);
+            this.groupBox1.Location = new System.Drawing.Point(77, 9);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(291, 90);
             this.groupBox1.TabIndex = 97;
@@ -236,7 +236,7 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.comboBoxPais);
             this.groupBox2.Controls.Add(this.textBoxCiudad);
-            this.groupBox2.Location = new System.Drawing.Point(309, 23);
+            this.groupBox2.Location = new System.Drawing.Point(374, 9);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(294, 138);
             this.groupBox2.TabIndex = 96;
@@ -246,7 +246,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.estrellas);
-            this.groupBox4.Location = new System.Drawing.Point(12, 119);
+            this.groupBox4.Location = new System.Drawing.Point(77, 105);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(291, 42);
             this.groupBox4.TabIndex = 98;
@@ -255,7 +255,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(639, 25);
+            this.button1.Location = new System.Drawing.Point(704, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(210, 37);
             this.button1.TabIndex = 99;
@@ -267,7 +267,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(874, 557);
+            this.ClientSize = new System.Drawing.Size(1019, 557);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);

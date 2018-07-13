@@ -16,6 +16,10 @@ namespace FrbaHotel.AbmUsuario
     {
         private Admin pantallaUsuario;
         private int idUsuario;
+        private String usernameAnterior;
+        private String mailAnterior;
+        private String tipoIdentificacionAnterior;
+        private String nroIdentificacionAnterior;
         public frmModificarUsuario()
         {
             InitializeComponent();
@@ -37,11 +41,17 @@ namespace FrbaHotel.AbmUsuario
             usernameUPD.Text = usuario;
             nombreUPD.Text = nombre;
             apellidoUPD.Text = apell;
+            comboBoxTipoUPD.Text=tipoId;
+            numIdUPD.Text=nroident;
             mailUPD.Text = mail;
             telUPD.Text = tel;
             calleUPD.Text = calle;
             nroUPD.Text = nroCalle;
             localidadUPD.Text = localidad;
+            usernameAnterior=usuario;
+            mailAnterior=mail;
+            tipoIdentificacionAnterior=tipoId;
+            nroIdentificacionAnterior=nroident;
 
             SqlCommand cmd = new SqlCommand("select nombrePais from [PISOS_PICADOS].Pais", Globals.conexionGlobal);
       
@@ -73,10 +83,50 @@ namespace FrbaHotel.AbmUsuario
 
            private void buttonActualizar_Click(object sender, EventArgs e)
         {
+
+            //Chequeos------------------------------------------------------------------------------------------------
+
             chequearSiHayCamposIncompletosUPD();
             if (!validarEmail(mailUPD.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if(checkedListBoxHotelesUPD.CheckedItems.Count == checkedListBoxHotelesUPD.Items.Count && checkedListBoxHotelesUPDNo.CheckedItems.Count==0){MessageBox.Show("Tiene que dejarle al Usuario al menos un Hotel", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (checkedListBoxRolesUPD.CheckedItems.Count == checkedListBoxRolesUPD.Items.Count && checkedListBoxRolesUPDNo.CheckedItems.Count == 0) { MessageBox.Show("Tiene que dejarle al Usuario al menos un Rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (usernameAnterior != usernameUPD.Text)
+            {
+                String user = usernameUPD.Text;
+
+                string query = "Select COUNT(*) from [PISOS_PICADOS].Empleado where  usuario= @user";
+
+                SqlCommand cmd = new SqlCommand(query, Globals.conexionGlobal);
+
+                cmd.Parameters.AddWithValue("@user", user);
+                int countNombreUsr = Convert.ToInt32(cmd.ExecuteScalar());
+                if (countNombreUsr > 0) { MessageBox.Show("Escribió un Nombre de Usuario ya existente, no se puede modificar por ese valor, escriba otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            }
+
+               if(mailAnterior != mailUPD.Text)
+               
+               {
+
+                string queryMail = "Select COUNT(*) from [PISOS_PICADOS].Usuario where  mail= @mail";
+                SqlCommand cmdMail = new SqlCommand(queryMail, Globals.conexionGlobal);
+
+                cmdMail.Parameters.AddWithValue("@mail", mailUPD.Text);
+                int countMail = Convert.ToInt32(cmdMail.ExecuteScalar());
 
 
+                if (countMail > 0) { MessageBox.Show("Escribió un Mail ya existente, no se puede modificar por ese valor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+               
+               }
+
+               if (tipoIdentificacionAnterior != comboBoxTipoUPD.Text && nroIdentificacionAnterior != numIdUPD.Text )
+               {
+               SqlCommand verificarId = new SqlCommand("SELECT [PISOS_PICADOS].estaRepetido(@tipo,@numero)", Globals.conexionGlobal);
+                verificarId.Parameters.AddWithValue("@tipo", comboBoxTipoUPD.Text);
+                verificarId.Parameters.AddWithValue("@numero", numIdUPD.Text);
+                if (((int)verificarId.ExecuteScalar()) > 0) { MessageBox.Show("Escribió un nuevo Tipo y Nro de Identificación ya existentes, no se pueden modificar por ese valor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                
+
+            }
             String cadenaModificacionUsuario = "PISOS_PICADOS.modificarEmpleado";
 
             SqlCommand comandoUpdUsuario = new SqlCommand(cadenaModificacionUsuario, Globals.conexionGlobal);
@@ -153,6 +203,7 @@ namespace FrbaHotel.AbmUsuario
 
                 /// SACAR  ROLES Y HOTELES QUE EL USUARIO TIENE
                 /// 
+
 
                 for (int i = 0; i <= checkedListBoxRolesUPD.CheckedItems.Count - 1; i++)
                 {
@@ -238,6 +289,10 @@ namespace FrbaHotel.AbmUsuario
             }
         }
 
+      
+
+        //Carga..............................................................................
+
 
         private void cargarCheckedListBoxHoteles(int idUsrModificar)
         {
@@ -298,6 +353,7 @@ namespace FrbaHotel.AbmUsuario
             return;
         }
 
+        //Keypress----------------------------------------------------------------------------------------
         
 
         private void numeros_KeyPress(object sender, KeyPressEventArgs e)

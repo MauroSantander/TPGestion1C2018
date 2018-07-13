@@ -26,6 +26,33 @@ namespace FrbaHotel.AbmHotel
             this.ShowDialog();
         }
 
+        private void NuevoHotel_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
+            SqlCommand cmdBuscarRegimenes = new SqlCommand("select descripcion from [PISOS_PICADOS].Regimen", Globals.conexionGlobal);
+            SqlDataReader reader2 = cmdBuscarRegimenes.ExecuteReader();
+
+            while (reader2.Read())
+            {
+                checkedListRegimenes.Items.Add((reader2["descripcion"]).ToString());
+            }
+
+            reader2.Close();
+
+            //inicializo combobox de paises
+            SqlCommand cmd = new SqlCommand("select nombrePais from [PISOS_PICADOS].Pais", Globals.conexionGlobal);
+
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                comboBoxPais.Items.Add((reader["nombrePais"]).ToString());
+            }
+
+            reader.Close();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
                 chequearSiHayCamposIncompletos();
@@ -100,7 +127,7 @@ namespace FrbaHotel.AbmHotel
                 }
                     pantallaHoteles.actualizarDataGrid();
                 MessageBox.Show("Creación correcta");
-
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -178,32 +205,7 @@ namespace FrbaHotel.AbmHotel
             }
         }
 
-        private void NuevoHotel_Load(object sender, EventArgs e)
-        {
-            this.CenterToScreen();
-            SqlCommand cmdBuscarRegimenes = new SqlCommand("select descripcion from [PISOS_PICADOS].Regimen", Globals.conexionGlobal);
-            SqlDataReader reader2 = cmdBuscarRegimenes.ExecuteReader();
-
-            while (reader2.Read())
-            {
-                checkedListRegimenes.Items.Add((reader2["descripcion"]).ToString());
-            }
-
-            reader2.Close();
-
-            //inicializo combobox de paises
-            SqlCommand cmd = new SqlCommand("select nombrePais from [PISOS_PICADOS].Pais", Globals.conexionGlobal);
-
-
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                comboBoxPais.Items.Add((reader["nombrePais"]).ToString());
-            }
-
-            reader.Close();
-        }
+        
 
        
 

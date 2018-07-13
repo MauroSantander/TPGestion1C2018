@@ -139,6 +139,7 @@ namespace FrbaHotel.AbmHotel
                 }
                 pantallaHoteles.actualizarDataGrid();
                 MessageBox.Show("Modificación correcta"+regimenesSinModificar);
+                this.Close();
               
 
             }

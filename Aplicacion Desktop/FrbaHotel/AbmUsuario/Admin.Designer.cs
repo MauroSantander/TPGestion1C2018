@@ -101,7 +101,7 @@
             // 
             this.buttonLimpiar.Location = new System.Drawing.Point(999, 144);
             this.buttonLimpiar.Name = "buttonLimpiar";
-            this.buttonLimpiar.Size = new System.Drawing.Size(165, 47);
+            this.buttonLimpiar.Size = new System.Drawing.Size(165, 40);
             this.buttonLimpiar.TabIndex = 71;
             this.buttonLimpiar.Text = "Limpiar y recargar";
             this.buttonLimpiar.UseVisualStyleBackColor = true;

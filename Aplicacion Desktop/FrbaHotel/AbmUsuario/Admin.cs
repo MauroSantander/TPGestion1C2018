@@ -92,8 +92,8 @@ namespace FrbaHotel.AbmUsuario
             String nroCalle = dataGridViewUsuarios.CurrentRow.Cells["NroCalle"].Value.ToString();
             String localidad = dataGridViewUsuarios.CurrentRow.Cells["Localidad"].Value.ToString();
             String pais = dataGridViewUsuarios.CurrentRow.Cells["Pais"].Value.ToString();
-            String tipoId = dataGridViewUsuarios.CurrentRow.Cells["TipoId"].Value.ToString();
-            String nroident =dataGridViewUsuarios.CurrentRow.Cells["NroIdentificación"].Value.ToString();
+            String tipoId = dataGridViewUsuarios.CurrentRow.Cells["TipoIdentificacion"].Value.ToString();
+            String nroident =dataGridViewUsuarios.CurrentRow.Cells["NroIdentificacion"].Value.ToString();
             String fechaNacimiento = dataGridViewUsuarios.CurrentRow.Cells["Fecha Nacimiento"].Value.ToString();
 
             int idPais = int.Parse(pais);
@@ -176,7 +176,7 @@ namespace FrbaHotel.AbmUsuario
             try
             {
 
-                SqlDataAdapter adapter = new SqlDataAdapter("select e.idUsuario 'Id',e.usuario 'Usuario', e.contrasena 'Contraseña', u.nombre 'Nombre', u.apellido 'Apellido',u.mail 'Mail',u.telefono 'Teléfono',u.calle 'Calle',u.nroCalle 'NroCalle',u.localidad 'Localidad',u.pais 'Pais',u.tipoIdentificacion 'TipoId',u.numeroIdentificacion 'NroIdentificación',u.fechaNacimiento 'Fecha Nacimiento' from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1"+agregar, Globals.conexionGlobal);
+                SqlDataAdapter adapter = new SqlDataAdapter("select e.idUsuario 'Id',e.usuario 'Usuario', u.nombre 'Nombre', u.apellido 'Apellido',u.mail 'Mail',u.telefono 'Teléfono',u.calle 'Calle',u.nroCalle 'NroCalle',u.localidad 'Localidad',u.pais 'Pais',u.tipoIdentificacion 'TipoIdentificacion',u.numeroIdentificacion 'NroIdentificacion',u.fechaNacimiento 'Fecha Nacimiento' from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1" + agregar, Globals.conexionGlobal);
                 dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 dataGridViewUsuarios.DataSource = dataTable;
@@ -213,15 +213,16 @@ namespace FrbaHotel.AbmUsuario
             if (textBoxApellido.Text != "") { cadenaFiltro = cadenaFiltro + " and Apellido = '" + textBoxApellido.Text + "'"; }
             if (textBoxUsuario.Text != "") { cadenaFiltro = cadenaFiltro + " and Usuario = '" + textBoxUsuario.Text + "'"; }
             if (textBoxNroCalle.Text != "") { cadenaFiltro = cadenaFiltro + " and NroCalle = " + textBoxNroCalle.Text; }
-            if (comboBoxTipoId.Text != "" && comboBoxTipoId.Text != "Seleccionar") { cadenaFiltro = cadenaFiltro + " and TipoId = " + comboBoxTipoId.Text; }
-            if (textBoxNroId.Text != "") { cadenaFiltro = cadenaFiltro + " and NroIdentificación = " + textBoxNroCalle.Text; }
+            if (comboBoxTipoId.Text != "" && comboBoxTipoId.Text != "Seleccionar") { cadenaFiltro = cadenaFiltro + " and TipoIdentificacion = '" + comboBoxTipoId.Text+"'"; }
+
+            if (textBoxNroId.Text != "") { cadenaFiltro = cadenaFiltro + " and u.numeroIdentificacion = " + textBoxNroId.Text ; }
             if (comboBoxPais.Text != "" && comboBoxPais.Text != "Seleccionar")
             {
                 SqlCommand cmdBuscaridPais = new SqlCommand("Select idPais from [PISOS_PICADOS].Pais where nombrePais = @nombrePais", Globals.conexionGlobal);
                 cmdBuscaridPais.Parameters.AddWithValue("@nombrePais", comboBoxPais.Text);
                 int idpais = (int)cmdBuscaridPais.ExecuteScalar();
 
-                cadenaFiltro = cadenaFiltro + " and pais = " + idpais.ToString();
+                cadenaFiltro = cadenaFiltro + " and Pais = " + idpais.ToString();
 
             }
 
@@ -231,7 +232,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void cargarAutocomplete(String columna,String nombre, TextBox textbox, AutoCompleteStringCollection coleccion)
         {
-            string query = "Select " + columna +" '"+nombre+"'  from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1";
+            string query = "Select "+ columna +" '"+nombre+"'  from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1";
             SqlCommand llenarColeccion = new SqlCommand(query, Globals.conexionGlobal);
             SqlDataReader dr = llenarColeccion.ExecuteReader();
             if (dr.HasRows == true)

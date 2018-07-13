@@ -94,7 +94,7 @@
             this.groupBox3.Controls.Add(this.groupBox5);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1185, 373);
+            this.groupBox3.Size = new System.Drawing.Size(1199, 373);
             this.groupBox3.TabIndex = 42;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edite los datos que quiera actualizar";
@@ -219,7 +219,7 @@
             this.groupBox6.Controls.Add(this.usernameUPD);
             this.groupBox6.Location = new System.Drawing.Point(14, 21);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(819, 53);
+            this.groupBox6.Size = new System.Drawing.Size(1165, 53);
             this.groupBox6.TabIndex = 37;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Inicio de Sesión";
@@ -330,9 +330,12 @@
             // dateTimePickerUPD
             // 
             this.dateTimePickerUPD.Location = new System.Drawing.Point(118, 239);
+            this.dateTimePickerUPD.MaxDate = new System.DateTime(2018, 7, 13, 0, 0, 0, 0);
+            this.dateTimePickerUPD.MinDate = new System.DateTime(1889, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerUPD.Name = "dateTimePickerUPD";
             this.dateTimePickerUPD.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerUPD.TabIndex = 18;
+            this.dateTimePickerUPD.Value = new System.DateTime(2018, 7, 13, 0, 0, 0, 0);
             // 
             // calleUPD
             // 
