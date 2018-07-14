@@ -2568,7 +2568,7 @@ AS
 BEGIN
 	DECLARE @resultado INT
 
-	SET @resultado = (@cantSimple * [PISOS_PICADOS].precioHabitacion(1, @codRegimen, @idHotel) + @cantDoble * [PISOS_PICADOS].precioHabitacion(2, @codRegimen, @idHotel) + @cantTriple * [PISOS_PICADOS].precioHabitacion(3, @codRegimen, @idHotel) + @cantCuadru * [PISOS_PICADOS].precioHabitacion(4, @codRegimen, @idHotel) + @cantKing * [PISOS_PICADOS].precioHabitacion(5, @codRegimen, @idHotel))
+	SET @resultado = isnull((@cantSimple * [PISOS_PICADOS].precioHabitacion(1, @codRegimen, @idHotel) + @cantDoble * [PISOS_PICADOS].precioHabitacion(2, @codRegimen, @idHotel) + @cantTriple * [PISOS_PICADOS].precioHabitacion(3, @codRegimen, @idHotel) + @cantCuadru * [PISOS_PICADOS].precioHabitacion(4, @codRegimen, @idHotel) + @cantKing * [PISOS_PICADOS].precioHabitacion(5, @codRegimen, @idHotel)),0)
 
 	RETURN @resultado
 END
@@ -2905,51 +2905,6 @@ RETURN (
 		GROUP BY ha.idHotel
 			,ha.idHabitacion
 		ORDER BY [Dias Ocupados] DESC
-		)
-GO
-/*Funcion que devuelve la infromacion de las habitaciones mas veces ocupadas en un determinado trimestre 
-de un determinado año*/
-CREATE FUNCTION [PISOS_PICADOS].topClientesPorPuntos (
-	@anio INT
-	,@trimestre INT
-	,@fechaActual DATE
-	)
-RETURNS TABLE
-AS
-RETURN (
-		SELECT TOP 5 u.idUsuario AS idCliente
-			,CAST((
-					SUM(reng.total) / 10 + SUM(CASE 
-							WHEN DATEPART(QUARTER, fechaCheckIn) = DATEPART(QUARTER, fechaCheckOut)
-								THEN (DATEDIFF(DAY, es.fechaCheckIn, es.fechaCheckOut)) * [PISOS_PICADOS].precioRegimen(re.codigoRegimen) / 20
-							WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
-								/*ACAAAAA*/
-								AND DATEPART(QUARTER, fechaCheckOut) < @trimestre
-								THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaCheckOut)
-							WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
-								AND DATEPART(QUARTER, fechaCheckOut) > @trimestre
-								THEN DATEDIFF(DAY, fechaCheckIn, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0)))
-							END)
-					) AS BIGINT) AS [Puntos del Cliente]
-			,u.nombre AS Nombre
-			,u.apellido AS Apellido
-			,u.tipoIdentificacion AS [Tipo de Identificacion]
-			,u.numeroIdentificacion AS [Numero de Identificacion]
-		FROM [PISOS_PICADOS].Factura AS fact
-		INNER JOIN [PISOS_PICADOS].RenglonFactura AS reng ON fact.numeroFactura = reng.numeroFactura
-		INNER JOIN [PISOS_PICADOS].Reserva AS re ON re.idCliente = fact.cliente
-		INNER JOIN [PISOS_PICADOS].Estadia AS es ON re.codigoReserva = es.codigoReserva
-		INNER JOIN [PISOS_PICADOS].Usuario AS u ON u.idUsuario = fact.cliente
-		WHERE (
-				DATEPART(YEAR, fact.fecha) = @anio
-				AND DATEPART(QUARTER, fact.fecha) = @trimestre
-				)
-		GROUP BY u.idUsuario
-			,u.nombre
-			,u.apellido
-			,u.tipoIdentificacion
-			,u.numeroIdentificacion
-		ORDER BY [Puntos del Cliente] DESC
 		)
 GO
 
@@ -3326,6 +3281,50 @@ END
 GO
 
 
+/*Funcion que devuelve la infromacion de las habitaciones mas veces ocupadas en un determinado trimestre 
+de un determinado año*/
+CREATE FUNCTION [PISOS_PICADOS].topClientesPorPuntos (
+	@anio INT
+	,@trimestre INT
+	,@fechaActual DATE
+	)
+RETURNS TABLE
+AS
+RETURN (
+		SELECT TOP 100 u.idUsuario AS idCliente
+			,CAST((
+					SUM(reng.total) / 10 + SUM(CASE 
+							WHEN DATEPART(QUARTER, fechaCheckIn) = DATEPART(QUARTER, fechaCheckOut)
+								THEN (DATEDIFF(DAY, es.fechaCheckIn, es.fechaCheckOut)) * ISNULL((re.precioTotal/ (DATEDIFF(DAY,re.fechaInicio,re.fechaFin))),0) / 20
+							WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
+								AND DATEPART(QUARTER, fechaCheckOut) < @trimestre
+								THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaCheckOut) * ISNULL((re.precioTotal/ (DATEDIFF(DAY,re.fechaInicio,re.fechaFin))),0)  / 20
+							WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
+								AND DATEPART(QUARTER, fechaCheckOut) > @trimestre
+								THEN DATEDIFF(DAY, fechaCheckIn, DATEADD(dd, - 1, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual) + 1, 0))) * ISNULL((re.precioTotal/ (DATEDIFF(DAY,re.fechaInicio,re.fechaFin))),0)  / 20
+							END)
+					) AS BIGINT) AS [Puntos del Cliente]
+			,u.nombre AS Nombre
+			,u.apellido AS Apellido
+			,u.tipoIdentificacion AS [Tipo de Identificacion]
+			,u.numeroIdentificacion AS [Numero de Identificacion]
+		FROM [PISOS_PICADOS].Factura AS fact
+		INNER JOIN [PISOS_PICADOS].RenglonFactura AS reng ON fact.numeroFactura = reng.numeroFactura
+		INNER JOIN [PISOS_PICADOS].Estadia AS es ON fact.idEstadia = es.idEstadia
+		INNER JOIN [PISOS_PICADOS].Reserva AS re ON es.codigoReserva = re.codigoReserva
+		INNER JOIN [PISOS_PICADOS].Usuario AS u ON u.idUsuario = fact.cliente
+		WHERE (
+				DATEPART(YEAR, fact.fecha) = @anio
+				AND DATEPART(QUARTER, fact.fecha) = @trimestre
+				)
+		GROUP BY u.idUsuario
+			,u.nombre
+			,u.apellido
+			,u.tipoIdentificacion
+			,u.numeroIdentificacion
+		ORDER BY [Puntos del Cliente] DESC
+		)
+GO
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
