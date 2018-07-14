@@ -233,11 +233,6 @@ namespace FrbaHotel.RegistrarEstadia
             //ejecuto y recibo estado de la reserva
             int estadoReserva = (int)cmdEstadoReserva.ExecuteScalar();
 
-            if (estadoReserva == 3)
-            {
-                MessageBox.Show("La reserva ya fue efectivizada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                verificacion = 0;
-            }
             //reservas canceladas
             if (estadoReserva == 2 || estadoReserva == 4)
             {

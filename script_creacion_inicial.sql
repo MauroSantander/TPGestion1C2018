@@ -2975,7 +2975,7 @@ BEGIN
 						FROM [PISOS_PICADOS].Reserva AS r
 						WHERE r.codigoReserva = @codReserva
 						), @fechaActual)
-				) >= 0
+				) > 0
 			)
 		RETURN 4
 
