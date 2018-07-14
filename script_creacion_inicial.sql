@@ -3182,7 +3182,7 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].Habitacion AS h ON hxr.idHabitacion = h.idHabitacion
 		INNER JOIN [PISOS_PICADOS].Tipo AS t ON h.tipo = t.idTipo
 		INNER JOIN [PISOS_PICADOS].Hotel AS hote ON h.idHotel = hote.idHotel
-		WHERE r.codigoRegimen = @codigoReserva
+		WHERE r.codigoReserva = @codigoReserva
 		)
 GO
 /*Verifica que no exista ninguna reserva posterior a la fecha que incluya el regimen que se desea borra,
