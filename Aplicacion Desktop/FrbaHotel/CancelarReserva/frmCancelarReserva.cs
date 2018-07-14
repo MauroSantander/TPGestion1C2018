@@ -64,6 +64,7 @@ namespace FrbaHotel.CancelarReserva
                 cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
                 cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(txtCodigo.Text);
                 int hotelDeLaEstadia;
+
                 try
                 {
                     hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
@@ -77,7 +78,11 @@ namespace FrbaHotel.CancelarReserva
 
                 if (hotelDeLaEstadia != Globals.idHotelUsuario)
                 {
-                    MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SqlCommand cmdBuscarNombreHotel = new SqlCommand("SELECT nombre FROM [PISOS_PICADOS].Hotel WHERE idHotel = @id", Globals.conexionGlobal);
+                    cmdBuscarNombreHotel.Parameters.Add("@id", SqlDbType.Int);
+                    cmdBuscarNombreHotel.Parameters["@id"].Value = hotelDeLaEstadia;
+                    string nombreHotel = cmdBuscarNombreHotel.ExecuteScalar().ToString();
+                    MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión, mas precisamente al hotel " + nombreHotel + ". Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }

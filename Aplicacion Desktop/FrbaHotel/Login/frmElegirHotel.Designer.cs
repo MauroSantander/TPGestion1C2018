@@ -37,14 +37,14 @@
             // 
             this.comboBoxHotel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxHotel.FormattingEnabled = true;
-            this.comboBoxHotel.Location = new System.Drawing.Point(9, 25);
+            this.comboBoxHotel.Location = new System.Drawing.Point(12, 25);
             this.comboBoxHotel.Name = "comboBoxHotel";
-            this.comboBoxHotel.Size = new System.Drawing.Size(152, 21);
+            this.comboBoxHotel.Size = new System.Drawing.Size(251, 21);
             this.comboBoxHotel.TabIndex = 3;
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(42, 52);
+            this.btnAceptar.Location = new System.Drawing.Point(93, 52);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(86, 23);
             this.btnAceptar.TabIndex = 4;
@@ -55,7 +55,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 9);
+            this.label1.Location = new System.Drawing.Point(88, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 13);
             this.label1.TabIndex = 5;
@@ -65,7 +65,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(173, 87);
+            this.ClientSize = new System.Drawing.Size(275, 87);
             this.Controls.Add(this.comboBoxHotel);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.label1);

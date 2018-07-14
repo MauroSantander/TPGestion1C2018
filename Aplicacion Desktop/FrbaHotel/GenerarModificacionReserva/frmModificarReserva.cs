@@ -254,7 +254,11 @@ namespace FrbaHotel.GenerarModificacionReserva
 
                     if (hotelDeLaReserva != Globals.idHotelUsuario)
                     {
-                        MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        SqlCommand cmdBuscarNombreHotel = new SqlCommand("SELECT nombre FROM [PISOS_PICADOS].Hotel WHERE idHotel = @id", Globals.conexionGlobal);
+                        cmdBuscarNombreHotel.Parameters.Add("@id", SqlDbType.Int);
+                        cmdBuscarNombreHotel.Parameters["@id"].Value = hotelDeLaReserva;
+                        string nombreHotel = cmdBuscarNombreHotel.ExecuteScalar().ToString();
+                        MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión, mas precisamente al hotel " + nombreHotel + ". Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
