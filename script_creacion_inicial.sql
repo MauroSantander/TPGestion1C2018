@@ -3291,7 +3291,7 @@ CREATE FUNCTION [PISOS_PICADOS].topClientesPorPuntos (
 RETURNS TABLE
 AS
 RETURN (
-		SELECT TOP 100 u.idUsuario AS idCliente
+		SELECT TOP 5 u.idUsuario AS idCliente
 			,CAST((
 					SUM(reng.total) / 10 + SUM(CASE 
 							WHEN DATEPART(QUARTER, fechaCheckIn) = DATEPART(QUARTER, fechaCheckOut)
