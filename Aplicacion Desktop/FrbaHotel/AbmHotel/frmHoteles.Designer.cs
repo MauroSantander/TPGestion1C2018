@@ -42,10 +42,10 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.textBoxCiudad = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.estrellas = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.buttonFiltrar = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.estrellas = new System.Windows.Forms.ComboBox();
             this.btnSalir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHoteles)).BeginInit();
             this.groupBox5.SuspendLayout();
@@ -197,6 +197,26 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filtros";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(736, 27);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(95, 40);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Limpiar y recargar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonFiltrar
+            // 
+            this.buttonFiltrar.Location = new System.Drawing.Point(837, 27);
+            this.buttonFiltrar.Name = "buttonFiltrar";
+            this.buttonFiltrar.Size = new System.Drawing.Size(95, 40);
+            this.buttonFiltrar.TabIndex = 6;
+            this.buttonFiltrar.Text = "Filtrar";
+            this.buttonFiltrar.UseVisualStyleBackColor = true;
+            this.buttonFiltrar.Click += new System.EventHandler(this.buttonFiltrar_Click);
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.estrellas);
@@ -228,24 +248,6 @@
             this.estrellas.Name = "estrellas";
             this.estrellas.Size = new System.Drawing.Size(127, 21);
             this.estrellas.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(736, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 40);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Limpiar y recargar";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // buttonFiltrar
-            // 
-            this.buttonFiltrar.Location = new System.Drawing.Point(837, 27);
-            this.buttonFiltrar.Name = "buttonFiltrar";
-            this.buttonFiltrar.Size = new System.Drawing.Size(95, 40);
-            this.buttonFiltrar.TabIndex = 6;
-            this.buttonFiltrar.Text = "Filtrar";
-            this.buttonFiltrar.UseVisualStyleBackColor = true;
             // 
             // btnSalir
             // 
