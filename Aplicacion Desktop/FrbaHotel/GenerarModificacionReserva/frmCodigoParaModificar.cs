@@ -67,5 +67,10 @@ namespace FrbaHotel.GenerarModificacionReserva
             (new FrbaHotel.GenerarModificacionReserva.frmModificarReserva(txtCodigoReserva.Text)).ShowDialog();
             this.Close();
         }
+
+        private void frmCodigoParaModificar_Load(object sender, EventArgs e)
+        {
+            this.CenterToScreen();
+        }
     }
 }

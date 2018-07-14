@@ -15,6 +15,13 @@ namespace FrbaHotel.GenerarModificacionReserva
     {
         frmGenerarReserva generarReservaInstancia;
         frmModificarReserva modificarReservaInstancia;
+        CancelarReserva.frmCancelarReserva cancelarReservaInstancia;
+
+        public frmSeleccionarCliente(CancelarReserva.frmCancelarReserva instanciaPadre)
+        {
+            InitializeComponent();
+            cancelarReservaInstancia = instanciaPadre;
+        }
 
         public frmSeleccionarCliente(frmGenerarReserva instanciaPadre)
         {
@@ -104,6 +111,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             int idCliente = (int)dataGridViewModificarCliente.CurrentRow.Cells["idUsuario"].Value;
+
             if (modificarReservaInstancia != null)
             {
                 modificarReservaInstancia.setCliente(idCliente);
@@ -113,6 +121,12 @@ namespace FrbaHotel.GenerarModificacionReserva
             {
                 generarReservaInstancia.setCliente(idCliente);
                 generarReservaInstancia.volver(this);
+            }
+
+            if (cancelarReservaInstancia != null)
+            {
+                cancelarReservaInstancia.setCliente(idCliente);
+                cancelarReservaInstancia.volver(this);                
             }
         }
     }

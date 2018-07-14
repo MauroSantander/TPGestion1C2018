@@ -33,6 +33,10 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void frmModificarReserva_Load(object sender, EventArgs e)
         {
+
+            dtpFinReserva.Value = Globals.FechaDelSistema;
+            dtpInicioReserva.Value = Globals.FechaDelSistema;
+
             idCliente = Globals.idUsuarioSesion;
             labelCodigoReserva.Text = codigoReserva;
             this.CenterToScreen();
@@ -167,28 +171,39 @@ namespace FrbaHotel.GenerarModificacionReserva
             cargarPrecios();
         }
 
-        public void volver(AbmCliente.frmAlta instanciaAlta)
-        {
-            instanciaAlta.Close();
-            MessageBox.Show("Gracias por identificarse. Ya puede realizar la reserva.", "Reserva", MessageBoxButtons.OK);
-            this.Show();
-        }
-
         public void volver(frmSeleccionarCliente instanciaSeleccionarCliente)
         {
+
+            //solo puede cancelar el usuario que la hizo, admins o recepcionistas
+
+            if (Globals.rolUsuario == "Guest")
+            {
+                SqlCommand buscarClienteReserva = new SqlCommand("SELECT idCliente FROM [PISOS_PICADOS].Reserva WHERE codigoReserva = @codigo", Globals.conexionGlobal);
+                buscarClienteReserva.Parameters.Add("@codigo", SqlDbType.Int);
+                buscarClienteReserva.Parameters["@codigo"].Value = codigoReserva;
+                int clienteDeReserva = (int)buscarClienteReserva.ExecuteScalar();
+                if (idCliente != clienteDeReserva)
+                {
+                    MessageBox.Show("Solo administradores y recepcionistas logueados o el cliente que generó la reserva pueden cancelarla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
             instanciaSeleccionarCliente.Close();
-            MessageBox.Show("Gracias por identificarse. Ya puede realizar la reserva.", "Reserva", MessageBoxButtons.OK);
+            MessageBox.Show("Gracias por identificarse. Ya puede modificar la reserva.", "Reserva", MessageBoxButtons.OK);
             this.Show();
         }
 
         private void dtpInicioReserva_ValueChanged(object sender, EventArgs e)
         {
             if (dtpFinReserva.Value < dtpInicioReserva.Value) dtpFinReserva.Value = dtpInicioReserva.Value;
+            if (dtpInicioReserva.Value < Globals.FechaDelSistema) dtpInicioReserva.Value = Globals.FechaDelSistema;
         }
 
         private void dtpFinReserva_ValueChanged(object sender, EventArgs e)
         {
             if (dtpInicioReserva.Value > dtpFinReserva.Value) dtpInicioReserva.Value = dtpFinReserva.Value;
+            if (dtpFinReserva.Value < Globals.FechaDelSistema) dtpFinReserva.Value = Globals.FechaDelSistema;
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -223,7 +238,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
                 if (idCliente == -1)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Debe identificarse o registrarse en el sistema para poder modificar una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
+                    DialogResult dialogResult = MessageBox.Show("Debe identificarse en el sistema para poder modificar una reserva. ¿Desea hacerlo?", "Estimado cliente", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
                         procesoInicioSesion();
@@ -261,8 +276,6 @@ namespace FrbaHotel.GenerarModificacionReserva
                 //ejecuto y recibo resultado
                 cmdPuedeModificarReserva.ExecuteNonQuery();
                 int resultadoBusqueda = (int)retorno.Value;
-
-                MessageBox.Show(resultadoBusqueda.ToString());
 
                 //según resultado aviso al usuario
                 if (resultadoBusqueda == 0)
@@ -350,19 +363,8 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void procesoInicioSesion()
         {
-            DialogResult dialogResult = MessageBox.Show("¿Ya se registró previamente en el sistema?", "Identificación", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                frmSeleccionarCliente seleccionarCliente = new frmSeleccionarCliente(this);
-                seleccionarCliente.Show();
-            }
-            else if (dialogResult == DialogResult.No)
-            {
-                AbmCliente.frmAlta instanciafrmCliente = new AbmCliente.frmAlta(this);
-                instanciafrmCliente.Show();
-                this.Hide();
-                Globals.frmMenuInstance.Hide();
-            }
+            frmSeleccionarCliente seleccionarCliente = new frmSeleccionarCliente(this);
+            seleccionarCliente.Show();
         }
     }
 }

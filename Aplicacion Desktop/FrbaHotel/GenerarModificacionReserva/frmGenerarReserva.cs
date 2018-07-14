@@ -28,6 +28,9 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             idCliente = Globals.idUsuarioSesion;
 
+            dtpFinReserva.Value = Globals.FechaDelSistema;
+            dtpInicioReserva.Value = Globals.FechaDelSistema;
+
             this.CenterToScreen();
 
             //cargo hoteles
@@ -276,11 +279,13 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void dtpInicioReserva_ValueChanged(object sender, EventArgs e)
         {
             if (dtpFinReserva.Value < dtpInicioReserva.Value) dtpFinReserva.Value = dtpInicioReserva.Value;
+            if (dtpInicioReserva.Value < Globals.FechaDelSistema) dtpInicioReserva.Value = Globals.FechaDelSistema;
         }
 
         private void dtpFinReserva_ValueChanged(object sender, EventArgs e)
         {
             if (dtpInicioReserva.Value > dtpFinReserva.Value) dtpInicioReserva.Value = dtpFinReserva.Value;
+            if (dtpFinReserva.Value < Globals.FechaDelSistema) dtpFinReserva.Value = Globals.FechaDelSistema;
         }
 
         private void procesoInicioSesion()

@@ -86,6 +86,7 @@
             this.Name = "frmCodigoParaModificar";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar reserva";
+            this.Load += new System.EventHandler(this.frmCodigoParaModificar_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
