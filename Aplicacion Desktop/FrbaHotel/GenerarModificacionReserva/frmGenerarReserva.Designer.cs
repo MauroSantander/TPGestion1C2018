@@ -346,6 +346,7 @@
             this.dgvPrecios.Location = new System.Drawing.Point(6, 15);
             this.dgvPrecios.MultiSelect = false;
             this.dgvPrecios.Name = "dgvPrecios";
+            this.dgvPrecios.RowHeadersVisible = false;
             this.dgvPrecios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPrecios.Size = new System.Drawing.Size(313, 240);
             this.dgvPrecios.TabIndex = 0;

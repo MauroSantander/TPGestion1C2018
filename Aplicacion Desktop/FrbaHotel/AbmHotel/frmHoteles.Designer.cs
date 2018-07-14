@@ -61,9 +61,11 @@
             this.dataGridViewHoteles.AllowUserToAddRows = false;
             this.dataGridViewHoteles.AllowUserToDeleteRows = false;
             this.dataGridViewHoteles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewHoteles.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridViewHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewHoteles.Location = new System.Drawing.Point(12, 119);
             this.dataGridViewHoteles.Name = "dataGridViewHoteles";
+            this.dataGridViewHoteles.RowHeadersVisible = false;
             this.dataGridViewHoteles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewHoteles.Size = new System.Drawing.Size(941, 307);
             this.dataGridViewHoteles.TabIndex = 5;

@@ -240,10 +240,12 @@
             this.dataGridViewHabitaciones.AllowUserToDeleteRows = false;
             this.dataGridViewHabitaciones.AllowUserToOrderColumns = true;
             this.dataGridViewHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewHabitaciones.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridViewHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewHabitaciones.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewHabitaciones.MultiSelect = false;
             this.dataGridViewHabitaciones.Name = "dataGridViewHabitaciones";
+            this.dataGridViewHabitaciones.RowHeadersVisible = false;
             this.dataGridViewHabitaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewHabitaciones.Size = new System.Drawing.Size(828, 239);
             this.dataGridViewHabitaciones.TabIndex = 0;

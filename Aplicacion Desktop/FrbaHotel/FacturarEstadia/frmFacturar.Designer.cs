@@ -168,6 +168,7 @@
             this.dgvHabitaciones.Location = new System.Drawing.Point(13, 72);
             this.dgvHabitaciones.MultiSelect = false;
             this.dgvHabitaciones.Name = "dgvHabitaciones";
+            this.dgvHabitaciones.RowHeadersVisible = false;
             this.dgvHabitaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvHabitaciones.Size = new System.Drawing.Size(361, 79);
             this.dgvHabitaciones.TabIndex = 4;
@@ -183,6 +184,7 @@
             this.dgvConsumibles.Location = new System.Drawing.Point(12, 208);
             this.dgvConsumibles.MultiSelect = false;
             this.dgvConsumibles.Name = "dgvConsumibles";
+            this.dgvConsumibles.RowHeadersVisible = false;
             this.dgvConsumibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvConsumibles.Size = new System.Drawing.Size(362, 79);
             this.dgvConsumibles.TabIndex = 5;

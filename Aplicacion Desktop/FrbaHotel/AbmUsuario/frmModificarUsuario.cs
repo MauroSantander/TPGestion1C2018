@@ -84,10 +84,13 @@ namespace FrbaHotel.AbmUsuario
 
             //Chequeos------------------------------------------------------------------------------------------------
 
-            chequearSiHayCamposIncompletosUPD();
+            int incompleto = chequearSiHayCamposIncompletosUPD();
+
+            if (incompleto == 1) return;
+
             if (!validarEmail(mailUPD.Text)) { MessageBox.Show("Escriba un formato de mail correcto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if(checkedListBoxHotelesUPD.CheckedItems.Count == checkedListBoxHotelesUPD.Items.Count && checkedListBoxHotelesUPDNo.CheckedItems.Count==0){MessageBox.Show("Tiene que dejarle al Usuario al menos un Hotel", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (checkedListBoxRolesUPD.CheckedItems.Count == checkedListBoxRolesUPD.Items.Count && checkedListBoxRolesUPDNo.CheckedItems.Count == 0) { MessageBox.Show("Tiene que dejarle al Usuario al menos un Rol", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if(checkedListBoxHotelesUPD.CheckedItems.Count == checkedListBoxHotelesUPD.Items.Count && checkedListBoxHotelesUPDNo.CheckedItems.Count==0){MessageBox.Show("Tiene que dejarle al Usuario al menos un hotel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            if (checkedListBoxRolesUPD.CheckedItems.Count == checkedListBoxRolesUPD.Items.Count && checkedListBoxRolesUPDNo.CheckedItems.Count == 0) { MessageBox.Show("Tiene que dejarle al Usuario al menos un rol.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (usernameAnterior != usernameUPD.Text)
             {
                 String user = usernameUPD.Text;
@@ -98,7 +101,7 @@ namespace FrbaHotel.AbmUsuario
 
                 cmd.Parameters.AddWithValue("@user", user);
                 int countNombreUsr = Convert.ToInt32(cmd.ExecuteScalar());
-                if (countNombreUsr > 0) { MessageBox.Show("Escribió un Nombre de Usuario ya existente, no se puede modificar por ese valor, escriba otro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (countNombreUsr > 0) { MessageBox.Show("Escribió un nombre de usuario ya existente, no se puede modificar por ese valor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             }
 
                if(mailAnterior != mailUPD.Text)
@@ -112,7 +115,7 @@ namespace FrbaHotel.AbmUsuario
                 int countMail = Convert.ToInt32(cmdMail.ExecuteScalar());
 
 
-                if (countMail > 0) { MessageBox.Show("Escribió un Mail ya existente, no se puede modificar por ese valor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (countMail > 0) { MessageBox.Show("Escribió un mail ya existente, no se puede modificar por ese valor.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                
                }
 
@@ -180,8 +183,6 @@ namespace FrbaHotel.AbmUsuario
                     agregarRol.Parameters.Add("@nombreRol", SqlDbType.VarChar);
                     agregarRol.Parameters["@nombreRol"].Value = nombreRol;
                     agregarRol.ExecuteNonQuery();
-
-
                 }
 
                 for (int i = 0; i <= checkedListBoxHotelesUPDNo.CheckedItems.Count - 1; i++)
@@ -231,16 +232,15 @@ namespace FrbaHotel.AbmUsuario
                     eliminarHotel.ExecuteNonQuery();
 
                 }
-                MessageBox.Show("Usuario Modificado correctamente");
+                MessageBox.Show("Usuario modificado correctamente.");
                 pantallaUsuario.llenarDataGridView("");
                 this.Close();
 
             }
-            catch (Exception exc)
+            catch
             {
-                MessageBox.Show("No se pudo modificar");
+                MessageBox.Show("No se pudo modificar.");
             }
-
          
         }
 
@@ -266,7 +266,7 @@ namespace FrbaHotel.AbmUsuario
             }
         }
 
-        private void chequearSiHayCamposIncompletosUPD()
+        private int chequearSiHayCamposIncompletosUPD()
         {
             if (String.IsNullOrEmpty(telUPD.Text)
                || String.IsNullOrEmpty(numIdUPD.Text)
@@ -282,9 +282,10 @@ namespace FrbaHotel.AbmUsuario
                || String.IsNullOrEmpty(comboBoxPaisUPD.Text)
                 )
             {
-                MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                MessageBox.Show("Faltan completar campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 1;
             }
+            return 0;
         }
 
       
@@ -357,7 +358,7 @@ namespace FrbaHotel.AbmUsuario
         private void numeros_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-            else { e.Handled = true; }
+            else { e.Handled = true; MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
 
@@ -365,7 +366,7 @@ namespace FrbaHotel.AbmUsuario
         {
             {
                 if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
+                else { e.Handled = true; MessageBox.Show("Este campo solo acepta letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
         }
 
@@ -381,7 +382,7 @@ namespace FrbaHotel.AbmUsuario
         {
             {
                 if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
+                else { e.Handled = true; MessageBox.Show("Este campo solo acepta letras y espacios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
         }
 

@@ -254,7 +254,7 @@ namespace FrbaHotel.AbmUsuario
         private void numeros_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-            else { e.Handled = true; }
+            else { e.Handled = true; MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
 
@@ -262,7 +262,7 @@ namespace FrbaHotel.AbmUsuario
         {
             {
                 if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
+                else { e.Handled = true; MessageBox.Show("Este campo solo acepta letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
         }
 
@@ -278,7 +278,7 @@ namespace FrbaHotel.AbmUsuario
         {
             {
                 if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
+                else { e.Handled = true; MessageBox.Show("Este campo solo acepta letras y espacios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
         }
 

@@ -13,7 +13,9 @@ namespace FrbaHotel.AbmHotel
 {
     public partial class frmHoteles : Form
     {
-
+        AutoCompleteStringCollection nombreColeccion = new AutoCompleteStringCollection();
+        AutoCompleteStringCollection idColeccion = new AutoCompleteStringCollection();
+        AutoCompleteStringCollection ciudadColeccion = new AutoCompleteStringCollection();
 
         int filaSeleccionada;
         Utils utils = new Utils();
@@ -43,18 +45,10 @@ namespace FrbaHotel.AbmHotel
             reader.Close();
 
             //Autocompletes
-            
-            AutoCompleteStringCollection nombreColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("nombre", textBoxNombre, nombreColeccion);
-
-            AutoCompleteStringCollection idColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("idHotel", textBoxID, idColeccion);
 
-            
-
             //Autocomplete Ciudad
-
-            AutoCompleteStringCollection ciudadColeccion = new AutoCompleteStringCollection();
             string query = "select LTRIM(RTRIM(ciudad)) 'ciudad' from [PISOS_PICADOS].Hotel ";
             SqlCommand llenarColeccion = new SqlCommand(query, Globals.conexionGlobal);
             SqlDataReader dr2 = llenarColeccion.ExecuteReader();
@@ -62,7 +56,6 @@ namespace FrbaHotel.AbmHotel
             {
                 while (dr2.Read())
                     ciudadColeccion.Add(dr2["ciudad"].ToString());
-
             }
 
             dr2.Close();
@@ -71,10 +64,21 @@ namespace FrbaHotel.AbmHotel
             textBoxCiudad.AutoCompleteCustomSource = ciudadColeccion;
         }
 
-        
-
         public void actualizarDataGrid() {
             utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
+            //Autocompletes
+            this.cargarAutocomplete("nombre", textBoxNombre, nombreColeccion);
+            this.cargarAutocomplete("idHotel", textBoxID, idColeccion);
+
+            //Autocomplete Ciudad
+            string query = "select LTRIM(RTRIM(ciudad)) 'ciudad' from [PISOS_PICADOS].Hotel ";
+            SqlCommand llenarColeccion = new SqlCommand(query, Globals.conexionGlobal);
+            SqlDataReader dr2 = llenarColeccion.ExecuteReader();
+            if (dr2.HasRows == true)
+            {
+                while (dr2.Read())
+                    ciudadColeccion.Add(dr2["ciudad"].ToString());
+            }
         }
 
         public void eliminarRowHotel()
@@ -125,18 +129,10 @@ namespace FrbaHotel.AbmHotel
 
         }
 
-
-
-
-       
-
         private void buttonNew_Click(object sender, EventArgs e)
         {
             (new FrbaHotel.AbmHotel.frmNuevoHotel()).abrirPantalla(this);
         }
-
-
-      
 
         //-------------------------------------------------------------------------------------------------------
         //KEYPRESS-------------------------------------------------------------------------------------------------

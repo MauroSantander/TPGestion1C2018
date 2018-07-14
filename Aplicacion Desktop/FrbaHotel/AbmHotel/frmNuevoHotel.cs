@@ -101,8 +101,6 @@ namespace FrbaHotel.AbmHotel
             comandoMod.Parameters["@fechaCreacion"].Value = dateTimePickerCreacion.Value.ToString("yyyy-MM-dd") ;
             comandoMod.Parameters["@autorId"].Value = Globals.idUsuarioSesion;
 
-            
-
             try
             {
                 comandoMod.ExecuteReader();
@@ -125,7 +123,7 @@ namespace FrbaHotel.AbmHotel
                     agregarRegimen.Parameters["@idRegimen"].Value = idRegimen;
                     agregarRegimen.ExecuteNonQuery();
                 }
-                    pantallaHoteles.actualizarDataGrid();
+                pantallaHoteles.actualizarDataGrid();
                 MessageBox.Show("Creación correcta");
                 this.Close();
             }
@@ -201,7 +199,6 @@ namespace FrbaHotel.AbmHotel
                 )
             {
                 MessageBox.Show("Faltan completar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             }
         }
 
@@ -210,5 +207,5 @@ namespace FrbaHotel.AbmHotel
             this.Close();
         }
 
-        }
     }
+}
