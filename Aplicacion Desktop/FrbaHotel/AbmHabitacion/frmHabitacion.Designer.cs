@@ -155,7 +155,7 @@
             // textBoxNumero
             // 
             this.textBoxNumero.Location = new System.Drawing.Point(477, 22);
-            this.textBoxNumero.MaxLength = 5;
+            this.textBoxNumero.MaxLength = 9;
             this.textBoxNumero.Name = "textBoxNumero";
             this.textBoxNumero.Size = new System.Drawing.Size(58, 20);
             this.textBoxNumero.TabIndex = 7;
@@ -173,7 +173,7 @@
             // textBoxPiso
             // 
             this.textBoxPiso.Location = new System.Drawing.Point(366, 22);
-            this.textBoxPiso.MaxLength = 5;
+            this.textBoxPiso.MaxLength = 9;
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(55, 20);
             this.textBoxPiso.TabIndex = 5;

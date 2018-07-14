@@ -145,7 +145,7 @@
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(6, 19);
-            this.txtNumero.MaxLength = 5;
+            this.txtNumero.MaxLength = 9;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(188, 20);
             this.txtNumero.TabIndex = 0;
@@ -183,7 +183,7 @@
             // txtPiso
             // 
             this.txtPiso.Location = new System.Drawing.Point(6, 19);
-            this.txtPiso.MaxLength = 5;
+            this.txtPiso.MaxLength = 9;
             this.txtPiso.Name = "txtPiso";
             this.txtPiso.Size = new System.Drawing.Size(188, 20);
             this.txtPiso.TabIndex = 0;

@@ -68,6 +68,7 @@
             // textBoxNumeroTarjeta
             // 
             this.textBoxNumeroTarjeta.Location = new System.Drawing.Point(134, 19);
+            this.textBoxNumeroTarjeta.MaxLength = 19;
             this.textBoxNumeroTarjeta.Name = "textBoxNumeroTarjeta";
             this.textBoxNumeroTarjeta.Size = new System.Drawing.Size(120, 20);
             this.textBoxNumeroTarjeta.TabIndex = 1;
@@ -147,7 +148,7 @@
             // textBoxCodigoReserva
             // 
             this.textBoxCodigoReserva.Location = new System.Drawing.Point(6, 19);
-            this.textBoxCodigoReserva.MaxLength = 8;
+            this.textBoxCodigoReserva.MaxLength = 9;
             this.textBoxCodigoReserva.Name = "textBoxCodigoReserva";
             this.textBoxCodigoReserva.Size = new System.Drawing.Size(100, 20);
             this.textBoxCodigoReserva.TabIndex = 0;

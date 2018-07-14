@@ -121,7 +121,7 @@
             // txtCodigoReserva
             // 
             this.txtCodigoReserva.Location = new System.Drawing.Point(6, 19);
-            this.txtCodigoReserva.MaxLength = 8;
+            this.txtCodigoReserva.MaxLength = 9;
             this.txtCodigoReserva.Name = "txtCodigoReserva";
             this.txtCodigoReserva.Size = new System.Drawing.Size(129, 20);
             this.txtCodigoReserva.TabIndex = 0;

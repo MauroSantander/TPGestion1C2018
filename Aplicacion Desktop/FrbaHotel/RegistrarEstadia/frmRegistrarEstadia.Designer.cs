@@ -49,7 +49,7 @@
             // textBoxCodigoReserva
             // 
             this.textBoxCodigoReserva.Location = new System.Drawing.Point(6, 19);
-            this.textBoxCodigoReserva.MaxLength = 8;
+            this.textBoxCodigoReserva.MaxLength = 9;
             this.textBoxCodigoReserva.Name = "textBoxCodigoReserva";
             this.textBoxCodigoReserva.Size = new System.Drawing.Size(107, 20);
             this.textBoxCodigoReserva.TabIndex = 0;
