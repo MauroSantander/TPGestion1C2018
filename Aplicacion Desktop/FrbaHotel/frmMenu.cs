@@ -165,6 +165,11 @@ namespace FrbaHotel
         private void frmMenu_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+
+            if (Globals.rolUsuario == "Guest")
+            {
+                btnCambiarContraseña.Enabled = false;
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
