@@ -285,10 +285,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void textoNrosYespacios_KeyPress(object sender, KeyPressEventArgs e)
         {
-            {
-                if (Char.IsLetterOrDigit(e.KeyChar) || Char.IsSeparator(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
-            }
+
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)

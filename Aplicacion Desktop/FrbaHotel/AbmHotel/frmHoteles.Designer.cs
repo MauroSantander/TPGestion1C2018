@@ -75,7 +75,7 @@
             this.buttonNew.Name = "buttonNew";
             this.buttonNew.Size = new System.Drawing.Size(85, 40);
             this.buttonNew.TabIndex = 3;
-            this.buttonNew.Text = "Nuevo Hotel";
+            this.buttonNew.Text = "Nuevo hotel";
             this.buttonNew.UseVisualStyleBackColor = true;
             this.buttonNew.Click += new System.EventHandler(this.buttonNew_Click);
             // 
@@ -85,7 +85,7 @@
             this.buttonUpd.Name = "buttonUpd";
             this.buttonUpd.Size = new System.Drawing.Size(85, 40);
             this.buttonUpd.TabIndex = 2;
-            this.buttonUpd.Text = "Actualizar Hotel";
+            this.buttonUpd.Text = "Modificar hotel";
             this.buttonUpd.UseVisualStyleBackColor = true;
             this.buttonUpd.Click += new System.EventHandler(this.buttonUpd_Click);
             // 
@@ -95,7 +95,7 @@
             this.buttonEliminar.Name = "buttonEliminar";
             this.buttonEliminar.Size = new System.Drawing.Size(85, 40);
             this.buttonEliminar.TabIndex = 1;
-            this.buttonEliminar.Text = "Baja de Hotel";
+            this.buttonEliminar.Text = "Baja de hotel";
             this.buttonEliminar.UseVisualStyleBackColor = true;
             this.buttonEliminar.Click += new System.EventHandler(this.buttonEliminar_Click);
             // 
@@ -125,6 +125,7 @@
             this.textBoxID.Name = "textBoxID";
             this.textBoxID.Size = new System.Drawing.Size(127, 20);
             this.textBoxID.TabIndex = 0;
+            this.textBoxID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // groupBox6
             // 

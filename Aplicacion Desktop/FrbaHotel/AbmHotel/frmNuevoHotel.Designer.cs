@@ -49,6 +49,7 @@
             this.textBoxMail = new System.Windows.Forms.TextBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.cBestrellas = new System.Windows.Forms.ComboBox();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -141,6 +142,7 @@
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(139, 20);
             this.textBoxNroCalle.TabIndex = 0;
+            this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // groupBox5
             // 
@@ -392,6 +394,7 @@
             this.textBoxTE.Name = "textBoxTE";
             this.textBoxTE.Size = new System.Drawing.Size(139, 20);
             this.textBoxTE.TabIndex = 0;
+            this.textBoxTE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // Nombre
             // 
@@ -454,11 +457,22 @@
             this.cBestrellas.Size = new System.Drawing.Size(141, 21);
             this.cBestrellas.TabIndex = 0;
             // 
+            // btnSalir
+            // 
+            this.btnSalir.Location = new System.Drawing.Point(118, 433);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(100, 29);
+            this.btnSalir.TabIndex = 11;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            // 
             // frmNuevoHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 472);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox10);
             this.Controls.Add(this.groupBox4);
@@ -517,6 +531,7 @@
         private System.Windows.Forms.ComboBox comboBoxPais;
         private System.Windows.Forms.TextBox textBoxCalle;
         private System.Windows.Forms.TextBox textBoxTE;
+        private System.Windows.Forms.Button btnSalir;
 
     }
 }

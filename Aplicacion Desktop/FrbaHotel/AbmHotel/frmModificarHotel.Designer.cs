@@ -39,19 +39,19 @@
             this.checkedListBoxRegimenesAgregar = new System.Windows.Forms.CheckedListBox();
             this.buttonCerrar = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.textBoxCIU = new System.Windows.Forms.TextBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.textBoxMail = new System.Windows.Forms.TextBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.textBoxName = new System.Windows.Forms.TextBox();
-            this.textBoxMail = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.textBoxNroCalle = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.textBoxCalle = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.comboBoxPais = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.textBoxTE = new System.Windows.Forms.TextBox();
-            this.comboBoxPais = new System.Windows.Forms.ComboBox();
-            this.textBoxCalle = new System.Windows.Forms.TextBox();
-            this.textBoxNroCalle = new System.Windows.Forms.TextBox();
-            this.textBoxCIU = new System.Windows.Forms.TextBox();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.dateTimePickerCreacion = new System.Windows.Forms.DateTimePicker();
             this.groupBox2.SuspendLayout();
@@ -186,6 +186,14 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Ciudad";
             // 
+            // textBoxCIU
+            // 
+            this.textBoxCIU.Location = new System.Drawing.Point(6, 19);
+            this.textBoxCIU.MaxLength = 255;
+            this.textBoxCIU.Name = "textBoxCIU";
+            this.textBoxCIU.Size = new System.Drawing.Size(167, 20);
+            this.textBoxCIU.TabIndex = 0;
+            // 
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.textBoxMail);
@@ -195,6 +203,14 @@
             this.groupBox9.TabIndex = 3;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Mail";
+            // 
+            // textBoxMail
+            // 
+            this.textBoxMail.Location = new System.Drawing.Point(6, 19);
+            this.textBoxMail.MaxLength = 255;
+            this.textBoxMail.Name = "textBoxMail";
+            this.textBoxMail.Size = new System.Drawing.Size(167, 20);
+            this.textBoxMail.TabIndex = 0;
             // 
             // groupBox10
             // 
@@ -213,14 +229,7 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(167, 20);
             this.textBoxName.TabIndex = 0;
-            // 
-            // textBoxMail
-            // 
-            this.textBoxMail.Location = new System.Drawing.Point(6, 19);
-            this.textBoxMail.MaxLength = 255;
-            this.textBoxMail.Name = "textBoxMail";
-            this.textBoxMail.Size = new System.Drawing.Size(167, 20);
-            this.textBoxMail.TabIndex = 0;
+            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // groupBox4
             // 
@@ -232,6 +241,15 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Número de calle";
             // 
+            // textBoxNroCalle
+            // 
+            this.textBoxNroCalle.Location = new System.Drawing.Point(6, 16);
+            this.textBoxNroCalle.MaxLength = 9;
+            this.textBoxNroCalle.Name = "textBoxNroCalle";
+            this.textBoxNroCalle.Size = new System.Drawing.Size(167, 20);
+            this.textBoxNroCalle.TabIndex = 0;
+            this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.textBoxCalle);
@@ -242,6 +260,14 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Calle";
             // 
+            // textBoxCalle
+            // 
+            this.textBoxCalle.Location = new System.Drawing.Point(6, 19);
+            this.textBoxCalle.MaxLength = 255;
+            this.textBoxCalle.Name = "textBoxCalle";
+            this.textBoxCalle.Size = new System.Drawing.Size(164, 20);
+            this.textBoxCalle.TabIndex = 0;
+            // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.comboBoxPais);
@@ -251,24 +277,6 @@
             this.groupBox6.TabIndex = 4;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "País";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.textBoxTE);
-            this.groupBox7.Location = new System.Drawing.Point(21, 68);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(179, 50);
-            this.groupBox7.TabIndex = 2;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Teléfono";
-            // 
-            // textBoxTE
-            // 
-            this.textBoxTE.Location = new System.Drawing.Point(6, 19);
-            this.textBoxTE.MaxLength = 255;
-            this.textBoxTE.Name = "textBoxTE";
-            this.textBoxTE.Size = new System.Drawing.Size(167, 20);
-            this.textBoxTE.TabIndex = 0;
             // 
             // comboBoxPais
             // 
@@ -475,29 +483,24 @@
             this.comboBoxPais.Size = new System.Drawing.Size(164, 21);
             this.comboBoxPais.TabIndex = 0;
             // 
-            // textBoxCalle
+            // groupBox7
             // 
-            this.textBoxCalle.Location = new System.Drawing.Point(6, 19);
-            this.textBoxCalle.MaxLength = 255;
-            this.textBoxCalle.Name = "textBoxCalle";
-            this.textBoxCalle.Size = new System.Drawing.Size(164, 20);
-            this.textBoxCalle.TabIndex = 0;
+            this.groupBox7.Controls.Add(this.textBoxTE);
+            this.groupBox7.Location = new System.Drawing.Point(21, 68);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(179, 50);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Teléfono";
             // 
-            // textBoxNroCalle
+            // textBoxTE
             // 
-            this.textBoxNroCalle.Location = new System.Drawing.Point(6, 16);
-            this.textBoxNroCalle.MaxLength = 9;
-            this.textBoxNroCalle.Name = "textBoxNroCalle";
-            this.textBoxNroCalle.Size = new System.Drawing.Size(167, 20);
-            this.textBoxNroCalle.TabIndex = 0;
-            // 
-            // textBoxCIU
-            // 
-            this.textBoxCIU.Location = new System.Drawing.Point(6, 19);
-            this.textBoxCIU.MaxLength = 255;
-            this.textBoxCIU.Name = "textBoxCIU";
-            this.textBoxCIU.Size = new System.Drawing.Size(167, 20);
-            this.textBoxCIU.TabIndex = 0;
+            this.textBoxTE.Location = new System.Drawing.Point(6, 19);
+            this.textBoxTE.MaxLength = 255;
+            this.textBoxTE.Name = "textBoxTE";
+            this.textBoxTE.Size = new System.Drawing.Size(167, 20);
+            this.textBoxTE.TabIndex = 0;
+            this.textBoxTE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
             // 
             // groupBox11
             // 

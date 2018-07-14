@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonActualizar = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.checkedListBoxHotelesUPD = new System.Windows.Forms.CheckedListBox();
             this.label48 = new System.Windows.Forms.Label();
             this.label47 = new System.Windows.Forms.Label();
+            this.buttonVolver = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.checkedListBoxHotelesUPDNo = new System.Windows.Forms.CheckedListBox();
             this.label45 = new System.Windows.Forms.Label();
@@ -72,8 +74,6 @@
             this.label42 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
             this.checkedListBoxRolesUPD = new System.Windows.Forms.CheckedListBox();
-            this.buttonActualizar = new System.Windows.Forms.Button();
-            this.buttonVolver = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -100,6 +100,17 @@
             this.groupBox3.TabIndex = 42;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edite los datos que quiera actualizar";
+            // 
+            // buttonActualizar
+            // 
+            this.buttonActualizar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonActualizar.Location = new System.Drawing.Point(965, 352);
+            this.buttonActualizar.Name = "buttonActualizar";
+            this.buttonActualizar.Size = new System.Drawing.Size(90, 40);
+            this.buttonActualizar.TabIndex = 46;
+            this.buttonActualizar.Text = "Actualizar Usuario";
+            this.buttonActualizar.UseVisualStyleBackColor = true;
+            this.buttonActualizar.Click += new System.EventHandler(this.buttonActualizar_Click);
             // 
             // groupBox8
             // 
@@ -138,6 +149,16 @@
             this.label47.Size = new System.Drawing.Size(89, 13);
             this.label47.TabIndex = 34;
             this.label47.Text = "que quiera quitar:";
+            // 
+            // buttonVolver
+            // 
+            this.buttonVolver.Location = new System.Drawing.Point(869, 352);
+            this.buttonVolver.Name = "buttonVolver";
+            this.buttonVolver.Size = new System.Drawing.Size(90, 40);
+            this.buttonVolver.TabIndex = 47;
+            this.buttonVolver.Text = "Volver";
+            this.buttonVolver.UseVisualStyleBackColor = true;
+            this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
             // 
             // groupBox9
             // 
@@ -530,27 +551,6 @@
             this.checkedListBoxRolesUPD.Name = "checkedListBoxRolesUPD";
             this.checkedListBoxRolesUPD.Size = new System.Drawing.Size(215, 79);
             this.checkedListBoxRolesUPD.TabIndex = 27;
-            // 
-            // buttonActualizar
-            // 
-            this.buttonActualizar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonActualizar.Location = new System.Drawing.Point(965, 352);
-            this.buttonActualizar.Name = "buttonActualizar";
-            this.buttonActualizar.Size = new System.Drawing.Size(90, 40);
-            this.buttonActualizar.TabIndex = 46;
-            this.buttonActualizar.Text = "Actualizar Usuario";
-            this.buttonActualizar.UseVisualStyleBackColor = true;
-            this.buttonActualizar.Click += new System.EventHandler(this.buttonActualizar_Click);
-            // 
-            // buttonVolver
-            // 
-            this.buttonVolver.Location = new System.Drawing.Point(869, 352);
-            this.buttonVolver.Name = "buttonVolver";
-            this.buttonVolver.Size = new System.Drawing.Size(90, 40);
-            this.buttonVolver.TabIndex = 47;
-            this.buttonVolver.Text = "Volver";
-            this.buttonVolver.UseVisualStyleBackColor = true;
-            this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
             // 
             // frmModificarUsuario
             // 

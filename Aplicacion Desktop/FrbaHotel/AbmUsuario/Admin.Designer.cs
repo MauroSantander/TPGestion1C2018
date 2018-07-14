@@ -227,6 +227,7 @@
             this.textBoxNroId.Name = "textBoxNroId";
             this.textBoxNroId.Size = new System.Drawing.Size(123, 20);
             this.textBoxNroId.TabIndex = 0;
+            this.textBoxNroId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // groupBox10
             // 
@@ -278,6 +279,7 @@
             this.textBoxApellido.Name = "textBoxApellido";
             this.textBoxApellido.Size = new System.Drawing.Size(123, 20);
             this.textBoxApellido.TabIndex = 0;
+            this.textBoxApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textos_KeyPress);
             // 
             // groupBox8
             // 
@@ -296,6 +298,7 @@
             this.textBoxNombre.Name = "textBoxNombre";
             this.textBoxNombre.Size = new System.Drawing.Size(123, 20);
             this.textBoxNombre.TabIndex = 0;
+            this.textBoxNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textos_KeyPress);
             // 
             // groupBox3
             // 
@@ -314,6 +317,7 @@
             this.textBoxNroCalle.Name = "textBoxNroCalle";
             this.textBoxNroCalle.Size = new System.Drawing.Size(123, 20);
             this.textBoxNroCalle.TabIndex = 0;
+            this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // groupBox2
             // 
@@ -332,6 +336,7 @@
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(123, 20);
             this.textBoxUsuario.TabIndex = 0;
+            this.textBoxUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoYNros_KeyPress);
             // 
             // label1
             // 
