@@ -224,6 +224,7 @@ namespace FrbaHotel.AbmHotel
             utils.llenarDataGridView(dataGridViewHoteles, "Hotel" + cadenaFiltro);
 
         }
+
         private void cargarAutocomplete(String columna, TextBox textbox, AutoCompleteStringCollection coleccion)
         {
             string query = "Select " + columna + " from [PISOS_PICADOS].Hotel";
@@ -267,6 +268,8 @@ namespace FrbaHotel.AbmHotel
         {
             this.Close();
         }
+
+       
         
 
     }
