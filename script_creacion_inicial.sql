@@ -3352,6 +3352,8 @@ RETURN (
 GO
 
 /* STORED PROCEDURES ------------------------------------------------------*/
+/* Se crea un nuevo rol asignadole el nombre y el estado que dado por parametro. Si el nombre del rol 
+ya existia se lo habilitara*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
 	,@estado BIT
 AS
@@ -3374,7 +3376,7 @@ BEGIN
 		WHERE nombreRol = @nombre
 END;
 GO
-
+/*Se agrega una funcionalidad al nombre del rol asignado*/
 CREATE PROCEDURE [PISOS_PICADOS].agregarFuncionalidad @nombre VARCHAR(255)
 	,@funcionalidad VARCHAR(255)
 AS
@@ -3388,7 +3390,7 @@ BEGIN
 		AND descripcion = @funcionalidad
 END
 GO
-
+/*Establece el esta en 0(baja) para el nombre de rol dado*/
 CREATE PROCEDURE [PISOS_PICADOS].bajaRol @nombreRol VARCHAR(255)
 AS
 BEGIN
@@ -3401,7 +3403,7 @@ BEGIN
 			)
 END;
 GO
-
+/*Asigna un nuevo nombre y estado al rolqqviejo pasado por parametro*/
 CREATE PROCEDURE [PISOS_PICADOS].modificarRol @nombreRolViejo VARCHAR(255)
 	,@nombreRol VARCHAR(255)
 	,@estado BIT
@@ -3418,7 +3420,7 @@ BEGIN
 		WHERE nombreRol = @nombreRol
 END;
 GO
-
+/*Le quita todas las funcionalidades al nombre de rol que se le pasa por parametro*/
 CREATE PROCEDURE [PISOS_PICADOS].quitarFuncionalidad @nombreRol VARCHAR(255)
 AS
 BEGIN
@@ -3431,7 +3433,7 @@ BEGIN
 			)
 END;
 GO
-
+/*Se ingresa un nuevo empleado en la tabla usuario y se lo establce como empleado ingresandolo en la tabla empleado*/
 CREATE PROCEDURE [PISOS_PICADOS].altaEmpleado @username VARCHAR(255)
 	,@password VARCHAR(255)
 	,@nombre VARCHAR(255)
@@ -3480,7 +3482,7 @@ BEGIN
 		);
 END;
 GO
-
+/*Modifica los daso para un empleado dado*/
 CREATE PROCEDURE [PISOS_PICADOS].modificarEmpleado @idAutor INT
 	,@idUsuario INT
 	,@username VARCHAR(255)
@@ -3563,6 +3565,7 @@ BEGIN
 END;
 GO
 
+/*Actualiza la contraseña apra un idUsuario*/
 CREATE PROCEDURE [PISOS_PICADOS].actualizarContrasena @idUsuario INT
 	,@contrasena VARCHAR(255)
 AS
@@ -3573,6 +3576,7 @@ BEGIN
 END
 GO
 
+/*Quita un el rol que recibe como parametro al usario tmb recibido*/
 CREATE PROCEDURE [PISOS_PICADOS].quitarRolAUsuario @idUsuario INT
 	,@nombreRol VARCHAR(255)
 AS
@@ -3587,7 +3591,7 @@ BEGIN
 			)
 END;
 GO
-
+/*Quita el hotel recibido por parametro al usaurio tambien recibido*/
 CREATE PROCEDURE [PISOS_PICADOS].quitarHotelAUsuario @idUsuario INT
 	,@nombreHotel VARCHAR(255)
 AS
@@ -3602,7 +3606,7 @@ BEGIN
 			)
 END;
 GO
-
+/*Se le Agrega un nuevo rol a un usuario*/
 CREATE PROCEDURE [PISOS_PICADOS].agregarRolAUsuario @idUsuario INT
 	,@nombreRol VARCHAR(255)
 AS
@@ -3618,7 +3622,7 @@ BEGIN
 		)
 END;
 GO
-
+/*Se le agrega un nuevo hotel a un usuario*/
 CREATE PROCEDURE [PISOS_PICADOS].agregarHotelAUsuario @idUsuario INT
 	,@nombreHotel VARCHAR(255)
 AS
@@ -3634,7 +3638,7 @@ BEGIN
 		)
 END;
 GO
-
+/*Se cambia el estado de usuario a 2(usaurio deshailitado) a partir de usser*/
 CREATE PROCEDURE [PISOS_PICADOS].deshabilitarUsuario @usuario VARCHAR(255)
 AS
 BEGIN
@@ -3646,6 +3650,7 @@ BEGIN
 END;
 GO
 
+/*Se cambia el estado de usuario a 2(usaurio deshailitado) a partir de su id*/
 CREATE PROCEDURE [PISOS_PICADOS].bajaUsuario @idUsuario INT
 AS
 BEGIN
@@ -3655,6 +3660,7 @@ BEGIN
 END;
 GO
 
+/*Crea un cliente en la base de datos almacenando los datos en la tabla usuario y asignandole el idrol 3 que es guest*/
 CREATE PROCEDURE [PISOS_PICADOS].SPAltaCliente @nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
 	,@tipo VARCHAR(255)
@@ -3713,7 +3719,7 @@ VALUES (
 
 RETURN @idUsuario
 GO
-
+/*Modifica los datos para un cliente*/
 CREATE PROCEDURE [PISOS_PICADOS].SPModificarCliente @idUsuario INT
 	,@nombre VARCHAR(255)
 	,@apellido VARCHAR(255)
@@ -3792,6 +3798,7 @@ BEGIN
 END;
 GO
 
+/*Actualiza el estado para un determinado idUsuario*/
 CREATE PROCEDURE [PISOS_PICADOS].SPEstadoCliente @idUsuario INT
 	,@Estado BIT
 AS
@@ -3802,6 +3809,7 @@ BEGIN
 END;
 GO
 
+/*Crea una nueva habitacion para un hotel*/
 CREATE PROCEDURE [PISOS_PICADOS].SPAltaHabitacion @numero INT
 	,@IDhotel INT
 	,@frente CHAR(1)
@@ -3835,6 +3843,7 @@ BEGIN
 END;
 GO
 
+/*Modifica los datos para una determinada habitacion*/
 CREATE PROCEDURE [PISOS_PICADOS].SPModificarHabitacion @idHabitacion INT
 	,@numeroH INT
 	,@frente CHAR(1)
@@ -3870,6 +3879,7 @@ BEGIN
 END;
 GO
 
+/*Se modifica el estado del idHabitacion recibido*/
 CREATE PROCEDURE [PISOS_PICADOS].SPEstadoHabitacion @idHabitacion INT
 	,@habilitado BIT
 AS
@@ -3879,7 +3889,7 @@ BEGIN
 	WHERE idHabitacion = @idHabitacion
 END;
 GO
-
+/*Creacion de un nuevo hotel*/
 CREATE PROCEDURE [PISOS_PICADOS].crearHotel @nombre VARCHAR(255)
 	,@mail VARCHAR(255)
 	,@telefono VARCHAR(255)
@@ -3927,7 +3937,7 @@ BEGIN
 		)
 END
 GO
-
+/*Perimite agregar un nuevo regimen a un hotel insertando la relacion en la tabla regimenxhotel*/
 CREATE PROCEDURE [PISOS_PICADOS].agregarRegimen @idHotel INT
 	,@idRegimen INT
 AS
@@ -3942,7 +3952,7 @@ BEGIN
 		)
 END
 GO
-
+/*Quita un regimen a un idhotel dado */
 CREATE PROCEDURE [PISOS_PICADOS].quitarRegimen @idHotel INT
 	,@idRegimen INT
 	,@fecha DATE
@@ -3954,7 +3964,7 @@ BEGIN
 		AND codigoRegimen = @idRegimen
 END
 GO
-
+/*modifacion de los datos de un hotel*/
 CREATE PROCEDURE [PISOS_PICADOS].modificarHotel @idHotel INT
 	,@nombre VARCHAR(255)
 	,@mail VARCHAR(255)
@@ -4013,7 +4023,7 @@ BEGIN
 		WHERE idHotel = @idHotel
 END
 GO
-
+/*Agrega un nuevo encargado al hotel que se pasa por param*/
 CREATE PROCEDURE [PISOS_PICADOS].agregarEncargado @idHotel INT
 	,@idEncargado INT
 AS
@@ -4028,7 +4038,7 @@ BEGIN
 		)
 END
 GO
-
+/*Agrega un nuevo encargado al hotel que se pasa por param*/
 CREATE PROCEDURE [PISOS_PICADOS].quitarEncargado @idHotel INT
 	,@idEncargado INT
 AS
@@ -4039,7 +4049,7 @@ BEGIN
 		AND idUsuario = @idEncargado
 END
 GO
-
+/*Se agrega a la tabla baja de hotel una determinada baja*/
 CREATE PROCEDURE [PISOS_PICADOS].bajaDeHotel @idHotel INT
 	,@fechaInicio DATE
 	,@fechaFin DATE
@@ -4063,6 +4073,8 @@ BEGIN
 END
 GO
 
+/*Cancela una reserva dada por su codigo eliminandola de todas las relaciones en las que se encontraba y agregrando
+en la tabla modificacion los datos necesatios */
 CREATE PROCEDURE [PISOS_PICADOS].cancelarReserva @codigoReserva INT
 	,@motivo VARCHAR(255)
 	,@fecha DATE
@@ -4228,6 +4240,8 @@ FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple, @cantDoble, @can
 RETURN @idReserva
 GO
 
+/*Elimina de la tabal reserva y de todas las relaciones en las que aparezca todas aquellas reservas en las cuales el 
+diaactual sea mayor al dia de inicio de la reserva habiendo sido esta no efectivizada*/
 CREATE PROCEDURE [PISOS_PICADOS].EliminarReservasNoEfectivizadas @fechaActual DATE
 AS
 BEGIN
@@ -4297,6 +4311,7 @@ BEGIN
 END
 GO
 
+/*Registra la fecha de check in para una reserva, cambia el estado de esa reserva a efectivizada (6)*/
 CREATE PROCEDURE [PISOS_PICADOS].registrarCheckIn @fechaIngreso DATE
 	,@idEncargado INT
 	,@codReserva INT
@@ -4312,7 +4327,7 @@ BEGIN
 	WHERE codigoReserva = @codReserva
 END
 GO
-
+/*Registra la fecha de check in para una reserva*/
 CREATE PROCEDURE [PISOS_PICADOS].registrarCheckOut @fechaEgreso DATE
 	,@idEncargado INT
 	,@codReserva INT
@@ -4328,7 +4343,7 @@ BEGIN
 	WHERE codigoReserva = @codReserva
 END
 GO
-
+/*Se modica los datos pertenecientes a una reserva así como a sus relaciones*/
 CREATE PROCEDURE [PISOS_PICADOS].modificarReserva @fechaActual DATE
 	,@fechaInicio DATE
 	,@fechaFin DATE
@@ -4393,7 +4408,7 @@ BEGIN
 	FROM [PISOS_PICADOS].habitacionesQueCumplenReserva(@cantSimple, @cantDoble, @cantTriple, @cantCuadru, @cantKing, @idHotel, @fechaInicio, @fechaFin) AS a
 END
 GO
-
+/*Crea una factura para la reserva ingresada por parametro*/
 CREATE PROCEDURE [PISOS_PICADOS].FacturarReserva @codReserva INT
 	,@fecha DATE
 	,@formaDePago VARCHAR(255)
@@ -4503,6 +4518,7 @@ BEGIN
 END
 GO
 
+/*Corrige los usuarios cargados de la tabla maestra cumpliendo con las condiciones establecidas en la estrategia*/
 CREATE PROCEDURE [PISOS_PICADOS].corregirUsuarios
 AS
 BEGIN
@@ -4533,6 +4549,7 @@ BEGIN
 END
 GO
 
+/*Suma un intento de ingreso de contraseña y usuario */
 CREATE PROCEDURE [PISOS_PICADOS].sumarIntento (@usuarioEmpleado VARCHAR(255))
 AS
 BEGIN
@@ -4541,7 +4558,7 @@ BEGIN
 	WHERE usuario = @usuarioEmpleado
 END
 GO
-
+/*Vuelve los intentos del usuario a 0*/
 CREATE PROCEDURE [PISOS_PICADOS].resetearIntentos (@usuarioEmpleado VARCHAR(255))
 AS
 BEGIN
@@ -4550,7 +4567,7 @@ BEGIN
 	WHERE usuario = @usuarioEmpleado
 END
 GO
-
+/*Asigna como nombre a los hoteles que no tienen la combinacion de su ciudad calle y numero*/
 CREATE PROCEDURE [PISOS_PICADOS].darNombreAHoteles
 AS
 BEGIN
@@ -4559,7 +4576,7 @@ BEGIN
 	WHERE nombre IS NULL
 END
 GO
-
+/*Establece para las reservas bajadas de la tabal maestra el estado en funcion del enunciado del trabaja */
 CREATE PROCEDURE [PISOS_PICADOS].establecerEstadoReserva
 AS
 BEGIN
@@ -4590,7 +4607,7 @@ BEGIN
 		AND fechaInicio > '20180713'
 END
 GO
-
+/*Verica que dada la disponibilidad del hotel apra lals fechas se puedan modificar las habitaciones de una reserva*/
 CREATE PROCEDURE [PISOS_PICADOS].puedeModificarReserva (
 	@fechaInicio DATE
 	,@fechaFin DATE
