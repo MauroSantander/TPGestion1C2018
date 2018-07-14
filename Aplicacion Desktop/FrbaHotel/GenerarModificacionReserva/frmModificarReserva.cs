@@ -234,6 +234,31 @@ namespace FrbaHotel.GenerarModificacionReserva
                     return;
                 }
 
+                if (Globals.rolUsuario != "Guest")
+                {
+                    //verifico si el usuario tiene permiso para tocar esta estadía
+                    SqlCommand cmdBuscarHotelDeReserva = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
+                    cmdBuscarHotelDeReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
+                    cmdBuscarHotelDeReserva.Parameters["@codigoReserva"].Value = codigoReserva;
+                    int hotelDeLaReserva;
+                    try
+                    {
+                        hotelDeLaReserva = (int)cmdBuscarHotelDeReserva.ExecuteScalar();
+                    }
+                    catch
+                    {
+                        //si rompe es porque no existe la estadia
+                        MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    if (hotelDeLaReserva != Globals.idHotelUsuario)
+                    {
+                        MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
                 //fin chequeos
 
                 if (idCliente == -1)
