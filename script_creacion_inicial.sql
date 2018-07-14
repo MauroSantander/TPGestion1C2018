@@ -166,9 +166,6 @@ IF OBJECT_ID(N'[PISOS_PICADOS].precioConsumible', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].estaRepetido', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].estaRepetido;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].filtroClientes', N'IF') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].filtroClientes;
-
 IF OBJECT_ID(N'[PISOS_PICADOS].listadoHabitaciones', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].listadoHabitaciones;
 
@@ -249,9 +246,6 @@ IF OBJECT_ID(N'[PISOS_PICADOS].checkOutYaRealizado', N'FN') IS NOT NULL
 
 IF OBJECT_ID(N'[PISOS_PICADOS].MostrarTablaRegimen', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].MostrarTablaRegimen;
-
-IF OBJECT_ID(N'[PISOS_PICADOS].RegistradoCliente', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].RegistradoCliente;
 
 IF OBJECT_ID(N'[PISOS_PICADOS].mostrarConsumibles', N'IF') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].mostrarConsumibles;
@@ -1617,7 +1611,6 @@ VALUES ('Reserva cancelada por No-Show');
 INSERT INTO [PISOS_PICADOS].Estado (descripcion)
 VALUES ('Reserva efectivizada');
 
-/* PARA MI ESTA MALLLLLLLLLL */
 INSERT INTO [PISOS_PICADOS].EmpleadoxHotel (
 	idUsuario
 	,idHotel
@@ -1631,10 +1624,13 @@ INSERT INTO [PISOS_PICADOS].RegimenxHotel (
 	codigoRegimen
 	,idHotel
 	)
-SELECT DISTINCT codigoRegimen
-	,idHotel
-FROM [PISOS_PICADOS].Hotel
-	,[PISOS_PICADOS].Regimen
+SELECT r.codigoRegimen
+	,h.idHotel
+FROM [gd_esquema].Maestra AS m 
+JOIN [PISOS_PICADOS].Hotel AS h ON m.Hotel_Ciudad + m.Hotel_Calle = h.ciudad + h.calle
+JOIN [PISOS_PICADOS].Regimen AS r ON m.Regimen_Descripcion = r.descripcion 
+group by r.codigoRegimen,h.idHotel
+order by idHotel,codigoRegimen
 
 INSERT INTO [PISOS_PICADOS].RolxFuncionalidad
 SELECT idRol
@@ -1920,7 +1916,7 @@ BEGIN
 END
 GO
 
-/*Verifica si el estado de un empleado es deshabilitado, es decir 0 */
+/*Verifica si el estado de un empleado es deshabilitado, es decir 2 (Retorna 1 si lo es) */
 CREATE FUNCTION [PISOS_PICADOS].empleadoDeshabilitado (@usuario VARCHAR(255))
 RETURNS INT
 AS
@@ -1939,7 +1935,7 @@ BEGIN
 END
 GO
 
-/* Verifica que el usuario y contraseña ingresados correspondan algun empleado registrado en la base, 
+/* Verifica que el usuario ingresado corresponda algun empleado registrado en la base, 
 devuelve 1 si existe  */
 CREATE FUNCTION [PISOS_PICADOS].usuarioValido (@usuario VARCHAR(255))
 RETURNS INT
@@ -2011,7 +2007,7 @@ BEGIN
 	RETURN 1
 END
 GO
-
+/* Dado un usuario con un unico rol se devuelve su id de rol */
 CREATE FUNCTION [PISOS_PICADOS].obtenerUnicoRol (@usuario VARCHAR(255))
 RETURNS INT
 AS
@@ -2032,7 +2028,7 @@ BEGIN
 END
 GO
 
-/* Dado un el usuario de un empleado devuelve sus roles */
+/* Dado un el usuario de un empleado devuelve sus id de roles */
 CREATE FUNCTION [PISOS_PICADOS].obtenerRol (@idUsaurio INT)
 RETURNS TABLE
 AS
@@ -2101,58 +2097,6 @@ BEGIN
 
 	RETURN 0;
 END
-GO
-
-/* Crear un filtro de los clientes por 5 parametros. pueden estar los 5 filtros o un subconjunto del mismo */
-CREATE FUNCTION [PISOS_PICADOS].filtroClientes (
-	@nombre VARCHAR(255)
-	,@apellido VARCHAR(255)
-	,@tipoIden VARCHAR(255)
-	,@numIdem INT
-	,@mail VARCHAR(255)
-	)
-RETURNS TABLE
-AS
-RETURN (
-		SELECT u.idUsuario
-			,u.nombre
-			,u.apellido
-			,u.mail
-			,u.telefono
-			,u.calle
-			,u.nroCalle
-			,u.localidad
-			,u.pais
-			,u.tipoIdentificacion
-			,u.numeroIdentificacion
-			,u.fechaNacimiento
-			,u.estado
-			,c.nacionalidad
-		FROM [PISOS_PICADOS].Usuario AS u
-		INNER JOIN [PISOS_PICADOS].Cliente AS c ON u.idUsuario = c.idUsuario
-		WHERE (
-				(
-					u.nombre = @nombre
-					OR @nombre IS NULL
-					)
-				AND (
-					u.apellido = @apellido
-					OR @apellido IS NULL
-					)
-				AND (
-					u.tipoIdentificacion = @tipoIden
-					OR @tipoIden IS NULL
-					)
-				AND (
-					u.numeroIdentificacion = @numIdem
-					OR @numIdem IS NULL
-					)
-				AND (
-					u.mail = @mail
-					OR @mail IS NULL
-					)
-				)
-		)
 GO
 
 /* Dado un nombre de rol verifica si este exite en la base de datos, si es asi devuelve 1 */
@@ -2313,7 +2257,7 @@ BEGIN
 			)
 END
 GO
-
+/*Dado un codigo de reserva se puede conocer su id de estadia*/
 CREATE FUNCTION [Pisos_Picados].obtenerEstadia (@codReserva INT)
 RETURNS INT
 AS
@@ -2326,7 +2270,7 @@ BEGIN
 END
 GO
 
-/*Dado una estadia devuelve el valor total para todos los consumibles*/
+/*Dado un codigo de reserva devuelve el valor total para todos los consumibles*/
 CREATE FUNCTION [PISOS_PICADOS].netearConsumibles (@codigoReserva INT)
 RETURNS NUMERIC(9, 2)
 AS
@@ -2398,7 +2342,8 @@ BEGIN
 	RETURN (@idTipo * [PISOS_PICADOS].precioRegimen(@idRegimen) * [PISOS_PICADOS].incrementoHotel(@idHotel));
 END
 GO
-
+/*Devuelve una tabla con todas las habitaciones de un determiado tipo de un hotel que se encuentran disponibles 
+para realizar una reserva entre la fecha de inicio y fin de la misma*/
 CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplen (
 	@idTipo INT
 	,@idHotel INT
@@ -2433,7 +2378,8 @@ RETURN (
 GO
 
 /*Dada una fecha un hotel y una determinada cant de habitaciones de un tipo verifica si el hotel 
-puede cumplir la demanda en la fecha dada*/
+puede cumplir la demanda en la fecha dada. Devuelve 1 si no cumple simples, 2 si no cumple dobles, 
+3 triples, 4 cuadruples, 5 kings y 0 si puede cumplir la reserva*/
 CREATE FUNCTION [PISOS_PICADOS].hotelCumple (
 	@cantSimple INT
 	,@cantDoble INT
@@ -2491,8 +2437,8 @@ BEGIN
 END
 GO
 
-/*Dado un hotel un tipo de habitacion , una fecha de reserva y una cantidad devuelve el una lista de habitaciones
-que cumplen */
+/*Dado un hotel un tipo de habitacion , una fecha de reserva y una cantidad devuelve una tabla de longitud igual 
+a la cantidad especificada de habitaciones que cumplen */
 CREATE FUNCTION [PISOS_PICADOS].habitacionesDeterminadasQueCumplen (
 	@idTipo INT
 	,@idHotel INT
@@ -2527,6 +2473,8 @@ RETURN (
 		)
 GO
 
+/*Dada la cant de habitaciones de cada tipo , el id de hotel y la fecha de inicio y fin, 
+retorna una tabla con todas las habitaciones que cumplen dichas caracteristicas(segun la cant definida)*/
 CREATE FUNCTION [PISOS_PICADOS].habitacionesQueCumplenReserva (
 	@cantSimple INT
 	,@cantDoble INT
@@ -2599,7 +2547,7 @@ BEGIN
 	RETURN 0
 END
 GO
-
+/* Dada la cant de habitaciones de cada tipo el regimen y el hotel se calcula el precio por dia de la reserva */
 CREATE FUNCTION [PISOS_PICADOS].precioReserva (
 	@cantSimple INT
 	,@cantDoble INT
@@ -2619,7 +2567,7 @@ BEGIN
 	RETURN @resultado
 END
 GO
-
+/*Dado un codigo de reserva se calcula su precio por dia*/
 CREATE FUNCTION [PISOS_PICADOS].precioPorDia (@codReserva INT)
 RETURNS INT
 AS
@@ -2631,7 +2579,7 @@ BEGIN
 			)
 END
 GO
-
+/* Dado un id de estadia calcula el precio del total que corresponde a dias hospedados en el hotel*/
 CREATE FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasHospedados (@idEstadia INT)
 RETURNS INT
 AS
@@ -2645,7 +2593,8 @@ BEGIN
 	RETURN @resultado
 END
 GO
-
+/* Dado un id de estadia calcula el precio del total que corresponde a dias no hospedados en el hotel 
+pero que fueron reservados*/
 CREATE FUNCTION [PISOS_PICADOS].calcularPrecioPorDiasNoHospedados (@idEstadia INT)
 RETURNS INT
 AS
@@ -2660,7 +2609,7 @@ BEGIN
 	RETURN @resultado
 END
 GO
-
+/*Dado un id de consumible retorna su precio*/
 CREATE FUNCTION [PISOS_PICADOS].precioConsumible (@idCons INT)
 RETURNS INT
 AS
@@ -2673,6 +2622,7 @@ BEGIN
 END
 GO
 
+/*Funcion que retorna una tabla con la informacion de todas las habitaciones de la cadena*/
 CREATE FUNCTION [PISOS_PICADOS].listadoHabitaciones ()
 RETURNS TABLE
 AS
@@ -2694,7 +2644,7 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].Hotel AS ht ON hb.idHotel = ht.idHotel
 		)
 GO
-
+/*Funcion que devuelve la infromacion del hotel con mas cancelaciones en un determinado trimestre de un determinado año*/
 CREATE FUNCTION [PISOS_PICADOS].hotelesConMasCancelaciones (
 	@anio INT
 	,@trimestre INT
@@ -2739,6 +2689,7 @@ RETURN (
 		)
 GO
 
+/*Funcion que devuelve la infromacion del hotel con mas consumibles en un determinado trimestre de un determinado año*/
 CREATE FUNCTION [PISOS_PICADOS].hotelesConMasConsumiblesFacturados (
 	@anio INT
 	,@trimestre INT
@@ -2771,7 +2722,7 @@ RETURN (
 		ORDER BY [consumibles Facturados] DESC
 		)
 GO
-
+/*Funcion que devuelve la infromacion del hotel con mas dias en un determinado trimestre de un determinado año*/
 CREATE FUNCTION [PISOS_PICADOS].hotelesConMasDiasDeBaja (
 	@anio INT
 	,@trimestre INT
@@ -2816,7 +2767,8 @@ RETURN (
 		ORDER BY [Dias de Baja] DESC
 		)
 GO
-
+/*Funcion que devuelve la infromacion de las habitaciones mas veces ocupadas en un determinado trimestre 
+de un determinado año*/
 CREATE FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasVeces (
 	@anio INT
 	,@trimestre INT
@@ -2877,7 +2829,8 @@ RETURN (
 		ORDER BY [Cantidad de Veces] DESC
 		)
 GO
-
+/*Funcion que devuelve la infromacion de las habitaciones mas dias ocupados en un determinado trimestre 
+de un determinado año*/
 CREATE FUNCTION [PISOS_PICADOS].topHabitacionesOcupadasDias (
 	@anio INT
 	,@trimestre INT
@@ -2948,7 +2901,8 @@ RETURN (
 		ORDER BY [Dias Ocupados] DESC
 		)
 GO
-
+/*Funcion que devuelve la infromacion de las habitaciones mas veces ocupadas en un determinado trimestre 
+de un determinado año*/
 CREATE FUNCTION [PISOS_PICADOS].topClientesPorPuntos (
 	@anio INT
 	,@trimestre INT
@@ -3005,6 +2959,7 @@ BEGIN
 END
 GO
 
+/*Dado un codigo de reserva nos devuelve su id de estado*/
 CREATE FUNCTION [PISOS_PICADOS].estadoDeReserva (@codReserva INT)
 RETURNS INT
 AS
@@ -3016,7 +2971,11 @@ BEGIN
 			)
 END
 GO
-
+/*Dado un codigo de reserva y una fecha establece el estado actual de una reserva y utiliza la fecha para verificar en
+ el caso de que la reserva sea correcta que todavia falte un dia para la misma
+ 0 reserva no existe, 1 reserva cancelada, 3 reserva efectivizada, 
+ 4 reseva corrrecta pero ya paso el dia anterior a la reserva
+ 1 correcta*/
 CREATE FUNCTION [PISOS_PICADOS].ObtenerEstadoReserva (
 	@codReserva INT
 	,@fechaActual DATE
@@ -3062,6 +3021,7 @@ BEGIN
 END
 GO
 
+/*Verifica si para un idEstadia se registraron consumibles, retorna 1 si se registraron*/
 CREATE FUNCTION [PISOS_PICADOS].yaSeRegistraronConsumibles (@idEstadia INT)
 RETURNS INT
 AS
@@ -3076,7 +3036,7 @@ BEGIN
 	RETURN 0
 END
 GO
-
+/*Devuelve a partir de un codgio de reserva el hotel al cual pertenece*/
 CREATE FUNCTION [PISOS_PICADOS].hotelDeReserva (@codigoReserva INT)
 RETURNS INT
 AS
@@ -3107,7 +3067,8 @@ BEGIN
 	RETURN 0
 END
 GO
-
+/*Dada una reserva y una fecha devuelve 1 si la fecha es igual al dia de inicio de la reserva,
+2 si la fehca es mayor a la de inicio y 0 si la fecha es menor a la de inicio*/
 CREATE FUNCTION [PISOS_PICADOS].esElDiaDeInicio (
 	@fecha DATE
 	,@codReserva INT
@@ -3130,7 +3091,7 @@ BEGIN
 	RETURN 0
 END
 GO
-
+/*Devuelve 1 si para un cod de reserva ya se realizo el check in*/
 CREATE FUNCTION [PISOS_PICADOS].checkInYaRealizado (@codReserva INT)
 RETURNS INT
 AS
@@ -3147,6 +3108,7 @@ BEGIN
 END
 GO
 
+/*Devuelve 1 si para un cod de reserva ya se realizo el check out*/
 CREATE FUNCTION [PISOS_PICADOS].checkOutYaRealizado (@codReserva INT)
 RETURNS INT
 AS
@@ -3163,6 +3125,7 @@ BEGIN
 END
 GO
 
+/*Muestra Una tabla con la informacion de los regimenes existentes para un id hotel*/
 CREATE FUNCTION [PISOS_PICADOS].MostrarTablaRegimen (@idHotel INT)
 RETURNS TABLE
 AS
@@ -3177,21 +3140,7 @@ RETURN (
 		)
 GO
 
-CREATE FUNCTION [PISOS_PICADOS].RegistradoCliente (@idUsuario INT)
-RETURNS INT
-AS
-BEGIN
-	IF EXISTS (
-			SELECT c.idUsuario
-			FROM [PISOS_PICADOS].Cliente AS c
-			WHERE c.idUsuario = @idUsuario
-			)
-		RETURN 1
-
-	RETURN 0
-END
-GO
-
+/*Muestra la informacion de todos los consumibles para un codigod de reserva*/
 CREATE FUNCTION [PISOS_PICADOS].mostrarConsumibles (@codigoReserva INT)
 RETURNS TABLE
 AS
@@ -3210,7 +3159,7 @@ RETURN (
 			,c.precio
 		)
 GO
-
+/*Muestra la informacion de todas las habitaciones pertenecientes a una reserva*/
 CREATE FUNCTION [PISOS_PICADOS].mostrarHabitaciones (@codigoReserva INT)
 RETURNS TABLE
 AS
@@ -3229,7 +3178,8 @@ RETURN (
 		WHERE r.codigoRegimen = @codigoReserva
 		)
 GO
-
+/*Verifica que no exista ninguna reserva posterior a la fecha que incluya el regimen que se desea borra,
+ devuelve 1 si se puede borrar*/
 CREATE FUNCTION [PISOS_PICADOS].puedeBorrarseRegimen (
 	@nombreRegimen VARCHAR(255)
 	,@idHotel INT
@@ -3259,6 +3209,7 @@ BEGIN
 END
 GO
 
+/*Dado un codigo de reserva devuelve un 1 si ya existe una factura para dicha reserva*/
 CREATE FUNCTION [PISOS_PICADOS].yaSeFacturo (@codigoReserva INT)
 RETURNS INT
 AS
@@ -3274,7 +3225,7 @@ BEGIN
 	RETURN 0
 END
 GO
-
+/*Listado de los precios de todas las habitaciones del hotel para todos los regimenes disponibles*/
 CREATE FUNCTION [PISOS_PICADOS].precioHabitacionesHotel (@idHotel INT)
 RETURNS TABLE
 AS
@@ -3295,7 +3246,7 @@ RETURN (
 			,h.idHotel
 		)
 GO
-
+/*Retorna una tabla con informacion de todos los clientes de una cadena*/
 CREATE FUNCTION [PISOS_PICADOS].mostrarClientes ()
 RETURNS TABLE
 AS
@@ -3320,7 +3271,7 @@ RETURN (
 		INNER JOIN [PISOS_PICADOS].EstadoUsuario AS eu ON u.estado = eu.idEstado
 		)
 GO
-
+/*Dado un codigo de reserva y un tipo devuelve la cantidad de habitaciones asignada a esa reserva de ese tipo*/
 CREATE FUNCTION [PISOS_PICADOS].cantHabitacionesReserva (
 	@codigoReserva INT
 	,@idTipo INT
