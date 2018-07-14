@@ -13,6 +13,7 @@ namespace FrbaHotel.FacturarEstadia
 {
     public partial class frmFacturar : Form
     {
+
         long codigoReserva = -1;
         public frmFacturar()
         {
@@ -89,28 +90,6 @@ namespace FrbaHotel.FacturarEstadia
                 return;
             }
 
-            //verifico si el usuario tiene permiso para tocar esta estadía
-            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
-            cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
-            cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
-            int hotelDeLaEstadia;
-            try
-            {
-                hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
-            }
-            catch
-            {
-                //si rompe es porque no existe la estadia
-                MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (hotelDeLaEstadia != Globals.idHotelUsuario)
-            {
-                MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             //fin chequeos
 
             cargarDataGridHabitaciones();
@@ -135,6 +114,7 @@ namespace FrbaHotel.FacturarEstadia
             }
             else
             {
+                labelDescuento.Text = "-$0";
                 labelTotal.Text = "$" + calcularTotal();
             }
 
@@ -159,7 +139,7 @@ namespace FrbaHotel.FacturarEstadia
 
             for (int i = 0; i < dgvHabitaciones.Rows.Count; i++) 
             {
-                total += float.Parse(dgvHabitaciones.Rows[i].Cells["Precio"].ToString());
+                total += (int)dgvHabitaciones.Rows[i].Cells["Precio"].Value;
             }
 
             return total.ToString();
@@ -172,20 +152,7 @@ namespace FrbaHotel.FacturarEstadia
             string _netearConsumibles = netearConsumibles();
             string _calcularTotalHabitaciones = calcularTotalHabitaciones();
 
-            if (_netearConsumibles == "0" && _calcularTotalHabitaciones == "0")
-            {
-                return "0";
-            }
-            if (_netearConsumibles == "0")
-            {
-                return _calcularTotalHabitaciones;
-            }
-            if (_calcularTotalHabitaciones == "0")
-            {
-                return _netearConsumibles;
-            }
-
-            return "0";
+            return (float.Parse(_netearConsumibles) + float.Parse(_calcularTotalHabitaciones)).ToString();
         }
 
         private string netearConsumibles()
@@ -269,6 +236,28 @@ namespace FrbaHotel.FacturarEstadia
 
             if (verificacion == 0)
             {
+                return;
+            }
+
+            //verifico si el usuario tiene permiso para tocar esta estadía
+            SqlCommand cmdBuscarHotelDeEstadia = new SqlCommand("SELECT [PISOS_PICADOS].hotelDeReserva (@codigoReserva)", Globals.conexionGlobal);
+            cmdBuscarHotelDeEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdBuscarHotelDeEstadia.Parameters["@codigoReserva"].Value = codigoReserva;
+            int hotelDeLaEstadia;
+            try
+            {
+                hotelDeLaEstadia = (int)cmdBuscarHotelDeEstadia.ExecuteScalar();
+            }
+            catch
+            {
+                //si rompe es porque no existe la estadia
+                MessageBox.Show("No existe estadía que se corresponda a esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (hotelDeLaEstadia != Globals.idHotelUsuario)
+            {
+                MessageBox.Show("El código que ingresó pertenece a un hotel diferente del que seleccionó cuando inicio sesión. Si usted trabaja en dicho hotel, debe iniciar sesión escogiéndolo para completar esta operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
