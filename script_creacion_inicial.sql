@@ -277,8 +277,8 @@ IF OBJECT_ID(N'[PISOS_PICADOS].cantHabitacionesReserva', N'FN') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].diasQueSEAlojo', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].diasQueSeAlojo;
 
-IF OBJECT_ID(N'[PISOS_PICADOS].diasQueSeReservo', N'FN') IS NOT NULL
-	DROP FUNCTION [PISOS_PICADOS].diasQueSeReservo;
+IF OBJECT_ID(N'[PISOS_PICADOS].diasQueReservo', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].diasQueReservo;
 
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
@@ -2923,7 +2923,8 @@ RETURN (
 							WHEN DATEPART(QUARTER, fechaCheckIn) = DATEPART(QUARTER, fechaCheckOut)
 								THEN (DATEDIFF(DAY, es.fechaCheckIn, es.fechaCheckOut)) * [PISOS_PICADOS].precioRegimen(re.codigoRegimen) / 20
 							WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
-								AND DATEPART(QUARTER, fechaCheckIn) < @trimestre
+								/*ACAAAAA*/
+								AND DATEPART(QUARTER, fechaCheckOut) < @trimestre
 								THEN DATEDIFF(DAY, DATEADD(qq, DATEDIFF(qq, 0, @fechaActual), 0), fechaCheckOut)
 							WHEN DATEPART(QUARTER, fechaCheckIn) < DATEPART(QUARTER, fechaCheckOut)
 								AND DATEPART(QUARTER, fechaCheckOut) > @trimestre
@@ -3312,7 +3313,7 @@ END
 GO
 
 /*Dado un codigo de reserva muestra los dias que reservo*/
-CREATE FUNCTION [PISOS_PICADOS].diasQueSeReservo (@codigoReserva INT)
+CREATE FUNCTION [PISOS_PICADOS].diasQueReservo (@codigoReserva INT)
 RETURNS INT
 AS
 BEGIN
@@ -3323,6 +3324,7 @@ BEGIN
 				), 0)
 END
 GO
+
 
 
 /* STORED PROCEDURES ------------------------------------------------------*/
