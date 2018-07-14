@@ -2579,7 +2579,14 @@ RETURNS INT
 AS
 BEGIN
 	RETURN (
-			SELECT r.precioTotal / DATEDIFF(DAY, r.fechaInicio, r.fechaFin)
+			SELECT
+			(
+			CASE WHEN DATEDIFF(DAY, r.fechaInicio, r.fechaFin) = 0
+			THEN  r.precioTotal / 1
+			ELSE 
+			r.precioTotal / DATEDIFF(DAY, r.fechaInicio, r.fechaFin)
+			END
+			)
 			FROM [PISOS_PICADOS].Reserva AS r
 			WHERE r.codigoReserva = @codReserva
 			)
@@ -4396,6 +4403,7 @@ BEGIN
 		@fecha
 		,@idEstadia
 		,@cliente
+		/*PONZIO*/
 		,ISNULL([PISOS_PICADOS].netearConsumibles(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idEstadia), 0)
 		)
 
