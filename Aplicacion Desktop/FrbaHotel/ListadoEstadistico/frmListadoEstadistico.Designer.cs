@@ -85,6 +85,7 @@
             0,
             0});
             this.Trimestre.Name = "Trimestre";
+            this.Trimestre.ReadOnly = true;
             this.Trimestre.Size = new System.Drawing.Size(120, 20);
             this.Trimestre.TabIndex = 2;
             this.Trimestre.Value = new decimal(new int[] {
