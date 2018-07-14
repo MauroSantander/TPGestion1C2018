@@ -74,7 +74,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             string cadenaNroIdentificacion = "";
             string cadenaMail = "";
 
-            string query = "SELECT * FROM [PISOS_PICADOS].mostrarClientes () WHERE 1=1 ";
+            string query = "SELECT * FROM [PISOS_PICADOS].mostrarClientes () WHERE [Estado de usuario] <> 'Deshabilitado' and [Estado de usuario] <> 'Mail Repetido' and [Estado de usuario] <> 'Pasaporte Repetido' ";
 
             if (txtNombre.Text != "")
             {
