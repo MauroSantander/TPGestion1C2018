@@ -4403,7 +4403,6 @@ BEGIN
 		@fecha
 		,@idEstadia
 		,@cliente
-		/*PONZIO*/
 		,ISNULL([PISOS_PICADOS].netearConsumibles(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasHospedados(@idEstadia), 0) + ISNULL([PISOS_PICADOS].calcularPrecioPorDiasNoHospedados(@idEstadia), 0)
 		)
 
