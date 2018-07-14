@@ -39,6 +39,8 @@
             this.buttonCerrar = new System.Windows.Forms.Button();
             this.buttonCrear = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.comboBoxPais = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.localidad = new System.Windows.Forms.TextBox();
@@ -55,7 +57,6 @@
             this.nombre = new System.Windows.Forms.TextBox();
             this.apellido = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkedListBoxRoles = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.groupBox11.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -167,7 +167,7 @@
             this.buttonCrear.Name = "buttonCrear";
             this.buttonCrear.Size = new System.Drawing.Size(90, 40);
             this.buttonCrear.TabIndex = 5;
-            this.buttonCrear.Text = "Crear Usuario";
+            this.buttonCrear.Text = "Crear usuario";
             this.buttonCrear.UseVisualStyleBackColor = true;
             this.buttonCrear.Click += new System.EventHandler(this.buttonCrear_Click);
             // 
@@ -202,6 +202,23 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Datos personales";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 179);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(0, 13);
+            this.label9.TabIndex = 10;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 118);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(50, 13);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "Identific.:";
             // 
             // comboBoxPais
             // 
@@ -359,14 +376,6 @@
             this.label11.TabIndex = 20;
             this.label11.Text = "Fecha nac:";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 179);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(0, 13);
-            this.label9.TabIndex = 10;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -438,15 +447,6 @@
             this.label1.Size = new System.Drawing.Size(158, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Ingrese datos del nuevo usuario";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 118);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(50, 13);
-            this.label13.TabIndex = 6;
-            this.label13.Text = "Identific.:";
             // 
             // frmNuevoUsuario
             // 

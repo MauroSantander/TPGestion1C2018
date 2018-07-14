@@ -227,6 +227,7 @@
             this.dataGridViewModificarCliente.Location = new System.Drawing.Point(12, 123);
             this.dataGridViewModificarCliente.Name = "dataGridViewModificarCliente";
             this.dataGridViewModificarCliente.ReadOnly = true;
+            this.dataGridViewModificarCliente.RowHeadersVisible = false;
             this.dataGridViewModificarCliente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewModificarCliente.Size = new System.Drawing.Size(919, 337);
             this.dataGridViewModificarCliente.TabIndex = 9;

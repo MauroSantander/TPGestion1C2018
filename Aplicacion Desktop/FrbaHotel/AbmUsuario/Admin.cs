@@ -13,8 +13,13 @@ namespace FrbaHotel.AbmUsuario
 {
     public partial class Admin : Form
     {
-
-          Utils utils = new Utils();
+        AutoCompleteStringCollection usernameColeccion = new AutoCompleteStringCollection();
+        AutoCompleteStringCollection nombreColeccion = new AutoCompleteStringCollection();
+        AutoCompleteStringCollection apColeccion = new AutoCompleteStringCollection();
+        AutoCompleteStringCollection locColeccion = new AutoCompleteStringCollection();
+        AutoCompleteStringCollection calleColeccion = new AutoCompleteStringCollection();
+            
+        Utils utils = new Utils();
       
         DataTable dataTable;
 
@@ -25,9 +30,6 @@ namespace FrbaHotel.AbmUsuario
 
         private void Admin_Load(object sender, EventArgs e)
         {
-
-
-    
             this.CenterToScreen();
             
             this.llenarDataGridView("");
@@ -46,34 +48,21 @@ namespace FrbaHotel.AbmUsuario
 
             reader.Close();
             
-            AutoCompleteStringCollection usernameColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("e.usuario", "Usuario", textBoxUsuario, usernameColeccion);
-
-            AutoCompleteStringCollection nombreColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("u.nombre","Nombre", textBoxNombre, nombreColeccion);
-
-            AutoCompleteStringCollection apColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("u.apellido","Apellido" ,textBoxApellido, apColeccion);
-
-            AutoCompleteStringCollection locColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("u.localidad","Localidad", textBoxLocalidad, locColeccion);
-
-            AutoCompleteStringCollection calleColeccion = new AutoCompleteStringCollection();
             this.cargarAutocomplete("u.calle","Calle", textBoxCalle, calleColeccion);
 
-
+            comboBoxTipoId.Text = "Seleccionar";
+            comboBoxPais.Text = "Seleccionar";
+    
         }
-
-
-        //----------------------------------------------------------------------------------------------------
-        //Boton Crear
-
 
         private void buttonCrearUsr_Click(object sender, EventArgs e)
         {
             (new FrbaHotel.AbmUsuario.frmNuevoUsuario()).abrirPantalla(this);
         }
-
 
         private void buttonActualizar_Click(object sender, EventArgs e)
         {
@@ -96,24 +85,9 @@ namespace FrbaHotel.AbmUsuario
             String nroident =dataGridViewUsuarios.CurrentRow.Cells["NroIdentificacion"].Value.ToString();
             String fechaNacimiento = dataGridViewUsuarios.CurrentRow.Cells["Fecha Nacimiento"].Value.ToString();
 
-            int idPais = int.Parse(pais);
-
-            SqlCommand cmdBuscarNombrePais = new SqlCommand("Select nombrePais from [PISOS_PICADOS].Pais where idPais = @idPais", Globals.conexionGlobal);
-            cmdBuscarNombrePais.Parameters.AddWithValue("@idPais", idPais);
-            SqlDataReader reader = cmdBuscarNombrePais.ExecuteReader();
-
-            while (reader.Read())
-            {
-                pais = (reader["nombrePais"]).ToString();
-            }
-
-
             (new FrbaHotel.AbmUsuario.frmModificarUsuario()).cargarDatos(id, usuario,nombre,apell, mail, tel, calle, nroCalle, localidad, pais, tipoId, nroident,fechaNacimiento, this);
 
         }
-       
-
-
 
         private void dataGridView1_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -122,83 +96,56 @@ namespace FrbaHotel.AbmUsuario
 
                 foreach (DataGridViewRow dr in dataGridViewUsuarios.SelectedRows)
                 {
-
                     dr.Selected = false;
-
                 }
-
                 // Para seleccionar
-
                 dataGridViewUsuarios.Rows[e.RowIndex].Selected = true;
-
             }
 
         }
 
-
-        //Boton dar de baja 
-
         private void buttonBaja_Click(object sender, EventArgs e)
         {
-
             {
                 if (dataGridViewUsuarios.CurrentRow == null){
                     MessageBox.Show("Seleccione usuario de la tabla"); return;}
 
                 int id = Convert.ToInt32(dataGridViewUsuarios.CurrentRow.Cells["Id"].Value);
-
-             
-                    String cadenaBajaUsuario = "PISOS_PICADOS.bajaUsuario";
-
-                    SqlCommand comandoBajaUsuario = new SqlCommand(cadenaBajaUsuario, Globals.conexionGlobal);
-                    comandoBajaUsuario.CommandType = CommandType.StoredProcedure;
-
-                    comandoBajaUsuario.Parameters.AddWithValue("@idUsuario", id);
-                    comandoBajaUsuario.ExecuteReader();
-                    MessageBox.Show("Usuario dado de baja correctamente");
-
                 
+                String cadenaBajaUsuario = "PISOS_PICADOS.bajaUsuario";
+
+                SqlCommand comandoBajaUsuario = new SqlCommand(cadenaBajaUsuario, Globals.conexionGlobal);
+                comandoBajaUsuario.CommandType = CommandType.StoredProcedure;
+
+                comandoBajaUsuario.Parameters.AddWithValue("@idUsuario", id);
+                comandoBajaUsuario.ExecuteReader();
+                MessageBox.Show("Usuario dado de baja correctamente");
 
                 dataGridViewUsuarios.Rows.Remove(dataGridViewUsuarios.CurrentRow);
-                
             }
         }
-
-      
-
-       
-
-       
-
        
         public void llenarDataGridView(String agregar)
         {
             try
             {
-
-                SqlDataAdapter adapter = new SqlDataAdapter("select e.idUsuario 'Id',e.usuario 'Usuario', u.nombre 'Nombre', u.apellido 'Apellido',u.mail 'Mail',u.telefono 'Teléfono',u.calle 'Calle',u.nroCalle 'NroCalle',u.localidad 'Localidad',u.pais 'Pais',u.tipoIdentificacion 'TipoIdentificacion',u.numeroIdentificacion 'NroIdentificacion',u.fechaNacimiento 'Fecha Nacimiento' from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) where u.estado = 1" + agregar, Globals.conexionGlobal);
+                SqlDataAdapter adapter = new SqlDataAdapter("select e.idUsuario 'Id',e.usuario 'Usuario', u.nombre 'Nombre', u.apellido 'Apellido',u.mail 'Mail',u.telefono 'Teléfono',u.calle 'Calle',u.nroCalle 'NroCalle',u.localidad 'Localidad',p.nombrePais 'Pais',u.tipoIdentificacion 'TipoIdentificacion',u.numeroIdentificacion 'NroIdentificacion',u.fechaNacimiento 'Fecha Nacimiento' from [PISOS_PICADOS].Empleado E join [PISOS_PICADOS].Usuario U on (E.idUsuario = U.idUsuario) join [PISOS_PICADOS].Pais p on u.pais = p.idPais where u.estado = 1" + agregar, Globals.conexionGlobal);
                 dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 dataGridViewUsuarios.DataSource = dataTable;
             }
-            catch (Exception exc)
+            catch
             {
                 MessageBox.Show("No se pudo llenar el DataGridView");
             }
+
+            this.cargarAutocomplete("e.usuario", "Usuario", textBoxUsuario, usernameColeccion);
+            this.cargarAutocomplete("u.nombre", "Nombre", textBoxNombre, nombreColeccion);
+            this.cargarAutocomplete("u.apellido", "Apellido", textBoxApellido, apColeccion);
+            this.cargarAutocomplete("u.localidad", "Localidad", textBoxLocalidad, locColeccion);
+            this.cargarAutocomplete("u.calle", "Calle", textBoxCalle, calleColeccion);
+
         }
-
-       
-        
-
-
-
-    
-
-
-      
-
-
-        //FILTRAR -----------------------------------------------------------------------------
 
         private void buttonFiltrar_Click(object sender, EventArgs e)
         {
@@ -239,10 +186,10 @@ namespace FrbaHotel.AbmUsuario
             {
                 while (dr.Read())
                     coleccion.Add(dr[nombre].ToString());
-
             }
 
             dr.Close();
+
             textbox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             textbox.AutoCompleteSource = AutoCompleteSource.CustomSource;
             textbox.AutoCompleteCustomSource = coleccion;
@@ -255,7 +202,7 @@ namespace FrbaHotel.AbmUsuario
         private void numeros_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Char.IsDigit(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-            else { e.Handled = true; }
+            else { e.Handled = true; MessageBox.Show("Este campo solo acepta números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
 
@@ -263,7 +210,7 @@ namespace FrbaHotel.AbmUsuario
         {
             {
                 if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
+                else { e.Handled = true; MessageBox.Show("Este campo solo acepta letras.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
         }
 
@@ -279,13 +226,8 @@ namespace FrbaHotel.AbmUsuario
         {
             {
                 if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
-                else { e.Handled = true; }
+                else { e.Handled = true; MessageBox.Show("Este campo solo acepta letras y espacios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             }
-        }
-
-        private void textoNrosYespacios_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
@@ -298,18 +240,7 @@ namespace FrbaHotel.AbmUsuario
             this.llenarDataGridView("");
         }
 
-       
-        
-
-       
-
-
-       
-
-       
-
     }
-
-    }
+}
 
 

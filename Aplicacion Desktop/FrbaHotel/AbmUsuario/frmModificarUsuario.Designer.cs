@@ -97,7 +97,7 @@
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(1061, 397);
-            this.groupBox3.TabIndex = 42;
+            this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edite los datos que quiera actualizar";
             // 
@@ -107,8 +107,8 @@
             this.buttonActualizar.Location = new System.Drawing.Point(965, 352);
             this.buttonActualizar.Name = "buttonActualizar";
             this.buttonActualizar.Size = new System.Drawing.Size(90, 40);
-            this.buttonActualizar.TabIndex = 46;
-            this.buttonActualizar.Text = "Actualizar Usuario";
+            this.buttonActualizar.TabIndex = 6;
+            this.buttonActualizar.Text = "Modificar";
             this.buttonActualizar.UseVisualStyleBackColor = true;
             this.buttonActualizar.Click += new System.EventHandler(this.buttonActualizar_Click);
             // 
@@ -120,7 +120,7 @@
             this.groupBox8.Location = new System.Drawing.Point(353, 189);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(351, 142);
-            this.groupBox8.TabIndex = 37;
+            this.groupBox8.TabIndex = 3;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Hoteles del usuario";
             // 
@@ -130,7 +130,7 @@
             this.checkedListBoxHotelesUPD.Location = new System.Drawing.Point(111, 19);
             this.checkedListBoxHotelesUPD.Name = "checkedListBoxHotelesUPD";
             this.checkedListBoxHotelesUPD.Size = new System.Drawing.Size(215, 94);
-            this.checkedListBoxHotelesUPD.TabIndex = 26;
+            this.checkedListBoxHotelesUPD.TabIndex = 2;
             // 
             // label48
             // 
@@ -138,7 +138,7 @@
             this.label48.Location = new System.Drawing.Point(6, 51);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(86, 13);
-            this.label48.TabIndex = 33;
+            this.label48.TabIndex = 0;
             this.label48.Text = "Seleccione hotel";
             // 
             // label47
@@ -147,7 +147,7 @@
             this.label47.Location = new System.Drawing.Point(5, 66);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(89, 13);
-            this.label47.TabIndex = 34;
+            this.label47.TabIndex = 1;
             this.label47.Text = "que quiera quitar:";
             // 
             // buttonVolver
@@ -155,8 +155,8 @@
             this.buttonVolver.Location = new System.Drawing.Point(869, 352);
             this.buttonVolver.Name = "buttonVolver";
             this.buttonVolver.Size = new System.Drawing.Size(90, 40);
-            this.buttonVolver.TabIndex = 47;
-            this.buttonVolver.Text = "Volver";
+            this.buttonVolver.TabIndex = 7;
+            this.buttonVolver.Text = "Salir";
             this.buttonVolver.UseVisualStyleBackColor = true;
             this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
             // 
@@ -168,7 +168,7 @@
             this.groupBox9.Location = new System.Drawing.Point(719, 189);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(325, 142);
-            this.groupBox9.TabIndex = 38;
+            this.groupBox9.TabIndex = 5;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Otros Hoteles con posibilidad de agregar";
             // 
@@ -178,7 +178,7 @@
             this.checkedListBoxHotelesUPDNo.Location = new System.Drawing.Point(111, 20);
             this.checkedListBoxHotelesUPDNo.Name = "checkedListBoxHotelesUPDNo";
             this.checkedListBoxHotelesUPDNo.Size = new System.Drawing.Size(195, 94);
-            this.checkedListBoxHotelesUPDNo.TabIndex = 27;
+            this.checkedListBoxHotelesUPDNo.TabIndex = 2;
             // 
             // label45
             // 
@@ -186,7 +186,7 @@
             this.label45.Location = new System.Drawing.Point(6, 68);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(99, 13);
-            this.label45.TabIndex = 36;
+            this.label45.TabIndex = 1;
             this.label45.Text = "que quiera agregar:";
             // 
             // label46
@@ -195,7 +195,7 @@
             this.label46.Location = new System.Drawing.Point(7, 54);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(86, 13);
-            this.label46.TabIndex = 35;
+            this.label46.TabIndex = 0;
             this.label46.Text = "Seleccione hotel";
             // 
             // groupBox7
@@ -206,7 +206,7 @@
             this.groupBox7.Location = new System.Drawing.Point(719, 80);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(325, 103);
-            this.groupBox7.TabIndex = 36;
+            this.groupBox7.TabIndex = 4;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Otros roles con posibilidad de agregar";
             // 
@@ -216,7 +216,7 @@
             this.label44.Location = new System.Drawing.Point(6, 26);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(85, 13);
-            this.label44.TabIndex = 31;
+            this.label44.TabIndex = 0;
             this.label44.Text = "Seleccione roles";
             // 
             // label43
@@ -225,7 +225,7 @@
             this.label43.Location = new System.Drawing.Point(4, 54);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(99, 13);
-            this.label43.TabIndex = 32;
+            this.label43.TabIndex = 1;
             this.label43.Text = "que quiera agregar:";
             // 
             // checkedListBoxRolesUPDNo
@@ -234,7 +234,7 @@
             this.checkedListBoxRolesUPDNo.Location = new System.Drawing.Point(113, 15);
             this.checkedListBoxRolesUPDNo.Name = "checkedListBoxRolesUPDNo";
             this.checkedListBoxRolesUPDNo.Size = new System.Drawing.Size(193, 79);
-            this.checkedListBoxRolesUPDNo.TabIndex = 28;
+            this.checkedListBoxRolesUPDNo.TabIndex = 2;
             // 
             // groupBox6
             // 
@@ -243,7 +243,7 @@
             this.groupBox6.Location = new System.Drawing.Point(14, 21);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(1030, 53);
-            this.groupBox6.TabIndex = 37;
+            this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Inicio de Sesión";
             // 
@@ -253,7 +253,7 @@
             this.label32.Location = new System.Drawing.Point(2, 26);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(58, 13);
-            this.label32.TabIndex = 42;
+            this.label32.TabIndex = 0;
             this.label32.Text = "Username:";
             // 
             // usernameUPD
@@ -262,7 +262,7 @@
             this.usernameUPD.MaxLength = 255;
             this.usernameUPD.Name = "usernameUPD";
             this.usernameUPD.Size = new System.Drawing.Size(213, 20);
-            this.usernameUPD.TabIndex = 43;
+            this.usernameUPD.TabIndex = 1;
             this.usernameUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoYNros_KeyPress);
             // 
             // groupBox4
@@ -293,7 +293,7 @@
             this.groupBox4.Location = new System.Drawing.Point(14, 80);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(321, 308);
-            this.groupBox4.TabIndex = 36;
+            this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Datos personales";
             // 
@@ -303,7 +303,7 @@
             this.label1.Location = new System.Drawing.Point(4, 74);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 13);
-            this.label1.TabIndex = 35;
+            this.label1.TabIndex = 4;
             this.label1.Text = "Tipo id:";
             // 
             // comboBoxPaisUPD
@@ -313,7 +313,7 @@
             this.comboBoxPaisUPD.Location = new System.Drawing.Point(78, 175);
             this.comboBoxPaisUPD.Name = "comboBoxPaisUPD";
             this.comboBoxPaisUPD.Size = new System.Drawing.Size(213, 21);
-            this.comboBoxPaisUPD.TabIndex = 34;
+            this.comboBoxPaisUPD.TabIndex = 13;
             // 
             // label37
             // 
@@ -321,7 +321,7 @@
             this.label37.Location = new System.Drawing.Point(6, 178);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(32, 13);
-            this.label37.TabIndex = 24;
+            this.label37.TabIndex = 12;
             this.label37.Text = "País:";
             // 
             // localidadUPD
@@ -330,7 +330,7 @@
             this.localidadUPD.MaxLength = 255;
             this.localidadUPD.Name = "localidadUPD";
             this.localidadUPD.Size = new System.Drawing.Size(213, 20);
-            this.localidadUPD.TabIndex = 23;
+            this.localidadUPD.TabIndex = 15;
             this.localidadUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // label36
@@ -339,7 +339,7 @@
             this.label36.Location = new System.Drawing.Point(6, 204);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(56, 13);
-            this.label36.TabIndex = 22;
+            this.label36.TabIndex = 14;
             this.label36.Text = "Localidad:";
             // 
             // nroUPD
@@ -348,7 +348,7 @@
             this.nroUPD.MaxLength = 9;
             this.nroUPD.Name = "nroUPD";
             this.nroUPD.Size = new System.Drawing.Size(213, 20);
-            this.nroUPD.TabIndex = 21;
+            this.nroUPD.TabIndex = 19;
             this.nroUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // label28
@@ -357,7 +357,7 @@
             this.label28.Location = new System.Drawing.Point(6, 257);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(27, 13);
-            this.label28.TabIndex = 20;
+            this.label28.TabIndex = 18;
             this.label28.Text = "Nro:";
             // 
             // dateTimePickerUPD
@@ -367,7 +367,7 @@
             this.dateTimePickerUPD.MinDate = new System.DateTime(1889, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerUPD.Name = "dateTimePickerUPD";
             this.dateTimePickerUPD.Size = new System.Drawing.Size(213, 20);
-            this.dateTimePickerUPD.TabIndex = 18;
+            this.dateTimePickerUPD.TabIndex = 21;
             this.dateTimePickerUPD.Value = new System.DateTime(2018, 7, 13, 0, 0, 0, 0);
             // 
             // calleUPD
@@ -385,7 +385,7 @@
             this.mailUPD.MaxLength = 255;
             this.mailUPD.Name = "mailUPD";
             this.mailUPD.Size = new System.Drawing.Size(213, 20);
-            this.mailUPD.TabIndex = 16;
+            this.mailUPD.TabIndex = 9;
             // 
             // telUPD
             // 
@@ -393,7 +393,7 @@
             this.telUPD.MaxLength = 255;
             this.telUPD.Name = "telUPD";
             this.telUPD.Size = new System.Drawing.Size(213, 20);
-            this.telUPD.TabIndex = 15;
+            this.telUPD.TabIndex = 11;
             this.telUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // numIdUPD
@@ -402,7 +402,7 @@
             this.numIdUPD.MaxLength = 9;
             this.numIdUPD.Name = "numIdUPD";
             this.numIdUPD.Size = new System.Drawing.Size(213, 20);
-            this.numIdUPD.TabIndex = 14;
+            this.numIdUPD.TabIndex = 7;
             this.numIdUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // comboBoxTipoUPD
@@ -423,7 +423,7 @@
             this.comboBoxTipoUPD.Location = new System.Drawing.Point(78, 74);
             this.comboBoxTipoUPD.Name = "comboBoxTipoUPD";
             this.comboBoxTipoUPD.Size = new System.Drawing.Size(213, 21);
-            this.comboBoxTipoUPD.TabIndex = 13;
+            this.comboBoxTipoUPD.TabIndex = 5;
             // 
             // nombreUPD
             // 
@@ -431,7 +431,7 @@
             this.nombreUPD.MaxLength = 255;
             this.nombreUPD.Name = "nombreUPD";
             this.nombreUPD.Size = new System.Drawing.Size(213, 20);
-            this.nombreUPD.TabIndex = 12;
+            this.nombreUPD.TabIndex = 1;
             this.nombreUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // apellidoUPD
@@ -440,7 +440,7 @@
             this.apellidoUPD.MaxLength = 255;
             this.apellidoUPD.Name = "apellidoUPD";
             this.apellidoUPD.Size = new System.Drawing.Size(213, 20);
-            this.apellidoUPD.TabIndex = 11;
+            this.apellidoUPD.TabIndex = 3;
             this.apellidoUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // label18
@@ -449,7 +449,7 @@
             this.label18.Location = new System.Drawing.Point(6, 282);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(61, 13);
-            this.label18.TabIndex = 8;
+            this.label18.TabIndex = 20;
             this.label18.Text = "Fecha nac:";
             // 
             // label19
@@ -458,7 +458,7 @@
             this.label19.Location = new System.Drawing.Point(6, 232);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(33, 13);
-            this.label19.TabIndex = 7;
+            this.label19.TabIndex = 16;
             this.label19.Text = "Calle:";
             // 
             // label23
@@ -475,7 +475,7 @@
             this.label20.Location = new System.Drawing.Point(6, 127);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(29, 13);
-            this.label20.TabIndex = 5;
+            this.label20.TabIndex = 8;
             this.label20.Text = "Mail:";
             // 
             // label21
@@ -484,7 +484,7 @@
             this.label21.Location = new System.Drawing.Point(6, 153);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(52, 13);
-            this.label21.TabIndex = 4;
+            this.label21.TabIndex = 10;
             this.label21.Text = "Teléfono:";
             // 
             // label22
@@ -493,7 +493,7 @@
             this.label22.Location = new System.Drawing.Point(6, 101);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(73, 13);
-            this.label22.TabIndex = 3;
+            this.label22.TabIndex = 6;
             this.label22.Text = "Identificación:";
             // 
             // label24
@@ -502,7 +502,7 @@
             this.label24.Location = new System.Drawing.Point(6, 25);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(47, 13);
-            this.label24.TabIndex = 1;
+            this.label24.TabIndex = 0;
             this.label24.Text = "Nombre:";
             // 
             // label25
@@ -522,7 +522,7 @@
             this.groupBox5.Location = new System.Drawing.Point(353, 81);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(351, 102);
-            this.groupBox5.TabIndex = 35;
+            this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Roles usuario";
             // 
@@ -532,7 +532,7 @@
             this.label42.Location = new System.Drawing.Point(5, 58);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(89, 13);
-            this.label42.TabIndex = 30;
+            this.label42.TabIndex = 1;
             this.label42.Text = "que quiera quitar:";
             // 
             // label41
@@ -541,7 +541,7 @@
             this.label41.Location = new System.Drawing.Point(4, 30);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(85, 13);
-            this.label41.TabIndex = 29;
+            this.label41.TabIndex = 0;
             this.label41.Text = "Seleccione roles";
             // 
             // checkedListBoxRolesUPD
@@ -550,7 +550,7 @@
             this.checkedListBoxRolesUPD.Location = new System.Drawing.Point(111, 14);
             this.checkedListBoxRolesUPD.Name = "checkedListBoxRolesUPD";
             this.checkedListBoxRolesUPD.Size = new System.Drawing.Size(215, 79);
-            this.checkedListBoxRolesUPD.TabIndex = 27;
+            this.checkedListBoxRolesUPD.TabIndex = 2;
             // 
             // frmModificarUsuario
             // 

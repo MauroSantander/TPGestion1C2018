@@ -73,7 +73,7 @@
             this.buttonCrearUsr.Name = "buttonCrearUsr";
             this.buttonCrearUsr.Size = new System.Drawing.Size(90, 40);
             this.buttonCrearUsr.TabIndex = 4;
-            this.buttonCrearUsr.Text = "Crear Usuario";
+            this.buttonCrearUsr.Text = "Crear usuario";
             this.buttonCrearUsr.UseVisualStyleBackColor = true;
             this.buttonCrearUsr.Click += new System.EventHandler(this.buttonCrearUsr_Click);
             // 
@@ -92,10 +92,12 @@
             this.dataGridViewUsuarios.AllowUserToAddRows = false;
             this.dataGridViewUsuarios.AllowUserToDeleteRows = false;
             this.dataGridViewUsuarios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewUsuarios.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridViewUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsuarios.Location = new System.Drawing.Point(12, 175);
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
             this.dataGridViewUsuarios.ReadOnly = true;
+            this.dataGridViewUsuarios.RowHeadersVisible = false;
             this.dataGridViewUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewUsuarios.Size = new System.Drawing.Size(927, 306);
             this.dataGridViewUsuarios.TabIndex = 5;

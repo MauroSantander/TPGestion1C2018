@@ -222,10 +222,12 @@
             this.dataGridViewClientes.AllowUserToDeleteRows = false;
             this.dataGridViewClientes.AllowUserToOrderColumns = true;
             this.dataGridViewClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewClientes.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClientes.Location = new System.Drawing.Point(11, 118);
             this.dataGridViewClientes.Name = "dataGridViewClientes";
             this.dataGridViewClientes.ReadOnly = true;
+            this.dataGridViewClientes.RowHeadersVisible = false;
             this.dataGridViewClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewClientes.Size = new System.Drawing.Size(919, 337);
             this.dataGridViewClientes.TabIndex = 4;

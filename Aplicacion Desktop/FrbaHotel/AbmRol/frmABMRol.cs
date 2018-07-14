@@ -113,6 +113,9 @@ namespace FrbaHotel.AbmRol
 
             Utils.cargarRoles(listRoles);
             MessageBox.Show("Alta realizada correctamente.");
+
+            tabControl1.SelectedIndex = 0;
+
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -131,6 +134,10 @@ namespace FrbaHotel.AbmRol
         public void recargarRoles()
         {
             Utils.cargarRoles(listRoles);
+            if (listRoles.Items.Count > 0)
+            {
+                listRoles.SelectedIndex = 0;
+            }
         }
 
         private void listRoles_SelectedIndexChanged(object sender, EventArgs e)
