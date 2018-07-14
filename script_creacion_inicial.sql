@@ -2335,13 +2335,13 @@ BEGIN
 
 	SET @idEstadia = [PISOS_PICADOS].obtenerEstadia(@codigoReserva)
 
-	RETURN (
-			SELECT SUM(ec.cantidad * c.precio)
+	RETURN ISNULL(
+			(SELECT SUM(ec.cantidad * c.precio)
 			FROM [PISOS_PICADOS].EstadiaxConsumible AS ec
 			INNER JOIN Consumible AS c ON ec.idConsumible = c.idConsumible
 			WHERE ec.idEstadia = @idEstadia
-			GROUP BY ec.idEstadia
-			)
+			GROUP BY ec.idEstadia)
+			,0)
 END
 GO
 
