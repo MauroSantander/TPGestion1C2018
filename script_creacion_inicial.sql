@@ -274,6 +274,12 @@ IF OBJECT_ID(N'[PISOS_PICADOS].mostrarClientes', N'IF') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].cantHabitacionesReserva', N'FN') IS NOT NULL
 	DROP FUNCTION [PISOS_PICADOS].cantHabitacionesReserva;
 
+IF OBJECT_ID(N'[PISOS_PICADOS].diasQueSEAlojo', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].diasQueSeAlojo;
+
+IF OBJECT_ID(N'[PISOS_PICADOS].diasQueSeReservo', N'FN') IS NOT NULL
+	DROP FUNCTION [PISOS_PICADOS].diasQueSeReservo;
+
 /* Procedures*/
 IF OBJECT_ID(N'[PISOS_PICADOS].altaRol', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].altaRol;
@@ -3291,6 +3297,33 @@ BEGIN
 			)
 END
 GO
+
+/*Dado un codigo de reserva muestra los dias que realmente se alojo*/
+CREATE FUNCTION [PISOS_PICADOS].diasQueSeAlojo (@codigoReserva INT)
+RETURNS INT
+AS
+BEGIN
+	RETURN ISNULL((
+				SELECT diasEstadia
+				FROM [PISOS_PICADOS].Estadia AS e
+				WHERE e.codigoReserva = @codigoReserva
+				), 0)
+END
+GO
+
+/*Dado un codigo de reserva muestra los dias que reservo*/
+CREATE FUNCTION [PISOS_PICADOS].diasQueSeReservo (@codigoReserva INT)
+RETURNS INT
+AS
+BEGIN
+	RETURN ISNULL((
+				SELECT diasReserva
+				FROM [PISOS_PICADOS].Estadia AS e
+				WHERE e.codigoReserva = @codigoReserva
+				), 0)
+END
+GO
+
 
 /* STORED PROCEDURES ------------------------------------------------------*/
 CREATE PROCEDURE [PISOS_PICADOS].altaRol @nombre VARCHAR(255)
