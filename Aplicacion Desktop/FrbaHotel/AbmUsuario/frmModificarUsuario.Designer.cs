@@ -45,6 +45,7 @@
             this.label32 = new System.Windows.Forms.Label();
             this.usernameUPD = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.comboBoxPaisUPD = new System.Windows.Forms.ComboBox();
             this.label37 = new System.Windows.Forms.Label();
             this.localidadUPD = new System.Windows.Forms.TextBox();
@@ -68,7 +69,6 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label49 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
             this.checkedListBoxRolesUPD = new System.Windows.Forms.CheckedListBox();
@@ -85,8 +85,10 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.BackColor = System.Drawing.Color.Silver;
+            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox3.Controls.Add(this.buttonActualizar);
             this.groupBox3.Controls.Add(this.groupBox8);
+            this.groupBox3.Controls.Add(this.buttonVolver);
             this.groupBox3.Controls.Add(this.groupBox9);
             this.groupBox3.Controls.Add(this.groupBox7);
             this.groupBox3.Controls.Add(this.groupBox6);
@@ -94,7 +96,7 @@
             this.groupBox3.Controls.Add(this.groupBox5);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1199, 373);
+            this.groupBox3.Size = new System.Drawing.Size(1061, 397);
             this.groupBox3.TabIndex = 42;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edite los datos que quiera actualizar";
@@ -104,19 +106,19 @@
             this.groupBox8.Controls.Add(this.checkedListBoxHotelesUPD);
             this.groupBox8.Controls.Add(this.label48);
             this.groupBox8.Controls.Add(this.label47);
-            this.groupBox8.Location = new System.Drawing.Point(482, 212);
+            this.groupBox8.Location = new System.Drawing.Point(353, 189);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(351, 142);
             this.groupBox8.TabIndex = 37;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Hoteles del  Usuario";
+            this.groupBox8.Text = "Hoteles del usuario";
             // 
             // checkedListBoxHotelesUPD
             // 
             this.checkedListBoxHotelesUPD.FormattingEnabled = true;
-            this.checkedListBoxHotelesUPD.Location = new System.Drawing.Point(101, 19);
+            this.checkedListBoxHotelesUPD.Location = new System.Drawing.Point(111, 19);
             this.checkedListBoxHotelesUPD.Name = "checkedListBoxHotelesUPD";
-            this.checkedListBoxHotelesUPD.Size = new System.Drawing.Size(187, 94);
+            this.checkedListBoxHotelesUPD.Size = new System.Drawing.Size(215, 94);
             this.checkedListBoxHotelesUPD.TabIndex = 26;
             // 
             // label48
@@ -124,9 +126,9 @@
             this.label48.AutoSize = true;
             this.label48.Location = new System.Drawing.Point(6, 51);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(88, 13);
+            this.label48.Size = new System.Drawing.Size(86, 13);
             this.label48.TabIndex = 33;
-            this.label48.Text = "Seleccione Hotel";
+            this.label48.Text = "Seleccione hotel";
             // 
             // label47
             // 
@@ -142,9 +144,9 @@
             this.groupBox9.Controls.Add(this.checkedListBoxHotelesUPDNo);
             this.groupBox9.Controls.Add(this.label45);
             this.groupBox9.Controls.Add(this.label46);
-            this.groupBox9.Location = new System.Drawing.Point(854, 213);
+            this.groupBox9.Location = new System.Drawing.Point(719, 189);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(325, 141);
+            this.groupBox9.Size = new System.Drawing.Size(325, 142);
             this.groupBox9.TabIndex = 38;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Otros Hoteles con posibilidad de agregar";
@@ -171,30 +173,30 @@
             this.label46.AutoSize = true;
             this.label46.Location = new System.Drawing.Point(7, 54);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(88, 13);
+            this.label46.Size = new System.Drawing.Size(86, 13);
             this.label46.TabIndex = 35;
-            this.label46.Text = "Seleccione Hotel";
+            this.label46.Text = "Seleccione hotel";
             // 
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.label44);
             this.groupBox7.Controls.Add(this.label43);
             this.groupBox7.Controls.Add(this.checkedListBoxRolesUPDNo);
-            this.groupBox7.Location = new System.Drawing.Point(854, 80);
+            this.groupBox7.Location = new System.Drawing.Point(719, 80);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(325, 103);
             this.groupBox7.TabIndex = 36;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Otros Roles con posibilidad de agregar";
+            this.groupBox7.Text = "Otros roles con posibilidad de agregar";
             // 
             // label44
             // 
             this.label44.AutoSize = true;
             this.label44.Location = new System.Drawing.Point(6, 26);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(90, 13);
+            this.label44.Size = new System.Drawing.Size(85, 13);
             this.label44.TabIndex = 31;
-            this.label44.Text = "Seleccione Roles";
+            this.label44.Text = "Seleccione roles";
             // 
             // label43
             // 
@@ -208,7 +210,7 @@
             // checkedListBoxRolesUPDNo
             // 
             this.checkedListBoxRolesUPDNo.FormattingEnabled = true;
-            this.checkedListBoxRolesUPDNo.Location = new System.Drawing.Point(117, 16);
+            this.checkedListBoxRolesUPDNo.Location = new System.Drawing.Point(113, 15);
             this.checkedListBoxRolesUPDNo.Name = "checkedListBoxRolesUPDNo";
             this.checkedListBoxRolesUPDNo.Size = new System.Drawing.Size(193, 79);
             this.checkedListBoxRolesUPDNo.TabIndex = 28;
@@ -219,7 +221,7 @@
             this.groupBox6.Controls.Add(this.usernameUPD);
             this.groupBox6.Location = new System.Drawing.Point(14, 21);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1165, 53);
+            this.groupBox6.Size = new System.Drawing.Size(1030, 53);
             this.groupBox6.TabIndex = 37;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Inicio de Sesión";
@@ -235,15 +237,16 @@
             // 
             // usernameUPD
             // 
-            this.usernameUPD.Location = new System.Drawing.Point(64, 23);
+            this.usernameUPD.Location = new System.Drawing.Point(78, 23);
             this.usernameUPD.MaxLength = 255;
             this.usernameUPD.Name = "usernameUPD";
-            this.usernameUPD.Size = new System.Drawing.Size(190, 20);
+            this.usernameUPD.Size = new System.Drawing.Size(213, 20);
             this.usernameUPD.TabIndex = 43;
             this.usernameUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoYNros_KeyPress);
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.comboBoxPaisUPD);
             this.groupBox4.Controls.Add(this.label37);
             this.groupBox4.Controls.Add(this.localidadUPD);
@@ -268,24 +271,33 @@
             this.groupBox4.Controls.Add(this.label25);
             this.groupBox4.Location = new System.Drawing.Point(14, 80);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(462, 274);
+            this.groupBox4.Size = new System.Drawing.Size(321, 308);
             this.groupBox4.TabIndex = 36;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Datos personales";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 74);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.TabIndex = 35;
+            this.label1.Text = "Tipo id:";
             // 
             // comboBoxPaisUPD
             // 
             this.comboBoxPaisUPD.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPaisUPD.FormattingEnabled = true;
-            this.comboBoxPaisUPD.Location = new System.Drawing.Point(290, 213);
+            this.comboBoxPaisUPD.Location = new System.Drawing.Point(78, 175);
             this.comboBoxPaisUPD.Name = "comboBoxPaisUPD";
-            this.comboBoxPaisUPD.Size = new System.Drawing.Size(166, 21);
+            this.comboBoxPaisUPD.Size = new System.Drawing.Size(213, 21);
             this.comboBoxPaisUPD.TabIndex = 34;
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(260, 218);
+            this.label37.Location = new System.Drawing.Point(6, 178);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(32, 13);
             this.label37.TabIndex = 24;
@@ -293,17 +305,17 @@
             // 
             // localidadUPD
             // 
-            this.localidadUPD.Location = new System.Drawing.Point(63, 213);
+            this.localidadUPD.Location = new System.Drawing.Point(78, 201);
             this.localidadUPD.MaxLength = 255;
             this.localidadUPD.Name = "localidadUPD";
-            this.localidadUPD.Size = new System.Drawing.Size(191, 20);
+            this.localidadUPD.Size = new System.Drawing.Size(213, 20);
             this.localidadUPD.TabIndex = 23;
             this.localidadUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(6, 218);
+            this.label36.Location = new System.Drawing.Point(6, 204);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(56, 13);
             this.label36.TabIndex = 22;
@@ -311,17 +323,17 @@
             // 
             // nroUPD
             // 
-            this.nroUPD.Location = new System.Drawing.Point(290, 181);
+            this.nroUPD.Location = new System.Drawing.Point(78, 254);
             this.nroUPD.MaxLength = 9;
             this.nroUPD.Name = "nroUPD";
-            this.nroUPD.Size = new System.Drawing.Size(125, 20);
+            this.nroUPD.Size = new System.Drawing.Size(213, 20);
             this.nroUPD.TabIndex = 21;
             this.nroUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(260, 184);
+            this.label28.Location = new System.Drawing.Point(6, 257);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(27, 13);
             this.label28.TabIndex = 20;
@@ -329,46 +341,46 @@
             // 
             // dateTimePickerUPD
             // 
-            this.dateTimePickerUPD.Location = new System.Drawing.Point(118, 239);
+            this.dateTimePickerUPD.Location = new System.Drawing.Point(78, 280);
             this.dateTimePickerUPD.MaxDate = new System.DateTime(2018, 7, 13, 0, 0, 0, 0);
             this.dateTimePickerUPD.MinDate = new System.DateTime(1889, 1, 1, 0, 0, 0, 0);
             this.dateTimePickerUPD.Name = "dateTimePickerUPD";
-            this.dateTimePickerUPD.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerUPD.Size = new System.Drawing.Size(213, 20);
             this.dateTimePickerUPD.TabIndex = 18;
             this.dateTimePickerUPD.Value = new System.DateTime(2018, 7, 13, 0, 0, 0, 0);
             // 
             // calleUPD
             // 
-            this.calleUPD.Location = new System.Drawing.Point(63, 181);
+            this.calleUPD.Location = new System.Drawing.Point(78, 229);
             this.calleUPD.MaxLength = 255;
             this.calleUPD.Name = "calleUPD";
-            this.calleUPD.Size = new System.Drawing.Size(191, 20);
+            this.calleUPD.Size = new System.Drawing.Size(213, 20);
             this.calleUPD.TabIndex = 17;
             this.calleUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
             // 
             // mailUPD
             // 
-            this.mailUPD.Location = new System.Drawing.Point(63, 114);
+            this.mailUPD.Location = new System.Drawing.Point(78, 124);
             this.mailUPD.MaxLength = 255;
             this.mailUPD.Name = "mailUPD";
-            this.mailUPD.Size = new System.Drawing.Size(255, 20);
+            this.mailUPD.Size = new System.Drawing.Size(213, 20);
             this.mailUPD.TabIndex = 16;
             // 
             // telUPD
             // 
-            this.telUPD.Location = new System.Drawing.Point(63, 148);
+            this.telUPD.Location = new System.Drawing.Point(78, 150);
             this.telUPD.MaxLength = 255;
             this.telUPD.Name = "telUPD";
-            this.telUPD.Size = new System.Drawing.Size(255, 20);
+            this.telUPD.Size = new System.Drawing.Size(213, 20);
             this.telUPD.TabIndex = 15;
             this.telUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
             // numIdUPD
             // 
-            this.numIdUPD.Location = new System.Drawing.Point(263, 80);
+            this.numIdUPD.Location = new System.Drawing.Point(78, 98);
             this.numIdUPD.MaxLength = 9;
             this.numIdUPD.Name = "numIdUPD";
-            this.numIdUPD.Size = new System.Drawing.Size(182, 20);
+            this.numIdUPD.Size = new System.Drawing.Size(213, 20);
             this.numIdUPD.TabIndex = 14;
             this.numIdUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.numeros_KeyPress);
             // 
@@ -387,42 +399,42 @@
             "L.E",
             "Carnet Ext.",
             "Pasaporte"});
-            this.comboBoxTipoUPD.Location = new System.Drawing.Point(144, 80);
+            this.comboBoxTipoUPD.Location = new System.Drawing.Point(78, 74);
             this.comboBoxTipoUPD.Name = "comboBoxTipoUPD";
-            this.comboBoxTipoUPD.Size = new System.Drawing.Size(113, 21);
+            this.comboBoxTipoUPD.Size = new System.Drawing.Size(213, 21);
             this.comboBoxTipoUPD.TabIndex = 13;
             // 
             // nombreUPD
             // 
-            this.nombreUPD.Location = new System.Drawing.Point(63, 19);
+            this.nombreUPD.Location = new System.Drawing.Point(78, 19);
             this.nombreUPD.MaxLength = 255;
             this.nombreUPD.Name = "nombreUPD";
-            this.nombreUPD.Size = new System.Drawing.Size(255, 20);
+            this.nombreUPD.Size = new System.Drawing.Size(213, 20);
             this.nombreUPD.TabIndex = 12;
             this.nombreUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // apellidoUPD
             // 
-            this.apellidoUPD.Location = new System.Drawing.Point(63, 45);
+            this.apellidoUPD.Location = new System.Drawing.Point(78, 48);
             this.apellidoUPD.MaxLength = 255;
             this.apellidoUPD.Name = "apellidoUPD";
-            this.apellidoUPD.Size = new System.Drawing.Size(255, 20);
+            this.apellidoUPD.Size = new System.Drawing.Size(213, 20);
             this.apellidoUPD.TabIndex = 11;
             this.apellidoUPD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(3, 242);
+            this.label18.Location = new System.Drawing.Point(6, 282);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(109, 13);
+            this.label18.Size = new System.Drawing.Size(61, 13);
             this.label18.TabIndex = 8;
-            this.label18.Text = "Fecha de nacimiento:";
+            this.label18.Text = "Fecha nac:";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(4, 184);
+            this.label19.Location = new System.Drawing.Point(6, 232);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(33, 13);
             this.label19.TabIndex = 7;
@@ -439,7 +451,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 117);
+            this.label20.Location = new System.Drawing.Point(6, 127);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(29, 13);
             this.label20.TabIndex = 5;
@@ -448,7 +460,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(5, 151);
+            this.label21.Location = new System.Drawing.Point(6, 153);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(52, 13);
             this.label21.TabIndex = 4;
@@ -457,11 +469,11 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 83);
+            this.label22.Location = new System.Drawing.Point(6, 101);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(132, 13);
+            this.label22.Size = new System.Drawing.Size(73, 13);
             this.label22.TabIndex = 3;
-            this.label22.Text = "Tipo y n° de identificación:";
+            this.label22.Text = "Identificación:";
             // 
             // label24
             // 
@@ -483,25 +495,15 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.label49);
             this.groupBox5.Controls.Add(this.label42);
             this.groupBox5.Controls.Add(this.label41);
             this.groupBox5.Controls.Add(this.checkedListBoxRolesUPD);
-            this.groupBox5.Location = new System.Drawing.Point(482, 80);
+            this.groupBox5.Location = new System.Drawing.Point(353, 81);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(351, 102);
             this.groupBox5.TabIndex = 35;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Roles Usuario";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(8, 44);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(60, 13);
-            this.label49.TabIndex = 33;
-            this.label49.Text = "del Usuario";
+            this.groupBox5.Text = "Roles usuario";
             // 
             // label42
             // 
@@ -517,9 +519,9 @@
             this.label41.AutoSize = true;
             this.label41.Location = new System.Drawing.Point(4, 30);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(90, 13);
+            this.label41.Size = new System.Drawing.Size(85, 13);
             this.label41.TabIndex = 29;
-            this.label41.Text = "Seleccione Roles";
+            this.label41.Text = "Seleccione roles";
             // 
             // checkedListBoxRolesUPD
             // 
@@ -532,9 +534,9 @@
             // buttonActualizar
             // 
             this.buttonActualizar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonActualizar.Location = new System.Drawing.Point(1039, 404);
+            this.buttonActualizar.Location = new System.Drawing.Point(965, 352);
             this.buttonActualizar.Name = "buttonActualizar";
-            this.buttonActualizar.Size = new System.Drawing.Size(137, 59);
+            this.buttonActualizar.Size = new System.Drawing.Size(90, 40);
             this.buttonActualizar.TabIndex = 46;
             this.buttonActualizar.Text = "Actualizar Usuario";
             this.buttonActualizar.UseVisualStyleBackColor = true;
@@ -542,9 +544,9 @@
             // 
             // buttonVolver
             // 
-            this.buttonVolver.Location = new System.Drawing.Point(833, 404);
+            this.buttonVolver.Location = new System.Drawing.Point(869, 352);
             this.buttonVolver.Name = "buttonVolver";
-            this.buttonVolver.Size = new System.Drawing.Size(137, 59);
+            this.buttonVolver.Size = new System.Drawing.Size(90, 40);
             this.buttonVolver.TabIndex = 47;
             this.buttonVolver.Text = "Volver";
             this.buttonVolver.UseVisualStyleBackColor = true;
@@ -554,13 +556,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1223, 490);
-            this.Controls.Add(this.buttonActualizar);
-            this.Controls.Add(this.buttonVolver);
+            this.ClientSize = new System.Drawing.Size(1084, 415);
             this.Controls.Add(this.groupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmModificarUsuario";
-            this.Text = "Modificar Usuario";
+            this.Text = "Modificar usuario";
             this.Load += new System.EventHandler(this.frmModificarUsuario_Load);
             this.groupBox3.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
@@ -621,12 +621,12 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label49;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.CheckedListBox checkedListBoxRolesUPD;
         private System.Windows.Forms.Button buttonActualizar;
         private System.Windows.Forms.Button buttonVolver;
+        private System.Windows.Forms.Label label1;
 
     }
 }

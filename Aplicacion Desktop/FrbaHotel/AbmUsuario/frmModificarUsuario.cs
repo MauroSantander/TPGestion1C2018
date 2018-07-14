@@ -26,11 +26,9 @@ namespace FrbaHotel.AbmUsuario
         }
         private void frmModificarUsuario_Load(object sender, EventArgs e)
         {
-
             this.CenterToScreen();
 
         }
-            //inicializo combobox de paises
             
 
         public void cargarDatos(int id, String usuario, String nombre, String apell, String mail, String tel, String calle, String nroCalle, String localidad, String pais, String tipoId, String nroident, String fechaNacimiento, Admin pantalla)
@@ -395,16 +393,6 @@ namespace FrbaHotel.AbmUsuario
             }
         }
 
-      
-
-
-
-       
-       
-
-    
-
-        
     }
 }
 

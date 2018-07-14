@@ -29,7 +29,6 @@ namespace FrbaHotel.AbmUsuario
         {
             this.cargarHoteles();
             this.cargarRoles();
-            
 
                 this.CenterToScreen();
                 //inicializo combobox de paises
@@ -44,11 +43,6 @@ namespace FrbaHotel.AbmUsuario
                 }
 
                 reader.Close();
-
-               
-
-            
-
         }
 
 
