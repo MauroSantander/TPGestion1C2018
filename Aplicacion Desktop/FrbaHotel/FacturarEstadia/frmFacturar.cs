@@ -138,6 +138,19 @@ namespace FrbaHotel.FacturarEstadia
                 labelTotal.Text = "$" + calcularTotal();
             }
 
+
+            SqlCommand diasAlojados = new SqlCommand("SELECT [PISOS_PICADOS].diasQueSeAlojo (@codigoReserva)", Globals.conexionGlobal);
+            diasAlojados.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            diasAlojados.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+
+            labelAlojados.Text = diasAlojados.ExecuteScalar().ToString();
+
+            SqlCommand diasReservados = new SqlCommand("SELECT [PISOS_PICADOS].diasQueReservo (@codigoReserva)", Globals.conexionGlobal);
+            diasReservados.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            diasReservados.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
+
+            labelReservados.Text = diasReservados.ExecuteScalar().ToString();
+
         }
 
         private string calcularTotalHabitaciones()
