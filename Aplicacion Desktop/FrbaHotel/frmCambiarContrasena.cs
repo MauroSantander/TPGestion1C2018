@@ -21,7 +21,6 @@ namespace FrbaHotel
         private void frmCambiarContrasena_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
-            this.textBoxContraActual.Text = Globals.contrasenaUsuario;
         }
 
         private void buttonVolver_Click(object sender, EventArgs e)
@@ -31,37 +30,38 @@ namespace FrbaHotel
 
         private void buttonCambiar_Click(object sender, EventArgs e)
         {
-            if (textBoxNueva.Text != "")
+            //chequeos
+            if (textBoxContraActual.Text == "" || textBoxNueva.Text == "" || textBoxRepetida.Text == "")
             {
-                //PASO CHEQUEOS
-                DialogResult result = MessageBox.Show("Su contraseña sera actualizada a:  ´"+textBoxNueva.Text+"´  . ¿Quiere confirmar el cambio?", "Confirmación de cambio", MessageBoxButtons.YesNoCancel);
+                MessageBox.Show("Complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                if (result == DialogResult.Yes)
-                {
-                    SqlCommand comandoBajaHotel = new SqlCommand("PISOS_PICADOS.actualizarContrasena", Globals.conexionGlobal);
-                    comandoBajaHotel.CommandType = CommandType.StoredProcedure;
+            if (textBoxContraActual.Text != Globals.contrasenaUsuario)
+            {
+                MessageBox.Show("Contraseña actual incorrecta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                    comandoBajaHotel.Parameters.AddWithValue("@idUsuario", Globals.idUsuarioSesion);
-                    comandoBajaHotel.Parameters.AddWithValue("@contrasena", textBoxNueva.Text);
+            if (textBoxNueva.Text != textBoxRepetida.Text)
+            {
+                MessageBox.Show("Los campos de nueva contraseña no coinciden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                    comandoBajaHotel.ExecuteNonQuery();
-                    MessageBox.Show("Contraseña actualizada correctamente");
-                    this.Close();
-                }
-                else if (result == DialogResult.No)
-                {
-                    textBoxNueva.Text = "";
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    this.Close();
-                }
+            //Creo sp actualización de contaseña
+            SqlCommand cmdActualizarPass = new SqlCommand("PISOS_PICADOS.actualizarContrasena", Globals.conexionGlobal);
+            cmdActualizarPass.CommandType = CommandType.StoredProcedure;
+
+            //Agrego parámetros
+            cmdActualizarPass.Parameters.AddWithValue("@idUsuario", Globals.idUsuarioSesion);
+            cmdActualizarPass.Parameters.AddWithValue("@contrasena", textBoxNueva.Text);
+
+            //Ejecuto
+            cmdActualizarPass.ExecuteNonQuery();
+            MessageBox.Show("Contraseña actualizada correctamente");
+            this.Close();
                 
-            }
-            else
-            {
-                MessageBox.Show("Escriba una nueva contraseña");
-            }
         }
 
         private void textoYNros_KeyPress(object sender, KeyPressEventArgs e)
@@ -72,7 +72,5 @@ namespace FrbaHotel
             }
         }
 
-
-        
     }
 }
