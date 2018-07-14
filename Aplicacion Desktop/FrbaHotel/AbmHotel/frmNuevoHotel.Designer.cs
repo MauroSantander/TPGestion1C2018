@@ -29,226 +29,128 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cBestrellas = new System.Windows.Forms.ComboBox();
-            this.textBoxCIU = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePickerCreacion = new System.Windows.Forms.DateTimePicker();
-            this.textBoxMail = new System.Windows.Forms.TextBox();
-            this.textBoxTE = new System.Windows.Forms.TextBox();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkedListRegimenes = new System.Windows.Forms.CheckedListBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dateTimePickerCreacion = new System.Windows.Forms.DateTimePicker();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.textBoxCIU = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBoxNroCalle = new System.Windows.Forms.TextBox();
-            this.textBoxCalle = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.comboBoxPais = new System.Windows.Forms.ComboBox();
-            this.groupBox2.SuspendLayout();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.textBoxCalle = new System.Windows.Forms.TextBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.textBoxTE = new System.Windows.Forms.TextBox();
+            this.Nombre = new System.Windows.Forms.GroupBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.textBoxMail = new System.Windows.Forms.TextBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cBestrellas = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.Nombre.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(411, 574);
+            this.button1.Location = new System.Drawing.Point(224, 433);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 29);
-            this.button1.TabIndex = 75;
-            this.button1.Text = "Registrar";
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Crear";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.cBestrellas);
-            this.groupBox2.Location = new System.Drawing.Point(58, 473);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(397, 41);
-            this.groupBox2.TabIndex = 74;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Estrellas";
-            // 
-            // cBestrellas
-            // 
-            this.cBestrellas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBestrellas.FormattingEnabled = true;
-            this.cBestrellas.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.cBestrellas.Location = new System.Drawing.Point(78, 13);
-            this.cBestrellas.Name = "cBestrellas";
-            this.cBestrellas.Size = new System.Drawing.Size(88, 21);
-            this.cBestrellas.TabIndex = 6;
-            this.cBestrellas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
-            // 
-            // textBoxCIU
-            // 
-            this.textBoxCIU.Location = new System.Drawing.Point(130, 268);
-            this.textBoxCIU.MaxLength = 255;
-            this.textBoxCIU.Name = "textBoxCIU";
-            this.textBoxCIU.Size = new System.Drawing.Size(178, 20);
-            this.textBoxCIU.TabIndex = 72;
-            this.textBoxCIU.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(55, 274);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 71;
-            this.label3.Text = "Ciudad:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(55, 236);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 69;
-            this.label2.Text = "País:";
-            // 
-            // dateTimePickerCreacion
-            // 
-            this.dateTimePickerCreacion.Location = new System.Drawing.Point(160, 530);
-            this.dateTimePickerCreacion.Name = "dateTimePickerCreacion";
-            this.dateTimePickerCreacion.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePickerCreacion.TabIndex = 68;
-            // 
-            // textBoxMail
-            // 
-            this.textBoxMail.Location = new System.Drawing.Point(130, 106);
-            this.textBoxMail.MaxLength = 255;
-            this.textBoxMail.Name = "textBoxMail";
-            this.textBoxMail.Size = new System.Drawing.Size(178, 20);
-            this.textBoxMail.TabIndex = 66;
-            // 
-            // textBoxTE
-            // 
-            this.textBoxTE.Location = new System.Drawing.Point(130, 152);
-            this.textBoxTE.MaxLength = 255;
-            this.textBoxTE.Name = "textBoxTE";
-            this.textBoxTE.Size = new System.Drawing.Size(178, 20);
-            this.textBoxTE.TabIndex = 65;
-            this.textBoxTE.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
-            // 
-            // textBoxName
-            // 
-            this.textBoxName.Location = new System.Drawing.Point(130, 64);
-            this.textBoxName.MaxLength = 255;
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(178, 20);
-            this.textBoxName.TabIndex = 64;
-            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(55, 532);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(99, 13);
-            this.label18.TabIndex = 63;
-            this.label18.Text = "Fecha de creación:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(55, 111);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(29, 13);
-            this.label20.TabIndex = 61;
-            this.label20.Text = "Mail:";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(55, 154);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(52, 13);
-            this.label21.TabIndex = 60;
-            this.label21.Text = "Teléfono:";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(55, 67);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(47, 13);
-            this.label24.TabIndex = 59;
-            this.label24.Text = "Nombre:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(268, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(164, 15);
-            this.label1.TabIndex = 58;
-            this.label1.Text = "Registrar un nuevo hotel";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.checkedListRegimenes);
-            this.groupBox1.Location = new System.Drawing.Point(58, 298);
+            this.groupBox1.Location = new System.Drawing.Point(12, 247);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(402, 169);
-            this.groupBox1.TabIndex = 73;
+            this.groupBox1.Size = new System.Drawing.Size(312, 124);
+            this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Regímenes";
             // 
             // checkedListRegimenes
             // 
             this.checkedListRegimenes.FormattingEnabled = true;
-            this.checkedListRegimenes.Location = new System.Drawing.Point(44, 26);
+            this.checkedListRegimenes.Location = new System.Drawing.Point(8, 19);
             this.checkedListRegimenes.Name = "checkedListRegimenes";
-            this.checkedListRegimenes.Size = new System.Drawing.Size(329, 124);
+            this.checkedListRegimenes.Size = new System.Drawing.Size(296, 94);
             this.checkedListRegimenes.TabIndex = 0;
             // 
-            // label4
+            // groupBox3
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(334, 191);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 13);
-            this.label4.TabIndex = 98;
-            this.label4.Text = "Nro:";
+            this.groupBox3.Controls.Add(this.dateTimePickerCreacion);
+            this.groupBox3.Location = new System.Drawing.Point(12, 377);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(312, 50);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Fecha de creación";
+            // 
+            // dateTimePickerCreacion
+            // 
+            this.dateTimePickerCreacion.Location = new System.Drawing.Point(6, 22);
+            this.dateTimePickerCreacion.Name = "dateTimePickerCreacion";
+            this.dateTimePickerCreacion.Size = new System.Drawing.Size(298, 20);
+            this.dateTimePickerCreacion.TabIndex = 0;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.textBoxCIU);
+            this.groupBox8.Location = new System.Drawing.Point(171, 125);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(153, 50);
+            this.groupBox8.TabIndex = 5;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Ciudad";
+            // 
+            // textBoxCIU
+            // 
+            this.textBoxCIU.Location = new System.Drawing.Point(6, 20);
+            this.textBoxCIU.MaxLength = 255;
+            this.textBoxCIU.Name = "textBoxCIU";
+            this.textBoxCIU.Size = new System.Drawing.Size(139, 20);
+            this.textBoxCIU.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.textBoxNroCalle);
+            this.groupBox4.Location = new System.Drawing.Point(171, 181);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(153, 50);
+            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Número de calle";
             // 
             // textBoxNroCalle
             // 
-            this.textBoxNroCalle.Location = new System.Drawing.Point(395, 189);
+            this.textBoxNroCalle.Location = new System.Drawing.Point(6, 19);
             this.textBoxNroCalle.MaxLength = 9;
             this.textBoxNroCalle.Name = "textBoxNroCalle";
-            this.textBoxNroCalle.Size = new System.Drawing.Size(98, 20);
-            this.textBoxNroCalle.TabIndex = 97;
-            this.textBoxNroCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nro_KeyPress);
+            this.textBoxNroCalle.Size = new System.Drawing.Size(139, 20);
+            this.textBoxNroCalle.TabIndex = 0;
             // 
-            // textBoxCalle
+            // groupBox5
             // 
-            this.textBoxCalle.Location = new System.Drawing.Point(130, 189);
-            this.textBoxCalle.MaxLength = 255;
-            this.textBoxCalle.Name = "textBoxCalle";
-            this.textBoxCalle.Size = new System.Drawing.Size(178, 20);
-            this.textBoxCalle.TabIndex = 96;
-            this.textBoxCalle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textoNrosYespacios_KeyPress);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(55, 196);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(33, 13);
-            this.label19.TabIndex = 95;
-            this.label19.Text = "Calle:";
+            this.groupBox5.Controls.Add(this.comboBoxPais);
+            this.groupBox5.Location = new System.Drawing.Point(12, 125);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(153, 50);
+            this.groupBox5.TabIndex = 4;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "País";
             // 
             // comboBoxPais
             // 
@@ -450,72 +352,171 @@
             this.comboBoxPais.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.comboBoxPais.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPais.FormattingEnabled = true;
-            this.comboBoxPais.Location = new System.Drawing.Point(130, 233);
+            this.comboBoxPais.Location = new System.Drawing.Point(8, 19);
             this.comboBoxPais.Name = "comboBoxPais";
-            this.comboBoxPais.Size = new System.Drawing.Size(197, 21);
-            this.comboBoxPais.TabIndex = 99;
-            this.comboBoxPais.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.texto_KeyPress);
+            this.comboBoxPais.Size = new System.Drawing.Size(139, 21);
+            this.comboBoxPais.TabIndex = 0;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.textBoxCalle);
+            this.groupBox6.Location = new System.Drawing.Point(12, 181);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(153, 50);
+            this.groupBox6.TabIndex = 6;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Calle";
+            // 
+            // textBoxCalle
+            // 
+            this.textBoxCalle.Location = new System.Drawing.Point(8, 19);
+            this.textBoxCalle.MaxLength = 255;
+            this.textBoxCalle.Name = "textBoxCalle";
+            this.textBoxCalle.Size = new System.Drawing.Size(139, 20);
+            this.textBoxCalle.TabIndex = 0;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.textBoxTE);
+            this.groupBox7.Location = new System.Drawing.Point(171, 68);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(153, 50);
+            this.groupBox7.TabIndex = 3;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Teléfono";
+            // 
+            // textBoxTE
+            // 
+            this.textBoxTE.Location = new System.Drawing.Point(6, 19);
+            this.textBoxTE.MaxLength = 255;
+            this.textBoxTE.Name = "textBoxTE";
+            this.textBoxTE.Size = new System.Drawing.Size(139, 20);
+            this.textBoxTE.TabIndex = 0;
+            // 
+            // Nombre
+            // 
+            this.Nombre.Controls.Add(this.textBoxName);
+            this.Nombre.Location = new System.Drawing.Point(12, 12);
+            this.Nombre.Name = "Nombre";
+            this.Nombre.Size = new System.Drawing.Size(153, 50);
+            this.Nombre.TabIndex = 0;
+            this.Nombre.TabStop = false;
+            this.Nombre.Text = "Nombre";
+            // 
+            // textBoxName
+            // 
+            this.textBoxName.Location = new System.Drawing.Point(8, 19);
+            this.textBoxName.MaxLength = 255;
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(139, 20);
+            this.textBoxName.TabIndex = 0;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.textBoxMail);
+            this.groupBox9.Location = new System.Drawing.Point(12, 68);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(153, 50);
+            this.groupBox9.TabIndex = 2;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Mail";
+            // 
+            // textBoxMail
+            // 
+            this.textBoxMail.Location = new System.Drawing.Point(6, 19);
+            this.textBoxMail.MaxLength = 255;
+            this.textBoxMail.Name = "textBoxMail";
+            this.textBoxMail.Size = new System.Drawing.Size(139, 20);
+            this.textBoxMail.TabIndex = 0;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.cBestrellas);
+            this.groupBox10.Location = new System.Drawing.Point(171, 12);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(153, 50);
+            this.groupBox10.TabIndex = 1;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Estrellas";
+            // 
+            // cBestrellas
+            // 
+            this.cBestrellas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBestrellas.FormattingEnabled = true;
+            this.cBestrellas.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.cBestrellas.Location = new System.Drawing.Point(6, 18);
+            this.cBestrellas.Name = "cBestrellas";
+            this.cBestrellas.Size = new System.Drawing.Size(141, 21);
+            this.cBestrellas.TabIndex = 0;
             // 
             // frmNuevoHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(703, 624);
-            this.Controls.Add(this.comboBoxPais);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBoxNroCalle);
-            this.Controls.Add(this.textBoxCalle);
-            this.Controls.Add(this.label19);
+            this.ClientSize = new System.Drawing.Size(334, 472);
+            this.Controls.Add(this.groupBox8);
+            this.Controls.Add(this.groupBox10);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.groupBox7);
+            this.Controls.Add(this.groupBox9);
+            this.Controls.Add(this.Nombre);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.textBoxCIU);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.dateTimePickerCreacion);
-            this.Controls.Add(this.textBoxMail);
-            this.Controls.Add(this.textBoxTE);
-            this.Controls.Add(this.textBoxName);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.label20);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.label24);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmNuevoHotel";
-            this.Text = "Nuevo Hotel";
+            this.Text = "Nuevo hotel";
             this.Load += new System.EventHandler(this.NuevoHotel_Load);
-            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.Nombre.ResumeLayout(false);
+            this.Nombre.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBoxCIU;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dateTimePickerCreacion;
-        private System.Windows.Forms.TextBox textBoxMail;
-        private System.Windows.Forms.TextBox textBoxTE;
-        private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cBestrellas;
         private System.Windows.Forms.CheckedListBox checkedListRegimenes;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox Nombre;
+        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.TextBox textBoxMail;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.ComboBox cBestrellas;
+        private System.Windows.Forms.DateTimePicker dateTimePickerCreacion;
+        private System.Windows.Forms.TextBox textBoxCIU;
         private System.Windows.Forms.TextBox textBoxNroCalle;
-        private System.Windows.Forms.TextBox textBoxCalle;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox comboBoxPais;
+        private System.Windows.Forms.TextBox textBoxCalle;
+        private System.Windows.Forms.TextBox textBoxTE;
 
     }
 }

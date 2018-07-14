@@ -205,9 +205,5 @@ namespace FrbaHotel.AbmHotel
             }
         }
 
-        
-
-       
-
         }
     }

@@ -79,7 +79,7 @@
             this.groupBox1.Location = new System.Drawing.Point(12, 110);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(230, 53);
-            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Desde";
             // 
@@ -88,7 +88,7 @@
             this.dtpInicioReserva.Location = new System.Drawing.Point(15, 19);
             this.dtpInicioReserva.Name = "dtpInicioReserva";
             this.dtpInicioReserva.Size = new System.Drawing.Size(200, 20);
-            this.dtpInicioReserva.TabIndex = 1;
+            this.dtpInicioReserva.TabIndex = 0;
             this.dtpInicioReserva.ValueChanged += new System.EventHandler(this.dtpInicioReserva_ValueChanged);
             // 
             // groupBox2
@@ -97,7 +97,7 @@
             this.groupBox2.Location = new System.Drawing.Point(12, 169);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(230, 53);
-            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Hasta";
             // 
@@ -106,7 +106,7 @@
             this.dtpFinReserva.Location = new System.Drawing.Point(15, 19);
             this.dtpFinReserva.Name = "dtpFinReserva";
             this.dtpFinReserva.Size = new System.Drawing.Size(200, 20);
-            this.dtpFinReserva.TabIndex = 1;
+            this.dtpFinReserva.TabIndex = 0;
             this.dtpFinReserva.ValueChanged += new System.EventHandler(this.dtpFinReserva_ValueChanged);
             // 
             // btnCrear
@@ -114,7 +114,7 @@
             this.btnCrear.Location = new System.Drawing.Point(425, 253);
             this.btnCrear.Name = "btnCrear";
             this.btnCrear.Size = new System.Drawing.Size(75, 23);
-            this.btnCrear.TabIndex = 4;
+            this.btnCrear.TabIndex = 7;
             this.btnCrear.Text = "Buscar";
             this.btnCrear.UseVisualStyleBackColor = true;
             this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
@@ -124,7 +124,7 @@
             this.btnSalir.Location = new System.Drawing.Point(263, 253);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 23);
-            this.btnSalir.TabIndex = 5;
+            this.btnSalir.TabIndex = 9;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
@@ -135,7 +135,7 @@
             this.groupBox3.Location = new System.Drawing.Point(12, 228);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(149, 53);
-            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Régimen";
             // 
@@ -155,7 +155,7 @@
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(202, 13);
-            this.label1.TabIndex = 6;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Ingrese su pedido. El sistema determinará";
             // 
             // label2
@@ -164,7 +164,7 @@
             this.label2.Location = new System.Drawing.Point(12, 28);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(234, 13);
-            this.label2.TabIndex = 7;
+            this.label2.TabIndex = 1;
             this.label2.Text = "si existe disponibilidad para satisfacer su pedido.";
             // 
             // groupBox5
@@ -173,7 +173,7 @@
             this.groupBox5.Location = new System.Drawing.Point(15, 54);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(227, 50);
-            this.groupBox5.TabIndex = 8;
+            this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Hotel";
             // 
@@ -197,7 +197,7 @@
             this.groupBox11.Location = new System.Drawing.Point(252, 9);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(248, 213);
-            this.groupBox11.TabIndex = 12;
+            this.groupBox11.TabIndex = 6;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Habitaciones";
             // 
@@ -207,7 +207,7 @@
             this.groupBox12.Location = new System.Drawing.Point(23, 142);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(102, 53);
-            this.groupBox12.TabIndex = 13;
+            this.groupBox12.TabIndex = 4;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "King";
             // 
@@ -220,6 +220,7 @@
             0,
             0});
             this.numKing.Name = "numKing";
+            this.numKing.ReadOnly = true;
             this.numKing.Size = new System.Drawing.Size(45, 20);
             this.numKing.TabIndex = 0;
             // 
@@ -229,7 +230,7 @@
             this.groupBox13.Location = new System.Drawing.Point(137, 83);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(102, 53);
-            this.groupBox13.TabIndex = 17;
+            this.groupBox13.TabIndex = 3;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Base cuádruple";
             // 
@@ -242,6 +243,7 @@
             0,
             0});
             this.numCuadruple.Name = "numCuadruple";
+            this.numCuadruple.ReadOnly = true;
             this.numCuadruple.Size = new System.Drawing.Size(45, 20);
             this.numCuadruple.TabIndex = 0;
             // 
@@ -251,7 +253,7 @@
             this.groupBox14.Location = new System.Drawing.Point(23, 83);
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(102, 53);
-            this.groupBox14.TabIndex = 15;
+            this.groupBox14.TabIndex = 2;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Base triple";
             // 
@@ -264,6 +266,7 @@
             0,
             0});
             this.numTriple.Name = "numTriple";
+            this.numTriple.ReadOnly = true;
             this.numTriple.Size = new System.Drawing.Size(45, 20);
             this.numTriple.TabIndex = 0;
             // 
@@ -273,7 +276,7 @@
             this.groupBox16.Location = new System.Drawing.Point(137, 24);
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.Size = new System.Drawing.Size(102, 53);
-            this.groupBox16.TabIndex = 14;
+            this.groupBox16.TabIndex = 1;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Base doble";
             // 
@@ -286,6 +289,7 @@
             0,
             0});
             this.numDoble.Name = "numDoble";
+            this.numDoble.ReadOnly = true;
             this.numDoble.Size = new System.Drawing.Size(45, 20);
             this.numDoble.TabIndex = 0;
             // 
@@ -295,7 +299,7 @@
             this.groupBox17.Location = new System.Drawing.Point(23, 24);
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Size = new System.Drawing.Size(102, 53);
-            this.groupBox17.TabIndex = 12;
+            this.groupBox17.TabIndex = 0;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "Base simple";
             // 
@@ -308,6 +312,7 @@
             0,
             0});
             this.numSimple.Name = "numSimple";
+            this.numSimple.ReadOnly = true;
             this.numSimple.Size = new System.Drawing.Size(45, 20);
             this.numSimple.TabIndex = 0;
             // 
@@ -316,7 +321,7 @@
             this.btnLimpiar.Location = new System.Drawing.Point(344, 253);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
-            this.btnLimpiar.TabIndex = 13;
+            this.btnLimpiar.TabIndex = 8;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
             this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
@@ -327,7 +332,7 @@
             this.groupBox4.Location = new System.Drawing.Point(517, 13);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(325, 263);
-            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabIndex = 10;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Precios";
             // 
@@ -344,6 +349,7 @@
             this.dgvPrecios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPrecios.Size = new System.Drawing.Size(313, 240);
             this.dgvPrecios.TabIndex = 0;
+            this.dgvPrecios.TabStop = false;
             // 
             // frmGenerarReserva
             // 

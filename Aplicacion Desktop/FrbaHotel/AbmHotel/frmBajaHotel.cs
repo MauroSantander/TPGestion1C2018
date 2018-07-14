@@ -46,15 +46,13 @@ namespace FrbaHotel.AbmHotel
            
         }
 
-       
-
         private void buttonBaja_Click(object sender, EventArgs e)
         {
             
             //chequeos
 
-                    if ( razon.Text=="") { MessageBox.Show("Informe el motivo de la baja"); }
-                    if (dateTimeDesde.Value > dateTimeHasta.Value) { MessageBox.Show("Coloque un rango de fechas correcto"); }
+                    if ( razon.Text=="") { MessageBox.Show("Informe el motivo de la baja."); }
+                    if (dateTimeDesde.Value > dateTimeHasta.Value) { MessageBox.Show("Coloque un rango de fechas correcto."); }
                     SqlCommand tieneReservas = new SqlCommand("select [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin)", Globals.conexionGlobal);
                     tieneReservas.Parameters.AddWithValue("@idHotel", idHotel);
                     tieneReservas.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
@@ -75,20 +73,20 @@ namespace FrbaHotel.AbmHotel
                         comandoBajaHotel.Parameters.AddWithValue("@razon", razon.Text);
 
                         comandoBajaHotel.ExecuteNonQuery();
-                        MessageBox.Show("Hotel dado de baja correctamente");
+                        MessageBox.Show("Hotel dado de baja correctamente.");
                         pantallaHoteles.eliminarRowHotel();
                         this.Close();
                     }
                     else
                     {
-                        MessageBox.Show("Hay reservas y/o huéspedes en el hotel entre esas fechas");
+                        MessageBox.Show("Hay reservas y/o huéspedes en el hotel entre esas fechas.");
                     }
-
-                    
-
-                
             
-            
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
        
