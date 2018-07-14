@@ -167,6 +167,7 @@ namespace FrbaHotel.CancelarReserva
         private void frmCancelarReserva_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            idCliente = Globals.idUsuarioSesion;
         }
 
         private void procesoInicioSesion()
