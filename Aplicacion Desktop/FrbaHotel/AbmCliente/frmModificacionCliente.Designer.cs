@@ -309,7 +309,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(146, 20);
             this.txtApellido.TabIndex = 0;
-            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // groupBox1
             // 
@@ -327,7 +327,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(146, 20);
             this.txtNombre.TabIndex = 0;
-            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // frmModificacionCliente
             // 

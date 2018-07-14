@@ -117,7 +117,7 @@
             this.Nombre.Name = "Nombre";
             this.Nombre.Size = new System.Drawing.Size(146, 20);
             this.Nombre.TabIndex = 0;
-            this.Nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Nombre_KeyPress);
+            this.Nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // groupBox2
             // 
@@ -136,7 +136,7 @@
             this.Apellido.Name = "Apellido";
             this.Apellido.Size = new System.Drawing.Size(146, 20);
             this.Apellido.TabIndex = 0;
-            this.Apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Apellido_KeyPress);
+            this.Apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textosYespacios_KeyPress);
             // 
             // groupBox3
             // 
@@ -273,7 +273,6 @@
             this.groupBox9.TabIndex = 10;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Número de calle";
-            this.groupBox9.Enter += new System.EventHandler(this.groupBox9_Enter);
             // 
             // NroCalle
             // 

@@ -115,6 +115,7 @@
             this.dateTimeDesde.Name = "dateTimeDesde";
             this.dateTimeDesde.Size = new System.Drawing.Size(218, 20);
             this.dateTimeDesde.TabIndex = 0;
+            this.dateTimeDesde.ValueChanged += new System.EventHandler(this.dateTimeDesde_ValueChanged);
             // 
             // groupBox4
             // 
@@ -134,6 +135,7 @@
             this.dateTimeHasta.Size = new System.Drawing.Size(218, 20);
             this.dateTimeHasta.TabIndex = 0;
             this.dateTimeHasta.Value = new System.DateTime(2018, 7, 13, 7, 2, 29, 0);
+            this.dateTimeHasta.ValueChanged += new System.EventHandler(this.dateTimeHasta_ValueChanged);
             // 
             // groupBox5
             // 

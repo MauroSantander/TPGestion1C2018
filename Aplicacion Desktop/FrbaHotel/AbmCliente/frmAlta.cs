@@ -43,6 +43,8 @@ namespace FrbaHotel.AbmCliente
 
         private void frmAlta_Load(object sender, EventArgs e)
         {
+            FechaNacimiento.Value = Globals.FechaDelSistema;
+            
             //centra el formulario
             this.CenterToScreen();
 
@@ -251,6 +253,7 @@ namespace FrbaHotel.AbmCliente
                 frmGenerarReservaInstance.volver(this);
             }
 
+            this.Close();
         }
 
         //cierra el formulario
@@ -306,9 +309,12 @@ namespace FrbaHotel.AbmCliente
             Utils.txtSoloAceptaLetras(Nacionalidad, sender, e);
         }
 
-        private void groupBox9_Enter(object sender, EventArgs e)
+        private void textosYespacios_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            {
+                if (Char.IsLetter(e.KeyChar) || Char.IsControl(e.KeyChar) || Char.IsSeparator(e.KeyChar)) { e.Handled = false; }
+                else { e.Handled = true; MessageBox.Show("Este campo solo acepta letras y espacios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            }
         }
     }
 }

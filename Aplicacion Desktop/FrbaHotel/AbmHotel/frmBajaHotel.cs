@@ -30,6 +30,8 @@ namespace FrbaHotel.AbmHotel
 
         private void frmBajaHotel_Load(object sender, EventArgs e)
         {
+            dateTimeDesde.Value = Globals.FechaDelSistema;
+            dateTimeHasta.Value = Globals.FechaDelSistema;
 
             this.CenterToScreen();
             textBoxId.Text = idHotel.ToString();
@@ -51,13 +53,13 @@ namespace FrbaHotel.AbmHotel
             
             //chequeos
 
-                    if ( razon.Text=="") { MessageBox.Show("Informe el motivo de la baja."); }
-                    if (dateTimeDesde.Value > dateTimeHasta.Value) { MessageBox.Show("Coloque un rango de fechas correcto."); }
+                    if ( razon.Text=="") { MessageBox.Show("Informe el motivo de la baja."); return;}
+                    if (dateTimeDesde.Value > dateTimeHasta.Value) { MessageBox.Show("Coloque un rango de fechas correcto."); return; }
                     SqlCommand tieneReservas = new SqlCommand("select [PISOS_PICADOS].HotelTieneReservas(@idHotel, @fechaInicio, @fechaFin)", Globals.conexionGlobal);
                     tieneReservas.Parameters.AddWithValue("@idHotel", idHotel);
                     tieneReservas.Parameters.AddWithValue("@fechaInicio", dateTimeDesde.Value.ToString("yyyy-MM-dd"));
                     tieneReservas.Parameters.AddWithValue("@fechaFin", dateTimeHasta.Value.ToString("yyyy-MM-dd"));
-                     Boolean  poseeReservas = (bool)tieneReservas.ExecuteScalar();
+                    Boolean  poseeReservas = (bool)tieneReservas.ExecuteScalar();
             //
       
                     if (!poseeReservas)
@@ -74,7 +76,6 @@ namespace FrbaHotel.AbmHotel
 
                         comandoBajaHotel.ExecuteNonQuery();
                         MessageBox.Show("Hotel dado de baja correctamente.");
-                        pantallaHoteles.eliminarRowHotel();
                         this.Close();
                     }
                     else
@@ -87,6 +88,18 @@ namespace FrbaHotel.AbmHotel
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dateTimeDesde_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimeHasta.Value < dateTimeDesde.Value) dateTimeHasta.Value = dateTimeDesde.Value;
+            if (dateTimeDesde.Value < Globals.FechaDelSistema) dateTimeDesde.Value = Globals.FechaDelSistema;
+        }
+
+        private void dateTimeHasta_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimeDesde.Value > dateTimeHasta.Value) dateTimeDesde.Value = dateTimeHasta.Value;
+            if (dateTimeHasta.Value < Globals.FechaDelSistema) dateTimeHasta.Value = Globals.FechaDelSistema;
         }
 
        

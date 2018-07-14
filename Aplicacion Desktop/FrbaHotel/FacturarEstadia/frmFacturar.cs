@@ -99,7 +99,14 @@ namespace FrbaHotel.FacturarEstadia
             cmdBuscarRegimenReserva.Parameters.Add("@codigoReserva", SqlDbType.Int);
             cmdBuscarRegimenReserva.Parameters["@codigoReserva"].Value = Int64.Parse(textBoxCodigoReserva.Text);
 
-            labelRegimen.Text = cmdBuscarRegimenReserva.ExecuteScalar().ToString();
+            try
+            {
+                labelRegimen.Text = cmdBuscarRegimenReserva.ExecuteScalar().ToString();
+            }
+            catch
+            {
+                MessageBox.Show("La reserva no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             label.Text = "Régimen de la estadía:";
             codigoReserva = Int64.Parse(textBoxCodigoReserva.Text);
 
@@ -280,7 +287,6 @@ namespace FrbaHotel.FacturarEstadia
                 return;
             }
 
-
             //fin chequeos
 
             SqlCommand cmdFacturar = new SqlCommand("[PISOS_PICADOS].FacturarReserva", Globals.conexionGlobal);
@@ -301,6 +307,17 @@ namespace FrbaHotel.FacturarEstadia
             else
             {
                 cmdFacturar.Parameters["@numeroTarjeta"].Value = Int64.Parse(textBoxNumeroTarjeta.Text);
+            }
+            //chequeo si la reserva tiene estadia
+            SqlCommand cmdTieneEstadia = new SqlCommand("SELECT idEstadia FROM [PISOS_PICADOS].Estadia WHERE codigoReserva = @codigoReserva", Globals.conexionGlobal);
+            cmdTieneEstadia.Parameters.Add("@codigoReserva", SqlDbType.Int);
+            cmdTieneEstadia.Parameters["@codigoReserva"].Value = codigoReserva;
+            var res = cmdTieneEstadia.ExecuteScalar();
+
+            if (res == null)
+            {
+                MessageBox.Show("No existe estadía para esa reserva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             try

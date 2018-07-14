@@ -29,7 +29,13 @@ namespace FrbaHotel.AbmHotel
         private void frmHoteles_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
-            utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
+            SqlCommand command = new SqlCommand("SELECT h.idHotel Hotel, h.nombre Nombre, h.mail Mail, h.telefono Telefono, h.calle Calle, h.nroCalle [Numero de calle], h.ciudad Ciudad, p.nombrePais Pais, h.fechaCreacion Creación, h.estrellas Estrellas FROM [PISOS_PICADOS].Hotel h JOIN [PISOS_PICADOS].Pais p on h.Pais = p.idPais", Globals.conexionGlobal);
+            DataTable dataTable = new DataTable();
+            SqlDataReader reader2 = command.ExecuteReader();
+            dataTable.Load(reader2);
+            dataGridViewHoteles.DataSource = dataTable;
+            reader2.Close();
+
             //inicializo combobox de paises
             SqlCommand cmd = new SqlCommand("select nombrePais from [PISOS_PICADOS].Pais", Globals.conexionGlobal);
 
@@ -65,7 +71,14 @@ namespace FrbaHotel.AbmHotel
         }
 
         public void actualizarDataGrid() {
-            utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
+
+            SqlCommand command = new SqlCommand("SELECT h.idHotel Hotel, h.nombre Nombre, h.mail Mail, h.telefono Telefono, h.calle Calle, h.nroCalle [Numero de calle], h.ciudad Ciudad, p.nombrePais Pais, h.fechaCreacion Creación, h.estrellas Estrellas FROM [PISOS_PICADOS].Hotel h JOIN [PISOS_PICADOS].Pais p on h.Pais = p.idPais", Globals.conexionGlobal);
+            DataTable dataTable = new DataTable();
+            SqlDataReader reader2 = command.ExecuteReader();
+            dataTable.Load(reader2);
+            dataGridViewHoteles.DataSource = dataTable;
+            reader2.Close();
+
             //Autocompletes
             this.cargarAutocomplete("nombre", textBoxNombre, nombreColeccion);
             this.cargarAutocomplete("idHotel", textBoxID, idColeccion);
@@ -81,38 +94,20 @@ namespace FrbaHotel.AbmHotel
             }
         }
 
-        public void eliminarRowHotel()
-        {
-            dataGridViewHoteles.Rows.Remove(dataGridViewHoteles.Rows[filaSeleccionada]);
-        }
-
-
         private void buttonUpd_Click(object sender, EventArgs e)
         {
             if (dataGridViewHoteles.CurrentRow == null) return;
 
-            int id = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["idHotel"].Value);
-            String nombre = dataGridViewHoteles.CurrentRow.Cells["nombre"].Value.ToString();
-            String mail = dataGridViewHoteles.CurrentRow.Cells["mail"].Value.ToString();
-            String telefono = dataGridViewHoteles.CurrentRow.Cells["telefono"].Value.ToString();
-            String calle = dataGridViewHoteles.CurrentRow.Cells["calle"].Value.ToString();
-            String nroCalle = dataGridViewHoteles.CurrentRow.Cells["nroCalle"].Value.ToString();
-            String ciudad = dataGridViewHoteles.CurrentRow.Cells["ciudad"].Value.ToString();
-            String pais = dataGridViewHoteles.CurrentRow.Cells["pais"].Value.ToString();
-            String fechaCreacion = dataGridViewHoteles.CurrentRow.Cells["fechaCreacion"].Value.ToString();
-            int estrellas = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["estrellas"].Value);
-
-            int idPais = int.Parse(pais);
-
-            SqlCommand cmdBuscarNombrePais = new SqlCommand("Select nombrePais from [PISOS_PICADOS].Pais where idPais = @idPais", Globals.conexionGlobal);
-            cmdBuscarNombrePais.Parameters.AddWithValue("@idPais", idPais);
-            SqlDataReader reader = cmdBuscarNombrePais.ExecuteReader();
-
-            while (reader.Read())
-            {
-                pais = (reader["nombrePais"]).ToString();
-            }
-            
+            int id = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["Hotel"].Value);
+            string nombre = dataGridViewHoteles.CurrentRow.Cells["Nombre"].Value.ToString();
+            string mail = dataGridViewHoteles.CurrentRow.Cells["Mail"].Value.ToString();
+            string telefono = dataGridViewHoteles.CurrentRow.Cells["Telefono"].Value.ToString();
+            string calle = dataGridViewHoteles.CurrentRow.Cells["Calle"].Value.ToString();
+            string nroCalle = dataGridViewHoteles.CurrentRow.Cells["Numero de calle"].Value.ToString();
+            string ciudad = dataGridViewHoteles.CurrentRow.Cells["Ciudad"].Value.ToString();
+            string pais = dataGridViewHoteles.CurrentRow.Cells["Pais"].Value.ToString();
+            string fechaCreacion = dataGridViewHoteles.CurrentRow.Cells["Creación"].Value.ToString();
+            int estrellas = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["Estrellas"].Value);            
 
             (new FrbaHotel.AbmHotel.frmModificarHotel()).cargarDatos(id, nombre, mail, telefono, calle, nroCalle, ciudad, pais, fechaCreacion, estrellas, this);
 
@@ -123,7 +118,7 @@ namespace FrbaHotel.AbmHotel
 
             if (dataGridViewHoteles.CurrentRow == null) return;
 
-            int id = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["idHotel"].Value);
+            int id = Convert.ToInt32(dataGridViewHoteles.CurrentRow.Cells["Hotel"].Value);
 
             (new FrbaHotel.AbmHotel.frmBajaHotel()).asignarId(id, this);
 
@@ -183,9 +178,12 @@ namespace FrbaHotel.AbmHotel
             textBoxID.Text = ""; textBoxCiudad.Text = ""; 
             textBoxNombre.Text = "";
             estrellas.Text = "Seleccionar"; comboBoxPais.Text = "Seleccionar";
-
-
-            utils.llenarDataGridView(dataGridViewHoteles, "Hotel");
+            SqlCommand command = new SqlCommand("SELECT h.idHotel Hotel, h.nombre Nombre, h.mail Mail, h.telefono Telefono, h.calle Calle, h.nroCalle [Numero de calle], h.ciudad Ciudad, p.nombrePais Pais, h.fechaCreacion Creación, h.estrellas Estrellas FROM [PISOS_PICADOS].Hotel h JOIN [PISOS_PICADOS].Pais p on h.Pais = p.idPais", Globals.conexionGlobal);
+            DataTable dataTable = new DataTable();
+            SqlDataReader reader2 = command.ExecuteReader();
+            dataTable.Load(reader2);
+            dataGridViewHoteles.DataSource = dataTable;
+            reader2.Close();
         }
 
 
@@ -217,8 +215,12 @@ namespace FrbaHotel.AbmHotel
 
             }
 
-            utils.llenarDataGridView(dataGridViewHoteles, "Hotel" + cadenaFiltro);
-
+            SqlCommand command = new SqlCommand("SELECT h.idHotel Hotel, h.nombre Nombre, h.mail Mail, h.telefono Telefono, h.calle Calle, h.nroCalle [Numero de calle], h.ciudad Ciudad, p.nombrePais Pais, h.fechaCreacion Creación, h.estrellas Estrellas FROM [PISOS_PICADOS].Hotel h JOIN [PISOS_PICADOS].Pais p on h.Pais = p.idPais" + cadenaFiltro, Globals.conexionGlobal);
+            DataTable dataTable = new DataTable();
+            SqlDataReader reader2 = command.ExecuteReader();
+            dataTable.Load(reader2);
+            dataGridViewHoteles.DataSource = dataTable;
+            reader2.Close();
         }
 
         private void cargarAutocomplete(String columna, TextBox textbox, AutoCompleteStringCollection coleccion)
