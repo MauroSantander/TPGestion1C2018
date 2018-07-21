@@ -309,7 +309,7 @@ namespace FrbaHotel
         public static void cargarConsumibles(ListBox listConsumibles)
         {
             //creo comando para traer consumibles
-            SqlCommand cmd = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Consumible", Globals.conexionGlobal);
+            SqlCommand cmd = new SqlCommand("SELECT descripcion FROM [PISOS_PICADOS].Consumible WHERE idConsumible <> 2323", Globals.conexionGlobal);
             SqlDataReader reader = cmd.ExecuteReader();
 
             listConsumibles.Items.Clear();

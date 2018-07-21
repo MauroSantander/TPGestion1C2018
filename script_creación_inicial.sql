@@ -410,6 +410,16 @@ IF OBJECT_ID(N'[PISOS_PICADOS].puedeModificarReserva', N'P') IS NOT NULL
 IF OBJECT_ID(N'[PISOS_PICADOS].actualizarContrasena', N'P') IS NOT NULL
 	DROP PROCEDURE [PISOS_PICADOS].actualizarContrasena;
 
+IF EXISTS (SELECT name FROM sys.schemas WHERE name = N'PISOS_PICADOS')
+   BEGIN
+      DROP SCHEMA [PISOS_PICADOS]
+END
+GO
+
+/* Creación schema*/
+CREATE SCHEMA [PISOS_PICADOS]
+GO
+
 /* Creacion De Tablas */
 CREATE TABLE [PISOS_PICADOS].Rol (
 	idRol INT PRIMARY KEY IDENTITY
@@ -1495,6 +1505,9 @@ FROM [gd_esquema].Maestra
 WHERE Consumible_Codigo IS NOT NULL
 ORDER BY Consumible_Codigo;
 
+INSERT INTO [PISOS_PICADOS].Consumible (idConsumible, precio, descripcion)
+VALUES (2323, 0, 'Otros consumos')
+
 SET IDENTITY_INSERT [PISOS_PICADOS].Consumible OFF
 
 INSERT INTO [PISOS_PICADOS].Regimen (
@@ -1728,35 +1741,37 @@ GROUP BY idHabitacion
 
 INSERT INTO [PISOS_PICADOS].Estadia (
 	codigoReserva
-	,fechaCheckIn
-	,fechaCheckOut
-	,diasReserva
-	,diasEstadia
 	)
 SELECT r.codigoReserva
-	,m.Estadia_Fecha_Inicio
-	,(
-		CASE 
-			WHEN (DATEADD(DAY, cast(m.Estadia_Fecha_Inicio AS INT), m.Estadia_Cant_Noches)) <= '20180713'
-				THEN DATEADD(DAY, cast(m.Estadia_Fecha_Inicio AS INT), m.Estadia_Cant_Noches)
-			ELSE NULL
-			END
-		)
-	,m.Reserva_Cant_Noches
-	,(
-		CASE 
-			WHEN (DATEADD(DAY, cast(m.Estadia_Fecha_Inicio AS INT), m.Estadia_Cant_Noches)) <= '20180713'
-				THEN m.Estadia_Cant_Noches
-			ELSE NULL
-			END
-		)
 FROM [gd_esquema].Maestra AS m
 INNER JOIN [PISOS_PICADOS].Reserva AS r ON m.Reserva_Codigo = r.codigoReserva
-WHERE m.Estadia_Fecha_Inicio <= '20180713'
 GROUP BY r.codigoReserva
-	,m.Estadia_Fecha_Inicio
-	,m.Reserva_Cant_Noches
-	,M.Estadia_Cant_Noches
+
+UPDATE [PISOS_PICADOS].Estadia SET fechaCheckIn =
+(SELECT m.Estadia_Fecha_Inicio
+FROM [gd_esquema].Maestra AS m
+WHERE m.Reserva_Codigo = codigoReserva and m.Estadia_Fecha_Inicio IS NOT NULL
+GROUP BY m.Estadia_Fecha_Inicio)
+
+UPDATE [PISOS_PICADOS].Estadia SET fechaCheckOut =
+(SELECT DATEADD(DAY, m.Estadia_Cant_Noches, m.Estadia_Fecha_Inicio)
+FROM [gd_esquema].Maestra AS m
+WHERE m.Reserva_Codigo = codigoReserva and m.Estadia_Cant_Noches IS NOT NULL
+	and m.Estadia_Fecha_Inicio IS NOT NULL
+	and m.Factura_Total IS NOT NULL
+GROUP BY m.Estadia_Cant_Noches, m.Estadia_Fecha_Inicio)
+
+UPDATE [PISOS_PICADOS].Estadia SET diasReserva =
+(SELECT m.Reserva_Cant_Noches
+FROM [gd_esquema].Maestra AS m
+WHERE m.Reserva_Codigo = codigoReserva and m.Estadia_Cant_Noches IS NOT NULL
+GROUP BY m.Reserva_Cant_Noches)
+
+UPDATE [PISOS_PICADOS].Estadia SET diasEstadia =
+(SELECT m.Estadia_Cant_Noches
+FROM [gd_esquema].Maestra AS m
+WHERE m.Reserva_Codigo = codigoReserva and m.Estadia_Cant_Noches IS NOT NULL
+GROUP BY m.Estadia_Cant_Noches)
 
 INSERT INTO [PISOS_PICADOS].EstadiaxConsumible
 SELECT e.idEstadia
@@ -1789,7 +1804,6 @@ INNER JOIN [PISOS_PICADOS].Usuario AS u ON (
 		)
 INNER JOIN [PISOS_PICADOS].Estadia AS es ON m.Reserva_Codigo = es.codigoReserva
 WHERE Factura_Total IS NOT NULL
-	AND Factura_Fecha <= '20180713'
 GROUP BY m.Factura_Nro
 	,u.idUsuario
 	,m.Factura_Total
@@ -1813,18 +1827,14 @@ SELECT ROW_NUMBER() OVER (
 		)
 	,f.numeroFactura
 	,c.idConsumible
-	,count(*)
+	,Item_Factura_Cantidad
 	,c.precio
-	,count(*) * c.precio
+	,m.Item_Factura_Cantidad * c.precio
 	,e.idEstadia
 FROM [gd_esquema].Maestra AS m
 INNER JOIN [PISOS_PICADOS].Estadia AS e ON m.Reserva_Codigo = e.codigoReserva
 INNER JOIN [PISOS_PICADOS].Factura AS f ON m.Factura_Nro = f.numeroFactura
-INNER JOIN [PISOS_PICADOS].Consumible AS c ON m.Consumible_Codigo = c.idConsumible
-GROUP BY f.numeroFactura
-	,c.idConsumible
-	,c.precio
-	,e.idEstadia
+INNER JOIN [PISOS_PICADOS].Consumible AS c ON isnull(m.Consumible_Codigo,2323) = c.idConsumible
 GO
 
 /*Migracion FIN-------------------------------------------------------------------*/
